@@ -44,6 +44,51 @@ jobs:
           submodules: recursive
           fetch-depth: 1
 
+      # The repository must pin the submodules as gitlinks. If they are missing (e.g. the repo
+      # was created by copying files instead of cloning), fetch the exact pinned commits.
+      - name: Ensure pinned sources (OpenCV 4.13.0, ONNX Runtime 1.24.1)
+        run: |
+          set -euo pipefail
+          ensure() {
+            local dir="$1" url="$2" sha="$3"
+            if [ -z "$(ls -A "$dir" 2>/dev/null)" ]; then
+              echo "::warning::$dir missing (submodule not pinned in this repo) -> fetching $url@$sha"
+              rm -rf "$dir"; mkdir -p "$dir"
+              git -C "$dir" init -q
+              git -C "$dir" remote add origin "$url"
+              git -C "$dir" fetch -q --depth 1 origin "$sha"
+              git -C "$dir" checkout -q FETCH_HEAD
+              git -C "$dir" submodule update --init --recursive --depth 1 || true
+            fi
+            echo "$dir -> $(git -C "$dir" rev-parse HEAD)"
+          }
+          ensure external/opencv      https://github.com/opencv/opencv.git          fe38fc608f6acb8b68953438a62305d8318f4fcd
+          ensure external/onnxruntime https://github.com/microsoft/onnxruntime.git  470ae16099a74fe05e31f2530489332c0525edb5
+
+      # The native scripts expect the git submodules external/opencv and external/onnxruntime.
+      # If the repository was pushed without the submodule links (e.g. files copied into a new
+      # repo), fetch the pinned upstream commits directly so the build stays reproducible.
+      - name: Ensure pinned submodules (OpenCV 4.13.0, ONNX Runtime 1.24.1)
+        run: |
+          set -euo pipefail
+          fetch_pinned() {
+            local dir="$1" url="$2" sha="$3"
+            if git -C "$dir" rev-parse -q --verify HEAD >/dev/null 2>&1 \
+               && [ "$(git -C "$dir" rev-parse --show-toplevel)" = "$(cd "$dir" && pwd)" ]; then
+              echo "$dir: submodule present at $(git -C "$dir" rev-parse HEAD)"
+              return
+            fi
+            echo "$dir: missing -> fetching $url @ $sha"
+            rm -rf "$dir" && mkdir -p "$dir"
+            git -C "$dir" init -q
+            git -C "$dir" remote add origin "$url"
+            git -C "$dir" fetch -q --depth 1 origin "$sha"
+            git -C "$dir" checkout -q FETCH_HEAD
+            git -C "$dir" submodule update --init --recursive --depth 1 || true
+          }
+          fetch_pinned external/opencv      https://github.com/opencv/opencv.git          fe38fc608f6acb8b68953438a62305d8318f4fcd
+          fetch_pinned external/onnxruntime https://github.com/microsoft/onnxruntime.git 470ae16099a74fe05e31f2530489332c0525edb5
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
