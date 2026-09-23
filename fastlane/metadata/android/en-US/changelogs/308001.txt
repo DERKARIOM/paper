@@ -1,0 +1,6 @@
+MakeACopy 3.8.0
+* Crop: aspect ratios (A3/A4/A5, Letter, Legal, custom), snap-to-right-angle, better edge drag, zoom/pan
+* Camera: sharper shots via AF/AE/AWB pre-lock; faster preview via NV21→RGBA fast path + pooling
+* Export: re-edit crop from preview; new high-pass "clean" modes (gray/color); zoomable preview
+* OCR: 2 modes + smarter policies
+* Offline only

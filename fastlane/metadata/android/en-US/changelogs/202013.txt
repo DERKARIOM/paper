@@ -1,0 +1,16 @@
+MakeACopy 2.2.1 (Release)
+
+- Camera rebuilt for broad device compatibility with dynamic 3‑stage binding. Most OEM workarounds removed; targeted handling remains for Sony on Android 15+.
+- Self‑healing preview to recover black screens.
+- Adaptive torch exposure based on live luminance; paused during corner preview to avoid darkening.
+- Faster frame analysis from the Y‑plane with lower CPU usage.
+- Cleaner lifecycle and improved recovery logging; key device/capability logs at INFO.
+- Share logs action collects only this app’s logs and adds a compact header.
+- Geometry fix: rectScore() angle calculation corrected for better contour ranking.
+- Version info in the shared log header now derives from the manifest at runtime (PackageInfo), ensuring accurate reporting accross ABI splits and reproducible builds.
+
+Notes
+
+- Fixed camera preview black screen on Sony Xperia (Android 15+) and Huawei.
+- Improved flashlight stability on Xiaomi/POCO.
+- No new dangerous permissions.

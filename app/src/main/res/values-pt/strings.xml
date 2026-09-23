@@ -1,0 +1,493 @@
+<resources>
+    <string name="app_name">MakeACopy</string>
+
+    <string name="tip_text_mode_editing">Modo de texto: As quebras de linha e a pontuação são atualmente normalizadas
+        para espaços. Se forem inseridas menos palavras do que as reconhecidas, as palavras restantes do OCR permanecem
+        inalteradas. As alterações são aplicadas após uma breve pausa.
+    </string>
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">Câmera</string>
+    <string name="title_crop">Cortar</string>
+    <string name="title_ocr">OCR</string>
+    <string name="title_export">Exportar</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">Digitalizar</string>
+    <string name="btn_crop">Cortar</string>
+    <string name="btn_process">Processar</string>
+    <string name="btn_share">Compartilhar</string>
+    <string name="btn_share_text">Compartilhar texto</string>
+    <string name="next">Avançar</string>
+    <string name="back">Voltar</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">A permissão da câmera é necessária para digitalizar documentos
+    </string>
+    <string name="confirm">Confirmar</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">Câmera pronta. Toque no botão para digitalizar um
+        documento.
+    </string>
+    <string name="captured_image">Imagem capturada</string>
+    <string name="image_to_crop">Imagem a cortar</string>
+    <string name="cropped_image">Imagem cortada</string>
+    <string name="document_preview">Pré-visualização do documento</string>
+    <string name="include_ocr_text">Exportar OCR como TXT separado</string>
+    <string name="ocr_results_will_appear_here">Os resultados do OCR aparecerão aqui</string>
+    <string name="ocr_no_text_detected">Nenhum texto detectado</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Ajuste os cantos do
+        trapézio para selecionar a área a cortar e toque no botão Cortar.
+    </string>
+    <string name="no_document_ready_process_ocr_first">Nenhum documento pronto. Execute o OCR primeiro.</string>
+    <string name="document_ready_for_export">Documento pronto para exportação</string>
+    <string name="processing_image">Processando imagem…</string>
+    <string name="no_image_processed_crop_an_image_first">Nenhuma imagem processada. Recorte uma imagem primeiro.
+    </string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">Processamento de OCR concluído. Toque no
+        botão para prosseguir para a exportação.
+    </string>
+
+    <string name="ocr_found_rotation">Rotação detectada: %1$d°</string>
+    <string name="ocr_score">Pontuação de OCR: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">Rotação detectada: %1$d° — pontuação de OCR: %2$d%%</string>
+
+    <!-- Explicação adicional adicionada no diálogo «Explicar modos de reconhecimento» -->
+    <string name="ocr_prep_modes_autorotate_note">Rotação automática do OCR: Quando ativada, o OCR também testa a página
+        em passos de 90° (0/90/180/270) e seleciona o melhor resultado. A rotação detectada pode ser aplicada
+        automaticamente durante a exportação se você não tiver rotacionado a página manualmente. Esta opção pode ser
+        ativada ou desativada em «Escolher modo de reconhecimento».
+    </string>
+
+    <string name="initializing_camera">Inicializando a câmera…</string>
+    <string name="resetting_camera">Reiniciando a câmera…</string>
+    <string name="error_initializing_camera">Erro ao inicializar a câmera: %1$s</string>
+    <string name="error_camera_provider_null">Falha ao inicializar a câmera – o provedor é nulo</string>
+    <string name="error_camera_not_initialized">Câmera não inicializada. Tente novamente.</string>
+    <string name="error_image_capture_failed">Falha ao capturar imagem: %1$s</string>
+    <string name="error_displaying_image">Erro ao exibir imagem: %1$s</string>
+    <string name="error_resetting_camera">Erro ao reiniciar a câmera: %1$s</string>
+    <string name="error_toggling_flashlight">Erro ao alternar a lanterna: %1$s</string>
+    <string name="error_camera_preview_failed">Falha ao iniciar a visualização da câmera. Tente novamente.</string>
+
+    <string name="share_logs">Compartilhar logs</string>
+    <string name="share_logs_subject">Logs de diagnóstico do MakeACopy</string>
+    <string name="share_logs_chooser_title">Compartilhar logs via…</string>
+    <string name="share_logs_error">Não foi possível preparar os logs: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">Tons de cinza</string>
+    <string name="export_as_jpeg">Exportar como JPEG</string>
+    <string name="export_format_label">Formato de exportação</string>
+    <string name="export_as_pdf">Exportar como PDF (padrão)</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">Alternar lanterna</string>
+    <string name="flashlight_on">Lanterna ligada</string>
+    <string name="flashlight_off">Lanterna desligada</string>
+    <string name="flashlight_not_available">Lanterna não disponível neste dispositivo</string>
+    <string name="low_light_detected">Baixa luminosidade detectada. Ligar a lanterna?</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">EV %1$s</string>
+    <string name="exposure_compensation_cd">Controle deslizante de compensação de exposição</string>
+    <string name="exposure_compensation_option">Compensação de exposição</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">Controle deslizante de foco manual</string>
+    <string name="manual_focus_af_button_cd">Mudar para foco automático</string>
+    <string name="autofocus_enabled">Foco automático ativado</string>
+    <string name="manual_focus_locked">Foco manual bloqueado</string>
+    <string name="manual_focus_option">Foco manual</string>
+    <string name="focus_quality_option">Indicador de qualidade do foco</string>
+    <string name="tap_to_focus_started">Focando…</string>
+    <string name="tap_to_focus_done">Foco ajustado</string>
+    <string name="tap_to_focus_requested">Foco solicitado</string>
+    <string name="tap_to_focus_not_locked">Não foi possível bloquear o foco aqui</string>
+    <string name="tap_to_focus_not_supported">Foco por toque não é suportado aqui</string>
+    <string name="tap_to_focus_failed">Não foi possível focar aqui</string>
+    <string name="focus_quality_low">Qualidade de foco: baixa</string>
+    <string name="focus_quality_good">Qualidade de foco: boa</string>
+    <string name="focus_quality_excellent">Qualidade de foco: excelente</string>
+    <string name="camera_zoom_title">Zoom / lente</string>
+    <string name="camera_zoom_cd">Escolher zoom ou lente</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">O zoom não está disponível neste dispositivo</string>
+
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">Cor</string>
+    <string name="jpeg_mode_auto">Tons de cinza</string>
+    <string name="jpeg_mode_bw_text">Preto e branco</string>
+    <string name="jpeg_mode_bw_robust">Preto e Branco (robusto) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">Pré-processamento OCR robusto (JPEG)</string>
+
+    <string name="pdf_bw_mode_robust">Preto e branco</string>
+    <string name="pdf_bw_mode_classic">P/B (clássico)</string>
+    <string name="pdf_bw_mode_ocr_robust">Pré-processamento OCR robusto (PDF)</string>
+
+    <string name="jpeg_mode_gray_clean">Escala de cinza limpa (filtro passa-alta) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">Cores limpas (filtro passa-alta) (JPEG)</string>
+    <string name="pdf_bw_mode_grayscale_clean">Escala de cinza limpa (passa-alta)</string>
+    <string name="pdf_bw_mode_color_clean">Cor limpa (passa-alta)</string>
+    <string name="skip_ocr_export_only">Pular OCR (apenas exportar)</string>
+    <string name="skip_cropping">Pular corte</string>
+    <string name="skip_edge_detection">Ignorar detecção de bordas</string>
+    <string name="preview_corner_detection">Pré-visualização da deteção de cantos</string>
+    <string name="btn_pick_image">Carregar</string>
+    <string name="pick_image_cd">Carregar imagem existente</string>
+    <!-- Multipage Export (v1 increment) -->
+    <string name="add_another_page">Adicionar página</string>
+    <string name="clear_all_pages">Limpar tudo</string>
+    <string name="remove_this_page">Remover esta página</string>
+    <string name="multipage_not_implemented">Exportação multipágina ainda não implementada</string>
+
+    <!-- Reorder A11y controls -->
+    <string name="move_page_left">Mover página para a esquerda</string>
+    <string name="move_page_right">Mover página para a direita</string>
+
+    <!-- Back confirmation for clearing multipage session -->
+    <string name="confirm_clear_multipage_title">Excluir páginas?</string>
+    <string name="confirm_clear_multipage_message">Várias páginas foram adicionadas. Deseja excluir todas e voltar?
+    </string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Clear-all confirmation for trash icon in multipage -->
+    <string name="confirm_clear_pages_title">Limpar todas as páginas?</string>
+    <string name="confirm_clear_pages_message">Deseja remover todas as páginas da tira de filme?</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">Escolha entre digitalizações concluídas</string>
+    <string name="picker_empty">Nenhuma digitalização concluída encontrada</string>
+    <!-- Library default collection -->
+    <string name="collection_completed_scans">Digitalizações concluídas</string>
+    <string name="done">Avançar</string>
+    <string name="thumbnail">Miniatura</string>
+    <string name="delete">Excluir</string>
+
+    <!-- Picker bulk actions -->
+    <string name="select_all">Selecionar tudo</string>
+    <string name="deselect_all">Desmarcar tudo</string>
+
+    <string name="added_pages_from_registry">Adicionadas %1$d página(s) do registro</string>
+
+    <!-- Add page options dialog -->    <!-- Picker states -->
+    <string name="missing_file">Arquivo ausente</string>
+
+    <!-- Inline OCR cues -->
+    <string name="ocr_processing_started">Executando OCR…</string>
+    <string name="ocr_processing_finished">OCR adicionado para esta página</string>
+    <string name="ocr_processing_failed">Falha no OCR em linha</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">Remover do registro</string>
+    <string name="remove_from_registry_message">Excluir esta entrada e seus arquivos associados?</string>
+    <string name="remove">Remover</string>
+    <string name="removed_from_registry_toast">Entrada removida</string>
+
+    <!-- PDF quality presets (Phase 1) -->
+    <string name="pdf_quality_title">Qualidade / tamanho do PDF</string>
+    <string name="pdf_preset_high">Alto (300 dpi, q85)</string>
+    <string name="pdf_preset_standard">Padrão (200 dpi, q72)</string>
+    <string name="pdf_preset_small">Pequeno (150 dpi, q62)</string>
+    <string name="pdf_preset_very_small">Muito pequeno (110 dpi, q52)</string>
+    <string name="pdf_text_layer_mode_title">Camada de texto PDF</string>
+    <string name="pdf_text_layer_mode_line_based">Baseada em linhas (recomendado)</string>
+    <string name="pdf_text_layer_mode_word_positioned">Posicionada por palavra (compatibilidade)</string>
+    <string name="export_options_title">Opções de exportação</string>
+    <string name="jpeg_enhancement_title">Cor de saída JPEG</string>
+    <string name="btn_options">Opções</string>
+    <string name="btn_save">Salvar</string>
+    <string name="btn_new">Nova digitalização</string>
+
+    <string name="btn_review">Revisar</string>
+    <string name="edit_word_title">Editar palavra</string>
+    <string name="cm_edit">Editar…</string>
+    <string name="cm_merge_next">Unir com a próxima</string>
+    <string name="cm_split">Dividir</string>
+    <string name="cm_delete">Excluir</string>
+    <string name="cm_case">Maiúsculas/minúsculas</string>
+    <string name="cm_lang">Idioma…</string>
+    <string name="case_upper">MAIÚSCULAS</string>
+    <string name="case_lower">minúsculas</string>
+    <string name="case_title">Inicial maiúscula</string>
+    <string name="dialog_language_title">Definir código do idioma</string>
+
+    <!-- Rotation (post-crop) -->
+    <string name="rotate_left_cd">Girar a página 90 graus no sentido anti-horário</string>
+    <string name="rotate_right_cd">Girar a página 90 graus no sentido horário</string>
+
+    <!-- OCR models management (prototype) -->
+    <string name="ocr_models_manage">Modelos de OCR</string>
+    <string name="ocr_import_manual">Importar .traineddata…</string>
+    <string name="ocr_discover_packs">Descobrir pacotes de idiomas</string>
+    <string name="ocr_no_packs_found">Nenhum pacote de idiomas encontrado</string>
+    <string name="ocr_choose_pack">Escolher pacote de idiomas</string>
+    <string name="ocr_no_models_in_pack">Nenhum modelo encontrado neste pacote</string>
+    <string name="ocr_choose_model">Escolher modelo para importar</string>
+    <string name="ocr_import_success">Modelo importado</string>
+    <string name="ocr_import_failed">Falha na importação</string>
+
+    <string name="ocr_delete_best_model">Excluir modelo Best</string>
+    <string name="ocr_nothing_to_delete">Nenhum modelo Best para excluir no idioma atual</string>
+    <string name="ocr_delete_confirm_title">Excluir modelo Best?</string>
+    <string name="ocr_delete_confirm_msg">Excluir o modelo Best importado para %1$s? O modelo Fast integrado continuará
+        disponível.
+    </string>
+    <string name="ocr_delete_success">Modelo excluído</string>
+    <string name="ocr_delete_failed">Falha ao excluir</string>
+
+    <!-- OCR models hint -->
+    <string name="ocr_models_hint">Para reconhecimento mais rápido, modelos compactos estão incluídos. Para maior
+        precisão, você pode instalar modelos "Best" maiores. Nenhuma conexão com a internet é necessária.
+    </string>
+
+    <!-- Modos de reconhecimento OCR – explicação -->
+    <string name="ocr_explain_prep_modes">Explicar modos de reconhecimento</string>
+    <string name="ocr_prep_modes_title">Modos de reconhecimento: explicação simples</string>
+    <string name="ocr_prep_modes_message">Existem duas formas de enviar imagens para o motor de OCR:\n\n• Original (sem
+        pré-processamento) — a mais rápida. A foto é enviada tal como está. Ideal para digitalizações já limpas e com
+        alto contraste. Pode não detetar texto fraco ou com ruído.\n\n• OpenCV Robusto — redesenhado para máxima precisão em páginas difíceis. Corrige inclinações,
+        normaliza sombras e iluminação, aplica redução de ruído com preservação de contornos e escalonamento
+        inteligente. É importante que o Tesseract receba uma imagem em tons de cinzento de alta qualidade (e não preto e
+        branco rígido), preservando detalhes finos como os laços da letra “o” e dígitos pequenos. Oferece a melhor
+        precisão em páginas exigentes, mas é mais lento e utiliza mais memória.\n\nPós-processamento de OCR: Corrige
+        erros comuns de reconhecimento, como confusões (0↔O, 1↔l↔I, rn↔m), e verifica palavras incertas com recurso a um
+        dicionário. Ativado por predefinição; desative para códigos técnicos ou números de série.
+    </string>
+
+    <!-- Seleção de modo de reconhecimento OCR -->
+    <string name="ocr_choose_prep_mode_menu">Modo de reconhecimento…</string>
+    <string name="ocr_choose_prep_mode_title">Escolher modo de reconhecimento</string>
+    <string name="ocr_mode_original">Original (sem pré-processamento)</string>
+    <string name="ocr_mode_quick">OpenCV Quick (rápido)</string>
+    <string name="ocr_mode_robust">OpenCV Robust (alta qualidade)</string>
+    <string name="opt_paddle_best_ocr">Melhor qualidade Paddle OCR (mais lento)</string>
+    <string name="ocr_prep_mode_set">Modo de reconhecimento definido como %1$s</string>
+
+    <!-- Labels -->
+    <string name="label_language">Idioma</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d P</string>
+    <string name="low_percent_format">Baixa %1$d%%</string>
+    <string name="low_placeholder">Baixa —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 P</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">Fechar</string>
+    <string name="cd_zoom_chip_open_menu">Abrir menu de zoom</string>
+    <string name="cd_minimap">Visão geral do documento, toque para navegar
+    </string>    <!-- A11y content descriptions for menu items -->    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">Por favor, insira um valor</string>
+
+    <!-- Collections / Library (feature-flagged) -->
+    <string name="new_collection_title">Nova coleção</string>
+    <string name="collection_name_hint">Nome da coleção</string>
+    <string name="create">Criar</string>
+    <string name="collection_not_empty">A coleção não está vazia</string>
+    <string name="collection_items_count">%1$d item(ns)</string>
+    <string name="deleted">Excluído</string>
+    <string name="open_collections">Coleções</string>
+    <string name="index_existing_scans">Indexar digitalizações existentes</string>
+    <string name="rename">Renomear</string>
+    <string name="ok">OK</string>
+    <string name="no_scans_yet">Nenhuma digitalização ainda</string>
+    <string name="rename_collection_title">Renomear coleção</string>
+    <string name="action_add_to_collection">Adicionar à coleção…</string>
+    <string name="place_in_collection_title">Adicionar à coleção</string>
+    <string name="create_new_collection">Criar nova coleção…</string>
+    <string name="scan_added_to_collection">Digitalização adicionada a “%1$s”</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">Ações da biblioteca</string>    <!-- Library list: collections membership -->
+    <string name="in_collections_prefix">Em: %1$s</string>
+    <!-- Delete confirmation (ScanDetails) -->
+    <string name="delete_warning_irreversible">Plik zostanie usunięty z urządzenia. Tej operacji nie można cofnąć.
+    </string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">Brak dokumentu do eksportu</string>
+    <string name="failed_to_export_document">Nie udało się wyeksportować dokumentu</string>
+    <string name="error_during_export_with_reason">Błąd podczas eksportu: %1$s</string>
+    <string name="document_exported">Dokument %1$s wyeksportowany</string>
+    <string name="document_multipage_exported">Dokument (wielostronicowy) %1$s wyeksportowany</string>
+    <string name="no_target_selected">Nie wybrano celu</string>
+    <string name="image_exported">Obraz %1$s wyeksportowany</string>
+    <string name="failed_to_export_image">Nie udało się wyeksportować obrazu</string>
+    <string name="error_during_jpeg_export_with_reason">Błąd podczas eksportu JPEG: %1$s</string>
+    <string name="zip_exported">ZIP %1$s wyeksportowany</string>
+    <string name="failed_to_export_zip">Nie udało się wyeksportować ZIP</string>
+    <string name="error_during_zip_export_with_reason">Błąd podczas eksportu ZIP: %1$s</string>
+    <string name="ocr_text_exported_as_txt">Tekst OCR wyeksportowany jako TXT</string>
+    <string name="error_exporting_ocr_text_with_reason">Błąd podczas eksportu tekstu OCR: %1$s</string>
+    <string name="no_document_to_share_export_first">Brak dokumentu do udostępnienia. Najpierw wyeksportuj dokument.
+    </string>
+    <string name="error_sharing_document_with_reason">Błąd podczas udostępniania dokumentu: %1$s</string>
+    <string name="feature_scan_library_disabled">Funkcja biblioteki skanów jest wyłączona</string>
+    <string name="navigation_failed">Nawigacja nie powiodła się</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">Brak identyfikatora skanu</string>
+    <string name="picker_failed">Nie udało się wybrać</string>
+    <string name="share_failed">Udostępnianie nie powiodło się</string>
+    <string name="no_app_found_to_open_file">Nie znaleziono aplikacji do otwarcia tego pliku</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">Usunąć z tej kolekcji?</string>
+    <string name="removed_from_collection">Usunięto z kolekcji</string>
+    <string name="indexed_new_items">Zindeksowano %1$d nowych element(ów)</string>
+    <string name="nothing_new_to_index">Brak nowych elementów do zindeksowania</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">Documento alinhado</string>
+    <string name="a11y_hint_move_left">Desloque-se para a esquerda</string>
+    <string name="a11y_hint_move_right">Desloque-se para a direita</string>
+    <string name="a11y_hint_move_up">Desloque-se para cima</string>
+    <string name="a11y_hint_move_down">Desloque-se para baixo</string>
+    <string name="a11y_hint_move_closer">Mais perto da superfície</string>
+    <string name="a11y_hint_move_back">Mais longe da superfície</string>
+    <string name="a11y_hint_too_far">Aproxime-se. O documento está muito longe.</string>
+    <string name="a11y_hint_tilt_left">Incline para a esquerda</string>
+    <string name="a11y_hint_tilt_right">Incline para a direita</string>
+    <string name="a11y_hint_tilt_forward">Incline para a frente</string>
+    <string name="a11y_hint_tilt_back">Incline para trás</string>
+    <string name="a11y_hold_still">Fique imóvel</string>
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">Documento detetado — pronto para capturar.</string>
+    <string name="a11y_no_document_detected">Nenhum documento detectado.</string>
+    <string name="a11y_orientation_portrait_tip">Parece estar em modo retrato. Segurar o telefone na vertical
+        normalmente funciona melhor para páginas altas.
+    </string>
+    <string name="a11y_orientation_landscape_tip">Parece estar em modo paisagem. Tente segurar o telefone na horizontal
+        para páginas largas.
+    </string>
+    <string name="a11y_crop_summary_detected">Análise da imagem capturada: documento detectado.</string>
+    <string name="a11y_crop_summary_no_doc">Análise da imagem capturada: nenhum documento detectado.</string>
+    <string name="accessibility_mode_label">Modo de acessibilidade</string>
+    <string name="a11y_camera_ready">Câmara pronta. Toque duas vezes em “Digitalizar” para capturar.</string>
+    <string name="a11y_low_light_toggle_flash">Pouca luz detetada. Toque duas vezes em “Flash” para ativar.</string>
+    <string name="a11y_capture_failed">Falha ao capturar.</string>
+    <string name="a11y_volume_shutter_hint">Dica: No modo de acessibilidade, pode capturar usando os botões de volume.
+    </string>
+    <string name="a11y_capture_success">Imagem capturada.
+    </string>    <!-- Acessibilidade: descrição de itens da lista e anúncios -->
+    <string name="page_n_of_m">Página %1$d de %2$d</string>
+    <string name="pages_count_announcement">Páginas: %1$d</string>
+    <string name="export_started">Exportação iniciada</string>
+    <string name="page_removed">Página removida</string>
+    <string name="page_moved_to_position">Movido para a posição %1$d</string>
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">Rotação automática de OCR (aplicar também na exportação)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">Pós-processamento de OCR (corrigir erros comuns)</string>
+    <string name="opt_layout_analysis">Análise de layout (colunas, tabelas)</string>
+    <!-- Options: Experimental directional mapping fallback -->
+    <!-- Developer / Debug options -->
+    <!-- Library / Collections -->    <!-- PDF Import -->
+    <string name="error_unknown_file_type">Tipo de ficheiro desconhecido</string>
+    <string name="error_unsupported_file_type">Este tipo de ficheiro não é suportado</string>
+    <string name="error_cannot_open_pdf">Não foi possível abrir o PDF</string>
+    <string name="error_pdf_empty">O PDF não contém páginas</string>
+    <string name="error_pdf_import_failed">Falha ao importar o PDF</string>
+    <string name="error_pdf_page_render_failed">Não foi possível renderizar a página</string>
+    <string name="pdf_select_page">Selecionar página</string>
+    <string name="pdf_page_number">Página %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">Selecionar idiomas de OCR</string>
+    <string name="ocr_max_languages_warning">É permitido no máximo 2 idiomas</string>
+    <string name="ocr_no_language_selected">Selecione pelo menos um idioma</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">Descartar alterações?</string>
+    <string name="msg_discard_changes">Tens alterações não guardadas. Queres descartá-las?</string>
+    <string name="btn_discard">Descartar</string>
+
+    <string name="btn_reocr">Executar OCR novamente</string>
+    <string name="reocr_processing">A executar o OCR novamente…</string>
+    <string name="reocr_success">Palavra atualizada: %1$s</string>
+    <string name="reocr_failed">Falha ao executar o OCR novamente</string>
+    <string name="reocr_no_language">Seleciona primeiro um idioma</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">100 %</string>
+    <string name="zoom_200">200 %</string>
+    <string name="zoom_300">300 %</string>
+    <string name="zoom_400">400 %</string>
+    <string name="zoom_fit">Ajustar</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">Layout</string>
+    <string name="label_text">Texto</string>
+    <string name="label_document">Documento</string>
+
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">Tamanho da página</string>
+    <string name="dpi_settings_label">Configurações de DPI</string>
+    <string name="page_format_fit">Ajustar à imagem (recomendado)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+
+    <string name="restore_access">Restaurar acesso</string>
+    <string name="status">Status</string>
+    <string name="ocr_text_editor_hint">Editar texto OCR</string>
+
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">Configurações de limpeza de digitalizações concluídas</string>
+    <string name="cleanup_policy">Política de limpeza</string>
+    <string name="cleanup_policy_none">Nenhuma (manter tudo)</string>
+    <string name="cleanup_policy_max_age">Por idade</string>
+    <string name="cleanup_policy_max_count">Por quantidade</string>
+    <string name="cleanup_policy_max_storage">Por armazenamento</string>
+    <string name="cleanup_policy_combined">Combinada</string>
+    <string name="cleanup_max_age_days">Idade máxima (dias)</string>
+    <string name="cleanup_max_count">Quantidade máxima</string>
+    <string name="cleanup_max_storage_mb">Armazenamento máximo (MB)</string>
+    <string name="cleanup_settings_saved">Configurações de limpeza salvas</string>
+    <string name="inbox_mode">Modo Caixa de entrada</string>
+    <string name="inbox_mode_enable">Ativar pasta de exportação padrão</string>
+    <string name="inbox_select_folder">Selecionar pasta</string>
+    <string name="inbox_folder_set">Pasta Inbox: %1$s</string>
+    <string name="inbox_folder_none">Nenhuma pasta selecionada</string>
+    <string name="inbox_saved">✓ Salvo na Inbox</string>
+    <string name="inbox_permission_lost">Acesso à pasta Inbox perdido. Selecione uma nova pasta.</string>
+    <string name="inbox_no_folder_selected">Selecione primeiro uma pasta Inbox.</string>
+    <string name="inbox_clear">Limpar pasta Inbox</string>
+    <string name="inbox_filename_format">Formato do nome do arquivo</string>
+    <string name="inbox_auto_new_scan">Iniciar nova digitalização automaticamente após exportar</string>
+    <string name="inbox_filename_date_scan">Data + Scan (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">Data + hora + Scan (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">Apenas data (2026-03-04)</string>
+    <string name="pdf_bw_mode_none">Cor</string>
+    <!-- Translations added for missing strings -->
+    <string name="confirm_remove_page_title">Remover página?</string>
+    <string name="confirm_remove_page_message">Deseja remover esta página da tira de filme?</string>
+    <string name="crop_aspect_label">Proporção</string>
+    <string name="crop_aspect_auto">Auto (recomendado)</string>
+    <string name="crop_aspect_original">Manter original (sem correção)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">Personalizado…</string>
+    <string name="crop_aspect_custom_with_ratio">Personalizado (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">Proporção personalizada</string>
+    <string name="crop_aspect_custom_width_hint">Largura</string>
+    <string name="crop_aspect_custom_height_hint">Altura</string>
+    <string name="crop_aspect_custom_invalid">Insira números positivos entre 1:1 e 1:20.</string>
+    <string name="crop_aspect_output_size_hint">Saída: %1$d × %2$d px</string>
+    <string name="crop_hint_corner_off_image">Canto fora da imagem — a saída pode ter bordas pretas</string>
+    <string name="crop_edge_dragged">Borda selecionada. Arraste para mover a borda.</string>
+    <!-- Document cleanup -->
+    <string name="document_cleanup_title">Limpeza do documento</string>
+    <string name="document_cleanup_original">Original</string>
+    <string name="document_cleanup_natural">Natural</string>
+    <string name="document_cleanup_enhanced">Melhorado</string>
+    <string name="document_cleanup_clean_text">Texto limpo</string>
+    <string name="workflow_step_description">Etapa %1$d de %2$d: %3$s</string>
+    <string name="search_scans">Pesquisar digitalizações</string>
+</resources>

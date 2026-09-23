@@ -1,0 +1,3 @@
+MakeACopy 4.1.1
+* Published Store listings now use the PaddleOCR flavor; Tesseract standard builds remain on GitHub.
+* Fixed crop handling so OpenCV fallback rectangles no longer override better document-corner estimates.

@@ -1,0 +1,16 @@
+Multi-Column OCR Test Document
+Synthetic A4 test file for OCR reading order and column handling.
+Left column - paragraph 1.
+This text should be read first,
+top to bottom, before switching columns.
+Left column - paragraph 2.
+Numbers: 1 2 3 4 5 6 7890
+Characters: O0|11 B 8
+Right column - paragraph 1.
+This text must be read only
+after the left column is finished.
+Right column - paragraph 2.
+Mixed content: PDF, OCR, AI, ML.
+Hyphenation test: multi-
+column handling.
+Footnote: This line should be read last.

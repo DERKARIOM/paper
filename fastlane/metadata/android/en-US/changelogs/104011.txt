@@ -1,0 +1,9 @@
+MakeACopy 1.4.1
+
+- Fix: Misaligned OCR text layer in macOS Preview resolved (text now uses the same transform as the image).
+
+- PDF: Embedded Unicode font (Noto Sans) for the OCR layer to ensure stable text metrics.
+
+- OCR: More robust RecognizedWord handling — normalized & clamped bounding boxes, defensive copies, consistent transforms; more stable line clustering and text selection.
+
+- Export: JpegExporter—improved compression in BW_TEXT mode and faster/cleaner preprocessing via morphology filters (opening/closing) → fewer artifacts, smaller files.

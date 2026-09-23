@@ -1,0 +1,470 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">MakeACopy</string>
+
+    <!-- OCR Review: Text mode editor tooltip documenting current behavior -->
+    <string name="tip_text_mode_editing">Λειτουργία κειμένου: Οι αλλαγές γραμμής και τα σημεία στίξης κανονικοποιούνται προς το παρόν σε κενά. Αν εισαχθούν λιγότερες λέξεις από όσες αναγνωρίστηκαν, οι υπόλοιπες λέξεις OCR παραμένουν αμετάβλητες. Οι αλλαγές εφαρμόζονται μετά από μια σύντομη παύση.</string>
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">Κάμερα</string>
+    <string name="title_crop">Περικοπή</string>
+    <string name="title_ocr">OCR</string>
+    <string name="title_export">Εξαγωγή</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">Σάρωση</string>
+    <string name="btn_crop">Περικοπή</string>
+    <string name="btn_process">Επεξεργασία</string>
+    <string name="btn_share">Κοινοποίηση</string>
+    <string name="btn_share_text">Κοινοποίηση κειμένου</string>
+    <string name="next">Επόμενο</string>
+    <string name="back">Πίσω</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">Απαιτείται άδεια κάμερας για τη σάρωση εγγράφων</string>
+    <string name="confirm">Επιβεβαίωση</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">Η κάμερα είναι έτοιμη. Πατήστε το κουμπί για σάρωση εγγράφου.</string>
+    <string name="captured_image">Ληφθείσα εικόνα</string>
+    <string name="image_to_crop">Εικόνα για περικοπή</string>
+    <string name="cropped_image">Περικομμένη εικόνα</string>
+    <string name="document_preview">Προεπισκόπηση εγγράφου</string>
+    <string name="include_ocr_text">Εξαγωγή OCR ως ξεχωριστό TXT</string>
+    <string name="ocr_results_will_appear_here">Τα αποτελέσματα OCR θα εμφανιστούν εδώ</string>
+    <string name="ocr_no_text_detected">Δεν εντοπίστηκε κείμενο</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Προσαρμόστε τις γωνίες του τραπεζίου για να επιλέξετε την περιοχή περικοπής και μετά πατήστε το κουμπί Περικοπή.</string>
+    <string name="no_document_ready_process_ocr_first">Δεν υπάρχει έτοιμο έγγραφο. Εκτελέστε πρώτα OCR.</string>
+    <string name="document_ready_for_export">Το έγγραφο είναι έτοιμο για εξαγωγή</string>
+    <string name="processing_image">Επεξεργασία εικόνας…</string>
+    <string name="no_image_processed_crop_an_image_first">Δεν έχει γίνει επεξεργασία εικόνας. Περικόψτε πρώτα μια εικόνα.</string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">Η επεξεργασία OCR ολοκληρώθηκε. Πατήστε το κουμπί για να συνεχίσετε στην εξαγωγή.</string>
+    <string name="ocr_found_rotation">Βρέθηκε περιστροφή: %1$d°</string>
+    <string name="ocr_score">Βαθμολογία OCR: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">Βρέθηκε περιστροφή: %1$d° — βαθμολογία OCR: %2$d%%</string>
+
+    <!-- Extra explanation appended in “Explain recognition modes” dialog -->
+    <string name="ocr_prep_modes_autorotate_note">Αυτόματη περιστροφή OCR: Όταν είναι ενεργή, το OCR δοκιμάζει επίσης τη σελίδα σε βήματα 90° (0/90/180/270) και επιλέγει το καλύτερο αποτέλεσμα. Η περιστροφή που βρέθηκε μπορεί να εφαρμοστεί αυτόματα κατά την εξαγωγή, αν δεν περιστρέψατε χειροκίνητα. Μπορείτε να το αλλάξετε στο «Επιλογή λειτουργίας αναγνώρισης».</string>
+
+    <string name="initializing_camera">Αρχικοποίηση κάμερας…</string>
+    <string name="resetting_camera">Επαναφορά κάμερας…</string>
+    <string name="error_initializing_camera">Σφάλμα κατά την αρχικοποίηση της κάμερας: %1$s</string>
+    <string name="error_camera_provider_null">Αποτυχία αρχικοποίησης κάμερας – ο provider είναι null</string>
+    <string name="error_camera_not_initialized">Η κάμερα δεν έχει αρχικοποιηθεί. Δοκιμάστε ξανά.</string>
+    <string name="error_image_capture_failed">Η λήψη εικόνας απέτυχε: %1$s</string>
+    <string name="error_displaying_image">Σφάλμα κατά την εμφάνιση της εικόνας: %1$s</string>
+    <string name="error_resetting_camera">Σφάλμα κατά την επαναφορά της κάμερας: %1$s</string>
+    <string name="error_toggling_flashlight">Σφάλμα κατά την εναλλαγή του φακού: %1$s</string>
+    <string name="error_camera_preview_failed">Η προεπισκόπηση κάμερας απέτυχε να ξεκινήσει. Δοκιμάστε ξανά.</string>
+
+    <!-- Logging / Share logs -->
+    <string name="share_logs">Κοινοποίηση αρχείων καταγραφής</string>
+    <string name="share_logs_subject">Διαγνωστικά αρχεία καταγραφής MakeACopy</string>
+    <string name="share_logs_chooser_title">Κοινοποίηση αρχείων καταγραφής μέσω…</string>
+    <string name="share_logs_error">Δεν ήταν δυνατή η προετοιμασία των αρχείων καταγραφής: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">Κλίμακα του γκρι</string>
+    <string name="export_as_jpeg">Εξαγωγή ως JPEG</string>
+    <string name="export_format_label">Μορφή εξαγωγής</string>
+    <string name="export_as_pdf">Εξαγωγή ως PDF (προεπιλογή)</string>
+    <string name="document_cleanup_title">Καθαρισμός εγγράφου</string>
+    <string name="document_cleanup_original">Αρχικό</string>
+    <string name="document_cleanup_natural">Φυσικό</string>
+    <string name="document_cleanup_enhanced">Βελτιωμένο</string>
+    <string name="document_cleanup_clean_text">Καθαρό κείμενο</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">Εναλλαγή φακού</string>
+    <string name="flashlight_on">Ο φακός ενεργός</string>
+    <string name="flashlight_off">Ο φακός ανενεργός</string>
+    <string name="flashlight_not_available">Ο φακός δεν είναι διαθέσιμος σε αυτήν τη συσκευή</string>
+    <string name="low_light_detected">Εντοπίστηκε χαμηλός φωτισμός. Να ενεργοποιηθεί ο φακός;</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">EV %1$s</string>
+    <string name="exposure_compensation_cd">Ρυθμιστικό αντιστάθμισης έκθεσης</string>
+    <string name="exposure_compensation_option">Αντιστάθμιση έκθεσης</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">Ρυθμιστικό χειροκίνητης εστίασης</string>
+    <string name="manual_focus_af_button_cd">Εναλλαγή σε αυτόματη εστίαση</string>
+    <string name="autofocus_enabled">Η αυτόματη εστίαση ενεργοποιήθηκε</string>
+    <string name="manual_focus_locked">Η χειροκίνητη εστίαση κλειδώθηκε</string>
+    <string name="manual_focus_option">Χειροκίνητη εστίαση</string>
+    <string name="focus_quality_option">Ένδειξη ποιότητας εστίασης</string>
+    <string name="tap_to_focus_started">Εστίαση…</string>
+    <string name="tap_to_focus_done">Η εστίαση προσαρμόστηκε</string>
+    <string name="tap_to_focus_requested">Ζητήθηκε εστίαση</string>
+    <string name="tap_to_focus_not_locked">Δεν ήταν δυνατό το κλείδωμα εστίασης εδώ</string>
+    <string name="tap_to_focus_not_supported">Η εστίαση με πάτημα δεν υποστηρίζεται εδώ</string>
+    <string name="tap_to_focus_failed">Δεν ήταν δυνατή η εστίαση εδώ</string>
+    <string name="focus_quality_low">Ποιότητα εστίασης: χαμηλή</string>
+    <string name="focus_quality_good">Ποιότητα εστίασης: καλή</string>
+    <string name="focus_quality_excellent">Ποιότητα εστίασης: άριστη</string>
+    <string name="camera_zoom_title">Ζουμ / φακός</string>
+    <string name="camera_zoom_cd">Επιλογή ζουμ ή φακού</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">Το ζουμ δεν είναι διαθέσιμο σε αυτήν τη συσκευή</string>
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">Χρώμα</string>
+    <string name="jpeg_mode_auto">Κλίμακα του γκρι</string>
+    <string name="jpeg_mode_bw_text">Ασπρόμαυρο</string>
+    <string name="jpeg_mode_bw_robust">Ασπρόμαυρο (ανθεκτικό) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">Ανθεκτική προεπεξεργασία OCR (JPEG)</string>
+    <string name="jpeg_mode_gray_clean">Καθαρή κλίμακα του γκρι (high-pass) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">Καθαρό χρώμα (high-pass) (JPEG)</string>
+    <string name="pdf_bw_mode_none">Χρώμα</string>
+    <string name="pdf_bw_mode_robust">Ασπρόμαυρο</string>
+    <string name="pdf_bw_mode_classic">Α/Μ (κλασικό)</string>
+    <string name="pdf_bw_mode_ocr_robust">Ανθεκτική προεπεξεργασία OCR (PDF)</string>
+    <string name="pdf_bw_mode_grayscale_clean">Καθαρή κλίμακα του γκρι (high-pass)</string>
+    <string name="pdf_bw_mode_color_clean">Καθαρό χρώμα (high-pass)</string>
+    <string name="output_color_title" translatable="false">Χρώμα εξόδου</string>
+    <string name="skip_ocr_export_only">Παράλειψη OCR (μόνο εξαγωγή)</string>
+    <string name="preview_corner_detection">Προεπισκόπηση ανίχνευσης γωνιών</string>
+    <string name="skip_cropping">Παράλειψη περικοπής</string>
+    <string name="skip_edge_detection">Παράλειψη ανίχνευσης ακμών</string>
+    <string name="btn_pick_image">Φόρτωση</string>
+    <string name="pick_image_cd">Φόρτωση υπάρχουσας εικόνας</string>
+    <!-- Multipage Export (v1 increment) -->
+    <string name="add_another_page">Προσθήκη σελίδας</string>
+    <string name="clear_all_pages">Εκκαθάριση όλων</string>
+    <string name="remove_this_page">Αφαίρεση αυτής της σελίδας</string>
+    <string name="multipage_not_implemented">Η εξαγωγή πολλών σελίδων δεν έχει υλοποιηθεί ακόμη</string>
+
+    <!-- Reorder A11y controls -->
+    <string name="move_page_left">Μετακίνηση σελίδας αριστερά</string>
+    <string name="move_page_right">Μετακίνηση σελίδας δεξιά</string>
+
+    <!-- Back confirmation for clearing multipage session -->
+    <string name="confirm_clear_multipage_title">Διαγραφή σελίδων;</string>
+    <string name="confirm_clear_multipage_message">Έχουν προστεθεί πολλές σελίδες. Θέλετε να διαγράψετε όλες τις σελίδες και να επιστρέψετε;</string>
+    <string name="cancel">Ακύρωση</string>
+
+
+    <!-- Clear-all confirmation for trash icon in multipage -->
+    <string name="confirm_clear_pages_title">Εκκαθάριση όλων των σελίδων;</string>
+    <string name="confirm_clear_pages_message">Θέλετε να αφαιρέσετε όλες τις σελίδες από τη λωρίδα φιλμ;</string>
+
+    <!-- Confirmation for removing a single page from the filmstrip -->
+    <string name="confirm_remove_page_title">Αφαίρεση σελίδας;</string>
+    <string name="confirm_remove_page_message">Θέλετε να αφαιρέσετε αυτήν τη σελίδα από τη λωρίδα φιλμ;</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">Επιλογή από ολοκληρωμένες σαρώσεις</string>
+    <string name="picker_empty">Δεν βρέθηκαν ολοκληρωμένες σαρώσεις</string>
+    <!-- Library default collection -->
+    <string name="collection_completed_scans">Ολοκληρωμένες σαρώσεις</string>
+    <string name="done">Επόμενο</string>
+    <string name="thumbnail">Μικρογραφία</string>
+    <string name="delete">Διαγραφή</string>
+
+    <!-- Picker bulk actions -->
+    <string name="select_all">Επιλογή όλων</string>
+    <string name="deselect_all">Αποεπιλογή όλων</string>
+
+    <string name="added_pages_from_registry">Προστέθηκαν %1$d σελίδα/σελίδες από το μητρώο</string>
+
+    <!-- Add page options dialog -->    <!-- Picker states -->
+    <string name="missing_file">Λείπει αρχείο</string>
+
+    <!-- Inline OCR cues -->
+    <string name="ocr_processing_started">Εκτέλεση OCR…</string>
+    <string name="ocr_processing_finished">Προστέθηκε OCR για αυτήν τη σελίδα</string>
+    <string name="ocr_processing_failed">Το ενσωματωμένο OCR απέτυχε</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">Αφαίρεση από το μητρώο</string>
+    <string name="remove_from_registry_message">Να διαγραφεί αυτή η καταχώριση και τα συσχετισμένα αρχεία της;</string>
+    <string name="remove">Αφαίρεση</string>
+    <string name="removed_from_registry_toast">Η καταχώριση αφαιρέθηκε</string>
+    <!-- PDF quality presets (Phase 1) -->
+    <string name="pdf_quality_title">Ποιότητα / μέγεθος PDF</string>
+    <string name="dpi_settings_label">Ρυθμίσεις DPI</string>
+    <string name="pdf_preset_high">Υψηλή (300 dpi, q85)</string>
+    <string name="pdf_preset_standard">Τυπική (200 dpi, q72)</string>
+    <string name="pdf_preset_small">Μικρή (150 dpi, q62)</string>
+    <string name="pdf_preset_very_small">Πολύ μικρή (110 dpi, q52)</string>
+    <string name="pdf_text_layer_mode_title">Επίπεδο κειμένου PDF</string>
+    <string name="pdf_text_layer_mode_line_based">Βασισμένο σε γραμμές (συνιστάται)</string>
+    <string name="pdf_text_layer_mode_word_positioned">Τοποθέτηση ανά λέξη (συμβατότητα)</string>
+    <string name="export_options_title">Επιλογές εξαγωγής</string>
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">Μέγεθος σελίδας</string>
+    <string name="page_format_fit">Προσαρμογή στην εικόνα (συνιστάται)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+    <string name="jpeg_enhancement_title">Χρώμα εξόδου JPEG</string>
+    <string name="btn_options">Επιλογές</string>
+    <string name="btn_save">Αποθήκευση</string>
+    <string name="btn_new">Νέα σάρωση</string>
+    <string name="btn_review">Έλεγχος</string>
+    <string name="edit_word_title">Επεξεργασία λέξης</string>
+    <string name="cm_edit">Επεξεργασία…</string>
+    <string name="cm_merge_next">Συγχώνευση με την επόμενη</string>
+    <string name="cm_split">Διαχωρισμός</string>
+    <string name="cm_delete">Διαγραφή</string>
+    <string name="cm_case">Πεζά/κεφαλαία</string>
+    <string name="cm_lang">Γλώσσα…</string>
+    <string name="case_upper">ΚΕΦΑΛΑΙΑ</string>
+    <string name="case_lower">πεζά</string>
+    <string name="case_title">Κεφαλαίο σε κάθε λέξη</string>
+    <string name="dialog_language_title">Ορισμός κωδικού γλώσσας</string>
+
+    <!-- Rotation (post-crop) -->
+    <string name="rotate_left_cd">Περιστροφή σελίδας 90 μοίρες αριστερόστροφα</string>
+    <string name="rotate_right_cd">Περιστροφή σελίδας 90 μοίρες δεξιόστροφα</string>
+
+    <!-- OCR models management (prototype) -->
+    <string name="ocr_models_manage">Μοντέλα OCR</string>
+    <string name="ocr_import_manual">Εισαγωγή .traineddata…</string>
+    <string name="ocr_discover_packs">Ανακάλυψη πακέτων γλωσσών</string>
+    <string name="ocr_no_packs_found">Δεν βρέθηκαν πακέτα γλωσσών</string>
+    <string name="ocr_choose_pack">Επιλέξτε πακέτο γλώσσας</string>
+    <string name="ocr_no_models_in_pack">Δεν βρέθηκαν μοντέλα σε αυτό το πακέτο</string>
+    <string name="ocr_choose_model">Επιλέξτε μοντέλο για εισαγωγή</string>
+    <string name="ocr_import_success">Το μοντέλο εισήχθη</string>
+    <string name="ocr_import_failed">Η εισαγωγή απέτυχε</string>
+
+    <!-- OCR models: delete local Best -->
+    <string name="ocr_delete_best_model">Διαγραφή μοντέλου Best</string>
+    <string name="ocr_nothing_to_delete">Δεν υπάρχει μοντέλο Best για διαγραφή για την τρέχουσα γλώσσα</string>
+    <string name="ocr_delete_confirm_title">Διαγραφή μοντέλου Best;</string>
+    <string name="ocr_delete_confirm_msg">Να διαγραφεί το εισαγόμενο μοντέλο Best για %1$s; Το ενσωματωμένο μοντέλο Fast θα παραμείνει διαθέσιμο.</string>
+    <string name="ocr_delete_success">Το μοντέλο διαγράφηκε</string>
+    <string name="ocr_delete_failed">Η διαγραφή απέτυχε</string>
+
+    <!-- OCR models hint -->
+    <string name="ocr_models_hint">Για ταχύτερη αναγνώριση περιλαμβάνονται συμπαγή μοντέλα. Για μεγαλύτερη ακρίβεια μπορείτε να εγκαταστήσετε μεγαλύτερα μοντέλα \"Best\". Δεν απαιτείται σύνδεση στο διαδίκτυο.</string>
+
+    <!-- OCR prep modes explanation -->
+    <string name="ocr_explain_prep_modes">Εξήγηση λειτουργιών αναγνώρισης</string>
+    <string name="ocr_prep_modes_title">Λειτουργίες αναγνώρισης: απλή εξήγηση</string>
+    <string name="ocr_prep_modes_message">Υπάρχουν δύο τρόποι τροφοδότησης εικόνων στη μηχανή OCR:\n\n• Αρχικό (χωρίς προεπεξεργασία) — το ταχύτερο. Στέλνουμε τη φωτογραφία ως έχει. Καλύτερο για ήδη καθαρές σαρώσεις υψηλής αντίθεσης. Μπορεί να χάσει αχνό ή θορυβώδες κείμενο.\n\n• OpenCV Robust — ανακατασκευασμένο για μέγιστη ακρίβεια σε δύσκολες σελίδες. Διορθώνει την κλίση, κανονικοποιεί σκιές/φωτισμό, εφαρμόζει αποθορυβοποίηση που διατηρεί ακμές και έξυπνη μεγέθυνση. Σημαντικό: τροφοδοτεί το Tesseract με εικόνα κλίμακας του γκρι υψηλής ποιότητας (όχι σκληρό ασπρόμαυρο), ώστε να διατηρούνται λεπτές λεπτομέρειες όπως οι βρόχοι στο “o” και μικρά ψηφία. Καλύτερη ακρίβεια σε δύσκολες σελίδες· πιο αργό και χρησιμοποιεί περισσότερη μνήμη. Συνιστώμενη προεπιλογή για τις περισσότερες φωτογραφίες.\n\nΜετα-επεξεργασία OCR: Διορθώνει τυπικά σφάλματα αναγνώρισης όπως συγχύσεις (0↔O, 1↔l↔I, rn↔m) και ελέγχει αβέβαιες λέξεις με λεξικό. Είναι ενεργή από προεπιλογή· απενεργοποιήστε τη για τεχνικούς κωδικούς ή σειριακούς αριθμούς.</string>
+
+    <!-- OCR prep modes selection -->
+    <string name="ocr_choose_prep_mode_menu">Λειτουργία αναγνώρισης…</string>
+    <string name="ocr_choose_prep_mode_title">Επιλέξτε λειτουργία αναγνώρισης</string>
+    <string name="ocr_mode_original">Αρχικό (χωρίς προεπεξεργασία)</string>
+    <string name="ocr_mode_quick">OpenCV Quick (γρήγορο)</string>
+    <string name="ocr_mode_robust">OpenCV Robust (υψηλή ποιότητα)</string>
+    <string name="ocr_mode_paddle" tools:ignore="MissingTranslation">PaddleOCR (πειραματικό, χωρίς προεπεξεργασία)</string>
+    <string name="opt_paddle_best_ocr">Καλύτερη ποιότητα Paddle OCR (πιο αργό)</string>
+    <string name="ocr_prep_mode_set">Η λειτουργία αναγνώρισης ορίστηκε σε %1$s</string>
+
+    <!-- Labels -->
+    <string name="label_language">Γλώσσα</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d λ.</string>
+    <string name="low_percent_format">Χαμηλό %1$d%%</string>
+    <string name="low_placeholder">Χαμηλό —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 λ.</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">Κλείσιμο</string>
+    <string name="cd_zoom_chip_open_menu">Άνοιγμα μενού ζουμ</string>
+    <string name="cd_minimap">Επισκόπηση εγγράφου, πατήστε για μετάβαση</string>
+    <!-- A11y content descriptions for menu items -->
+    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">Παρακαλώ εισαγάγετε μια τιμή</string>
+
+    <!-- Collections / Library (feature-flagged) -->
+    <string name="new_collection_title">Νέα συλλογή</string>
+    <string name="collection_name_hint">Όνομα συλλογής</string>
+    <string name="create">Δημιουργία</string>
+    <string name="collection_not_empty">Η συλλογή δεν είναι κενή</string>
+    <string name="collection_items_count">%1$d στοιχείο/στοιχεία</string>
+    <string name="deleted">Διαγράφηκε</string>
+    <string name="open_collections">Συλλογές</string>
+    <string name="index_existing_scans">Ευρετηρίαση υπαρχουσών σαρώσεων</string>
+    <string name="rename">Μετονομασία</string>
+    <string name="ok">OK</string>
+    <string name="no_scans_yet">Δεν υπάρχουν σαρώσεις ακόμη</string>
+    <string name="rename_collection_title">Μετονομασία συλλογής</string>
+    <string name="action_add_to_collection">Προσθήκη σε συλλογή…</string>
+    <string name="place_in_collection_title">Προσθήκη σε συλλογή</string>
+    <string name="create_new_collection">Δημιουργία νέας συλλογής…</string>
+    <string name="scan_added_to_collection">Η σάρωση προστέθηκε στο \"%1$s\"</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">Ενέργειες βιβλιοθήκης</string>    <!-- Library list: collections membership -->
+    <string name="in_collections_prefix">Σε: %1$s</string>
+    <!-- Delete confirmation (ScanDetails) -->
+    <string name="delete_warning_irreversible">Το αρχείο θα διαγραφεί από τη συσκευή. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.</string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">Δεν υπάρχει έγγραφο για εξαγωγή</string>
+    <string name="failed_to_export_document">Η εξαγωγή του εγγράφου απέτυχε</string>
+    <string name="error_during_export_with_reason">Σφάλμα κατά την εξαγωγή: %1$s</string>
+    <string name="document_exported">Το έγγραφο %1$s εξήχθη</string>
+    <string name="document_multipage_exported">Το έγγραφο (πολλών σελίδων) %1$s εξήχθη</string>
+    <string name="no_target_selected">Δεν επιλέχθηκε προορισμός</string>
+    <string name="image_exported">Η εικόνα %1$s εξήχθη</string>
+    <string name="failed_to_export_image">Η εξαγωγή εικόνας απέτυχε</string>
+    <string name="error_during_jpeg_export_with_reason">Σφάλμα κατά την εξαγωγή JPEG: %1$s</string>
+    <string name="zip_exported">Το ZIP %1$s εξήχθη</string>
+    <string name="failed_to_export_zip">Η εξαγωγή ZIP απέτυχε</string>
+    <string name="error_during_zip_export_with_reason">Σφάλμα κατά την εξαγωγή ZIP: %1$s</string>
+    <string name="ocr_text_exported_as_txt">Το κείμενο OCR εξήχθη ως TXT</string>
+    <string name="error_exporting_ocr_text_with_reason">Σφάλμα κατά την εξαγωγή κειμένου OCR: %1$s</string>
+    <string name="no_document_to_share_export_first">Δεν υπάρχει διαθέσιμο έγγραφο για κοινοποίηση. Εξαγάγετε πρώτα ένα έγγραφο.</string>
+    <string name="error_sharing_document_with_reason">Σφάλμα κατά την κοινοποίηση εγγράφου: %1$s</string>
+    <string name="feature_scan_library_disabled">Η λειτουργία βιβλιοθήκης σαρώσεων είναι απενεργοποιημένη</string>
+    <string name="navigation_failed">Η πλοήγηση απέτυχε</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">Λείπει αναγνωριστικό σάρωσης</string>
+    <string name="picker_failed">Ο επιλογέας απέτυχε</string>
+    <string name="share_failed">Η κοινοποίηση απέτυχε</string>
+    <string name="no_app_found_to_open_file">Δεν βρέθηκε εφαρμογή για άνοιγμα αυτού του αρχείου</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">Αφαίρεση από αυτήν τη συλλογή;</string>
+    <string name="removed_from_collection">Αφαιρέθηκε από τη συλλογή</string>
+    <string name="indexed_new_items">Ευρετηριάστηκαν %1$d νέα στοιχεία</string>
+    <string name="nothing_new_to_index">Δεν υπάρχει τίποτα νέο για ευρετηρίαση</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">Το έγγραφο είναι ευθυγραμμισμένο</string>
+    <string name="a11y_hint_move_left">Μετακινήστε αριστερά</string>
+    <string name="a11y_hint_move_right">Μετακινήστε δεξιά</string>
+    <string name="a11y_hint_move_up">Μετακινήστε προς τα πάνω</string>
+    <string name="a11y_hint_move_down">Μετακινήστε προς τα κάτω</string>
+    <string name="a11y_hint_move_closer">Πιο κοντά στην επιφάνεια</string>
+    <string name="a11y_hint_move_back">Πιο μακριά από την επιφάνεια</string>
+    <string name="a11y_hint_too_far">Πλησιάστε. Το έγγραφο είναι πολύ μακριά.</string>
+    <string name="a11y_hint_tilt_left">Γείρετε αριστερά</string>
+    <string name="a11y_hint_tilt_right">Γείρετε δεξιά</string>
+    <string name="a11y_hint_tilt_forward">Γείρετε προς τα εμπρός</string>
+    <string name="a11y_hint_tilt_back">Γείρετε προς τα πίσω</string>
+    <string name="a11y_hold_still">Κρατήστε σταθερά</string>
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">Εντοπίστηκε έγγραφο – έτοιμο για λήψη.</string>
+    <string name="a11y_no_document_detected">Δεν εντοπίστηκε έγγραφο.</string>
+    <string name="a11y_orientation_portrait_tip">Αυτό μοιάζει με κατακόρυφη διάταξη. Το κράτημα του τηλεφώνου κατακόρυφα συνήθως ταιριάζει καλύτερα σε ψηλές σελίδες.</string>
+    <string name="a11y_orientation_landscape_tip">Αυτό μοιάζει με οριζόντια διάταξη. Δοκιμάστε να κρατήσετε το τηλέφωνο οριζόντια για πλατιές σελίδες.</string>
+    <string name="a11y_crop_summary_detected">Ανάλυση ληφθείσας εικόνας: εντοπίστηκε έγγραφο.</string>
+    <string name="a11y_crop_summary_no_doc">Ανάλυση ληφθείσας εικόνας: δεν εντοπίστηκε έγγραφο.</string>
+    <string name="accessibility_mode_label">Λειτουργία προσβασιμότητας</string>
+    <string name="a11y_camera_ready">Η κάμερα είναι έτοιμη. Πατήστε δύο φορές τη Σάρωση για λήψη.</string>
+    <string name="a11y_low_light_toggle_flash">Εντοπίστηκε χαμηλός φωτισμός. Πατήστε δύο φορές τον Φακό για ενεργοποίηση.</string>
+    <string name="a11y_capture_failed">Η λήψη απέτυχε.</string>
+    <string name="a11y_volume_shutter_hint">Συμβουλή: Στη λειτουργία προσβασιμότητας, πατήστε τα πλήκτρα έντασης για λήψη.</string>
+    <string name="a11y_capture_success">Η εικόνα λήφθηκε.</string>
+    <!-- Accessibility: Recycler item description and announcements -->
+    <string name="page_n_of_m">Σελίδα %1$d από %2$d</string>
+    <string name="pages_count_announcement">Σελίδες: %1$d</string>
+    <string name="export_started">Η εξαγωγή ξεκίνησε</string>
+    <string name="page_removed">Η σελίδα αφαιρέθηκε</string>
+    <string name="page_moved_to_position">Μετακινήθηκε στη θέση %1$d</string>
+    <!-- RecyclerView custom accessibility actions (defined once above in Reorder A11y controls) -->
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">Αυτόματη περιστροφή OCR (εφαρμογή και στην εξαγωγή)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">Μετα-επεξεργασία OCR (διόρθωση συνηθισμένων σφαλμάτων)</string>
+    <!-- Options: Layout analysis for complex documents -->
+    <string name="opt_layout_analysis">Ανάλυση διάταξης (στήλες, πίνακες)</string>
+    <!-- Options: PaddleOCR strings live in src/paddle/res/values/strings.xml (paddle flavor only). -->
+    <!-- Options: Experimental directional mapping fallback -->    <!-- Developer / Debug options -->    <!-- Library / Collections (developer strings kept non-translatable for now) -->    <!-- PDF Import -->
+    <string name="error_unknown_file_type">Άγνωστος τύπος αρχείου</string>
+    <string name="error_unsupported_file_type">Αυτός ο τύπος αρχείου δεν υποστηρίζεται</string>
+    <string name="error_cannot_open_pdf">Δεν ήταν δυνατό το άνοιγμα του PDF</string>
+    <string name="error_pdf_empty">Το PDF δεν περιέχει σελίδες</string>
+    <string name="error_pdf_import_failed">Η εισαγωγή PDF απέτυχε</string>
+    <string name="error_pdf_page_render_failed">Δεν ήταν δυνατή η απόδοση της σελίδας</string>
+    <string name="pdf_select_page">Επιλογή σελίδας</string>
+    <string name="pdf_page_number">Σελίδα %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">Επιλογή γλωσσών OCR</string>
+    <string name="ocr_max_languages_warning">Επιτρέπονται έως 2 γλώσσες</string>
+    <string name="ocr_no_language_selected">Παρακαλώ επιλέξτε τουλάχιστον μία γλώσσα</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">Απόρριψη αλλαγών;</string>
+    <string name="msg_discard_changes">Έχετε μη αποθηκευμένες αλλαγές. Θέλετε να τις απορρίψετε;</string>
+    <string name="btn_discard">Απόρριψη</string>
+
+    <string name="btn_reocr">Επανάληψη OCR</string>
+    <string name="reocr_processing">Επανεκτέλεση OCR…</string>
+    <string name="reocr_success">Η λέξη ενημερώθηκε: %1$s</string>
+    <string name="reocr_failed">Η επανάληψη OCR απέτυχε</string>
+    <string name="reocr_no_language">Παρακαλώ ορίστε πρώτα μια γλώσσα</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">100%</string>
+    <string name="zoom_200">200%</string>
+    <string name="zoom_300">300%</string>
+    <string name="zoom_400">400%</string>
+    <string name="zoom_fit">Προσαρμογή</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">Διάταξη</string>
+    <string name="label_text">Κείμενο</string>
+    <string name="label_document">Έγγραφο</string>
+    <string name="ocr_text_editor_hint">Επεξεργασία κειμένου OCR</string>
+    <string name="restore_access">Επαναφορά πρόσβασης</string>
+    <string name="status">Κατάσταση</string>
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">Ρυθμίσεις καθαρισμού ολοκληρωμένων σαρώσεων</string>
+    <string name="cleanup_policy">Πολιτική καθαρισμού</string>
+    <string name="cleanup_policy_none">Καμία (διατήρηση όλων)</string>
+    <string name="cleanup_policy_max_age">Κατά ηλικία</string>
+    <string name="cleanup_policy_max_count">Κατά πλήθος</string>
+    <string name="cleanup_policy_max_storage">Κατά αποθηκευτικό χώρο</string>
+    <string name="cleanup_policy_combined">Συνδυασμένη</string>
+    <string name="cleanup_max_age_days">Μέγιστη ηλικία (ημέρες)</string>
+    <string name="cleanup_max_count">Μέγιστο πλήθος</string>
+    <string name="cleanup_max_storage_mb">Μέγιστος αποθηκευτικός χώρος (MB)</string>
+    <string name="cleanup_settings_saved">Οι ρυθμίσεις καθαρισμού αποθηκεύτηκαν</string>
+
+    <!-- Inbox Mode -->
+    <string name="inbox_mode">Λειτουργία Inbox</string>
+    <string name="inbox_mode_enable">Ενεργοποίηση προεπιλεγμένου φακέλου εξαγωγής</string>
+    <string name="inbox_select_folder">Επιλογή φακέλου</string>
+    <string name="inbox_folder_set">Φάκελος Inbox: %1$s</string>
+    <string name="inbox_folder_none">Δεν έχει επιλεγεί φάκελος</string>
+    <string name="inbox_saved">✓ Αποθηκεύτηκε στο Inbox</string>
+    <string name="inbox_permission_lost">Η πρόσβαση στον φάκελο Inbox χάθηκε. Επιλέξτε νέο φάκελο.</string>
+    <string name="inbox_no_folder_selected">Παρακαλώ επιλέξτε πρώτα έναν φάκελο Inbox.</string>
+    <string name="inbox_clear">Εκκαθάριση φακέλου Inbox</string>
+    <string name="inbox_filename_format">Μορφή ονόματος αρχείου</string>
+    <string name="inbox_auto_new_scan">Αυτόματη έναρξη νέας σάρωσης μετά την εξαγωγή</string>
+    <string name="inbox_filename_date_scan">Ημερομηνία + Σάρωση (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">Ημερομηνία + Ώρα + Σάρωση (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">Μόνο ημερομηνία (2026-03-04)</string>
+    <!-- Crop: Aspect ratio selector (v3.8.0) -->
+    <string name="crop_aspect_label">Αναλογία διαστάσεων</string>
+    <string name="crop_aspect_auto">Αυτόματο (συνιστάται)</string>
+    <string name="crop_aspect_original">Διατήρηση αρχικού (χωρίς διόρθωση αναλογίας)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">Προσαρμοσμένο…</string>
+    <string name="crop_aspect_custom_with_ratio">Προσαρμοσμένο (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">Προσαρμοσμένη αναλογία διαστάσεων</string>
+    <string name="crop_aspect_custom_width_hint">Πλάτος</string>
+    <string name="crop_aspect_custom_height_hint">Ύψος</string>
+    <!-- Universal separator displayed between width and height in the custom aspect ratio dialog (e.g. "16 : 9"); not translatable. -->
+    <string name="crop_aspect_ratio_separator" translatable="false">:</string>
+    <string name="crop_aspect_custom_invalid">Παρακαλώ εισαγάγετε θετικούς αριθμούς από 1:1 έως 1:20.</string>
+    <string name="crop_aspect_output_size_hint" tools:ignore="UnusedResources">Έξοδος: %1$d × %2$d px</string>
+    <!-- Crop: Edge dragging & off-screen corners (see docs/edge_drag_pan_zoom_concept.md) -->
+    <string name="crop_hint_corner_off_image">Η γωνία βρίσκεται έξω από την εικόνα — το παραμορφωμένο αποτέλεσμα μπορεί να περιέχει μαύρα περιθώρια</string>
+    <string name="crop_edge_dragged">Επιλέχθηκε ακμή. Σύρετε για να μετακινήσετε την ακμή.</string>
+    <!-- FR #72: Re-Edit shape from export preview -->
+    <string name="btn_edit_crop" tools:ignore="MissingTranslation">Προσαρμογή περικοπής</string>
+    <string name="edit_crop_original_unavailable" tools:ignore="MissingTranslation">Η αρχική εικόνα δεν είναι πλέον διαθέσιμη — δεν είναι δυνατή η εκ νέου επεξεργασία της περικοπής.</string>
+    <!-- FR #72 companion: Snap-to-Right-Angle -->
+    <string name="crop_snap_engaged" tools:ignore="MissingTranslation">Η ακμή ευθυγραμμίστηκε σε ορθή γωνία</string>
+    <string name="crop_snap_toggle_cd" tools:ignore="MissingTranslation">Εναλλαγή προσκόλλησης σε ορθή γωνία</string>
+    <string name="crop_snap_toggle_on" tools:ignore="MissingTranslation">Η προσκόλληση σε ορθή γωνία είναι ενεργή</string>
+    <string name="crop_snap_toggle_off" tools:ignore="MissingTranslation">Η προσκόλληση σε ορθή γωνία είναι ανενεργή</string>
+    <string name="workflow_step_description">Βήμα %1$d από %2$d: %3$s</string>
+    <string name="search_scans">Αναζήτηση σαρώσεων</string>
+</resources>

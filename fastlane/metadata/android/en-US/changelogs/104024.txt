@@ -1,0 +1,6 @@
+Make A Copy 1.4.2 (2025-09-19)
+
+* Fix: Prevented a crash during layout caused by OpenCV drawContours running on the UI thread (crop view sizing). Corner detection is now scheduled safely and never runs synchronously in onSizeChanged.
+* Stability: Debounced initialization of the crop overlay and moved heavy work off the UI thread to improve responsiveness during rotations/resizes.
+* Safety: Guarded debug contour drawing behind a flag and added input validation to avoid invalid/oversized contour lists.
+* General: Minor reliability tweaks and logs to help diagnose edge cases without impacting release builds.

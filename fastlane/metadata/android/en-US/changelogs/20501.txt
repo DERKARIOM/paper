@@ -1,0 +1,7 @@
+
+MakeACopy 2.5.1
+
+Bug fixes
+
+- Fixed an issue where importing an image (gallery) or PDF could sometimes show an old OCR result.
+- Update Tesseract dependency group and URL

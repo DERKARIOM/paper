@@ -1,0 +1,7 @@
+2.0.0 (Release)
+- New  Scan Library: browse saved scans, basic collections, and details.
+- No changes to the classic export flow; existing exports continue to work as before.
+- Quad detection: corner angle checks now validate quads (reject overly acute/obtuse corners).
+- Improved candidate selection with fallback when angle constraints are violated.
+- OCR: selected language is now saved and restored across app launches.
+- Cropper: reduced interference from system edge gestures near screen borders (uses system gesture exclusion).

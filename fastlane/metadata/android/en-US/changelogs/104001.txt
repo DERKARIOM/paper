@@ -1,0 +1,10 @@
+MakeACopy 1.4.0
+
+What’s new
+- New: Import an existing image via the system file picker (SAF). Process it through the same Review → Crop → Export flow as camera captures.
+
+Notes
+- No additional permissions required for importing (SAF). Read access is persisted only when granted by the system.
+
+Additional changes in 1.4.0
+- Fixed: Cropped images no longer look stretched; perspective correction now preserves the selection’s aspect ratio.

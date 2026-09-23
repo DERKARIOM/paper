@@ -1,0 +1,6 @@
+MakeACopy 3.0.0 (Release)
+
+* Replaced DocAligner with a self-trained ONNX corner detection model.
+* Model size reduced from ~12,6 MB to ~4,8 MB.
+* Improved robustness and accuracy of document detection.
+* Fully offline, no cloud or tracking.

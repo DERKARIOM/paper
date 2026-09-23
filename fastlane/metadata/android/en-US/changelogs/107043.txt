@@ -1,0 +1,7 @@
+Version 1.7.4 (Release)
+
+Fixes
+
+Black preview issue on Sony Xperia 1 VI and similar devices:
+Some Sony devices running Android 15 showed a black screen when opening the camera.
+The preview pipeline now automatically switches to TextureView (compatible mode) and uses a 16:9 preview resolution, which resolves the issue.

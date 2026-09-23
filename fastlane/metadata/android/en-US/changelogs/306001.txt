@@ -1,0 +1,9 @@
+MakeACopy 3.6.0
+* Build: Migrated from JDK 17 to JDK 21 for improved performance and long-term support
+* Build: Updated Android Gradle Plugin, Gradle wrapper, and compileSdk to latest versions
+* Build: ONNX Runtime build files pinned and adapted for JDK 21 compatibility
+* Fixed: Crash (IllegalStateException) when confirming back navigation in multipage export after view was destroyed
+* Improved: Export option buttons now scale properly with font size and display size changes
+* Improved: DPI settings now have their own section header in export options
+* Improved: PDF quality filters changed from checkboxes to radio buttons for clearer exclusive selection
+* Fully offline, no cloud or tracking

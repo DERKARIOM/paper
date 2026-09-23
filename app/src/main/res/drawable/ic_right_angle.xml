@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Snap-to-Right-Angle toggle icon.
+  A right-angle ruler (set square) with a small square 90° marker at the corner
+  and a short dashed alignment line, suggesting "snap to 0°/90°".
+  Uses currentColor-style black fill that is recolored via ImageButton tint.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Set-square outline: right triangle with legs along bottom and left,
+         hypotenuse from top-left to bottom-right. Stroked, not filled. -->
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="1.8"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M4,4 L4,20 L20,20 Z" />
+
+    <!-- 90° corner marker (small square at inner corner). -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M5,17h3v3h-3z" />
+
+    <!-- Dashed alignment guide along the bottom edge, suggesting the snap axis. -->
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="1.4"
+        android:strokeLineCap="round"
+        android:pathData="M10,22 L11.5,22 M13.5,22 L15,22 M17,22 L18.5,22"  />
+</vector>

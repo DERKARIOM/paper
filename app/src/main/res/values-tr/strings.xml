@@ -1,0 +1,488 @@
+<resources>
+    <string name="app_name">MakeACopy</string>
+
+    <string name="tip_text_mode_editing">Metin modu: Satır sonları ve noktalama işaretleri şu anda boşluklara
+        dönüştürülmektedir. Tanınan kelimelerden daha az kelime girilirse, kalan OCR kelimeleri değişmeden kalır.
+        Değişiklikler kısa bir aradan sonra uygulanır.
+    </string>
+
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">Kamera</string>
+    <string name="title_crop">Kırp</string>
+    <string name="title_ocr">OCR</string>
+    <string name="title_export">Dışa Aktar</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">Tara</string>
+    <string name="btn_crop">Kırp</string>
+    <string name="btn_process">İşle</string>
+    <string name="btn_share">Paylaş</string>
+    <string name="btn_share_text">Metni paylaş</string>
+    <string name="next">İleri</string>
+    <string name="back">Geri</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">Belge taramak için kamera izni gereklidir
+    </string>
+    <string name="confirm">Onayla</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">Kamera hazır. Belge taramak için düğmeye dokunun.
+    </string>
+    <string name="captured_image">Çekilen görüntü</string>
+    <string name="image_to_crop">Kırpılacak görüntü</string>
+    <string name="cropped_image">Kırpılmış görüntü</string>
+    <string name="document_preview">Belge önizleme</string>
+    <string name="include_ocr_text">OCR metnini ayrı TXT olarak dışa aktar</string>
+    <string name="ocr_results_will_appear_here">OCR sonuçları burada görünecek</string>
+    <string name="ocr_no_text_detected">Metin algılanamadı</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Kırpılacak alanı
+        seçmek için yamuk köşelerini ayarlayın, ardından Kırp düğmesine dokunun.
+    </string>
+    <string name="no_document_ready_process_ocr_first">Belge hazır değil. Önce OCR işlemini yapın.</string>
+    <string name="document_ready_for_export">Belge dışa aktarıma hazır</string>
+    <string name="processing_image">Görüntü işleniyor…</string>
+    <string name="no_image_processed_crop_an_image_first">İşlenmiş görüntü yok. Önce bir görüntü kırpın.</string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR işlemi tamamlandı. Dışa aktarıma
+        geçmek için düğmeye dokunun.
+    </string>
+
+    <string name="ocr_found_rotation">Bulunan döndürme: %1$d°</string>
+    <string name="ocr_score">OCR puanı: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">Bulunan döndürme: %1$d° — OCR puanı: %2$d%%</string>
+
+    <!-- OCR otomatik döndürme açıklaması -->
+    <string name="ocr_prep_modes_autorotate_note">OCR Otomatik Döndürme: Etkinleştirildiğinde, OCR sayfayı 90° adımlarla
+        (0/90/180/270) da dener ve en iyi sonucu seçer. Bulunan döndürme, manuel olarak döndürmediyseniz dışa aktarım
+        sırasında otomatik olarak uygulanabilir. Bunu \"Tanıma modunu seç\" bölümünden açıp kapatabilirsiniz.
+    </string>
+
+    <string name="initializing_camera">Kamera başlatılıyor…</string>
+    <string name="resetting_camera">Kamera sıfırlanıyor…</string>
+    <string name="error_initializing_camera">Kamera başlatılırken hata: %1$s</string>
+    <string name="error_camera_provider_null">Kamera başlatılamadı – sağlayıcı boş</string>
+    <string name="error_camera_not_initialized">Kamera başlatılmadı. Lütfen tekrar deneyin.</string>
+    <string name="error_image_capture_failed">Görüntü çekimi başarısız: %1$s</string>
+    <string name="error_displaying_image">Görüntü gösterilirken hata: %1$s</string>
+    <string name="error_resetting_camera">Kamera sıfırlanırken hata: %1$s</string>
+    <string name="error_toggling_flashlight">Fener açılırken/kapatılırken hata: %1$s</string>
+    <string name="error_camera_preview_failed">Kamera önizlemesi başlatılamadı. Lütfen tekrar deneyin.</string>
+
+    <string name="share_logs">Günlükleri paylaş</string>
+    <string name="share_logs_subject">MakeACopy tanılama günlükleri</string>
+    <string name="share_logs_chooser_title">Günlükleri şununla paylaş…</string>
+    <string name="share_logs_error">Günlükler hazırlanamadı: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">Gri tonlamalı</string>
+    <string name="export_as_jpeg">JPEG olarak dışa aktar</string>
+    <string name="export_format_label">Dışa aktarma biçimi</string>
+    <string name="export_as_pdf">PDF olarak dışa aktar (varsayılan)</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">Feneri aç/kapat</string>
+    <string name="flashlight_on">Fener açık</string>
+    <string name="flashlight_off">Fener kapalı</string>
+    <string name="flashlight_not_available">Bu cihazda fener kullanılamıyor</string>
+    <string name="low_light_detected">Düşük ışık algılandı. Fener açılsın mı?</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">EV %1$s</string>
+    <string name="exposure_compensation_cd">Pozlama telafisi kaydırıcısı</string>
+    <string name="exposure_compensation_option">Pozlama telafisi</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">Manuel odak kaydırıcısı</string>
+    <string name="manual_focus_af_button_cd">Otomatik odaklamaya geç</string>
+    <string name="autofocus_enabled">Otomatik odaklama etkinleştirildi</string>
+    <string name="manual_focus_locked">Manuel odak kilitlendi</string>
+    <string name="manual_focus_option">Manuel odak</string>
+    <string name="focus_quality_option">Odak kalitesi göstergesi</string>
+    <string name="tap_to_focus_started">Odaklanıyor…</string>
+    <string name="tap_to_focus_done">Odak ayarlandı</string>
+    <string name="tap_to_focus_requested">Odak istendi</string>
+    <string name="tap_to_focus_not_locked">Odak burada kilitlenemedi</string>
+    <string name="tap_to_focus_not_supported">Dokunarak odaklama burada desteklenmiyor</string>
+    <string name="tap_to_focus_failed">Burada odaklanılamadı</string>
+    <string name="focus_quality_low">Odak kalitesi: düşük</string>
+    <string name="focus_quality_good">Odak kalitesi: iyi</string>
+    <string name="focus_quality_excellent">Odak kalitesi: mükemmel</string>
+    <string name="camera_zoom_title">Yakınlaştırma / lens</string>
+    <string name="camera_zoom_cd">Yakınlaştırma veya lens seç</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">Yakınlaştırma bu cihazda kullanılamıyor</string>
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">Renkli</string>
+    <string name="jpeg_mode_auto">Gri tonlamalı</string>
+    <string name="jpeg_mode_bw_text">Siyah Beyaz</string>
+    <string name="jpeg_mode_bw_robust">Siyah Beyaz (güçlü) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">OCR güçlü ön işleme (JPEG)</string>
+
+    <string name="pdf_bw_mode_robust">Siyah Beyaz</string>
+    <string name="pdf_bw_mode_classic">S&amp;B (klasik)</string>
+    <string name="pdf_bw_mode_ocr_robust">OCR güçlü ön işleme (PDF)</string>
+    <string name="jpeg_mode_gray_clean">Temizlenmiş gri tonlama (yüksek geçiren filtre) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">Temizlenmiş renkler (yüksek geçiren filtre) (JPEG)</string>
+    <string name="pdf_bw_mode_grayscale_clean">Gri tonlama – temizlenmiş (yüksek geçiren filtre)</string>
+    <string name="pdf_bw_mode_color_clean">Renk – temizlenmiş (yüksek geçiren filtre)</string>
+    <string name="skip_ocr_export_only">OCR\'yi atla (yalnızca dışa aktar)</string>
+    <string name="skip_cropping">Kırpmayı atla</string>
+    <string name="skip_edge_detection">Kenar algılamayı atla</string>
+    <string name="preview_corner_detection">Köşe algılama önizlemesi</string>
+    <string name="btn_pick_image">Yükle</string>
+    <string name="pick_image_cd">Mevcut görüntüyü yükle</string>
+    <!-- Multipage Export (v1 increment) -->
+    <string name="add_another_page">Sayfa ekle</string>
+    <string name="clear_all_pages">Tümünü temizle</string>
+    <string name="remove_this_page">Bu sayfayı kaldır</string>
+    <string name="multipage_not_implemented">Çok sayfalı dışa aktarım henüz uygulanmadı</string>
+
+    <!-- Reorder A11y controls -->
+    <string name="move_page_left">Sayfayı sola taşı</string>
+    <string name="move_page_right">Sayfayı sağa taşı</string>
+
+    <!-- Back confirmation for clearing multipage session -->
+    <string name="confirm_clear_multipage_title">Sayfalar silinsin mi?</string>
+    <string name="confirm_clear_multipage_message">Birden fazla sayfa eklendi. Tüm sayfaları silip geri dönmek istiyor
+        musunuz?
+    </string>
+    <string name="cancel">İptal</string>
+
+    <!-- Clear-all confirmation for trash icon in multipage -->
+    <string name="confirm_clear_pages_title">Tüm sayfalar temizlensin mi?</string>
+    <string name="confirm_clear_pages_message">Film şeridindeki tüm sayfaları kaldırmak istiyor musunuz?</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">Tamamlanmış taramalardan seçin</string>
+    <string name="picker_empty">Tamamlanmış tarama bulunamadı</string>
+    <!-- Library default collection -->
+    <string name="collection_completed_scans">Tamamlanmış Taramalar</string>
+    <string name="done">İleri</string>
+    <string name="thumbnail">Küçük resim</string>
+    <string name="delete">Sil</string>
+
+    <!-- Seçici toplu işlemleri -->
+    <string name="select_all">Tümünü seç</string>
+    <string name="deselect_all">Tüm seçimi kaldır</string>
+
+    <string name="added_pages_from_registry">Kayıt defterinden %1$d sayfa eklendi</string>
+
+    <!-- Add page options dialog -->    <!-- Picker states -->
+    <string name="missing_file">Dosya eksik</string>
+
+    <!-- Inline OCR cues -->
+    <string name="ocr_processing_started">OCR çalıştırılıyor…</string>
+    <string name="ocr_processing_finished">Bu sayfa için OCR eklendi</string>
+    <string name="ocr_processing_failed">Satır içi OCR başarısız oldu</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">Kayıt defterinden kaldır</string>
+    <string name="remove_from_registry_message">Bu kayıt ve ilişkili dosyalar silinsin mi?</string>
+    <string name="remove">Kaldır</string>
+    <string name="removed_from_registry_toast">Kayıt kaldırıldı</string>
+    <!-- PDF quality presets (Phase 1) -->
+    <string name="pdf_quality_title">PDF kalitesi / boyutu</string>
+    <string name="pdf_preset_high">Yüksek (300 dpi, q85)</string>
+    <string name="pdf_preset_standard">Standart (200 dpi, q72)</string>
+    <string name="pdf_preset_small">Küçük (150 dpi, q62)</string>
+    <string name="pdf_preset_very_small">Çok küçük (110 dpi, q52)</string>
+    <string name="pdf_text_layer_mode_title">PDF metin katmanı</string>
+    <string name="pdf_text_layer_mode_line_based">Satır tabanlı (önerilir)</string>
+    <string name="pdf_text_layer_mode_word_positioned">Kelime konumlu (uyumluluk)</string>
+    <string name="export_options_title">Dışa aktarım seçenekleri</string>
+    <string name="jpeg_enhancement_title">JPEG çıkış rengi</string>
+    <string name="btn_options">Seçenekler</string>
+    <string name="btn_save">Kaydet</string>
+    <string name="btn_new">Yeni tarama</string>
+    <string name="btn_review">İncele</string>
+    <string name="edit_word_title">Kelimeyi düzenle</string>
+    <string name="cm_edit">Düzenle…</string>
+    <string name="cm_merge_next">Sonrakiyle birleştir</string>
+    <string name="cm_split">Böl</string>
+    <string name="cm_delete">Sil</string>
+    <string name="cm_case">Büyük/küçük harf</string>
+    <string name="cm_lang">Dil…</string>
+    <string name="case_upper">BÜYÜK HARF</string>
+    <string name="case_lower">küçük harf</string>
+    <string name="case_title">Başlık Düzeni</string>
+    <string name="dialog_language_title">Dil kodunu ayarla</string>
+
+    <!-- Rotation (post-crop) -->
+    <string name="rotate_left_cd">Sayfayı saat yönünün tersine 90 derece döndür</string>
+    <string name="rotate_right_cd">Sayfayı saat yönünde 90 derece döndür</string>
+
+    <!-- OCR modelleri yönetimi (prototip) -->
+    <string name="ocr_models_manage">OCR modelleri</string>
+    <string name="ocr_import_manual">.traineddata dosyasını içe aktar…</string>
+    <string name="ocr_discover_packs">Dil paketlerini keşfet</string>
+    <string name="ocr_no_packs_found">Dil paketi bulunamadı</string>
+    <string name="ocr_choose_pack">Dil paketi seçin</string>
+    <string name="ocr_no_models_in_pack">Bu pakette model bulunamadı</string>
+    <string name="ocr_choose_model">İçe aktarılacak modeli seçin</string>
+    <string name="ocr_import_success">Model içe aktarıldı</string>
+    <string name="ocr_import_failed">İçe aktarma başarısız</string>
+
+    <string name="ocr_delete_best_model">Best modeli sil</string>
+    <string name="ocr_nothing_to_delete">Geçerli dil için silinecek Best model yok</string>
+    <string name="ocr_delete_confirm_title">Best model silinsin mi?</string>
+    <string name="ocr_delete_confirm_msg">%1$s için içe aktarılan Best model silinsin mi? Yerleşik Fast model
+        kullanılabilir olmaya devam edecektir.
+    </string>
+    <string name="ocr_delete_success">Model silindi</string>
+    <string name="ocr_delete_failed">Silme başarısız</string>
+
+    <!-- OCR modelleri ipucu -->
+    <string name="ocr_models_hint">Daha hızlı tanıma için kompakt modeller dahil edilmiştir. Daha yüksek doğruluk için
+        daha büyük \"Best\" modelleri yükleyebilirsiniz. İnternet bağlantısı gerekmez.
+    </string>
+
+    <!-- OCR tanıma modları açıklaması -->
+    <string name="ocr_explain_prep_modes">Tanıma modlarını açıkla</string>
+    <string name="ocr_prep_modes_title">Tanıma modları: basit açıklama</string>
+    <string name="ocr_prep_modes_message">Görüntüleri OCR motoruna göndermenin iki yolu vardır:\n\n• Orijinal (ön işleme
+        yok) — en hızlı. Fotoğraf olduğu gibi gönderilir. Zaten temiz, yüksek kontrastlı taramalar için en iyisi.
+        Soluk veya gürültülü metinleri kaçırabilir.\n\n• OpenCV Güçlü — zor sayfalar için maksimum doğruluk amacıyla
+        yeniden tasarlandı. Eğrilik düzeltme, gölge/aydınlatma normalleştirme, kenar koruyucu gürültü azaltma ve akıllı
+        büyütme uygular. Önemli olarak, ince ayrıntıları (\"o\" harfindeki halkalar ve küçük rakamlar gibi) korumak için
+        Tesseract\'a yüksek kaliteli gri tonlamalı görüntü (sert siyah beyaz değil) gönderir. Zor sayfalarda en iyi
+        doğruluk; daha yavaş ve daha fazla bellek kullanır.\n\nOCR Son İşleme: Karışıklıklar (0↔O, 1↔l↔I, rn↔m) gibi
+        tipik tanıma hatalarını düzeltir ve belirsiz kelimeleri sözlükle kontrol eder. Varsayılan olarak etkin; teknik
+        kodlar veya seri numaraları için devre dışı bırakın.
+    </string>
+
+    <!-- OCR tanıma modu seçimi -->
+    <string name="ocr_choose_prep_mode_menu">Tanıma modu…</string>
+    <string name="ocr_choose_prep_mode_title">Tanıma modunu seçin</string>
+    <string name="ocr_mode_original">Orijinal (ön işleme yok)</string>
+    <string name="ocr_mode_quick">OpenCV Quick (hızlı)</string>
+    <string name="ocr_mode_robust">OpenCV Robust (yüksek kalite)</string>
+    <string name="opt_paddle_best_ocr">En iyi Paddle OCR kalitesi (daha yavaş)</string>
+    <string name="ocr_prep_mode_set">Tanıma modu %1$s olarak ayarlandı</string>
+
+    <!-- Labels -->
+    <string name="label_language">Dil</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d K</string>
+    <string name="low_percent_format">Düşük %1$d%%</string>
+    <string name="low_placeholder">Düşük —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 K</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">Kapat</string>
+    <string name="cd_zoom_chip_open_menu">Yakınlaştırma menüsünü aç</string>
+    <string name="cd_minimap">Belge genel görünümü, atlamak için dokunun
+    </string>    <!-- A11y content descriptions for menu items -->    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">Lütfen bir değer girin</string>
+
+    <!-- Collections / Library (feature-flagged) -->
+    <string name="new_collection_title">Yeni koleksiyon</string>
+    <string name="collection_name_hint">Koleksiyon adı</string>
+    <string name="create">Oluştur</string>
+    <string name="collection_not_empty">Koleksiyon boş değil</string>
+    <string name="collection_items_count">%1$d öğe</string>
+    <string name="deleted">Silindi</string>
+    <string name="open_collections">Koleksiyonlar</string>
+    <string name="index_existing_scans">Mevcut taramaları dizinle</string>
+    <string name="rename">Yeniden adlandır</string>
+    <string name="ok">Tamam</string>
+    <string name="no_scans_yet">Henüz tarama yok</string>
+    <string name="rename_collection_title">Koleksiyonu yeniden adlandır</string>
+    <string name="action_add_to_collection">Koleksiyona ekle…</string>
+    <string name="place_in_collection_title">Koleksiyona ekle</string>
+    <string name="create_new_collection">Yeni koleksiyon oluştur…</string>
+    <string name="scan_added_to_collection">Tarama \"%1$s\" koleksiyonuna eklendi</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">Kütüphane işlemleri</string>    <!-- Library list: collections membership -->
+    <string name="in_collections_prefix">İçinde: %1$s</string>
+    <!-- Delete confirmation (ScanDetails) -->
+    <string name="delete_warning_irreversible">Dosya cihazdan silinecektir. Bu işlem geri alınamaz.
+    </string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">Dışa aktarılacak belge yok</string>
+    <string name="failed_to_export_document">Belge dışa aktarılamadı</string>
+    <string name="error_during_export_with_reason">Dışa aktarım sırasında hata: %1$s</string>
+    <string name="document_exported">Belge %1$s dışa aktarıldı</string>
+    <string name="document_multipage_exported">Belge (çok sayfalı) %1$s dışa aktarıldı</string>
+    <string name="no_target_selected">Hedef seçilmedi</string>
+    <string name="image_exported">Görüntü %1$s dışa aktarıldı</string>
+    <string name="failed_to_export_image">Görüntü dışa aktarılamadı</string>
+    <string name="error_during_jpeg_export_with_reason">JPEG dışa aktarımı sırasında hata: %1$s</string>
+    <string name="zip_exported">ZIP %1$s dışa aktarıldı</string>
+    <string name="failed_to_export_zip">ZIP dışa aktarılamadı</string>
+    <string name="error_during_zip_export_with_reason">ZIP dışa aktarımı sırasında hata: %1$s</string>
+    <string name="ocr_text_exported_as_txt">OCR metni TXT olarak dışa aktarıldı</string>
+    <string name="error_exporting_ocr_text_with_reason">OCR metni dışa aktarılırken hata: %1$s</string>
+    <string name="no_document_to_share_export_first">Paylaşılacak belge yok. Önce bir belge dışa aktarın.</string>
+    <string name="error_sharing_document_with_reason">Belge paylaşılırken hata: %1$s</string>
+    <string name="feature_scan_library_disabled">Tarama kütüphanesi özelliği devre dışı</string>
+    <string name="navigation_failed">Gezinme başarısız</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">Tarama kimliği eksik</string>
+    <string name="picker_failed">Seçici başarısız</string>
+    <string name="share_failed">Paylaşım başarısız</string>
+    <string name="no_app_found_to_open_file">Bu dosyayı açacak uygulama bulunamadı</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">Bu koleksiyondan kaldırılsın mı?</string>
+    <string name="removed_from_collection">Koleksiyondan kaldırıldı</string>
+    <string name="indexed_new_items">%1$d yeni öğe dizinlendi</string>
+    <string name="nothing_new_to_index">Dizinlenecek yeni öğe yok</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">Belge hizalandı</string>
+    <string name="a11y_hint_move_left">Sola hareket edin</string>
+    <string name="a11y_hint_move_right">Sağa hareket edin</string>
+    <string name="a11y_hint_move_up">Yukarı hareket edin</string>
+    <string name="a11y_hint_move_down">Aşağı hareket edin</string>
+    <string name="a11y_hint_move_closer">Yüzeye yaklaşın</string>
+    <string name="a11y_hint_move_back">Yüzeyden uzaklaşın</string>
+    <string name="a11y_hint_too_far">Yaklaşın. Belge çok uzakta.</string>
+    <string name="a11y_hint_tilt_left">Sola eğin</string>
+    <string name="a11y_hint_tilt_right">Sağa eğin</string>
+    <string name="a11y_hint_tilt_forward">Öne eğin</string>
+    <string name="a11y_hint_tilt_back">Arkaya eğin</string>
+    <string name="a11y_hold_still">Sabit tutun</string>
+
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">Belge algılandı — çekime hazır.</string>
+    <string name="a11y_no_document_detected">Belge algılanamadı.</string>
+    <string name="a11y_orientation_portrait_tip">Bu dikey formata benziyor. Uzun sayfalar için telefonu dikey tutmak
+        genellikle en uygunudur.
+    </string>
+    <string name="a11y_orientation_landscape_tip">Bu yatay formata benziyor. Geniş sayfalar için telefonu yatay tutmayı
+        deneyin.
+    </string>
+    <string name="a11y_crop_summary_detected">Çekilen görüntü analizi: belge algılandı.</string>
+    <string name="a11y_crop_summary_no_doc">Çekilen görüntü analizi: belge algılanamadı.</string>
+    <string name="accessibility_mode_label">Erişilebilirlik Modu</string>
+    <string name="a11y_camera_ready">Kamera hazır. Çekmek için Tara düğmesine çift dokunun.</string>
+    <string name="a11y_low_light_toggle_flash">Düşük ışık algılandı. Etkinleştirmek için Fener düğmesine çift dokunun.</string>
+    <string name="a11y_capture_failed">Çekim başarısız.</string>
+    <string name="a11y_volume_shutter_hint">İpucu: Erişilebilirlik Modunda çekim yapmak için ses tuşlarına basın.
+    </string>
+    <string name="a11y_capture_success">Görüntü çekildi.
+    </string>    <!-- Erişilebilirlik: Liste öğesi açıklaması ve duyurular -->
+    <string name="page_n_of_m">Sayfa %1$d / %2$d</string>
+    <string name="pages_count_announcement">Sayfalar: %1$d</string>
+    <string name="export_started">Dışa aktarım başladı</string>
+    <string name="page_removed">Sayfa kaldırıldı</string>
+    <string name="page_moved_to_position">%1$d konumuna taşındı</string>
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">OCR otomatik döndürme (dışa aktarıma da uygula)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">OCR son işleme (yaygın hataları düzelt)</string>
+    <string name="opt_layout_analysis">Düzen analizi (sütunlar, tablolar)</string>
+    <!-- Options: Experimental directional mapping fallback -->
+    <!-- Developer / Debug options -->
+    <!-- Library / Collections -->    <!-- PDF Import -->
+    <string name="error_unknown_file_type">Bilinmeyen dosya türü</string>
+    <string name="error_unsupported_file_type">Bu dosya türü desteklenmiyor</string>
+    <string name="error_cannot_open_pdf">PDF açılamadı</string>
+    <string name="error_pdf_empty">PDF hiç sayfa içermiyor</string>
+    <string name="error_pdf_import_failed">PDF içe aktarımı başarısız</string>
+    <string name="error_pdf_page_render_failed">Sayfa oluşturulamadı</string>
+    <string name="pdf_select_page">Sayfa seçin</string>
+    <string name="pdf_page_number">Sayfa %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">OCR Dillerini Seçin</string>
+    <string name="ocr_max_languages_warning">En fazla 2 dil seçilebilir</string>
+    <string name="ocr_no_language_selected">Lütfen en az bir dil seçin</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">Değişiklikler iptal edilsin mi?</string>
+    <string name="msg_discard_changes">Kaydedilmemiş değişiklikleriniz var. İptal etmek istiyor musunuz?</string>
+    <string name="btn_discard">İptal Et</string>
+
+    <string name="btn_reocr">Yeniden OCR</string>
+    <string name="reocr_processing">OCR yeniden çalıştırılıyor…</string>
+    <string name="reocr_success">Kelime güncellendi: %1$s</string>
+    <string name="reocr_failed">Yeniden OCR başarısız</string>
+    <string name="reocr_no_language">Lütfen önce bir dil seçin</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">%100</string>
+    <string name="zoom_200">%200</string>
+    <string name="zoom_300">%300</string>
+    <string name="zoom_400">%400</string>
+    <string name="zoom_fit">Sığdır</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">Düzen</string>
+    <string name="label_text">Metin</string>
+    <string name="label_document">Belge</string>
+
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">Sayfa boyutu</string>
+    <string name="dpi_settings_label">DPI ayarları</string>
+    <string name="page_format_fit">Görüntüye sığdır (önerilen)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+
+    <string name="restore_access">Erişimi geri yükle</string>
+    <string name="status">Durum</string>
+    <string name="ocr_text_editor_hint">OCR metnini düzenle</string>
+
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">Tamamlanmış tarama temizleme ayarları</string>
+    <string name="cleanup_policy">Temizleme politikası</string>
+    <string name="cleanup_policy_none">Yok (tümünü sakla)</string>
+    <string name="cleanup_policy_max_age">Yaşa göre</string>
+    <string name="cleanup_policy_max_count">Sayıya göre</string>
+    <string name="cleanup_policy_max_storage">Depolamaya göre</string>
+    <string name="cleanup_policy_combined">Birleşik</string>
+    <string name="cleanup_max_age_days">Maksimum yaş (gün)</string>
+    <string name="cleanup_max_count">Maksimum sayı</string>
+    <string name="cleanup_max_storage_mb">Maksimum depolama (MB)</string>
+    <string name="cleanup_settings_saved">Temizleme ayarları kaydedildi</string>
+    <string name="inbox_mode">Gelen Kutusu Modu</string>
+    <string name="inbox_mode_enable">Varsayılan dışa aktarma klasörünü etkinleştir</string>
+    <string name="inbox_select_folder">Klasör seç</string>
+    <string name="inbox_folder_set">Inbox klasörü: %1$s</string>
+    <string name="inbox_folder_none">Klasör seçilmedi</string>
+    <string name="inbox_saved">✓ Inbox\'a kaydedildi</string>
+    <string name="inbox_permission_lost">Inbox klasörüne erişim kaybedildi. Lütfen yeni bir klasör seçin.</string>
+    <string name="inbox_no_folder_selected">Lütfen önce bir Inbox klasörü seçin.</string>
+    <string name="inbox_clear">Inbox klasörünü temizle</string>
+    <string name="inbox_filename_format">Dosya adı biçimi</string>
+    <string name="inbox_auto_new_scan">Dışa aktarma sonrası otomatik olarak yeni tarama başlat</string>
+    <string name="inbox_filename_date_scan">Tarih + Scan (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">Tarih + saat + Scan (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">Yalnızca tarih (2026-03-04)</string>
+    <string name="pdf_bw_mode_none">Renkli</string>
+    <!-- Translations added for missing strings -->
+    <string name="confirm_remove_page_title">Sayfa kaldırılsın mı?</string>
+    <string name="confirm_remove_page_message">Bu sayfayı film şeridinden kaldırmak istiyor musun?</string>
+    <string name="crop_aspect_label">En boy oranı</string>
+    <string name="crop_aspect_auto">Otomatik (önerilen)</string>
+    <string name="crop_aspect_original">Orijinali koru (düzeltme yok)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">Özel…</string>
+    <string name="crop_aspect_custom_with_ratio">Özel (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">Özel en boy oranı</string>
+    <string name="crop_aspect_custom_width_hint">Genişlik</string>
+    <string name="crop_aspect_custom_height_hint">Yükseklik</string>
+    <string name="crop_aspect_custom_invalid">Lütfen 1:1 ile 1:20 arasında pozitif sayılar girin.</string>
+    <string name="crop_aspect_output_size_hint">Çıktı: %1$d × %2$d px</string>
+    <string name="crop_hint_corner_off_image">Köşe görüntü dışında — çıktıda siyah kenarlar olabilir</string>
+    <string name="crop_edge_dragged">Kenar seçildi. Kenarı taşımak için sürükleyin.</string>
+    <!-- Document cleanup -->
+    <string name="document_cleanup_title">Belge temizleme</string>
+    <string name="document_cleanup_original">Orijinal</string>
+    <string name="document_cleanup_natural">Doğal</string>
+    <string name="document_cleanup_enhanced">Geliştirilmiş</string>
+    <string name="document_cleanup_clean_text">Temiz metin</string>
+    <string name="workflow_step_description">Adım %1$d / %2$d: %3$s</string>
+    <string name="search_scans">Taramalarda ara</string>
+</resources>

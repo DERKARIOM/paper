@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!-- Top App Bar -->
+    <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_app_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:title="@string/btn_review"
+            app:titleCentered="false"
+            app:navigationIcon="@drawable/ic_close"
+            app:navigationIconTint="?attr/colorOnSurface"
+            app:navigationContentDescription="@string/cd_close"
+            app:menu="@menu/menu_ocr_review"
+            app:paddingTopSystemWindowInsets="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!-- Segmented control -->
+    <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/segmented_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:checkedButton="@id/seg_layout"
+            app:layout_constraintTop_toBottomOf="@id/top_app_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/seg_layout"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:textSize="12sp"
+                android:text="@string/label_layout"
+                app:icon="@drawable/ic_image"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/seg_document"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:textSize="12sp"
+                android:text="@string/label_document"
+                app:icon="@drawable/ic_document"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/seg_text"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:textSize="12sp"
+                android:text="@string/label_text"
+                app:icon="@drawable/ic_edit"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <!-- Bottom Button Container (BACK/SAVE) -->
+    <LinearLayout
+            android:id="@+id/button_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="?attr/colorSurfaceContainer"
+            android:padding="12dp"
+            android:elevation="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+                android:id="@+id/button_back"
+                style="@style/Widget.MakeACopy.Button.Tonal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="12dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/back"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        <Button
+                android:id="@+id/button_save"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/btn_save"
+                android:maxLines="1"
+                android:ellipsize="end" />
+    </LinearLayout>
+
+    <!-- Layout-Mode: Canvas -->
+    <FrameLayout
+            android:id="@+id/overlay_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?attr/colorSurfaceVariant"
+            app:layout_constraintTop_toBottomOf="@id/segmented_group"
+            app:layout_constraintBottom_toTopOf="@id/button_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <de.schliweb.makeacopy.ui.ocr.review.view.OcrTextLayerView
+                android:id="@+id/ocr_text_layer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        <de.schliweb.makeacopy.ui.ocr.review.view.OcrOverlayView
+                android:id="@+id/ocr_overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        <!-- Zoom-Chip -->
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chip_zoom"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="12dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:clickable="true"
+                android:focusable="true"
+                tools:text="100%"
+                android:contentDescription="@string/cd_zoom_chip_open_menu"
+                app:chipIcon="@drawable/ic_zoom_24"
+                app:chipIconVisible="true"
+                app:rippleColor="?attr/colorPrimary" />
+
+        <!-- Minimap-Platzhalter -->
+        <com.google.android.material.card.MaterialCardView
+                android:id="@+id/minimap_placeholder"
+                android:layout_width="120dp"
+                android:layout_height="90dp"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="12dp"
+                android:contentDescription="@string/cd_minimap"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp" />
+    </FrameLayout>
+
+    <!-- Text-Mode: Editor -->
+    <FrameLayout
+            android:id="@+id/text_mode_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/segmented_group"
+            app:layout_constraintBottom_toTopOf="@id/button_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+                android:id="@+id/text_mode_editor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                android:textSize="16sp"
+                android:background="@android:color/transparent"
+                android:inputType="textMultiLine|textCapSentences"
+                android:hint="@string/ocr_text_editor_hint"
+                android:gravity="top|start"
+                android:overScrollMode="always"
+                android:scrollbars="vertical"
+                android:scrollbarStyle="insideInset"
+                android:imeOptions="flagNoEnterAction|flagNoFullscreen"
+                android:importantForAutofill="noExcludeDescendants"
+                android:tooltipText="@string/tip_text_mode_editing" />
+    </FrameLayout>
+
+    <!-- Document-Mode: Original image with OCR overlay -->
+    <FrameLayout
+            android:id="@+id/document_mode_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/segmented_group"
+            app:layout_constraintBottom_toTopOf="@id/button_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Original document image -->
+        <ImageView
+                android:id="@+id/document_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="matrix"
+                android:contentDescription="@string/document_preview" />
+
+        <!-- OCR overlay on top of the document -->
+        <de.schliweb.makeacopy.ui.ocr.review.view.OcrOverlayView
+                android:id="@+id/document_ocr_overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        <!-- Zoom-Chip for document mode -->
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chip_zoom_document"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="12dp"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:clickable="true"
+                android:focusable="true"
+                tools:text="100%"
+                android:contentDescription="@string/cd_zoom_chip_open_menu"
+                app:chipIcon="@drawable/ic_zoom_24"
+                app:chipIconVisible="true"
+                app:rippleColor="?attr/colorPrimary" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

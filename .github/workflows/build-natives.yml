@@ -1,0 +1,107 @@
+name: Build Native Libraries
+
+# Builds ONLY the native libraries (OpenCV + ONNX Runtime) from source, exactly like the
+# "build" job of build-release.yml, and publishes them as the `native-libs` artifact.
+# Use it when you cannot run the Linux native scripts locally (e.g. Windows without WSL):
+# download the artifact and unzip it at the repository root, it contains
+#   app/src/main/jniLibs/<abi>/*.so  and  app/libs/onnxruntime-*.jar
+# Then build locally with the default -PnativeDeps=source.
+
+on:
+  workflow_dispatch:
+    inputs:
+      abis:
+        description: "ABIs to build (space separated)"
+        required: false
+        default: "arm64-v8a armeabi-v7a x86 x86_64"
+  push:
+    branches: ['qwipaper/**']
+    paths:
+      - '.github/workflows/build-natives.yml'
+      - 'scripts/build_opencv_android.sh'
+      - 'scripts/prepare_opencv.sh'
+      - 'scripts/build_onnxruntime_android.sh'
+      - 'external/**'
+      - '.gitmodules'
+      - 'app/src/main/assets/docquad/*.config'
+      - 'app/src/paddle/assets/paddleocr/v5/*.config'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  natives:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+
+    env:
+      ABIS: ${{ github.event.inputs.abis || 'arm64-v8a armeabi-v7a x86 x86_64' }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Set up Python 3.11.2
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.2'
+
+      - name: Install Android SDK NDK 28.0.13004108
+        run: yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} "ndk;28.0.13004108"
+
+      - name: Set up CMake 3.31.6
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '3.31.6'
+
+      - name: Install Python deps for ONNX Runtime minimal build
+        run: python3 -m pip install flatbuffers
+
+      - name: Export build environment
+        run: |
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/28.0.13004108" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "BUILD_GENERATOR=Unix Makefiles" >> $GITHUB_ENV
+          echo "ORT_CMAKE=$(which cmake)" >> $GITHUB_ENV
+          echo "OPENCV_CMAKE=$(which cmake)" >> $GITHUB_ENV
+          echo "PY3_BIN=$(which python3)" >> $GITHUB_ENV
+          echo "SOURCE_DATE_EPOCH=1700000000" >> $GITHUB_ENV
+          echo "TZ=UTC" >> $GITHUB_ENV
+          echo "LC_ALL=C" >> $GITHUB_ENV
+          echo "LANG=C" >> $GITHUB_ENV
+          echo "PYTHONHASHSEED=0" >> $GITHUB_ENV
+
+      - name: Build OpenCV native libraries
+        run: |
+          chmod +x scripts/*.sh
+          REQUIRE_PINNED_JNI=1 VERBOSE=1 ./scripts/build_opencv_android.sh
+
+      - name: Prepare OpenCV for app
+        run: ./scripts/prepare_opencv.sh
+
+      - name: Build ONNX Runtime
+        run: ./scripts/build_onnxruntime_android.sh
+
+      - name: List artifacts
+        run: |
+          find app/src/main/jniLibs app/libs -type f -exec ls -l {} \;
+          sha256sum app/src/main/jniLibs/*/*.so app/libs/*.jar | tee native-libs.sha256
+
+      - name: Upload native libraries
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-libs
+          retention-days: 90
+          path: |
+            app/src/main/jniLibs/
+            app/libs/
+            native-libs.sha256

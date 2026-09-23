@@ -1,0 +1,4 @@
+MakeACopy 4.6.0
+* Full-text search across your scan library, now including recognized OCR text (Room/FTS5).
+* Search results are highlighted in the scan list for faster navigation.
+* Various stability and performance improvements under the hood.

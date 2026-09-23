@@ -1,0 +1,8 @@
+MakeACopy 4.5.0
+* Material You dynamic colors (Android 12+) and Material 3 dialogs.
+* Themed (monochrome) launcher icon.
+* Workflow stepper across Scan, Crop, OCR and Export.
+* Search in the scan library.
+* New "Share text" action and export format selector (PDF/JPEG).
+* Option to skip edge detection, smoother transitions and haptic feedback.
+* Fixed duplicate dialogs on rapid taps and redundant edge re-detection.

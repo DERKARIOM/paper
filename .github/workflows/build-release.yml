@@ -1,0 +1,496 @@
+name: Build Release
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx8g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # Python für deterministische CMake-Skripte pinnen (nur Host-Interpreter, keine Py-Bindings)
+      - name: Set up Python 3.11.2
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.2'
+
+      # NDK installieren
+      - name: Install Android SDK NDK 28.0.13004108
+        run: |
+          yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} "ndk;28.0.13004108"
+        env:
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
+
+      # Install exact CMake version to match FDroid (3.31.6 from bookworm-backports)
+      - name: Set up CMake 3.31.6
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '3.31.6'
+
+      - name: Install Python deps for ONNX Runtime minimal build
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install flatbuffers
+          python3 -c "import flatbuffers; print('flatbuffers OK:', flatbuffers.__file__)"
+
+      # Use the installed CMake on PATH to align with FDroid
+      - name: Export ANDROID_*, CMake and Python paths
+        run: |
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/28.0.13004108" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "BUILD_GENERATOR=Unix Makefiles" >> $GITHUB_ENV
+          echo "ORT_CMAKE=$(which cmake)" >> $GITHUB_ENV
+          echo "OPENCV_CMAKE=$(which cmake)" >> $GITHUB_ENV
+          echo "PY3_BIN=$(which python3)" >> $GITHUB_ENV
+          cmake --version
+          python3 --version
+
+      - name: Set deterministic environment
+        run: |
+          echo "SOURCE_DATE_EPOCH=1700000000" >> $GITHUB_ENV
+          echo "TZ=UTC" >> $GITHUB_ENV
+          echo "LC_ALL=C" >> $GITHUB_ENV
+          echo "LANG=C" >> $GITHUB_ENV
+          echo "PYTHONHASHSEED=0" >> $GITHUB_ENV
+
+      - name: Check installed NDK
+        run: ls -l $ANDROID_NDK_HOME
+
+      # (optional) Nur arm64-v8a auf CI bauen – auskommentiert lassen, wenn alle ABIs gewünscht
+      - name: Limit ABIs to arm64-v8a armeabi-v7a x86 x86_64
+        run: echo "ABIS=arm64-v8a armeabi-v7a x86 x86_64" >> $GITHUB_ENV
+
+      - name: Build OpenCV native libraries
+        run: |
+          chmod +x scripts/build_opencv_android.sh
+          REQUIRE_PINNED_JNI=1 VERBOSE=1 DEBUG=1 ./scripts/build_opencv_android.sh
+
+      - name: Collect reproducibility evidence (native)
+        run: |
+          chmod +x scripts/collect_repro_evidence.sh
+          ./scripts/collect_repro_evidence.sh
+
+      - name: Upload native reproducibility evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-repro-evidence
+          path: |
+            scripts/repro_out/**
+            scripts/repro_out.tgz
+
+      - name: Prepare OpenCV for app
+        run: |
+          chmod +x scripts/prepare_opencv.sh
+          ./scripts/prepare_opencv.sh
+
+      - name: Build ONNX Runtime
+        run: |
+          chmod +x scripts/build_onnxruntime_android.sh
+          ./scripts/build_onnxruntime_android.sh
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Code Quality
+        run: ./gradlew :app:compileStandardDebugJavaWithJavac :app:compilePaddleDebugJavaWithJavac :app:testStandardDebugUnitTest :app:testPaddleDebugUnitTest :app:lintStandardDebug :app:lintPaddleDebug
+
+      # Keystore nur für TAG-Builds dekodieren (PRs/branch: überspringen)
+      - name: Decode Keystore (tags only)
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          ENCODED_KEYSTORE: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$ENCODED_KEYSTORE" ]; then
+            echo "$ENCODED_KEYSTORE" | base64 --decode > app/keystore.jks
+            echo "Keystore decoded successfully"
+          else
+            echo "No keystore provided. Tag build will proceed unsigned."
+          fi
+
+      - name: Extract versionName and versionCode from build.gradle
+        id: extract_version
+        run: |
+          VERSION=$(grep -m1 'versionName' app/build.gradle | sed 's/[^"]*"\([^"]*\)".*/\1/')
+          VERSION_CODE=$(grep -m1 'versionCode' app/build.gradle | grep -o '[0-9]\+')
+          echo "VERSION=$VERSION"
+          echo "VERSION_CODE=$VERSION_CODE"
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_OUTPUT
+
+      # Build (unsigned) – PRs/branches (nur :app Tasks)
+      - name: Build Full (unsigned) – PRs/branches
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          ./gradlew --no-daemon :app:clean :app:bundleRelease -PenableAbiSplits=false
+          ./gradlew --no-daemon :app:assembleRelease -PenableAbiSplits=true
+
+      # Build (signed) – tags (nur :app Tasks)
+      - name: Build Full (signed) – tags
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+        run: |
+          EXTRA_PROPS=""
+          if [ -n "${SIGNING_KEY_ALIAS}" ] && [ -n "${SIGNING_KEY_PASSWORD}" ] && [ -n "${SIGNING_STORE_PASSWORD}" ]; then
+            EXTRA_PROPS="-PSIGNING_KEY_ALIAS=${SIGNING_KEY_ALIAS} -PSIGNING_KEY_PASSWORD=${SIGNING_KEY_PASSWORD} -PSIGNING_STORE_PASSWORD=${SIGNING_STORE_PASSWORD}"
+          else
+            echo "Signing secrets missing → building unsigned even for tag."
+          fi
+          ./gradlew --no-daemon :app:bundleRelease -PenableAbiSplits=false $EXTRA_PROPS
+          ./gradlew --no-daemon :app:assembleRelease -PenableAbiSplits=true $EXTRA_PROPS
+
+      # Verify that no test data leaks into release APKs (CI gate, both flavors).
+      - name: Verify no test data in release APKs
+        run: ./gradlew --no-daemon :app:verifyNoTestDataInApk
+
+      # Collect APKs/AABs from per-flavor output dirs into a single staging dir,
+      # renaming so that `standard` keeps the historical name and `paddle` gets
+      # a `-paddle` suffix (analogous to `MakeACopy-Light-...`).
+      - name: Rename Full artifacts (standard + paddle)
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.extract_version.outputs.VERSION }}"
+          STAGE_APK="app/build/outputs/apk/release"
+          STAGE_AAB="app/build/outputs/bundle/release"
+          mkdir -p "$STAGE_APK" "$STAGE_AAB"
+          shopt -s nullglob
+          # APKs: app-<flavor>-<abi>-release[-unsigned].apk -> staged + renamed
+          for apk in app/build/outputs/apk/standard/release/app-standard-*-release*.apk; do
+            abi=$(basename "$apk" | sed -n 's/^app-standard-\(.*\)-release\(-unsigned\)\{0,1\}\.apk$/\1/p')
+            [ -n "$abi" ] && mv "$apk" "$STAGE_APK/MakeACopy-v${VERSION}-${abi}-release.apk"
+          done
+          for apk in app/build/outputs/apk/paddle/release/app-paddle-*-release*.apk; do
+            abi=$(basename "$apk" | sed -n 's/^app-paddle-\(.*\)-release\(-unsigned\)\{0,1\}\.apk$/\1/p')
+            [ -n "$abi" ] && mv "$apk" "$STAGE_APK/MakeACopy-v${VERSION}-${abi}-paddle-release.apk"
+          done
+          # AABs: standard keeps unsuffixed historical name, paddle gets -paddle suffix
+          if [ -f app/build/outputs/bundle/standardRelease/app-standard-release.aab ]; then
+            mv app/build/outputs/bundle/standardRelease/app-standard-release.aab "$STAGE_AAB/MakeACopy-v${VERSION}-release.aab"
+          fi
+          if [ -f app/build/outputs/bundle/paddleRelease/app-paddle-release.aab ]; then
+            mv app/build/outputs/bundle/paddleRelease/app-paddle-release.aab "$STAGE_AAB/MakeACopy-v${VERSION}-paddle-release.aab"
+          fi
+          ls -la "$STAGE_APK" "$STAGE_AAB"
+
+      - name: Verify APK signatures (tags only)
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.extract_version.outputs.VERSION }}"
+          APK_OUT="app/build/outputs/apk/release"
+          APKSIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -Vr | head -n1)
+          for f in "$APK_OUT"/MakeACopy-v${VERSION}-*-release.apk; do
+            [ -f "$f" ] && "$APKSIGNER" verify --verbose "$f"
+          done
+
+      - name: Generate Full checksums
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.extract_version.outputs.VERSION }}"
+          APK_OUT="app/build/outputs/apk/release"
+          AAB_OUT="app/build/outputs/bundle/release"
+          if command -v sha256sum >/dev/null 2>&1; then H=sha256sum; else H="shasum -a 256"; fi
+          for f in "$APK_OUT"/MakeACopy-v${VERSION}-*-release.apk; do
+            [ -f "$f" ] && $H "$f" > "$f.sha256"
+          done
+          for f in "$AAB_OUT"/MakeACopy-v${VERSION}*-release.aab; do
+            [ -f "$f" ] && $H "$f" > "$f.sha256"
+          done
+
+      - name: Load Release Notes
+        if: startsWith(github.ref, 'refs/tags/')
+        id: release_notes
+        run: |
+          VERSION_CODE=${{ steps.extract_version.outputs.VERSION_CODE }}
+          CHANGELOG_FILE="fastlane/metadata/android/en-US/changelogs/${VERSION_CODE}.txt"
+          echo "Using changelog: $CHANGELOG_FILE"
+          if [ -f "$CHANGELOG_FILE" ]; then
+            NOTES=$(cat "$CHANGELOG_FILE")
+          else
+            echo "::error file=$CHANGELOG_FILE::Release Notes file not found!"
+            exit 1
+          fi
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release (tags only)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "MakeACopy v${{ steps.extract_version.outputs.VERSION }}"
+          tag_name: ${{ github.ref_name }}
+          body: ${{ steps.release_notes.outputs.notes }}
+          prerelease: ${{ contains(github.ref_name, '-rc') }}
+          files: |
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-arm64-v8a-release.apk
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-armeabi-v7a-release.apk
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-x86_64-release.apk
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-x86-release.apk
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-arm64-v8a-release.apk.sha256
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-armeabi-v7a-release.apk.sha256
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-x86_64-release.apk.sha256
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-x86-release.apk.sha256
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-arm64-v8a-paddle-release.apk
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-armeabi-v7a-paddle-release.apk
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-x86_64-paddle-release.apk
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-x86-paddle-release.apk
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-arm64-v8a-paddle-release.apk.sha256
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-armeabi-v7a-paddle-release.apk.sha256
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-x86_64-paddle-release.apk.sha256
+            app/build/outputs/apk/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-x86-paddle-release.apk.sha256
+            app/build/outputs/bundle/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-release.aab
+            app/build/outputs/bundle/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-release.aab.sha256
+            app/build/outputs/bundle/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-paddle-release.aab
+            app/build/outputs/bundle/release/MakeACopy-v${{ steps.extract_version.outputs.VERSION }}-paddle-release.aab.sha256
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Full APK/AAB artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: MakeACopy-${{ steps.extract_version.outputs.VERSION }}
+          path: |
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/apk/release/*.sha256
+            app/build/outputs/bundle/release/*.aab
+            app/build/outputs/bundle/release/*.sha256
+
+      - name: Upload native libraries for Light build
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-libs
+          path: |
+            app/src/main/jniLibs/
+            app/libs/
+
+      - name: Upload OpenCV-only native libraries for Light build
+        run: |
+          mkdir -p /tmp/opencv-only-jniLibs
+          for abi_dir in app/src/main/jniLibs/*/; do
+            abi=$(basename "$abi_dir")
+            mkdir -p "/tmp/opencv-only-jniLibs/src/main/jniLibs/$abi"
+            cp "$abi_dir"libopencv_*.so "/tmp/opencv-only-jniLibs/src/main/jniLibs/$abi/"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-libs-opencv-only
+          path: /tmp/opencv-only-jniLibs/
+
+  build-light:
+    runs-on: ubuntu-latest
+    needs: build
+
+    env:
+      GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx8g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # Python für deterministische CMake-Skripte pinnen
+      - name: Set up Python 3.11.2
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.2'
+
+      # NDK installieren
+      - name: Install Android SDK NDK 28.0.13004108
+        run: |
+          yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} "ndk;28.0.13004108"
+        env:
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
+
+      - name: Set up CMake 3.31.6
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '3.31.6'
+
+      - name: Install Python deps for ONNX Runtime minimal build
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install flatbuffers
+          python3 -c "import flatbuffers; print('flatbuffers OK:', flatbuffers.__file__)"
+
+      - name: Export ANDROID_*, CMake and Python paths
+        run: |
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/28.0.13004108" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "BUILD_GENERATOR=Unix Makefiles" >> $GITHUB_ENV
+          echo "ORT_CMAKE=$(which cmake)" >> $GITHUB_ENV
+          echo "PY3_BIN=$(which python3)" >> $GITHUB_ENV
+          cmake --version
+          python3 --version
+
+      - name: Set deterministic environment
+        run: |
+          echo "SOURCE_DATE_EPOCH=1700000000" >> $GITHUB_ENV
+          echo "TZ=UTC" >> $GITHUB_ENV
+          echo "LC_ALL=C" >> $GITHUB_ENV
+          echo "LANG=C" >> $GITHUB_ENV
+          echo "PYTHONHASHSEED=0" >> $GITHUB_ENV
+
+      - name: Download OpenCV-only native libraries from Full build
+        uses: actions/download-artifact@v4
+        with:
+          name: native-libs-opencv-only
+          path: app
+
+      - name: Verify OpenCV native libraries
+        run: |
+          echo "=== jniLibs (OpenCV only) ==="
+          find app/src/main/jniLibs -type f | head -20 || echo "jniLibs NOT found"
+
+      - name: Build ONNX Runtime (minimal AAR)
+        run: |
+          chmod +x scripts/build_minimal_onnxruntime.sh
+          ./scripts/build_minimal_onnxruntime.sh
+
+      - name: Verify ONNX Runtime AAR
+        run: |
+          echo "=== libs (AAR) ==="
+          ls -la app/libs/ || echo "libs/ NOT found"
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Limit ABIs to arm64-v8a armeabi-v7a x86 x86_64
+        run: echo "ABIS=arm64-v8a armeabi-v7a x86 x86_64" >> $GITHUB_ENV
+
+      # Keystore nur für TAG-Builds dekodieren (PRs/branch: überspringen)
+      - name: Decode Keystore (tags only)
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          ENCODED_KEYSTORE: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$ENCODED_KEYSTORE" ]; then
+            echo "$ENCODED_KEYSTORE" | base64 --decode > app/keystore.jks
+            echo "Keystore decoded successfully"
+          else
+            echo "No keystore provided. Tag build will proceed unsigned."
+          fi
+
+      - name: Extract versionName and versionCode from build.gradle
+        id: extract_version
+        run: |
+          VERSION=$(grep -m1 'versionName' app/build.gradle | sed 's/[^"]*"\([^"]*\)".*/\1/')
+          VERSION_CODE=$(grep -m1 'versionCode' app/build.gradle | grep -o '[0-9]\+')
+          echo "VERSION=$VERSION"
+          echo "VERSION_CODE=$VERSION_CODE"
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_OUTPUT
+
+      # Build Light (unsigned) – PRs/branches
+      # Light edition is `standard`-flavor only (Paddle requires the full ORT runtime
+      # with merged DocQuad+PaddleOCR ops; the minimal AAR in the Light job ships
+      # without Paddle ops on purpose).
+      - name: Build Light (unsigned) – PRs/branches
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          ./gradlew --no-daemon :app:assembleStandardRelease -PenableAbiSplits=true -Pedition=light
+
+      # Build Light (signed) – tags
+      - name: Build Light (signed) – tags
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+        run: |
+          EXTRA_PROPS=""
+          if [ -n "${SIGNING_KEY_ALIAS}" ] && [ -n "${SIGNING_KEY_PASSWORD}" ] && [ -n "${SIGNING_STORE_PASSWORD}" ]; then
+            EXTRA_PROPS="-PSIGNING_KEY_ALIAS=${SIGNING_KEY_ALIAS} -PSIGNING_KEY_PASSWORD=${SIGNING_KEY_PASSWORD} -PSIGNING_STORE_PASSWORD=${SIGNING_STORE_PASSWORD}"
+          else
+            echo "Signing secrets missing → building unsigned even for tag."
+          fi
+          ./gradlew --no-daemon :app:assembleStandardRelease -PenableAbiSplits=true -Pedition=light $EXTRA_PROPS
+
+      - name: Rename Light artifacts
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.extract_version.outputs.VERSION }}"
+          STAGE_APK="app/build/outputs/apk/release"
+          mkdir -p "$STAGE_APK"
+          shopt -s nullglob
+          for apk in app/build/outputs/apk/standard/release/app-standard-*-release*.apk; do
+            abi=$(basename "$apk" | sed -n 's/^app-standard-\(.*\)-release\(-unsigned\)\{0,1\}\.apk$/\1/p')
+            [ -n "$abi" ] && mv "$apk" "$STAGE_APK/MakeACopy-Light-v${VERSION}-${abi}-release.apk"
+          done
+
+      - name: Verify Light APK signatures (tags only)
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.extract_version.outputs.VERSION }}"
+          APK_OUT="app/build/outputs/apk/release"
+          APKSIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -Vr | head -n1)
+          for f in "$APK_OUT"/MakeACopy-Light-v${VERSION}-*-release.apk; do
+            [ -f "$f" ] && "$APKSIGNER" verify --verbose "$f"
+          done
+
+      - name: Generate Light checksums
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.extract_version.outputs.VERSION }}"
+          APK_OUT="app/build/outputs/apk/release"
+          if command -v sha256sum >/dev/null 2>&1; then H=sha256sum; else H="shasum -a 256"; fi
+          for f in "$APK_OUT"/MakeACopy-Light-v${VERSION}-*-release.apk; do
+            [ -f "$f" ] && $H "$f" > "$f.sha256"
+          done
+
+      - name: Upload Light release assets (tags only)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: |
+            app/build/outputs/apk/release/MakeACopy-Light-v${{ steps.extract_version.outputs.VERSION }}-arm64-v8a-release.apk
+            app/build/outputs/apk/release/MakeACopy-Light-v${{ steps.extract_version.outputs.VERSION }}-armeabi-v7a-release.apk
+            app/build/outputs/apk/release/MakeACopy-Light-v${{ steps.extract_version.outputs.VERSION }}-x86_64-release.apk
+            app/build/outputs/apk/release/MakeACopy-Light-v${{ steps.extract_version.outputs.VERSION }}-x86-release.apk
+            app/build/outputs/apk/release/MakeACopy-Light-v${{ steps.extract_version.outputs.VERSION }}-arm64-v8a-release.apk.sha256
+            app/build/outputs/apk/release/MakeACopy-Light-v${{ steps.extract_version.outputs.VERSION }}-armeabi-v7a-release.apk.sha256
+            app/build/outputs/apk/release/MakeACopy-Light-v${{ steps.extract_version.outputs.VERSION }}-x86_64-release.apk.sha256
+            app/build/outputs/apk/release/MakeACopy-Light-v${{ steps.extract_version.outputs.VERSION }}-x86-release.apk.sha256
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Light APK artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: MakeACopy-Light-${{ steps.extract_version.outputs.VERSION }}
+          path: |
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/apk/release/*.sha256

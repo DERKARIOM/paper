@@ -1,0 +1,4 @@
+Slovenčina
+Jazyková ukážka
+Kŕdeľ ďatľov učí koňa žrať kôru v húštine.
+Ukážka rozpoznávania textu.

@@ -1,0 +1,6 @@
+MakeACopy 3.5.0
+
+* New: Inbox Mode – configure a default export folder for frictionless scanning, no file picker needed (ideal for paperless-ngx, Nextcloud, Syncthing workflows). Guide: https://github.com/egdels/makeacopy/blob/main/docs/inbox_mode_guide_en.md
+* Fixed: File picker now remembers the last used folder correctly (improved initial URI handling for better OEM compatibility)
+* Fixed: Crash (OutOfMemoryError) during JPEG-compressed PDF export caused by alpha channel extraction in large images
+* Fully offline, no cloud or tracking

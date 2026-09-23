@@ -1,0 +1,9 @@
+* Introduced ONNX Runtime with a trained model for document corner detection (hybrid with existing heuristics).
+* Added new cross-platform build script (macOS/Linux) to compile ONNX from source.
+* Switched to full ONNX build for broader model compatibility.
+* Implemented ABI-split APK builds for smaller per-architecture downloads.
+* Removed unused minimal-build configs and checksum files from APK.
+* Multi-level memory management (Application + Activity Level)
+* App Cache: Recursive cleanup of cache directory
+* Tessdata: switched to smaller language model instead of large.
+* LICENSE and NOTICE now bundled into the app build.nd notice ins build

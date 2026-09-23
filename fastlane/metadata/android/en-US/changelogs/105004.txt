@@ -1,0 +1,16 @@
+1.5.0 (Release)
+
+• Multi-page scanning and export (stable)
+  - Add multiple pages from camera or "Completed scans"
+  - Filmstrip with thumbnails; tap to preview a page
+  - Drag-and-drop to reorder, remove single pages, or "Clear all"
+  - Multi-page PDF with optional per-page OCR layer where available
+  - JPEG export: single image or multi-page as ZIP (page_001.jpg, …)
+  - TXT export combines OCR text in page order
+
+• New "Completed scans" picker
+  - Browse previously saved scans; multi-select to add
+  - Long-press to remove entries from the registry
+
+• Inline OCR status messages and UX polish
+  - Improved dark mode for dialogs, better accessibility labels, and small bug fixes

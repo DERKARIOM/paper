@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme (Material3, compatible with Material widgets via M3 styles). -->
+    <style name="Theme.MakeACopy" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- M3 container tokens used by components -->
+        <item name="colorPrimaryContainer">@color/purple_200</item>
+        <item name="colorOnPrimaryContainer">@color/purple_700</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Surface -->
+        <item name="colorOnSurface">@color/black</item>
+
+        <!-- System bars -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- (Optional) Shadow colors -->
+        <item name="android:outlineSpotShadowColor">#4A7AAC</item>
+        <item name="android:outlineAmbientShadowColor">#2A5A8E</item>
+
+        <!-- Material dialogs in M3 style -->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog</item>
+
+        <!-- Default overlay for BottomSheetDialog -->
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.MakeACopy.BottomSheet</item>
+
+        <!-- Global MaterialButton style -->
+        <item name="materialButtonStyle">@style/Widget.MakeACopy.Button</item>
+    </style>
+
+    <!-- Bottom-sheet overlay (no dependency on com.google.android.material.R in code) -->
+    <style name="ThemeOverlay.MakeACopy.BottomSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- Optional:
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.M3.Corner.Medium</item>
+        -->
+    </style>
+
+    <!-- Unified MaterialButton style. Colors come from Material tokens so that
+         dynamic color (Material You) and dark mode are handled automatically. -->
+    <style name="Widget.MakeACopy.Button" parent="Widget.Material3.Button">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- Secondary (tonal) button style for non-primary actions in bottom bars -->
+    <style name="Widget.MakeACopy.Button.Tonal" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- Optional: special outlined button style -->
+    <style name="Widget.MakeACopy.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+</resources>

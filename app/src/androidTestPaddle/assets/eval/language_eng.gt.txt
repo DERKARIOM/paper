@@ -1,0 +1,4 @@
+English
+Language sample
+The quick brown fox scans a clear document with words and punctuation.
+Offline text recognition sample.

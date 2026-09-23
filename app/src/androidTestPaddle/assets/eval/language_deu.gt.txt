@@ -1,0 +1,4 @@
+Deutsch
+Sprachbeispiel
+Falsches Üben von Xylophonmusik quält jeden größeren Zwerg.
+Beispiel zur Texterkennung.

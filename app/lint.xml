@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Intentional: custom-styled buttons in button bars (not Material button bars) -->
+    <issue id="ButtonStyle" severity="ignore" />
+
+    <!-- Intentional: debug/status text uses concatenation (not user-facing translatable text) -->
+    <issue id="SetTextI18n" severity="ignore" />
+
+    <!-- Intentional: adapters call notifyDataSetChanged for full refreshes -->
+    <issue id="NotifyDataSetChanged" severity="ignore" />
+
+    <!-- Intentional: portrait-only scanning activity -->
+    <issue id="LockedOrientationActivity" severity="ignore" />
+
+    <!-- Intentional: root element backgrounds for themed containers -->
+    <issue id="Overdraw" severity="ignore" />
+
+    <!-- Known: monochrome icon will be added in a future design iteration -->
+    <issue id="MonochromeLauncherIcon" severity="ignore" />
+
+    <!-- Known: TrustManager in OcrModelManager is for local addon package verification only -->
+    <issue id="TrustAllX509TrustManager" severity="ignore" />
+
+    <!-- Intentional: custom touch handling in overlay views (performClick called where appropriate) -->
+    <issue id="ClickableViewAccessibility" severity="ignore" />
+
+    <!-- Known: plural forms tracked for future i18n improvement -->
+    <issue id="PluralsCandidate" severity="ignore" />
+
+    <!-- Known: fixed orientation and scheduleAtFixedRate are intentional for this app -->
+    <issue id="DiscouragedApi" severity="ignore" />
+
+    <!-- Dependency version updates tracked separately -->
+    <issue id="GradleDependency" severity="ignore" />
+    <issue id="NewerVersionAvailable" severity="ignore" />
+    <issue id="AndroidGradlePluginVersion" severity="ignore" />
+    <!-- Intentional: ASCII hyphens are required in user-facing examples that show
+         literal filename patterns (e.g. "2026-03-04_scan"). Replacing them with an
+         en-dash would misrepresent the actual filenames produced by Inbox Mode. -->
+    <issue id="TypographyDashes" severity="ignore" />
+</lint>

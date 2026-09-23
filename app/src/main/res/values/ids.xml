@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tag_previous_enabled" type="id" />
+    <!-- Accessibility custom action IDs for Export pages RecyclerView items -->
+    <item name="a11y_action_delete_page" type="id"/>
+    <item name="a11y_action_move_left" type="id"/>
+    <item name="a11y_action_move_right" type="id"/>
+</resources>

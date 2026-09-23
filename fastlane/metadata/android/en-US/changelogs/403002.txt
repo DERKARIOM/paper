@@ -1,0 +1,5 @@
+MakeACopy 4.3.0
+* Added Greek OCR support in the PaddleOCR flavor.
+* Improved searchable PDFs with cleaner copy & paste.
+* Added PDF text-layer compatibility options.
+* Fixed CropFragment corners getting stuck outside the image.

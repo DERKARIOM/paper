@@ -1,0 +1,3 @@
+MakeACopy 4.1.2
+* Improved scan workflow navigation so Camera, Crop, OCR, and Export no longer leave duplicate or stale screens in the back stack.
+* Returning to the camera from Crop or Export now resets the scan flow cleanly.

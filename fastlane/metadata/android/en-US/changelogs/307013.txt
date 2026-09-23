@@ -1,0 +1,3 @@
+MakeACopy 3.7.1
+* Fix: File extensions are now preserved when saving to cloud providers (e.g. Nextcloud) via SAF
+* Fully offline, no cloud or tracking

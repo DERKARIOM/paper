@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        tools:context=".ui.crop.CropFragment">
+
+    <!-- Titel/Statusanzeige -->
+    <TextView
+            android:id="@+id/text_crop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Workflow stepper: Camera → Crop → OCR → Export (step 2) -->
+    <de.schliweb.makeacopy.ui.views.WorkflowStepperView
+            android:id="@+id/workflow_stepper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:currentStep="2"
+            app:layout_constraintTop_toBottomOf="@id/text_crop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Originalbild zur Bearbeitung -->
+    <ImageView
+            android:id="@+id/image_to_crop"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/image_to_crop"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
+            app:layout_constraintBottom_toTopOf="@id/rotation_button_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Trapezoid-Auswahl (überlagert das Bild, gleiche Constraints!) -->
+    <de.schliweb.makeacopy.ui.crop.TrapezoidSelectionView
+            android:id="@+id/trapezoid_selection"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/image_to_crop"
+            app:layout_constraintBottom_toBottomOf="@id/image_to_crop"
+            app:layout_constraintStart_toStartOf="@id/image_to_crop"
+            app:layout_constraintEnd_toEndOf="@id/image_to_crop"
+            android:visibility="visible"/>
+
+    <!-- Dev-Overlay: zeigt modelRect/Metriken, wenn FEATURE_FRAMING_LOGGING aktiv ist -->
+    <de.schliweb.makeacopy.ui.camera.CameraCornersOverlay
+            android:id="@+id/crop_dev_overlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/image_to_crop"
+            app:layout_constraintBottom_toBottomOf="@id/image_to_crop"
+            app:layout_constraintStart_toStartOf="@id/image_to_crop"
+            app:layout_constraintEnd_toEndOf="@id/image_to_crop"/>
+
+    <!-- Cropped Image (nur nach Zuschnitt sichtbar, identische Constraints!) -->
+    <ImageView
+            android:id="@+id/cropped_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/cropped_image"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
+            app:layout_constraintBottom_toTopOf="@id/crop_button_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Crop-Buttons (Back + Crop) im Crop-Mode sichtbar -->
+    <LinearLayout
+            android:id="@+id/crop_button_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="?attr/colorSurfaceContainer"
+            android:padding="12dp"
+            android:elevation="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+                android:id="@+id/button_back"
+                style="@style/Widget.MakeACopy.Button.Tonal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="12dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/back"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        <Button
+                android:id="@+id/button_crop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/btn_crop"
+                android:maxLines="1"
+                android:ellipsize="end" />
+    </LinearLayout>
+
+    <!-- Rotation Icons (über dem Button-Container, nur nach Crop sichtbar).
+         Liegt in derselben Zeile wie die Aspect-Bar: Rotations-Icons zentriert
+         über die volle Breite, Spinner rechts darüber gelegt. -->
+    <LinearLayout
+            android:id="@+id/rotation_button_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/crop_button_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+                android:id="@+id/button_rotate_left"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/rotate_left_cd"
+                android:padding="8dp"
+                android:src="@drawable/ic_rotate_left"
+                app:tint="?attr/colorControlNormal"
+                app:tooltipText="@string/rotate_left_cd"/>
+
+        <Space
+                android:layout_width="12dp"
+                android:layout_height="1dp"/>
+
+        <ImageButton
+                android:id="@+id/button_rotate_right"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/rotate_right_cd"
+                android:padding="8dp"
+                android:src="@drawable/ic_rotate_right"
+                app:tint="?attr/colorControlNormal"
+                app:tooltipText="@string/rotate_right_cd"/>
+    </LinearLayout>
+
+    <!-- Aspect-Ratio-Button: koexistiert in derselben Zeile wie die Rotations-Icons,
+         rechtsbündig. Öffnet beim Klick einen Dialog mit den Aspect-Optionen. -->
+    <ImageButton
+            android:id="@+id/crop_aspect_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/crop_aspect_label"
+            android:padding="8dp"
+            android:src="@drawable/ic_aspect_ratio"
+            app:tint="?attr/colorControlNormal"
+            app:tooltipText="@string/crop_aspect_label"
+            app:layout_constraintTop_toTopOf="@id/rotation_button_bar"
+            app:layout_constraintBottom_toBottomOf="@id/rotation_button_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"/>
+
+    <!-- Snap-to-Right-Angle Toggle (FR #72 companion): toggles the runtime feature flag.
+         Activated state is reflected via android:selected (tint changes via state list). -->
+    <ImageButton
+            android:id="@+id/crop_snap_toggle_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/crop_snap_toggle_cd"
+            android:padding="8dp"
+            android:src="@drawable/ic_right_angle"
+            app:tint="?attr/colorControlNormal"
+            app:tooltipText="@string/crop_snap_toggle_cd"
+            app:layout_constraintTop_toTopOf="@id/rotation_button_bar"
+            app:layout_constraintBottom_toBottomOf="@id/rotation_button_bar"
+            app:layout_constraintEnd_toStartOf="@id/crop_aspect_button"
+            android:layout_marginEnd="4dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

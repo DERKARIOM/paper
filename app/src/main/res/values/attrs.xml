@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Attributes for the lightweight workflow stepper (Camera → Crop → OCR → Export) -->
+    <declare-styleable name="WorkflowStepperView">
+        <!-- 1-based index of the current workflow step (1=Camera, 2=Crop, 3=OCR, 4=Export) -->
+        <attr name="currentStep" format="integer" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,8 @@
+MakeACopy Eval Sample
+Section A
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+ex ea commodo consequat.
+Section B
+The quick brown fox jumps over the lazy dog. Numbers: 1234567890. Symbols: !?.,:;-_/().
+Footer: MakeACopy eval - additional sample.

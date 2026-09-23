@@ -1,0 +1,485 @@
+<resources>
+    <string name="app_name">MakeACopy</string>
+
+    <string name="tip_text_mode_editing">โหมดข้อความ:
+        การขึ้นบรรทัดใหม่และเครื่องหมายวรรคตอนจะถูกปรับให้เป็นช่องว่างในขณะนี้ หากป้อนคำจำนวนน้อยกว่าที่ระบบรู้จำได้ คำ
+        OCR ที่เหลือจะไม่เปลี่ยนแปลง การเปลี่ยนแปลงจะถูกนำไปใช้หลังจากหยุดชั่วคราวสั้น ๆ
+    </string>
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">กล้อง</string>
+    <string name="title_crop">ครอบตัด</string>
+    <string name="title_ocr">OCR</string>
+    <string name="title_export">ส่งออก</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">สแกน</string>
+    <string name="btn_crop">ครอบตัด</string>
+    <string name="btn_process">ประมวลผล</string>
+    <string name="btn_share">แชร์</string>
+    <string name="btn_share_text">แชร์ข้อความ</string>
+    <string name="next">ถัดไป</string>
+    <string name="back">ย้อนกลับ</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">ต้องการสิทธิ์กล้องเพื่อสแกนเอกสาร</string>
+    <string name="confirm">ยืนยัน</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">กล้องพร้อมแล้ว แตะปุ่มเพื่อสแกนเอกสาร</string>
+    <string name="captured_image">รูปที่ถ่าย</string>
+    <string name="image_to_crop">รูปภาพสำหรับครอบตัด</string>
+    <string name="cropped_image">รูปที่ครอบตัดแล้ว</string>
+    <string name="document_preview">ตัวอย่างเอกสาร</string>
+    <string name="include_ocr_text">ส่งออก OCR เป็นไฟล์ TXT แยก</string>
+    <string name="ocr_results_will_appear_here">ผลลัพธ์ OCR จะแสดงที่นี่</string>
+    <string name="ocr_no_text_detected">ไม่พบข้อความ</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">
+        ปรับมุมสี่เหลี่ยมคางหมูเพื่อเลือกพื้นที่ที่ต้องการครอบตัด แล้วแตะปุ่มครอบตัด
+    </string>
+    <string name="no_document_ready_process_ocr_first">ยังไม่มีเอกสารพร้อม ประมวลผล OCR ก่อน</string>
+    <string name="document_ready_for_export">เอกสารพร้อมสำหรับการส่งออก</string>
+    <string name="processing_image">กำลังประมวลผลรูปภาพ…</string>
+    <string name="no_image_processed_crop_an_image_first">ยังไม่มีรูปประมวลผล ครอบตัดรูปก่อน</string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR เสร็จสิ้น
+        แตะปุ่มเพื่อไปยังการส่งออก
+    </string>
+
+    <string name="ocr_found_rotation">ตรวจพบการหมุน: %1$d°</string>
+    <string name="ocr_score">คะแนน OCR: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">ตรวจพบการหมุน: %1$d° — คะแนน OCR: %2$d%%</string>
+
+    <!-- คำอธิบายเพิ่มเติมที่แสดงในกล่องโต้ตอบ “อธิบายโหมดการรู้จำ” -->
+    <string name="ocr_prep_modes_autorotate_note">การหมุนอัตโนมัติของ OCR: เมื่อเปิดใช้งาน OCR จะทดสอบหน้าเอกสารในขั้นละ
+        90° (0/90/180/270) และเลือกผลลัพธ์ที่ดีที่สุด การหมุนที่ตรวจพบสามารถนำไปใช้โดยอัตโนมัติระหว่างการส่งออก
+        หากคุณไม่ได้หมุนหน้าด้วยตนเอง คุณสามารถเปิดหรือปิดตัวเลือกนี้ได้ใน “เลือกโหมดการรู้จำ”
+    </string>
+
+    <string name="initializing_camera">กำลังเริ่มต้นกล้อง…</string>
+    <string name="resetting_camera">กำลังกำหนดค่ากล้องใหม่…</string>
+    <string name="error_initializing_camera">ไม่สามารถเริ่มต้นกล้อง: %1$s</string>
+    <string name="error_camera_provider_null">ไม่สามารถเริ่มต้นกล้อง – provider เป็น null</string>
+    <string name="error_camera_not_initialized">กล้องยังไม่ได้เริ่มต้น กรุณาลองใหม่</string>
+    <string name="error_image_capture_failed">การถ่ายรูปผิดพลาด: %1$s</string>
+    <string name="error_displaying_image">ไม่สามารถแสดงรูปภาพ: %1$s</string>
+    <string name="error_resetting_camera">ข้อผิดพลาดในการรีเซ็ตกล้อง: %1$s</string>
+    <string name="error_toggling_flashlight">เปิด/ปิดไฟฉายผิดพลาด: %1$s</string>
+    <string name="error_camera_preview_failed">ไม่สามารถเริ่มพรีวิวกล้อง กรุณาลองใหม่</string>
+
+    <string name="share_logs">แชร์บันทึก</string>
+    <string name="share_logs_subject">บันทึกการวินิจฉัยของ MakeACopy</string>
+    <string name="share_logs_chooser_title">แชร์บันทึกผ่าน…</string>
+    <string name="share_logs_error">ไม่สามารถเตรียมบันทึกได้: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">ระดับเทา</string>
+    <string name="export_as_jpeg">ส่งออกเป็น JPEG</string>
+    <string name="export_format_label">รูปแบบการส่งออก</string>
+    <string name="export_as_pdf">ส่งออกเป็น PDF (ค่าเริ่มต้น)</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">เปิด/ปิดไฟฉาย</string>
+    <string name="flashlight_on">ไฟฉายเปิด</string>
+    <string name="flashlight_off">ไฟฉายปิด</string>
+    <string name="flashlight_not_available">อุปกรณ์นี้ไม่มีไฟฉาย</string>
+    <string name="low_light_detected">ตรวจพบแสงน้อย เปิดไฟฉายหรือไม่?</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">EV %1$s</string>
+    <string name="exposure_compensation_cd">แถบเลื่อนชดเชยแสง</string>
+    <string name="exposure_compensation_option">การชดเชยแสง</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">แถบเลื่อนโฟกัสด้วยตนเอง</string>
+    <string name="manual_focus_af_button_cd">สลับไปใช้โฟกัสอัตโนมัติ</string>
+    <string name="autofocus_enabled">เปิดใช้โฟกัสอัตโนมัติแล้ว</string>
+    <string name="manual_focus_locked">ล็อกโฟกัสด้วยตนเองแล้ว</string>
+    <string name="manual_focus_option">โฟกัสด้วยตนเอง</string>
+    <string name="focus_quality_option">ตัวบ่งชี้คุณภาพโฟกัส</string>
+    <string name="tap_to_focus_started">กำลังโฟกัส…</string>
+    <string name="tap_to_focus_done">ปรับโฟกัสแล้ว</string>
+    <string name="tap_to_focus_requested">ส่งคำขอโฟกัสแล้ว</string>
+    <string name="tap_to_focus_not_locked">ไม่สามารถล็อกโฟกัสที่นี่ได้</string>
+    <string name="tap_to_focus_not_supported">ไม่รองรับการแตะเพื่อโฟกัสที่นี่</string>
+    <string name="tap_to_focus_failed">ไม่สามารถโฟกัสที่นี่ได้</string>
+    <string name="focus_quality_low">คุณภาพโฟกัส: ต่ำ</string>
+    <string name="focus_quality_good">คุณภาพโฟกัส: ดี</string>
+    <string name="focus_quality_excellent">คุณภาพโฟกัส: ดีเยี่ยม</string>
+    <string name="camera_zoom_title">ซูม / เลนส์</string>
+    <string name="camera_zoom_cd">เลือกซูมหรือเลนส์</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">อุปกรณ์นี้ไม่รองรับการซูม</string>
+
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">สี</string>
+    <string name="jpeg_mode_auto">ระดับเทา</string>
+    <string name="jpeg_mode_bw_text">ขาวดำ</string>
+    <string name="jpeg_mode_bw_robust">ขาวดำ (ทนทาน) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">การประมวลผลล่วงหน้า OCR แบบทนทาน (JPEG)</string>
+
+    <string name="pdf_bw_mode_robust">ขาวดำ</string>
+    <string name="pdf_bw_mode_classic">ขาวดำ (คลาสสิก)</string>
+    <string name="pdf_bw_mode_ocr_robust">การประมวลผลล่วงหน้า OCR แบบทนทาน (PDF)</string>
+    <string name="jpeg_mode_gray_clean">ขาวดำแบบปรับให้สะอาด (ฟิลเตอร์ความถี่สูง) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">สีแบบปรับให้สะอาด (ฟิลเตอร์ความถี่สูง) (JPEG)</string>
+    <string name="pdf_bw_mode_grayscale_clean">โทนสีเทาแบบปรับให้สะอาด (ฟิลเตอร์ผ่านความถี่สูง)</string>
+    <string name="pdf_bw_mode_color_clean">สีแบบปรับให้สะอาด (ฟิลเตอร์ผ่านความถี่สูง)</string>
+    <string name="skip_ocr_export_only">ข้าม OCR (ส่งออกเท่านั้น)</string>
+    <string name="skip_cropping">ข้ามการครอบตัด</string>
+    <string name="skip_edge_detection">ข้ามการตรวจจับขอบ</string>
+    <string name="preview_corner_detection">แสดงตัวอย่างการตรวจจับมุม</string>
+    <string name="btn_pick_image">โหลด</string>
+    <string name="pick_image_cd">โหลดรูปที่มีอยู่</string>
+    <!-- Multipage Export (v1 increment) -->
+    <string name="add_another_page">เพิ่มหน้า</string>
+
+    <string name="clear_all_pages">ล้างทั้งหมด</string>
+    <string name="remove_this_page">ลบหน้านี้</string>
+    <string name="multipage_not_implemented">ยังไม่รองรับการส่งออกหลายหน้า</string>
+
+    <!-- Reorder A11y controls -->
+    <string name="move_page_left">ย้ายหน้าไปทางซ้าย</string>
+    <string name="move_page_right">ย้ายหน้าไปทางขวา</string>
+
+    <!-- Back confirmation for clearing multipage session -->
+    <string name="confirm_clear_multipage_title">ลบหน้าทั้งหมด?</string>
+    <string name="confirm_clear_multipage_message">มีหลายหน้า คุณต้องการลบทั้งหมดและย้อนกลับหรือไม่?</string>
+    <string name="cancel">ยกเลิก</string>
+
+    <!-- Clear-all confirmation for trash icon in multipage -->
+    <string name="confirm_clear_pages_title">ล้างหน้าทั้งหมด?</string>
+    <string name="confirm_clear_pages_message">คุณต้องการลบหน้าทั้งหมดจากฟิล์มสตริปหรือไม่?</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">เลือกจากการสแกนที่เสร็จแล้ว</string>
+    <string name="picker_empty">ไม่พบการสแกนที่เสร็จแล้ว</string>
+    <!-- Library default collection -->
+    <string name="collection_completed_scans">การสแกนที่เสร็จสมบูรณ์</string>
+    <string name="done">ถัดไป</string>
+    <string name="thumbnail">ภาพขนาดย่อ</string>
+    <string name="delete">ลบ</string>
+
+    <!-- Picker bulk actions -->
+    <string name="select_all">เลือกทั้งหมด</string>
+    <string name="deselect_all">ยกเลิกเลือกทั้งหมด</string>
+
+    <string name="added_pages_from_registry">เพิ่ม %1$d หน้า จาก registry</string>
+
+    <!-- Add page options dialog -->    <!-- Picker states -->
+    <string name="missing_file">ไฟล์หายไป</string>
+
+    <!-- Inline OCR cues -->
+    <string name="ocr_processing_started">กำลังทำ OCR…</string>
+    <string name="ocr_processing_finished">เพิ่ม OCR สำหรับหน้านี้แล้ว</string>
+    <string name="ocr_processing_failed">OCR ล้มเหลว</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">ลบออกจาก registry</string>
+    <string name="remove_from_registry_message">ลบรายการนี้และไฟล์ที่เกี่ยวข้องหรือไม่?</string>
+    <string name="remove">ลบ</string>
+    <string name="removed_from_registry_toast">ลบเรียบร้อยแล้ว</string>
+
+    <!-- PDF quality presets (Phase 1) -->
+    <string name="pdf_quality_title">คุณภาพ/ขนาด PDF</string>
+    <string name="pdf_preset_high">สูง (300 dpi, q85)</string>
+    <string name="pdf_preset_standard">มาตรฐาน (200 dpi, q72)</string>
+    <string name="pdf_preset_small">เล็ก (150 dpi, q62)</string>
+    <string name="pdf_preset_very_small">เล็กมาก (110 dpi, q52)</string>
+    <string name="pdf_text_layer_mode_title">เลเยอร์ข้อความ PDF</string>
+    <string name="pdf_text_layer_mode_line_based">ตามบรรทัด (แนะนำ)</string>
+    <string name="pdf_text_layer_mode_word_positioned">วางตำแหน่งตามคำ (ความเข้ากันได้)</string>
+    <string name="export_options_title">ตัวเลือกการส่งออก</string>
+    <string name="jpeg_enhancement_title">สีผลลัพธ์ JPEG</string>
+    <string name="btn_options">ตัวเลือก</string>
+    <string name="btn_save">บันทึก</string>
+    <string name="btn_new">สแกนใหม่</string>
+
+    <string name="btn_review">ตรวจทาน</string>
+    <string name="edit_word_title">แก้ไขคำ</string>
+    <string name="cm_edit">แก้ไข…</string>
+    <string name="cm_merge_next">รวมกับคำถัดไป</string>
+    <string name="cm_split">แยก</string>
+    <string name="cm_delete">ลบ</string>
+    <string name="cm_case">ตัวพิมพ์ใหญ่/เล็ก</string>
+    <string name="cm_lang">ภาษา…</string>
+    <string name="case_upper">ตัวพิมพ์ใหญ่</string>
+    <string name="case_lower">ตัวพิมพ์เล็ก</string>
+    <string name="case_title">ตัวอักษรแรกเป็นตัวพิมพ์ใหญ่</string>
+    <string name="dialog_language_title">ตั้งรหัสภาษา</string>
+
+    <!-- Rotation (post-crop) -->
+    <string name="rotate_left_cd">หมุนหน้า 90° ทวนเข็มนาฬิกา</string>
+    <string name="rotate_right_cd">หมุนหน้า 90° ตามเข็มนาฬิกา</string>
+
+
+    <!-- การจัดการโมเดล OCR (ต้นแบบ) -->
+    <string name="ocr_models_manage">โมเดล OCR</string>
+    <string name="ocr_import_manual">นำเข้า .traineddata…</string>
+    <string name="ocr_discover_packs">ค้นหาแพ็กภาษา</string>
+    <string name="ocr_no_packs_found">ไม่พบแพ็กภาษา</string>
+    <string name="ocr_choose_pack">เลือกแพ็กภาษา</string>
+    <string name="ocr_no_models_in_pack">ไม่พบโมเดลในแพ็กนี้</string>
+    <string name="ocr_choose_model">เลือกโมเดลเพื่อนำเข้า</string>
+    <string name="ocr_import_success">นำเข้าโมเดลสำเร็จ</string>
+    <string name="ocr_import_failed">นำเข้าไม่สำเร็จ</string>
+
+    <string name="ocr_delete_best_model">ลบโมเดล Best</string>
+    <string name="ocr_nothing_to_delete">ไม่มีโมเดล Best สำหรับภาษาปัจจุบันให้ลบ</string>
+    <string name="ocr_delete_confirm_title">ลบโมเดล Best?</string>
+    <string name="ocr_delete_confirm_msg">ต้องการลบโมเดล Best ที่นำเข้าสำหรับ %1$s หรือไม่? โมเดล Fast
+        ที่มากับระบบจะยังคงใช้งานได้อยู่
+    </string>
+    <string name="ocr_delete_success">ลบโมเดลแล้ว</string>
+    <string name="ocr_delete_failed">การลบล้มเหลว</string>
+
+    <!-- คำแนะนำเกี่ยวกับโมเดล OCR -->
+    <string name="ocr_models_hint">เพื่อการรู้จำที่เร็วขึ้น มีโมเดลแบบกะทัดรัดรวมมาให้แล้ว หากต้องการความแม่นยำสูงขึ้น
+        คุณสามารถติดตั้งโมเดล "Best" ที่มีขนาดใหญ่กว่าได้ โดยไม่ต้องเชื่อมต่ออินเทอร์เน็ต
+    </string>
+
+    <!-- โหมดการรู้จำ OCR – คำอธิบาย -->
+    <string name="ocr_explain_prep_modes">อธิบายโหมดการรู้จำ</string>
+    <string name="ocr_prep_modes_title">โหมดการรู้จำ: คำอธิบายแบบง่าย</string>
+    <string name="ocr_prep_modes_message">มีสองวิธีในการส่งภาพไปยังเอนจิน OCR:\n\n• ต้นฉบับ (ไม่มีการประมวลผลล่วงหน้า) —
+        เร็วที่สุด ภาพจะถูกส่งตามสภาพเดิม เหมาะสำหรับการสแกนที่สะอาดและมีคอนทราสต์สูง
+        อาจพลาดข้อความที่จางหรือมีสัญญาณรบกวน\n\n• OpenCV ขั้นสูง —
+        ออกแบบใหม่เพื่อความแม่นยำสูงสุดสำหรับหน้าที่ยากต่อการประมวลผล แก้ไขความเอียง ปรับความสม่ำเสมอของเงาและแสง
+        ใช้การลดสัญญาณรบกวนแบบรักษาขอบ และการปรับขนาดอัจฉริยะ สิ่งสำคัญคือ Tesseract จะได้รับภาพระดับสีเทาคุณภาพสูง
+        (ไม่ใช่ขาวดำแบบแข็ง) เพื่อรักษารายละเอียดเล็ก ๆ เช่น ห่วงของตัวอักษร “o” และตัวเลขขนาดเล็ก
+        ให้ความแม่นยำดีที่สุดสำหรับหน้าที่ยาก แต่ช้ากว่าและใช้หน่วยความจำมากกว่า\n\nการประมวลผลหลัง OCR:
+        แก้ไขข้อผิดพลาดในการรู้จำที่พบบ่อย เช่น ความสับสน (0↔O, 1↔l↔I, rn↔m) และตรวจสอบคำที่ไม่แน่ชัดด้วยพจนานุกรม
+        เปิดใช้งานโดยค่าเริ่มต้น; ปิดใช้งานสำหรับรหัสทางเทคนิคหรือหมายเลขซีเรียล
+    </string>
+
+    <!-- การเลือกโหมดการรู้จำ OCR -->
+    <string name="ocr_choose_prep_mode_menu">โหมดการรู้จำ…</string>
+    <string name="ocr_choose_prep_mode_title">เลือกโหมดการรู้จำ</string>
+    <string name="ocr_mode_original">ต้นฉบับ (ไม่ประมวลผลล่วงหน้า)</string>
+    <string name="ocr_mode_quick">OpenCV Quick (รวดเร็ว)</string>
+    <string name="ocr_mode_robust">OpenCV Robust (คุณภาพสูง)</string>
+    <string name="opt_paddle_best_ocr">คุณภาพ Paddle OCR ดีที่สุด (ช้าลง)</string>
+    <string name="ocr_prep_mode_set">ตั้งค่าโหมดการรู้จำเป็น %1$s แล้ว</string>
+
+    <!-- Labels -->
+    <string name="label_language">ภาษา</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d คำ</string>
+    <string name="low_percent_format">ความมั่นใจต่ำ %1$d%%</string>
+    <string name="low_placeholder">ต่ำ —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 คำ</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">ปิด</string>
+    <string name="cd_zoom_chip_open_menu">เปิดเมนูการซูม</string>
+    <string name="cd_minimap">ภาพรวมของเอกสาร แตะเพื่อไปยังตำแหน่ง
+    </string>    <!-- A11y content descriptions for menu items -->    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">กรุณากรอกค่า</string>
+
+    <!-- Collections / Library (feature-flagged) -->
+    <string name="new_collection_title">คอลเลกชันใหม่</string>
+    <string name="collection_name_hint">ชื่อคอลเลกชัน</string>
+    <string name="create">สร้าง</string>
+    <string name="collection_not_empty">คอลเลกชันนี้ไม่ว่างเปล่า</string>
+    <string name="collection_items_count">%1$d รายการ</string>
+    <string name="deleted">ลบแล้ว</string>
+    <string name="open_collections">คอลเลกชัน</string>
+    <string name="index_existing_scans">จัดทำดัชนีการสแกนที่มีอยู่</string>
+    <string name="rename">เปลี่ยนชื่อ</string>
+    <string name="ok">ตกลง</string>
+    <string name="no_scans_yet">ยังไม่มีการสแกน</string>
+    <string name="rename_collection_title">เปลี่ยนชื่อคอลเลกชัน</string>
+    <string name="action_add_to_collection">เพิ่มไปยังคอลเลกชัน…</string>
+    <string name="place_in_collection_title">เพิ่มไปยังคอลเลกชัน</string>
+    <string name="create_new_collection">สร้างคอลเลกชันใหม่…</string>
+    <string name="scan_added_to_collection">เพิ่มการสแกนไปยัง “%1$s” แล้ว</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">การทำงานของไลบรารี</string>    <!-- Library list: collections membership -->
+    <string name="in_collections_prefix">อยู่ใน: %1$s</string>
+    <!-- Delete confirmation (ScanDetails) -->
+    <string name="delete_warning_irreversible">ไฟล์จะถูกลบออกจากอุปกรณ์ การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">ไม่มีเอกสารสำหรับส่งออก</string>
+    <string name="failed_to_export_document">ไม่สามารถส่งออกเอกสารได้</string>
+    <string name="error_during_export_with_reason">เกิดข้อผิดพลาดระหว่างการส่งออก: %1$s</string>
+    <string name="document_exported">ส่งออกเอกสาร %1$s แล้ว</string>
+    <string name="document_multipage_exported">ส่งออกเอกสาร (หลายหน้า) %1$s แล้ว</string>
+    <string name="no_target_selected">ยังไม่ได้เลือกปลายทาง</string>
+    <string name="image_exported">ส่งออกภาพ %1$s แล้ว</string>
+    <string name="failed_to_export_image">ไม่สามารถส่งออกภาพได้</string>
+    <string name="error_during_jpeg_export_with_reason">เกิดข้อผิดพลาดระหว่างการส่งออก JPEG: %1$s</string>
+    <string name="zip_exported">ส่งออก ZIP %1$s แล้ว</string>
+    <string name="failed_to_export_zip">ไม่สามารถส่งออก ZIP ได้</string>
+    <string name="error_during_zip_export_with_reason">เกิดข้อผิดพลาดระหว่างการส่งออก ZIP: %1$s</string>
+    <string name="ocr_text_exported_as_txt">ส่งออกข้อความ OCR เป็น TXT แล้ว</string>
+    <string name="error_exporting_ocr_text_with_reason">เกิดข้อผิดพลาดในการส่งออกข้อความ OCR: %1$s</string>
+    <string name="no_document_to_share_export_first">ไม่มีเอกสารสำหรับแชร์ โปรดส่งออกเอกสารก่อน</string>
+    <string name="error_sharing_document_with_reason">เกิดข้อผิดพลาดในการแชร์เอกสาร: %1$s</string>
+    <string name="feature_scan_library_disabled">ฟีเจอร์คลังสแกนถูกปิดใช้งาน</string>
+    <string name="navigation_failed">การนำทางล้มเหลว</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">ไม่มีรหัสสแกน</string>
+    <string name="picker_failed">การเลือกไม่สำเร็จ</string>
+    <string name="share_failed">การแชร์ไม่สำเร็จ</string>
+    <string name="no_app_found_to_open_file">ไม่พบแอปสำหรับเปิดไฟล์นี้</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">ลบออกจากคอลเลกชันนี้หรือไม่?</string>
+    <string name="removed_from_collection">ลบออกจากคอลเลกชันแล้ว</string>
+    <string name="indexed_new_items">จัดทำดัชนี %1$d รายการใหม่แล้ว</string>
+    <string name="nothing_new_to_index">ไม่มีรายการใหม่สำหรับจัดทำดัชนี</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">จัดแนวเอกสารแล้ว</string>
+    <string name="a11y_hint_move_left">ขยับไปทางซ้าย</string>
+    <string name="a11y_hint_move_right">ขยับไปทางขวา</string>
+    <string name="a11y_hint_move_up">ขยับขึ้น</string>
+    <string name="a11y_hint_move_down">ขยับลง</string>
+    <string name="a11y_hint_move_closer">เข้าใกล้พื้นผิวมากขึ้น</string>
+    <string name="a11y_hint_move_back">ถอยห่างจากพื้นผิวมากขึ้น</string>
+    <string name="a11y_hint_too_far">ขยับเข้าใกล้ขึ้น เอกสารอยู่ไกลเกินไป</string>
+    <string name="a11y_hint_tilt_left">เอียงไปทางซ้าย</string>
+    <string name="a11y_hint_tilt_right">เอียงไปทางขวา</string>
+    <string name="a11y_hint_tilt_forward">เอียงไปข้างหน้า</string>
+    <string name="a11y_hint_tilt_back">เอียงไปข้างหลัง</string>
+    <string name="a11y_hold_still">อยู่นิ่งๆ</string>
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">ตรวจพบเอกสาร — พร้อมถ่ายภาพ</string>
+    <string name="a11y_no_document_detected">ไม่พบเอกสาร</string>
+    <string name="a11y_orientation_portrait_tip">ดูเหมือนเป็นโหมดตั้ง
+        โทรศัพท์ในแนวตั้งมักเหมาะที่สุดสำหรับหน้ากระดาษที่มีความสูง
+    </string>
+    <string name="a11y_orientation_landscape_tip">ดูเหมือนเป็นโหมดแนวนอน
+        ลองถือโทรศัพท์ในแนวนอนสำหรับหน้ากระดาษที่กว้าง
+    </string>
+    <string name="a11y_crop_summary_detected">การวิเคราะห์ภาพที่บันทึกไว้: ตรวจพบเอกสาร</string>
+    <string name="a11y_crop_summary_no_doc">การวิเคราะห์ภาพที่บันทึก: ไม่พบเอกสาร</string>
+    <string name="accessibility_mode_label">โหมดการเข้าถึง</string>
+    <string name="a11y_camera_ready">กล้องพร้อมแล้ว แตะสองครั้งที่ “สแกน” เพื่อถ่ายภาพ</string>
+    <string name="a11y_low_light_toggle_flash">ตรวจพบแสงน้อย แตะสองครั้งที่ “แฟลช” เพื่อเปิดใช้งาน</string>
+    <string name="a11y_capture_failed">ถ่ายภาพไม่สำเร็จ</string>
+    <string name="a11y_volume_shutter_hint">เคล็ดลับ: ในโหมดการเข้าถึง คุณสามารถถ่ายภาพด้วยปุ่มเพิ่ม/ลดเสียงได้</string>
+    <string name="a11y_capture_success">ถ่ายภาพเรียบร้อยแล้ว
+    </string>    <!-- การช่วยการเข้าถึง: คำอธิบายรายการและการประกาศ -->
+    <string name="page_n_of_m">หน้า %1$d จาก %2$d</string>
+    <string name="pages_count_announcement">จำนวนหน้า: %1$d</string>
+    <string name="export_started">เริ่มการส่งออกแล้ว</string>
+    <string name="page_removed">ลบหน้าแล้ว</string>
+    <string name="page_moved_to_position">ย้ายไปยังตำแหน่ง %1$d</string>
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">หมุน OCR อัตโนมัติ (ใช้กับการส่งออกด้วย)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">การประมวลผล OCR ภายหลัง (แก้ไขข้อผิดพลาดทั่วไป)</string>
+    <string name="opt_layout_analysis">การวิเคราะห์เค้าโครง (คอลัมน์, ตาราง)
+    </string>    <!-- Options: Experimental directional mapping fallback -->
+    <!-- Developer / Debug options -->
+    <!-- Library / Collections -->    <!-- PDF Import -->
+    <string name="error_unknown_file_type">ไม่ทราบประเภทไฟล์</string>
+    <string name="error_unsupported_file_type">ไม่รองรับไฟล์ประเภทนี้</string>
+    <string name="error_cannot_open_pdf">ไม่สามารถเปิดไฟล์ PDF ได้</string>
+    <string name="error_pdf_empty">ไฟล์ PDF ไม่มีหน้า</string>
+    <string name="error_pdf_import_failed">การนำเข้าไฟล์ PDF ล้มเหลว</string>
+    <string name="error_pdf_page_render_failed">ไม่สามารถแสดงผลหน้าได้</string>
+    <string name="pdf_select_page">เลือกหน้า</string>
+    <string name="pdf_page_number">หน้า %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">เลือกภาษา OCR</string>
+    <string name="ocr_max_languages_warning">อนุญาตให้เลือกได้สูงสุด 2 ภาษา</string>
+    <string name="ocr_no_language_selected">โปรดเลือกอย่างน้อยหนึ่งภาษา</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">ยกเลิกการเปลี่ยนแปลง?</string>
+    <string name="msg_discard_changes">คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก ต้องการยกเลิกหรือไม่?</string>
+    <string name="btn_discard">ยกเลิก</string>
+
+    <string name="btn_reocr">รัน OCR อีกครั้ง</string>
+    <string name="reocr_processing">กำลังรัน OCR อีกครั้ง…</string>
+    <string name="reocr_success">อัปเดตคำแล้ว: %1$s</string>
+    <string name="reocr_failed">การรัน OCR ล้มเหลว</string>
+    <string name="reocr_no_language">โปรดเลือกภาษาก่อน</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">100%</string>
+    <string name="zoom_200">200%</string>
+    <string name="zoom_300">300%</string>
+    <string name="zoom_400">400%</string>
+    <string name="zoom_fit">พอดี</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">เค้าโครง</string>
+    <string name="label_text">ข้อความ</string>
+    <string name="label_document">เอกสาร</string>
+
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">ขนาดหน้า</string>
+    <string name="dpi_settings_label">การตั้งค่า DPI</string>
+    <string name="page_format_fit">ปรับตามภาพ (แนะนำ)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+
+    <string name="restore_access">กู้คืนการเข้าถึง</string>
+    <string name="status">สถานะ</string>
+    <string name="ocr_text_editor_hint">แก้ไขข้อความ OCR</string>
+
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">การตั้งค่าการล้างข้อมูลสแกนที่เสร็จสิ้น</string>
+    <string name="cleanup_policy">นโยบายการล้างข้อมูล</string>
+    <string name="cleanup_policy_none">ไม่มี (เก็บทั้งหมด)</string>
+    <string name="cleanup_policy_max_age">ตามอายุ</string>
+    <string name="cleanup_policy_max_count">ตามจำนวน</string>
+    <string name="cleanup_policy_max_storage">ตามพื้นที่จัดเก็บ</string>
+    <string name="cleanup_policy_combined">รวมกัน</string>
+    <string name="cleanup_max_age_days">อายุสูงสุด (วัน)</string>
+    <string name="cleanup_max_count">จำนวนสูงสุด</string>
+    <string name="cleanup_max_storage_mb">พื้นที่จัดเก็บสูงสุด (MB)</string>
+    <string name="cleanup_settings_saved">บันทึกการตั้งค่าการล้างข้อมูลแล้ว</string>
+    <string name="inbox_mode">โหมดกล่องขาเข้า</string>
+    <string name="inbox_mode_enable">เปิดใช้โฟลเดอร์ส่งออกเริ่มต้น</string>
+    <string name="inbox_select_folder">เลือกโฟลเดอร์</string>
+    <string name="inbox_folder_set">โฟลเดอร์ Inbox: %1$s</string>
+    <string name="inbox_folder_none">ไม่ได้เลือกโฟลเดอร์</string>
+    <string name="inbox_saved">✓ บันทึกไปยัง Inbox แล้ว</string>
+    <string name="inbox_permission_lost">สูญเสียการเข้าถึงโฟลเดอร์ Inbox กรุณาเลือกโฟลเดอร์ใหม่</string>
+    <string name="inbox_no_folder_selected">กรุณาเลือกโฟลเดอร์ Inbox ก่อน</string>
+    <string name="inbox_clear">ล้างโฟลเดอร์ Inbox</string>
+    <string name="inbox_filename_format">รูปแบบชื่อไฟล์</string>
+    <string name="inbox_auto_new_scan">เริ่มสแกนใหม่โดยอัตโนมัติหลังส่งออก</string>
+    <string name="inbox_filename_date_scan">วันที่ + Scan (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">วันที่ + เวลา + Scan (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">วันที่เท่านั้น (2026-03-04)</string>
+    <string name="pdf_bw_mode_none">สี</string>
+    <!-- Translations added for missing strings -->
+    <string name="confirm_remove_page_title">ลบหน้านี้หรือไม่?</string>
+    <string name="confirm_remove_page_message">คุณต้องการลบหน้านี้ออกจากแถบฟิล์มหรือไม่?</string>
+    <string name="crop_aspect_label">อัตราส่วนภาพ</string>
+    <string name="crop_aspect_auto">อัตโนมัติ (แนะนำ)</string>
+    <string name="crop_aspect_original">คงต้นฉบับไว้ (ไม่ปรับอัตราส่วน)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">กำหนดเอง…</string>
+    <string name="crop_aspect_custom_with_ratio">กำหนดเอง (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">อัตราส่วนภาพแบบกำหนดเอง</string>
+    <string name="crop_aspect_custom_width_hint">ความกว้าง</string>
+    <string name="crop_aspect_custom_height_hint">ความสูง</string>
+    <string name="crop_aspect_custom_invalid">กรุณาใส่ตัวเลขบวกระหว่าง 1:1 ถึง 1:20</string>
+    <string name="crop_aspect_output_size_hint">ผลลัพธ์: %1$d × %2$d พิกเซล</string>
+    <string name="crop_hint_corner_off_image">มุมอยู่นอกภาพ — ผลลัพธ์อาจมีขอบสีดำ</string>
+    <string name="crop_edge_dragged">เลือกขอบแล้ว ลากเพื่อย้ายขอบ</string>
+    <!-- Document cleanup -->
+    <string name="document_cleanup_title">การทำความสะอาดเอกสาร</string>
+    <string name="document_cleanup_original">ต้นฉบับ</string>
+    <string name="document_cleanup_natural">เป็นธรรมชาติ</string>
+    <string name="document_cleanup_enhanced">ปรับปรุง</string>
+    <string name="document_cleanup_clean_text">ข้อความสะอาด</string>
+    <string name="workflow_step_description">ขั้นตอนที่ %1$d จาก %2$d: %3$s</string>
+    <string name="search_scans">ค้นหาเอกสารสแกน</string>
+</resources>

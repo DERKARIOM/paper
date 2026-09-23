@@ -1,0 +1,7 @@
+MakeACopy 2.3.1 (Release)
+
+- Improved accessibility: new and expanded A11y guidance, including haptic feedback and clearer hints.
+- Reorder pages (A11y-friendly): actions to move pages left or right.
+- Collections / indexing: completed scans are now automatically placed in a dedicated default collection, making them easier to find.
+- Unified rotation handling: more consistent image rotation across the entire workflow (viewing, processing, export).
+- OCR auto-rotate improved and clarified: clearer option explanation and better handling of detected rotation during export.

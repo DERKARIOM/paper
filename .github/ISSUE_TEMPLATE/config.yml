@@ -1,0 +1,12 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/egdels/makeacopy/discussions
+    about: For general questions, ideas, and discussions
+  - name: 📖 Documentation
+    url: https://github.com/egdels/makeacopy/blob/main/README.md
+    about: Read the documentation and contributing guide
+  - name: 🔒 Report Security Vulnerability
+    url: https://github.com/egdels/makeacopy/security/advisories/new
+    about: Report security issues confidentially
+

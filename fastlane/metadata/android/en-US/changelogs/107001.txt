@@ -1,0 +1,8 @@
+1.7.0 (Release)
+
+- Added support for larger, high-accuracy OCR models (“best” language packs).
+- New: Load OCR models fully offline — either via the add-on language pack or manual import of .traineddata files.
+- Improved OCR workflow in the app’s OCR screen to manage/download models without internet access.
+- Fixed: File sharing and export on SDCard-based storage (FileProvider path configuration corrected for Android 11+).
+
+Note: The add-on provides the bigger “best” models separately to keep the main app lightweight.

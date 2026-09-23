@@ -1,0 +1,8 @@
+🔧 Under-the-Hood Improvements (Build & Size Optimization)
+
+- Switched to NDK 27.3.13750724 for improved compatibility and simpler builds
+- Reduced APK size by targeting only ARM architectures: arm64-v8a and armeabi-v7a
+- OpenCV is now built with only the required modules: core and imgproc
+  Unused modules like dnn, gapi, video, features2d and others are excluded
+
+Result: Smaller APK, faster build times, and better performance on devices

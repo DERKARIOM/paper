@@ -1,0 +1,10 @@
+Version 1.2.1 – 2025-08-29
+
+Maintenance
+- Switch to per-ABI versionCodes (base*10 + ABI code) for proper update ordering in F-Droid and Play Console
+- No functional changes to features
+
+Notes
+- Base versionCode: 10201
+- ABI versionCodes: 102011 (armeabi-v7a), 102012 (arm64-v8a), 102013 (x86), 102014 (x86_64)
+- All APKs are functionally identical; they differ only by ABI and versionCode

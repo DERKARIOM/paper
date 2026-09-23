@@ -1,0 +1,8 @@
+1.5.2 (Release)
+
+- Improved reliability of OCR status updates by modernizing in‑app broadcasts (no LocalBroadcastManager; uses up‑to‑date APIs)
+- Stability: replaced deprecated list position APIs to ensure smoother page ordering and interactions on newer devices
+- Bump library versions: AGP to 8.11.2, JUnit to 1.3.0, Espresso Core to 3.7.0, Material to 1.13.0, and others.
+
+- JPEG export: fixed orientation handling so rotated scans are exported with the correct rotation (consistent with PDF export)
+- Preview: when "Export as JPEG" is selected, the PDF-only option "Convert B/W" is ignored; only JPEG options affect the preview

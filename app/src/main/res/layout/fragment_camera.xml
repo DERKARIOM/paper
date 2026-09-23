@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/camera_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!-- Header / Info -->
+    <TextView
+            android:id="@+id/text_camera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/camera_ready_tap_the_button_to_scan_a_document"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:accessibilityHeading="true"
+            android:accessibilityLiveRegion="polite"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Workflow stepper: Camera → Crop → OCR → Export (step 1) -->
+    <de.schliweb.makeacopy.ui.views.WorkflowStepperView
+            android:id="@+id/workflow_stepper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:currentStep="1"
+            app:layout_constraintTop_toBottomOf="@id/text_camera"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Barrier for buttons -->
+    <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/buttons_top_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:barrierAllowsGoneWidgets="false"
+            app:constraint_referenced_ids="scan_button_container,button_container" />
+
+    <!-- Skip OCR -->
+
+    <!-- Camera preview -->
+    <androidx.camera.view.PreviewView
+            android:id="@+id/view_finder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:focusable="false"
+            android:clickable="false"
+            android:importantForAccessibility="no"
+            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
+            app:layout_constraintBottom_toTopOf="@id/focus_control"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Corner preview overlay -->
+    <de.schliweb.makeacopy.ui.camera.CameraCornersOverlay
+            android:id="@+id/corner_overlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:clickable="false"
+            android:focusable="false"
+            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
+            app:layout_constraintBottom_toTopOf="@id/focus_control"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Tap-to-focus indicator overlay -->
+    <de.schliweb.makeacopy.ui.camera.FocusRingView
+            android:id="@+id/focus_ring"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:importantForAccessibility="no"
+            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
+            app:layout_constraintBottom_toTopOf="@id/focus_control"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Image preview -->
+    <ImageView
+            android:id="@+id/captured_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/captured_image"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
+            app:layout_constraintBottom_toTopOf="@id/focus_control"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Manual focus control -->
+    <LinearLayout
+            android:id="@+id/focus_control"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/exposure_control"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+                android:id="@+id/focus_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/manual_focus_auto"
+                android:textSize="12sp"
+                android:minWidth="56dp"
+                android:gravity="center"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/focus_af_button"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:checkable="true"
+                android:text="@string/manual_focus_auto"
+                android:textSize="12sp"
+                android:contentDescription="@string/manual_focus_af_button_cd"/>
+
+        <com.google.android.material.slider.Slider
+                android:id="@+id/focus_slider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:valueFrom="1"
+                android:valueTo="100"
+                android:stepSize="1"
+                app:labelBehavior="floating"
+                android:contentDescription="@string/manual_focus_cd"/>
+
+    </LinearLayout>
+
+    <!-- Exposure compensation control -->
+    <LinearLayout
+            android:id="@+id/exposure_control"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/camera_actions_row"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+                android:id="@+id/exposure_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exposure_compensation_cd"
+                android:textSize="12sp"
+                android:minWidth="56dp"
+                android:gravity="center"/>
+
+        <com.google.android.material.slider.Slider
+                android:id="@+id/exposure_slider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:stepSize="1"
+                app:labelBehavior="floating"
+                android:contentDescription="@string/exposure_compensation_cd"/>
+
+    </LinearLayout>
+
+    <!-- Actions row: settings icon above the button bar (analog zu OCRFragment) -->
+    <LinearLayout
+            android:id="@+id/camera_actions_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/scan_button_container">
+
+        <ImageButton
+                android:id="@+id/button_camera_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="16dp"
+                android:padding="8dp"
+                android:contentDescription="@string/btn_options"
+                android:src="@drawable/ic_tune"
+                app:tint="?attr/colorControlNormal"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                app:tooltipText="@string/btn_options"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+                <!-- Library entry icon (feature-flagged) -->
+        <ImageButton
+                android:id="@+id/button_open_library_cam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="16dp"
+                android:padding="8dp"
+                android:contentDescription="@string/open_collections"
+                android:src="@drawable/ic_library"
+                android:visibility="gone"
+                app:tint="?attr/colorControlNormal"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                app:tooltipText="@string/open_collections"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+    </LinearLayout>
+
+    <!-- Zoom/Lens button: rechtsbündig analog zum Aspect-Ratio-Button im CropFragment. -->
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_camera_zoom"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/camera_zoom_cd"
+            android:minWidth="48dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:drawablePadding="4dp"
+            android:text="@string/camera_zoom_ratio"
+            android:textColor="?attr/colorControlNormal"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_zoom_24"
+            app:drawableTint="?attr/colorControlNormal"
+            app:tooltipText="@string/camera_zoom_cd"
+            app:layout_constraintTop_toTopOf="@id/camera_actions_row"
+            app:layout_constraintBottom_toBottomOf="@id/camera_actions_row"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Live focus-quality (sharpness) indicator: 5 segments, feature-flagged, hidden by default.
+         Placed start-aligned in the actions row band, mirroring the zoom button on the end side. -->
+    <de.schliweb.makeacopy.ui.camera.FocusQualityIndicatorView
+            android:id="@+id/focus_quality_indicator"
+            android:layout_width="72dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="16dp"
+            android:visibility="gone"
+            android:contentDescription="@string/focus_quality_low"
+            app:layout_constraintTop_toTopOf="@id/camera_actions_row"
+            app:layout_constraintBottom_toBottomOf="@id/camera_actions_row"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- Scan buttons -->
+    <LinearLayout
+            android:id="@+id/scan_button_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="?attr/colorSurfaceContainer"
+            android:elevation="8dp"
+            android:padding="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Flash -->
+        <ImageButton
+                android:id="@+id/button_flash"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/toggle_flashlight"
+                android:src="@drawable/ic_flash_off"/>
+
+        <!-- Pick Image (Left) -->
+        <Button
+                android:id="@+id/button_pick_image"
+                style="@style/Widget.MakeACopy.Button.Tonal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/btn_pick_image"
+                android:contentDescription="@string/pick_image_cd"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        <Space
+                android:layout_width="16dp"
+                android:layout_height="0dp" />
+
+        <!-- Scan (Right) -->
+        <Button
+                android:id="@+id/button_scan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/btn_scan"
+                android:maxLines="1"
+                android:ellipsize="end" />
+    </LinearLayout>
+
+    <!-- Review buttons -->
+    <LinearLayout
+            android:id="@+id/button_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="?attr/colorSurfaceContainer"
+            android:elevation="8dp"
+            android:padding="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+                android:id="@+id/button_retake"
+                style="@style/Widget.MakeACopy.Button.Tonal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="12dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/back"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        <Button
+                android:id="@+id/button_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/next"
+                android:maxLines="1"
+                android:ellipsize="end" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

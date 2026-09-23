@@ -1,0 +1,11 @@
+- Persist export options using SharedPreferences in ExportFragment
+- Improve export success message for clarity
+- Enhancements in OpenCV integration and usage of advanced features.
+- Update last modified date and contact links in privacy policies
+- Update release workflow to use changelog for GitHub releases
+
+
+
+
+
+

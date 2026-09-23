@@ -1,0 +1,17 @@
+1.6.0 (Release)
+
+- Added OCR support for Chinese: Simplified (chi_sim) and Traditional (chi_tra)
+- Camera improvements: Auto-focus on each scan, tap-to-focus by touching the viewfinder
+- Enhanced image quality: Higher resolution and maximum JPEG quality for sharper scans
+- Accessibility: Added performClick support for better usability
+- Build system: Enabled parallel OpenCV Android builds for faster CI and local development
+- Export screen: added a small Share icon next to the Plus. It shares the last successfully exported file.
+- Replaced the main Share button with an Add button to capture a new page via a fresh scan (not from the registry).
+- Short label for the Add button (“Add”).
+- Trash icon is always visible; it becomes enabled only when more than one page exists.
+- Plus icon now jumps directly to Completed Scans (picker) without the intermediate dialog.
+- During saving/export, all buttons are temporarily disabled to avoid accidental actions; they are restored afterward.
+- Share icon is automatically enabled after a successful save/export.
+- Replaced the large DocAligner model with the lightweight version to reduce app size and improve performance.
+- ONNX build script updated: switched from CPU-only to XNNPACK and NNAPI execution providers for faster inference on Android devices.
+- Code cleanup and minor bug fixes

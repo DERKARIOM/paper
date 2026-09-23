@@ -1,0 +1,4 @@
+1.7.1 (Release)
+
+- Enhance external file directory fallback for reliable storage on varied devices (SD card/internal storage).
+- Implement robust FileProvider URI handling with proper fallback to prevent crashes.

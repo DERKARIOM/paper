@@ -1,0 +1,22 @@
+Version 1.2.0 – 2025-08-29
+
+New
+- JPEG export in addition to PDF
+- Optional enhancement: AUTO (contrast/sharpen) or Black & White (text)
+- Save via SAF with custom destination and filename DOC_YYYYMMDD_HHmmss.jpg
+
+Improvements
+- Memory protection for very large images
+- Stability improvements in image processing (OpenCV)
+- Edge-to-edge UI updated for Android 15 (androidx.activity EdgeToEdge)
+- OCR screen: bottom action button above navigation bar on Android 10, placed lower for reachability
+- Build & maintenance: removed deprecated memory trim constants, surfaced deprecation warnings, added 16 KB page-size verification script for native libs
+
+Fixes
+- Various minor bug fixes and UI polish for export and sharing
+- Improved readability in dark mode: low-light warning dialog buttons now use high-contrast text color
+
+Notes
+- AUTO = histogram equalization + unsharp mask
+- Black & White (Text) = robust binarization for readability
+- Native libraries rebuilt with 16 KB page size (-Wl,-z,max-page-size=16384) → compliance, no functional changes

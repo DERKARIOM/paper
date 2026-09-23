@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Status chips as a custom action view -->
+    <item
+        android:id="@+id/action_status_chips"
+        android:title="@string/status"
+        app:showAsAction="always"
+        app:actionLayout="@layout/menu_action_status_chips" />
+
+</menu>

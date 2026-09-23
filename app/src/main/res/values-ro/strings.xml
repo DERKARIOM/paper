@@ -1,0 +1,498 @@
+<resources>
+    <string name="app_name">MakeACopy</string>
+
+    <string name="tip_text_mode_editing">Mod text: În prezent, întreruperile de rând și semnele de punctuație sunt
+        normalizate la spații. Dacă se introduc mai puține cuvinte decât au fost recunoscute, celelalte cuvinte OCR
+        rămân neschimbate. Modificările sunt aplicate după o scurtă pauză.
+    </string>
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">Cameră</string>
+    <string name="title_crop">Decupare</string>
+    <string name="title_ocr">OCR</string>
+    <string name="title_export">Exportare</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">Scanare</string>
+    <string name="btn_crop">Decupare</string>
+    <string name="btn_process">Procesare</string>
+    <string name="btn_share">Partajare</string>
+    <string name="btn_share_text">Partajează textul</string>
+    <string name="next">Următor</string>
+    <string name="back">Înapoi</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">Permisiunea camerei este necesară pentru a scana documente</string>
+    <string name="confirm">Confirmare</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">Camera este pregătită. Atinge butonul pentru a scana
+        un document.
+    </string>
+    <string name="captured_image">Imagine capturată</string>
+    <string name="image_to_crop">Imagine de decupat</string>
+    <string name="cropped_image">Imagine decupată</string>
+    <string name="document_preview">Previzualizare document</string>
+    <string name="include_ocr_text">Exportă OCR ca fișier TXT separat</string>
+    <string name="ocr_results_will_appear_here">Rezultatele OCR vor apărea aici</string>
+    <string name="ocr_no_text_detected">Nu a fost detectat niciun text</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Ajustează colțurile
+        trapezului pentru a selecta zona de decupat, apoi apasă butonul Decupare.
+    </string>
+    <string name="no_document_ready_process_ocr_first">Niciun document pregătit. Procesează mai întâi OCR.</string>
+    <string name="document_ready_for_export">Document pregătit pentru export</string>
+    <string name="processing_image">Procesare imagine…</string>
+    <string name="no_image_processed_crop_an_image_first">Nicio imagine procesată. Decupează o imagine mai întâi.
+    </string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">Procesarea OCR este completă. Atinge
+        butonul pentru a continua la export.
+    </string>
+
+    <string name="ocr_found_rotation">Rotație detectată: %1$d°</string>
+    <string name="ocr_score">Scor OCR: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">Rotație detectată: %1$d° — scor OCR: %2$d%%</string>
+
+    <!-- Explicație suplimentară adăugată în dialogul „Explică modurile de recunoaștere” -->
+    <string name="ocr_prep_modes_autorotate_note">Rotire automată OCR: Când este activată, OCR încearcă pagina și în
+        pași de 90° (0/90/180/270) și alege cel mai bun rezultat. Rotația detectată poate fi aplicată automat la export
+        dacă nu ai rotit manual pagina. Această opțiune poate fi activată sau dezactivată în „Alege modul de
+        recunoaștere”.
+    </string>
+
+    <string name="initializing_camera">Inițializare cameră…</string>
+    <string name="resetting_camera">Resetare cameră…</string>
+    <string name="error_initializing_camera">Eroare la inițializarea camerei: %1$s</string>
+    <string name="error_camera_provider_null">Eșec la inițializarea camerei – furnizor nul</string>
+    <string name="error_camera_not_initialized">Camera nu este inițializată. Încearcă din nou.</string>
+    <string name="error_image_capture_failed">Capturarea imaginii a eșuat: %1$s</string>
+    <string name="error_displaying_image">Eroare la afișarea imaginii: %1$s</string>
+    <string name="error_resetting_camera">Eroare la resetarea camerei: %1$s</string>
+    <string name="error_toggling_flashlight">Eroare la comutarea lanternei: %1$s</string>
+    <string name="error_camera_preview_failed">Previzualizarea camerei nu a putut fi pornită. Încearcă din nou.</string>
+
+    <string name="share_logs">Partajează jurnalele</string>
+    <string name="share_logs_subject">Jurnale de diagnostic MakeACopy</string>
+    <string name="share_logs_chooser_title">Partajează jurnalele prin…</string>
+    <string name="share_logs_error">Nu s-au putut pregăti jurnalele: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">Tonuri de gri</string>
+    <string name="export_as_jpeg">Exportă ca JPEG</string>
+    <string name="export_format_label">Format de export</string>
+    <string name="export_as_pdf">Exportă ca PDF (implicit)</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">Comută lanterna</string>
+    <string name="flashlight_on">Lanternă pornită</string>
+    <string name="flashlight_off">Lanternă oprită</string>
+    <string name="flashlight_not_available">Lanterna nu este disponibilă pe acest dispozitiv</string>
+    <string name="low_light_detected">Luminozitate scăzută detectată. Dorești să pornești lanterna?</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">EV %1$s</string>
+    <string name="exposure_compensation_cd">Cursor compensare expunere</string>
+    <string name="exposure_compensation_option">Compensare expunere</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">Glisor pentru focalizare manuală</string>
+    <string name="manual_focus_af_button_cd">Comutare la focalizare automată</string>
+    <string name="autofocus_enabled">Focalizare automată activată</string>
+    <string name="manual_focus_locked">Focalizare manuală blocată</string>
+    <string name="manual_focus_option">Focalizare manuală</string>
+    <string name="focus_quality_option">Indicator de calitate a focalizării</string>
+    <string name="tap_to_focus_started">Se focalizează…</string>
+    <string name="tap_to_focus_done">Focalizare ajustată</string>
+    <string name="tap_to_focus_requested">Focalizare solicitată</string>
+    <string name="tap_to_focus_not_locked">Focalizarea nu a putut fi blocată aici</string>
+    <string name="tap_to_focus_not_supported">Focalizarea prin atingere nu este acceptată aici</string>
+    <string name="tap_to_focus_failed">Nu s-a putut focaliza aici</string>
+    <string name="focus_quality_low">Calitatea focalizării: scăzută</string>
+    <string name="focus_quality_good">Calitatea focalizării: bună</string>
+    <string name="focus_quality_excellent">Calitatea focalizării: excelentă</string>
+    <string name="camera_zoom_title">Zoom / obiectiv</string>
+    <string name="camera_zoom_cd">Alege zoomul sau obiectivul</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">Zoomul nu este disponibil pe acest dispozitiv</string>
+
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">Culoare</string>
+    <string name="jpeg_mode_auto">Tonuri de gri</string>
+    <string name="jpeg_mode_bw_text">Alb-negru</string>
+    <string name="jpeg_mode_bw_robust">Alb-negru (robust) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">Preprocesare OCR robustă (JPEG)</string>
+
+    <string name="pdf_bw_mode_robust">Alb-negru</string>
+    <string name="pdf_bw_mode_classic">A/N (clasic)</string>
+    <string name="pdf_bw_mode_ocr_robust">Preprocesare OCR robustă (PDF)</string>
+    <string name="jpeg_mode_gray_clean">Nuanțe de gri curățate (filtru trece-sus) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">Culori curățate (filtru trece-sus) (JPEG)</string>
+    <string name="pdf_bw_mode_grayscale_clean">Tonuri de gri – curățate (trece-sus)</string>
+    <string name="pdf_bw_mode_color_clean">Culoare – curățată (trece-sus)</string>
+    <string name="skip_ocr_export_only">Omite OCR (doar export)</string>
+    <string name="skip_cropping">Omite decuparea</string>
+    <string name="skip_edge_detection">Omite detectarea marginilor</string>
+    <string name="preview_corner_detection">Previzualizare detecție colțuri</string>
+    <string name="btn_pick_image">Încarcă</string>
+    <string name="pick_image_cd">Încarcă o imagine existentă</string>
+    <!-- Multipage Export -->
+    <string name="add_another_page">Adaugă pagină</string>
+
+    <string name="clear_all_pages">Șterge tot</string>
+    <string name="remove_this_page">Elimină această pagină</string>
+    <string name="multipage_not_implemented">Exportul multipagină nu este încă implementat</string>
+
+    <!-- Reorder controls -->
+    <string name="move_page_left">Mută pagina la stânga</string>
+    <string name="move_page_right">Mută pagina la dreapta</string>
+
+    <!-- Back confirmation -->
+    <string name="confirm_clear_multipage_title">Ștergi paginile?</string>
+    <string name="confirm_clear_multipage_message">Au fost adăugate mai multe pagini. Dorești să le ștergi pe toate și
+        să revii?
+    </string>
+    <string name="cancel">Anulează</string>
+
+    <!-- Clear all confirmation -->
+    <string name="confirm_clear_pages_title">Ștergi toate paginile?</string>
+    <string name="confirm_clear_pages_message">Dorești să elimini toate paginile din previzualizare?</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">Alege din scanările finalizate</string>
+    <string name="picker_empty">Nu au fost găsite scanări finalizate</string>
+    <!-- Library default collection -->
+    <string name="collection_completed_scans">Digitalizações concluídas</string>
+    <string name="done">Următor</string>
+    <string name="thumbnail">Miniatură</string>
+    <string name="delete">Șterge</string>
+
+    <!-- Picker bulk actions -->
+    <string name="select_all">Selectează tot</string>
+    <string name="deselect_all">Deselectează tot</string>
+
+    <string name="added_pages_from_registry">Adăugate %1$d pagini din registru</string>
+
+    <!-- Add page options -->    <!-- Picker states -->
+    <string name="missing_file">Fișier lipsă</string>
+
+    <!-- Inline OCR -->
+    <string name="ocr_processing_started">Se rulează OCR…</string>
+    <string name="ocr_processing_finished">OCR adăugat pentru această pagină</string>
+    <string name="ocr_processing_failed">OCR integrat a eșuat</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">Elimină din registru</string>
+    <string name="remove_from_registry_message">Ștergi această înregistrare și fișierele asociate?</string>
+    <string name="remove">Elimină</string>
+    <string name="removed_from_registry_toast">Înregistrare eliminată</string>
+
+    <!-- PDF quality presets -->
+    <string name="pdf_quality_title">Calitate / dimensiune PDF</string>
+    <string name="pdf_preset_high">Înaltă (300 dpi, q85)</string>
+    <string name="pdf_preset_standard">Standard (200 dpi, q72)</string>
+    <string name="pdf_preset_small">Mică (150 dpi, q62)</string>
+    <string name="pdf_preset_very_small">Foarte mică (110 dpi, q52)</string>
+    <string name="pdf_text_layer_mode_title">Strat de text PDF</string>
+    <string name="pdf_text_layer_mode_line_based">Bazat pe linii (recomandat)</string>
+    <string name="pdf_text_layer_mode_word_positioned">Poziționat pe cuvinte (compatibilitate)</string>
+    <string name="export_options_title">Opțiuni de export</string>
+    <string name="jpeg_enhancement_title">Culoare de ieșire JPEG</string>
+    <string name="btn_options">Opțiuni</string>
+    <string name="btn_save">Salvează</string>
+    <string name="btn_new">Scanare nouă</string>
+
+    <string name="btn_review">Revizuire</string>
+    <string name="edit_word_title">Editează cuvântul</string>
+    <string name="cm_edit">Editează…</string>
+    <string name="cm_merge_next">Combină cu următorul</string>
+    <string name="cm_split">Împarte</string>
+    <string name="cm_delete">Șterge</string>
+    <string name="cm_case">Majuscule/minuscule</string>
+    <string name="cm_lang">Limbă…</string>
+    <string name="case_upper">MAJUSCULE</string>
+    <string name="case_lower">minuscule</string>
+    <string name="case_title">Inițiale majuscule</string>
+    <string name="dialog_language_title">Setează codul limbii</string>
+    <!-- Rotation -->
+    <string name="rotate_left_cd">Rotește pagina 90° spre stânga</string>
+    <string name="rotate_right_cd">Rotește pagina 90° spre dreapta</string>
+
+    <!-- OCR models management -->
+    <string name="ocr_models_manage">Modele OCR</string>
+    <string name="ocr_import_manual">Importă .traineddata…</string>
+    <string name="ocr_discover_packs">Descoperă pachete de limbă</string>
+    <string name="ocr_no_packs_found">Nu au fost găsite pachete de limbă</string>
+    <string name="ocr_choose_pack">Alege pachet de limbă</string>
+    <string name="ocr_no_models_in_pack">Nu există modele în acest pachet</string>
+    <string name="ocr_choose_model">Alege model pentru import</string>
+    <string name="ocr_import_success">Model importat</string>
+    <string name="ocr_import_failed">Import nereușit</string>
+
+    <string name="ocr_delete_best_model">Șterge modelul Best</string>
+    <string name="ocr_nothing_to_delete">Niciun model Best de șters pentru limba curentă</string>
+    <string name="ocr_delete_confirm_title">Șterge modelul Best?</string>
+    <string name="ocr_delete_confirm_msg">Dorești să ștergi modelul Best importat pentru %1$s? Modelul Fast integrat va
+        rămâne disponibil.
+    </string>
+    <string name="ocr_delete_success">Model șters</string>
+    <string name="ocr_delete_failed">Ștergerea a eșuat</string>
+
+    <!-- OCR models hint -->
+    <string name="ocr_models_hint">Pentru recunoaștere mai rapidă sunt incluse modele compacte. Pentru o acuratețe mai
+        mare, poți instala modele mai mari „Best”. Nu este necesară conexiunea la internet.
+    </string>
+
+    <!-- Moduri de recunoaștere OCR – explicație -->
+    <string name="ocr_explain_prep_modes">Explică modurile de recunoaștere</string>
+    <string name="ocr_prep_modes_title">Moduri de recunoaștere: explicație simplă</string>
+    <string name="ocr_prep_modes_message">Există două moduri de a trimite imaginile către motorul OCR:\n\n• Original
+        (fără preprocesare) — cel mai rapid. Fotografia este trimisă așa cum este. Ideal pentru scanări deja curate și
+        cu contrast ridicat. Poate omite textul slab sau cu zgomot.\n\n•
+        OpenCV Robust — reproiectat pentru acuratețe maximă pe pagini dificile. Corectează înclinarea, normalizează
+        umbrele și iluminarea, aplică reducere de zgomot cu păstrarea marginilor și mărire inteligentă. Este important
+        ca Tesseract să primească o imagine în tonuri de gri de înaltă calitate (nu alb-negru dur), pentru a păstra
+        detalii fine precum buclele literei „o” și cifrele mici. Oferă cea mai bună acuratețe pe pagini complexe, dar
+        este mai lent și folosește mai multă memorie.\n\nPost-procesare OCR: Corectează erori frecvente de recunoaștere,
+        cum ar fi confuziile (0↔O, 1↔l↔I, rn↔m), și verifică cuvintele incerte folosind un dicționar. Activată implicit;
+        dezactivați pentru coduri tehnice sau numere de serie.
+    </string>
+
+    <!-- Selectarea modului de recunoaștere OCR -->
+    <string name="ocr_choose_prep_mode_menu">Mod de recunoaștere…</string>
+    <string name="ocr_choose_prep_mode_title">Alege modul de recunoaștere</string>
+    <string name="ocr_mode_original">Original (fără preprocesare)</string>
+    <string name="ocr_mode_quick">OpenCV Quick (rapid)</string>
+    <string name="ocr_mode_robust">OpenCV Robust (calitate ridicată)</string>
+    <string name="opt_paddle_best_ocr">Cea mai bună calitate Paddle OCR (mai lent)</string>
+    <string name="ocr_prep_mode_set">Modul de recunoaștere setat la %1$s</string>
+
+
+    <!-- Labels -->
+    <string name="label_language">Limbă</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d C</string>
+    <string name="low_percent_format">Scăzut %1$d%%</string>
+    <string name="low_placeholder">Scăzut —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 C</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">Închide</string>
+    <string name="cd_zoom_chip_open_menu">Deschide meniul de zoom</string>
+    <string name="cd_minimap">Previzualizare document, atinge pentru a naviga
+    </string>    <!-- A11y content descriptions for menu items -->    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">Introduceți o valoare</string>
+
+    <!-- Collections / Library (feature-flagged) -->
+    <string name="new_collection_title">Colecție nouă</string>
+    <string name="collection_name_hint">Numele colecției</string>
+    <string name="create">Creează</string>
+    <string name="collection_not_empty">Colecția nu este goală</string>
+    <string name="collection_items_count">%1$d element(e)</string>
+    <string name="deleted">Șters</string>
+    <string name="open_collections">Colecții</string>
+    <string name="index_existing_scans">Indexează scanările existente</string>
+    <string name="rename">Redenumește</string>
+    <string name="ok">OK</string>
+    <string name="no_scans_yet">Nicio scanare deocamdată</string>
+    <string name="rename_collection_title">Redenumește colecția</string>
+    <string name="action_add_to_collection">Adaugă la colecție…</string>
+    <string name="place_in_collection_title">Adaugă la colecție</string>
+    <string name="create_new_collection">Creează o nouă colecție…</string>
+    <string name="scan_added_to_collection">Scanare adăugată la „%1$s”</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">Acțiuni bibliotecă</string>    <!-- Library list: collections membership -->
+    <string name="in_collections_prefix">În: %1$s</string>
+    <!-- Delete confirmation (ScanDetails) -->
+    <string name="delete_warning_irreversible">Fișierul va fi șters de pe dispozitiv. Această acțiune nu poate fi
+        anulată.
+    </string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">Niciun document de exportat</string>
+    <string name="failed_to_export_document">Nu s-a putut exporta documentul</string>
+    <string name="error_during_export_with_reason">Eroare în timpul exportului: %1$s</string>
+    <string name="document_exported">Documentul %1$s a fost exportat</string>
+    <string name="document_multipage_exported">Documentul (cu mai multe pagini) %1$s a fost exportat</string>
+    <string name="no_target_selected">Nicio destinație selectată</string>
+    <string name="image_exported">Imaginea %1$s a fost exportată</string>
+    <string name="failed_to_export_image">Nu s-a putut exporta imaginea</string>
+    <string name="error_during_jpeg_export_with_reason">Eroare în timpul exportului JPEG: %1$s</string>
+    <string name="zip_exported">Fișierul ZIP %1$s a fost exportat</string>
+    <string name="failed_to_export_zip">Nu s-a putut exporta fișierul ZIP</string>
+    <string name="error_during_zip_export_with_reason">Eroare în timpul exportului ZIP: %1$s</string>
+    <string name="ocr_text_exported_as_txt">Textul OCR a fost exportat ca TXT</string>
+    <string name="error_exporting_ocr_text_with_reason">Eroare la exportul textului OCR: %1$s</string>
+    <string name="no_document_to_share_export_first">Niciun document disponibil pentru partajare. Exportați mai întâi un
+        document.
+    </string>
+    <string name="error_sharing_document_with_reason">Eroare la partajarea documentului: %1$s</string>
+    <string name="feature_scan_library_disabled">Funcția bibliotecii de scanări este dezactivată</string>
+    <string name="navigation_failed">Navigarea a eșuat</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">ID-ul scanării lipsește</string>
+    <string name="picker_failed">Selectarea a eșuat</string>
+    <string name="share_failed">Partajarea a eșuat</string>
+    <string name="no_app_found_to_open_file">Nu a fost găsită nicio aplicație pentru a deschide acest fișier</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">Eliminați din această colecție?</string>
+    <string name="removed_from_collection">Eliminat din colecție</string>
+    <string name="indexed_new_items">Au fost indexate %1$d element(e) noi</string>
+    <string name="nothing_new_to_index">Nimic nou de indexat</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">Document aliniat</string>
+    <string name="a11y_hint_move_left">Mutați spre stânga</string>
+    <string name="a11y_hint_move_right">Mutați spre dreapta</string>
+    <string name="a11y_hint_move_up">Mutați în sus</string>
+    <string name="a11y_hint_move_down">Mutați în jos</string>
+    <string name="a11y_hint_move_closer">Mai aproape de suprafață</string>
+    <string name="a11y_hint_move_back">Mai departe de suprafață</string>
+    <string name="a11y_hint_too_far">Apropiați-vă. Documentul este prea departe.</string>
+    <string name="a11y_hint_tilt_left">Înclinați spre stânga</string>
+    <string name="a11y_hint_tilt_right">Înclinați spre dreapta</string>
+    <string name="a11y_hint_tilt_forward">Înclinați înainte</string>
+    <string name="a11y_hint_tilt_back">Înclinați înapoi</string>
+    <string name="a11y_hold_still">Stați nemișcat</string>
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">Document detectat — gata pentru captură.</string>
+    <string name="a11y_no_document_detected">Nu a fost detectat niciun document.</string>
+    <string name="a11y_orientation_portrait_tip">Pare a fi modul portret. Ținerea telefonului în poziție verticală este
+        de obicei cea mai potrivită pentru paginile înalte.
+    </string>
+    <string name="a11y_orientation_landscape_tip">Pare a fi modul peisaj. Încercați să țineți telefonul în poziție
+        orizontală pentru paginile late.
+    </string>
+    <string name="a11y_crop_summary_detected">Analiza imaginii capturate: document detectat.</string>
+    <string name="a11y_crop_summary_no_doc">Analiza imaginii capturate: nu a fost detectat niciun document.</string>
+    <string name="accessibility_mode_label">Mod de accesibilitate</string>
+    <string name="a11y_camera_ready">Camera este gata. Atingeți de două ori „Scanare” pentru a captura.</string>
+    <string name="a11y_low_light_toggle_flash">Luminozitate scăzută detectată. Atingeți de două ori „Bliț” pentru a
+        activa.
+    </string>
+    <string name="a11y_capture_failed">Captura a eșuat.</string>
+    <string name="a11y_volume_shutter_hint">Sfat: În modul de accesibilitate puteți captura și cu butoanele de volum.
+    </string>
+    <string name="a11y_capture_success">Imagine capturată.
+    </string>    <!-- Accesibilitate: descrierea elementelor din listă și anunțuri -->
+    <string name="page_n_of_m">Pagina %1$d din %2$d</string>
+    <string name="pages_count_announcement">Pagini: %1$d</string>
+    <string name="export_started">Export pornit</string>
+    <string name="page_removed">Pagina eliminată</string>
+    <string name="page_moved_to_position">Mutat la poziția %1$d</string>
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">Rotire automată OCR (aplică și la export)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">Post-procesare OCR (corectează erorile comune)</string>
+    <string name="opt_layout_analysis">Analiză aspect (coloane, tabele)
+    </string>    <!-- Options: Experimental directional mapping fallback -->
+    <!-- Developer / Debug options -->
+    <!-- Library / Collections -->    <!-- PDF Import -->
+    <string name="error_unknown_file_type">Tip de fișier necunoscut</string>
+    <string name="error_unsupported_file_type">Acest tip de fișier nu este acceptat</string>
+    <string name="error_cannot_open_pdf">Nu s-a putut deschide PDF-ul</string>
+    <string name="error_pdf_empty">PDF-ul nu conține pagini</string>
+    <string name="error_pdf_import_failed">Importul PDF-ului a eșuat</string>
+    <string name="error_pdf_page_render_failed">Nu s-a putut reda pagina</string>
+    <string name="pdf_select_page">Selectează pagina</string>
+    <string name="pdf_page_number">Pagina %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">Selectați limbile OCR</string>
+    <string name="ocr_max_languages_warning">Sunt permise maximum 2 limbi</string>
+    <string name="ocr_no_language_selected">Selectați cel puțin o limbă</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">Renunți la modificări?</string>
+    <string name="msg_discard_changes">Ai modificări nesalvate. Vrei să le renunți?</string>
+    <string name="btn_discard">Renunță</string>
+
+    <string name="btn_reocr">Rulează OCR din nou</string>
+    <string name="reocr_processing">Se rulează OCR din nou…</string>
+    <string name="reocr_success">Cuvânt actualizat: %1$s</string>
+    <string name="reocr_failed">Reluarea OCR a eșuat</string>
+    <string name="reocr_no_language">Selectează mai întâi o limbă</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">100 %</string>
+    <string name="zoom_200">200 %</string>
+    <string name="zoom_300">300 %</string>
+    <string name="zoom_400">400 %</string>
+    <string name="zoom_fit">Potrivește</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">Aspect</string>
+    <string name="label_text">Text</string>
+    <string name="label_document">Document</string>
+
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">Dimensiune pagină</string>
+    <string name="dpi_settings_label">Setări DPI</string>
+    <string name="page_format_fit">Potrivire la imagine (recomandat)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+
+    <string name="restore_access">Restabilește accesul</string>
+    <string name="status">Stare</string>
+    <string name="ocr_text_editor_hint">Editează textul OCR</string>
+
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">Setări de curățare pentru scanările finalizate</string>
+    <string name="cleanup_policy">Politica de curățare</string>
+    <string name="cleanup_policy_none">Niciuna (păstrează tot)</string>
+    <string name="cleanup_policy_max_age">După vechime</string>
+    <string name="cleanup_policy_max_count">După număr</string>
+    <string name="cleanup_policy_max_storage">După spațiu de stocare</string>
+    <string name="cleanup_policy_combined">Combinată</string>
+    <string name="cleanup_max_age_days">Vechime maximă (zile)</string>
+    <string name="cleanup_max_count">Număr maxim</string>
+    <string name="cleanup_max_storage_mb">Spațiu maxim de stocare (MB)</string>
+    <string name="cleanup_settings_saved">Setările de curățare au fost salvate</string>
+    <string name="inbox_mode">Mod Inbox</string>
+    <string name="inbox_mode_enable">Activează folderul implicit de export</string>
+    <string name="inbox_select_folder">Selectează folder</string>
+    <string name="inbox_folder_set">Folder Inbox: %1$s</string>
+    <string name="inbox_folder_none">Niciun folder selectat</string>
+    <string name="inbox_saved">✓ Salvat în Inbox</string>
+    <string name="inbox_permission_lost">Accesul la folderul Inbox a fost pierdut. Selectați un folder nou.</string>
+    <string name="inbox_no_folder_selected">Selectați mai întâi un folder Inbox.</string>
+    <string name="inbox_clear">Șterge folderul Inbox</string>
+    <string name="inbox_filename_format">Format nume fișier</string>
+    <string name="inbox_auto_new_scan">Pornește automat o scanare nouă după export</string>
+    <string name="inbox_filename_date_scan">Dată + Scan (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">Dată + oră + Scan (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">Doar dată (2026-03-04)</string>
+    <string name="pdf_bw_mode_none">Culoare</string>
+    <!-- Translations added for missing strings -->
+    <string name="confirm_remove_page_title">Eliminați pagina?</string>
+    <string name="confirm_remove_page_message">Doriți să eliminați această pagină din peliculă?</string>
+    <string name="crop_aspect_label">Raport de aspect</string>
+    <string name="crop_aspect_auto">Auto (recomandat)</string>
+    <string name="crop_aspect_original">Păstrează originalul (fără corecție)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">Personalizat…</string>
+    <string name="crop_aspect_custom_with_ratio">Personalizat (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">Raport de aspect personalizat</string>
+    <string name="crop_aspect_custom_width_hint">Lățime</string>
+    <string name="crop_aspect_custom_height_hint">Înălțime</string>
+    <string name="crop_aspect_custom_invalid">Introduceți numere pozitive între 1:1 și 1:20.</string>
+    <string name="crop_aspect_output_size_hint">Ieșire: %1$d × %2$d px</string>
+    <string name="crop_hint_corner_off_image">Colț în afara imaginii — ieșirea poate avea margini negre</string>
+    <string name="crop_edge_dragged">Margine selectată. Trageți pentru a muta marginea.</string>
+    <!-- Document cleanup -->
+    <string name="document_cleanup_title">Curățare document</string>
+    <string name="document_cleanup_original">Original</string>
+    <string name="document_cleanup_natural">Natural</string>
+    <string name="document_cleanup_enhanced">Îmbunătățit</string>
+    <string name="document_cleanup_clean_text">Text curat</string>
+    <string name="workflow_step_description">Pasul %1$d din %2$d: %3$s</string>
+    <string name="search_scans">Căutare scanări</string>
+</resources>

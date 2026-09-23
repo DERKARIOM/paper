@@ -1,0 +1,9 @@
+MakeACopy 2.6.0 (Release)
+
+* Switched OCR engine to tesseract4android-openmp for better performance.
+* Fixed OCR edge case where high confidence was reported with no detected text.
+* Empty OCR results are now handled deterministically and normalized to confidence = 0.
+* Removed misleading OCR score toasts when no text is detected.
+* Added a clear “No text detected” message.
+* Improved OCR retry and rotation handling for empty results.
+* Stability and correctness improvements in the OCR pipeline.

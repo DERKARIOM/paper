@@ -1,0 +1,4 @@
+* New: Added app translations for German, French, Italian, and Spanish.
+* Improved: Minor UI text polishing and consistency across languages.
+* Misc: Small stability and logging improvements.
+* Dev: Android build scripts now write per-ABI logs and show concise error snippets to avoid CI log floods.

@@ -1,0 +1,4 @@
+Español
+Ejemplo de idioma
+El pingüino Wenceslao hizo kilómetros bajo exhaustiva lluvia y frío.
+Ejemplo de reconocimiento de texto.

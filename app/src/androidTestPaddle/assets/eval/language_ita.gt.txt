@@ -1,0 +1,4 @@
+Italiano
+Esempio di lingua
+Quel vituperabile xenofobo zelante assaggia un buon caffè.
+Esempio di riconoscimento del testo.

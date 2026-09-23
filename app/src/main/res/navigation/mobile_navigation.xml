@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_camera">
+
+    <fragment
+        android:id="@+id/navigation_camera"
+        android:name="de.schliweb.makeacopy.ui.camera.CameraFragment"
+        android:label="@string/title_camera"
+        tools:layout="@layout/fragment_camera" />
+
+    <fragment
+        android:id="@+id/navigation_crop"
+        android:name="de.schliweb.makeacopy.ui.crop.CropFragment"
+        android:label="@string/title_crop"
+        tools:layout="@layout/fragment_crop" />
+
+    <fragment
+        android:id="@+id/navigation_ocr"
+        android:name="de.schliweb.makeacopy.ui.ocr.OCRFragment"
+        android:label="@string/title_ocr"
+        tools:layout="@layout/fragment_ocr" />
+
+    <fragment
+        android:id="@+id/navigation_export"
+        android:name="de.schliweb.makeacopy.ui.export.ExportFragment"
+        android:label="@string/title_export"
+        tools:layout="@layout/fragment_export" />
+
+    <fragment
+        android:id="@+id/navigation_completed_scans_picker"
+        android:name="de.schliweb.makeacopy.ui.export.picker.CompletedScansPickerFragment"
+        android:label="@string/picker_title_completed_scans"
+        tools:layout="@layout/fragment_completed_scans_picker" />
+
+    <fragment
+        android:id="@+id/navigation_review"
+        android:name="de.schliweb.makeacopy.ui.ocr.review.OcrReviewFragment"
+        android:label="@string/btn_review"
+        tools:layout="@layout/fragment_ocr_review" />
+
+    <!-- Experimental scan library destination -->
+    <fragment
+        android:id="@+id/navigation_scans_library"
+        android:name="de.schliweb.makeacopy.ui.library.ScansLibraryFragment"
+        android:label="Scans Library"
+        tools:layout="@layout/fragment_scans_library" />
+
+    <!-- Experimental collections destination -->
+    <fragment
+        android:id="@+id/navigation_collections"
+        android:name="de.schliweb.makeacopy.ui.library.CollectionsFragment"
+        android:label="Collections"
+        tools:layout="@layout/fragment_collections" />
+
+    <!-- Experimental scan details destination -->
+    <fragment
+        android:id="@+id/navigation_scan_details"
+        android:name="de.schliweb.makeacopy.ui.library.ScanDetailsFragment"
+        android:label="Scan Details"
+        tools:layout="@layout/fragment_scan_details" />
+</navigation>

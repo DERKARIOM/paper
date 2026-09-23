@@ -1,0 +1,30 @@
+Türkçe OCR Test Belgesi
+
+Bu belge, MakeACopy uygulamasında Türkçe OCR doğruluğunu test etmek
+amacıyla oluşturulmuştur. İstanbul, Türkiye’nin en büyük şehridir ve
+kültürel çeşitliliği ile bilinir. Özel karakterler: ğ, ü, ş, ı, ö, ç, İ,
+Ğ, Ü, Ş, Ö, Ç. Hızlı kahverengi tilki tembel köpeğin üzerinden atladı.
+2026 yılında teknoloji ve yapay zekâ alanında büyük gelişmeler
+beklenmektedir. Fatura örneği: Toplam Tutar: 1.234,56 TL – KDV Dahil.
+Adres: Atatürk Mahallesi, Çiçek Sokak No: 15, 34000 İstanbul.
+
+Kısa Tablo (format testi):
+
+Alan: Tarih Değer: 03.03.2026
+
+Alan: Müşteri Değer: Şahin Çalışkan
+
+Alan: Tutar Değer: 1.234,56 TL
+
+Alan: Açıklama Değer: Ödeme, kredi kartı ile yapıldı.
+
+Numaralı Liste:
+
+1.  Birinci madde: Basit metin.
+2.  İkinci madde: Büyük/küçük harf testi.
+3.  Üçüncü madde: Noktalama işaretleri! ?,.;:-()
+4.  Dördüncü madde: Türkçe karakter yoğunluğu — “İyi günler, hoşça
+    kalın!”
+
+Kod benzeri satır: Örnek: OMP_PROC_BIND=false / sched_setaffinity /
+KMPNativeAffinity::Mask::set_system_affinity

@@ -1,0 +1,8 @@
+1.5.1 (Release)
+
+- New: rotate **after crop, before OCR** (±90°, 180°) per page
+- Completed Scans: **Select all / Deselect all** and **Delete**
+- Safer OCR: single-thread, one TessBaseAPI per job; cooperative cancel → fixes rare Tesseract/Leptonica crashes
+- More robust inputs (immutable ARGB_8888, A4 scaling) and a clearer **Process → Processing… → Next** flow
+- Many small fixes and better error messages
+- Device-specific: fix black preview on HONOR Magic UI 4 (Android 10) by forcing TextureView.

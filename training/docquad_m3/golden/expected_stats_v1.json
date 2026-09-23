@@ -1,0 +1,15 @@
+{
+  "mask_area_definition": "mask_prob_gt_0.5",
+  "samples": {
+    "sample0": {
+      "corner_argmax_idx": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mask_area": 0
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="12dp">
+
+        <CheckBox
+            android:id="@+id/dialog_checkbox_skip_ocr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/skip_ocr_export_only" />
+
+        <CheckBox
+            android:id="@+id/dialog_checkbox_skip_cropping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/skip_cropping" />
+
+        <CheckBox
+            android:id="@+id/dialog_checkbox_skip_edge_detection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/skip_edge_detection" />
+
+        <CheckBox
+            android:id="@+id/dialog_checkbox_analysis_enabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preview_corner_detection" />
+
+        <CheckBox
+            android:id="@+id/dialog_checkbox_accessibility_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/accessibility_mode_label" />
+
+        <CheckBox
+            android:id="@+id/dialog_checkbox_exposure_compensation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/exposure_compensation_option" />
+
+        <CheckBox
+            android:id="@+id/dialog_checkbox_manual_focus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/manual_focus_option" />
+
+        <CheckBox
+            android:id="@+id/dialog_checkbox_focus_quality"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/focus_quality_option" />
+
+        <!-- Share logs button placed directly under the options (de-emphasized) -->
+        <Button
+            android:id="@+id/button_share_logs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="start"
+            android:text="@string/share_logs"
+            android:textColor="?android:textColorSecondary"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+    </LinearLayout>
+</ScrollView>

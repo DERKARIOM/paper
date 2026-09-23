@@ -1,0 +1,10 @@
+MakeACopy 1.6.1 (Release)
+
+- New: Export options dialog improvements for image/PDF export.
+- New: Added support for Russian and Thai in OCR.
+- Improved: JPEG export pipeline and options for better quality and consistency.
+- Improved: PDF creation stability and output handling.
+- Improved: Black & white conversion robustness (shadow handling, adaptive thresholding).
+- Updated: UI texts/translations.
+- Technical: Minor cleanup and logging improvements.
+- Improved: Camera preview compatibility on Huawei/Honor devices with EMUI/Magic UI quirks.

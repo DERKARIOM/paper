@@ -1,0 +1,72 @@
+name: ORT Compliance
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ort-analyze-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          # ORT >= 89 is built with and requires Java 25. The Gradle Inspector
+          # is pinned to Java 21 via ort/config/config.yml (javaVersion option).
+          java-version: "25"
+
+      - name: Install ORT
+        run: |
+          ORT_URL=$(curl -s https://api.github.com/repos/oss-review-toolkit/ort/releases/latest \
+            | jq -r '.assets[] | select(.name | test("^ort-.*\\.tgz$")) | .browser_download_url')
+          curl -L -o ort.tgz "$ORT_URL"
+          tar -xzf ort.tgz
+          sudo mv ort-*/ /opt/ort
+          sudo ln -s /opt/ort/bin/ort /usr/local/bin/ort
+
+      - name: Run ORT (Analyze + Report)
+        run: |
+          chmod +x scripts/run-ort.sh
+          ./scripts/run-ort.sh
+
+      - name: Upload ORT artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ort-reports
+          path: ort-out/
+
+  scancode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ScanCode
+        run: |
+          pip install scancode-toolkit
+          scancode --version
+
+      - name: Run ScanCode
+        run: |
+          chmod +x scripts/run-scancode.sh
+          ./scripts/run-scancode.sh
+
+      - name: Upload ScanCode artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: scancode-reports
+          path: ort-out/scancode/

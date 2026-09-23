@@ -1,0 +1,487 @@
+<resources>
+    <string name="app_name">MakeACopy</string>
+
+    <string name="tip_text_mode_editing">Teksttilstand: Linjeskift og tegnsætning normaliseres i øjeblikket til
+        mellemrum. Hvis der indtastes færre ord, end der blev genkendt, forbliver de resterende OCR-ord uændrede.
+        Ændringer anvendes efter en kort pause.
+    </string>
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">Kamera</string>
+    <string name="title_crop">Beskær</string>
+    <string name="title_ocr">OCR</string>
+    <string name="title_export">Eksporter</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">Scan</string>
+    <string name="btn_crop">Beskær</string>
+    <string name="btn_process">Behandl</string>
+    <string name="btn_share">Del</string>
+    <string name="btn_share_text">Del tekst</string>
+    <string name="next">Næste</string>
+    <string name="back">Tilbage</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">Kameratilladelse er påkrævet for at scanne dokumenter</string>
+    <string name="confirm">Bekræft</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">Kameraet er klar. Tryk på knappen for at scanne et
+        dokument.
+    </string>
+    <string name="captured_image">Optaget billede</string>
+    <string name="image_to_crop">Billede til beskæring</string>
+    <string name="cropped_image">Beskåret billede</string>
+    <string name="document_preview">Dokumentforhåndsvisning</string>
+    <string name="include_ocr_text">Eksportér OCR som separat TXT</string>
+    <string name="ocr_results_will_appear_here">OCR-resultater vises her</string>
+    <string name="ocr_no_text_detected">Ingen tekst fundet</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Juster
+        trapezhjørnerne for at vælge området, der skal beskæres, og tryk derefter på Beskær-knappen.
+    </string>
+    <string name="no_document_ready_process_ocr_first">Intet dokument klar. Kør først OCR.</string>
+    <string name="document_ready_for_export">Dokument klar til eksport</string>
+    <string name="processing_image">Behandler billede…</string>
+    <string name="no_image_processed_crop_an_image_first">Intet billede behandlet. Beskær et billede først.</string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR-behandling fuldført. Tryk på knappen
+        for at fortsætte til eksport.
+    </string>
+
+    <string name="ocr_found_rotation">Fundet rotation: %1$d°</string>
+    <string name="ocr_score">OCR-score: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">Fundet rotation: %1$d° — OCR-score: %2$d%%</string>
+
+    <!-- Ekstra forklaring tilføjet i dialogen “Forklar genkendelsestilstande” -->
+    <string name="ocr_prep_modes_autorotate_note">OCR automatisk rotation: Når den er aktiveret, prøver OCR også siden i
+        90°-trin (0/90/180/270) og vælger det bedste resultat. Den fundne rotation kan automatisk anvendes under
+        eksport, hvis du ikke har roteret manuelt. Dette kan slås til/fra i “Vælg genkendelsestilstand”.
+    </string>
+
+    <string name="initializing_camera">Initialiserer kamera…</string>
+    <string name="resetting_camera">Nulstiller kamera…</string>
+    <string name="error_initializing_camera">Fejl under initialisering af kamera: %1$s</string>
+    <string name="error_camera_provider_null">Kunne ikke initialisere kamera – udbyder er null</string>
+    <string name="error_camera_not_initialized">Kamera ikke initialiseret. Prøv igen.</string>
+    <string name="error_image_capture_failed">Billedoptagelse mislykkedes: %1$s</string>
+    <string name="error_displaying_image">Fejl ved visning af billede: %1$s</string>
+    <string name="error_resetting_camera">Fejl ved nulstilling af kamera: %1$s</string>
+    <string name="error_toggling_flashlight">Fejl ved tænd/sluk af lommelygte: %1$s</string>
+    <string name="error_camera_preview_failed">Kameraforhåndsvisning kunne ikke starte. Prøv igen.</string>
+
+    <string name="share_logs">Del logfiler</string>
+    <string name="share_logs_subject">MakeACopy diagnostic-logfiler</string>
+    <string name="share_logs_chooser_title">Del logfiler via…</string>
+    <string name="share_logs_error">Kunne ikke forberede logfiler: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">Gråtoner</string>
+    <string name="export_as_jpeg">Eksporter som JPEG</string>
+    <string name="export_format_label">Eksportformat</string>
+    <string name="export_as_pdf">Eksporter som PDF (standard)</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">Tænd/sluk lommelygte</string>
+    <string name="flashlight_on">Lommelygte tændt</string>
+    <string name="flashlight_off">Lommelygte slukket</string>
+    <string name="flashlight_not_available">Lommelygte ikke tilgængelig på denne enhed</string>
+    <string name="low_light_detected">Svagt lys registreret. Vil du tænde lommelygten?</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">EV %1$s</string>
+    <string name="exposure_compensation_cd">Skyder til eksponeringskompensation</string>
+    <string name="exposure_compensation_option">Eksponeringskompensation</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">Skyder til manuel fokus</string>
+    <string name="manual_focus_af_button_cd">Skift til autofokus</string>
+    <string name="autofocus_enabled">Autofokus aktiveret</string>
+    <string name="manual_focus_locked">Manuel fokus låst</string>
+    <string name="manual_focus_option">Manuel fokus</string>
+    <string name="focus_quality_option">Indikator for fokuskvalitet</string>
+    <string name="tap_to_focus_started">Fokuserer…</string>
+    <string name="tap_to_focus_done">Fokus justeret</string>
+    <string name="tap_to_focus_requested">Fokus anmodet</string>
+    <string name="tap_to_focus_not_locked">Fokus kunne ikke låses her</string>
+    <string name="tap_to_focus_not_supported">Tryk for fokus understøttes ikke her</string>
+    <string name="tap_to_focus_failed">Kunne ikke fokusere her</string>
+    <string name="focus_quality_low">Fokuskvalitet: lav</string>
+    <string name="focus_quality_good">Fokuskvalitet: god</string>
+    <string name="focus_quality_excellent">Fokuskvalitet: fremragende</string>
+    <string name="camera_zoom_title">Zoom / objektiv</string>
+    <string name="camera_zoom_cd">Vælg zoom eller objektiv</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">Zoom er ikke tilgængelig på denne enhed</string>
+
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">Farve</string>
+    <string name="jpeg_mode_auto">Gråtoner</string>
+    <string name="jpeg_mode_bw_text">Sort/hvid</string>
+    <string name="jpeg_mode_bw_robust">Sort/hvid (robust) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">Robust OCR-forbehandling (JPEG)</string>
+
+    <string name="pdf_bw_mode_robust">Sort/hvid</string>
+    <string name="pdf_bw_mode_classic">S/H (klassisk)</string>
+    <string name="pdf_bw_mode_ocr_robust">Robust OCR-forbehandling (PDF)</string>
+    <string name="jpeg_mode_gray_clean">Renset gråtoner (højpasfilter) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">Rensede farver (højpasfilter) (JPEG)</string>
+    <string name="pdf_bw_mode_grayscale_clean">Gråtoner – renset (high-pass)</string>
+    <string name="pdf_bw_mode_color_clean">Farver – renset (high-pass)</string>
+    <string name="skip_ocr_export_only">Spring OCR over (kun eksport)</string>
+    <string name="skip_cropping">Spring beskæring over</string>
+    <string name="skip_edge_detection">Spring kantdetektering over</string>
+    <string name="preview_corner_detection">Forhåndsvisning af hjørnedetektion</string>
+    <string name="btn_pick_image">Indlæs</string>
+    <string name="pick_image_cd">Indlæs eksisterende billede</string>
+    <!-- Multipage Export -->
+    <string name="add_another_page">Tilføj side</string>
+    <string name="clear_all_pages">Ryd alt</string>
+    <string name="remove_this_page">Fjern denne side</string>
+    <string name="multipage_not_implemented">Flersidet eksport er endnu ikke implementeret</string>
+
+    <!-- Reorder controls -->
+    <string name="move_page_left">Flyt side til venstre</string>
+    <string name="move_page_right">Flyt side til højre</string>
+
+    <!-- Back confirmation -->
+    <string name="confirm_clear_multipage_title">Slet sider?</string>
+    <string name="confirm_clear_multipage_message">Flere sider er tilføjet. Vil du slette alle sider og gå tilbage?
+    </string>
+    <string name="cancel">Annuller</string>
+
+    <!-- Clear all confirmation -->
+    <string name="confirm_clear_pages_title">Ryd alle sider?</string>
+    <string name="confirm_clear_pages_message">Vil du fjerne alle sider fra forhåndsvisningen?</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">Vælg fra fuldførte scanninger</string>
+    <string name="picker_empty">Ingen fuldførte scanninger fundet</string>
+    <!-- Library default collection -->
+    <string name="collection_completed_scans">Fuldførte scanninger</string>
+    <string name="done">Næste</string>
+    <string name="thumbnail">Miniature</string>
+    <string name="delete">Slet</string>
+
+    <!-- Picker bulk actions -->
+    <string name="select_all">Vælg alle</string>
+    <string name="deselect_all">Fravælg alle</string>
+
+    <string name="added_pages_from_registry">Tilføjede %1$d side(r) fra registreret</string>
+
+    <!-- Add page options -->    <!-- Picker states -->
+    <string name="missing_file">Manglende fil</string>
+
+    <!-- Inline OCR -->
+    <string name="ocr_processing_started">Kører OCR…</string>
+    <string name="ocr_processing_finished">OCR tilføjet for denne side</string>
+    <string name="ocr_processing_failed">Indlejret OCR mislykkedes</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">Fjern fra register</string>
+    <string name="remove_from_registry_message">Slet denne post og tilknyttede filer?</string>
+    <string name="remove">Fjern</string>
+    <string name="removed_from_registry_toast">Post fjernet</string>
+
+    <!-- PDF quality presets -->
+    <string name="pdf_quality_title">PDF-kvalitet / størrelse</string>
+    <string name="pdf_preset_high">Høj (300 dpi, q85)</string>
+    <string name="pdf_preset_standard">Standard (200 dpi, q72)</string>
+    <string name="pdf_preset_small">Lille (150 dpi, q62)</string>
+    <string name="pdf_preset_very_small">Meget lille (110 dpi, q52)</string>
+    <string name="pdf_text_layer_mode_title">PDF-tekstlag</string>
+    <string name="pdf_text_layer_mode_line_based">Linjebaseret (anbefalet)</string>
+    <string name="pdf_text_layer_mode_word_positioned">Ordplaceret (kompatibilitet)</string>
+    <string name="export_options_title">Eksportindstillinger</string>
+    <string name="jpeg_enhancement_title">JPEG-udskriftsfarve</string>
+    <string name="btn_options">Indstillinger</string>
+    <string name="btn_save">Gem</string>
+    <string name="btn_new">Ny scanning</string>
+    <string name="btn_review">Gennemse</string>
+    <string name="edit_word_title">Rediger ord</string>
+    <string name="cm_edit">Rediger…</string>
+    <string name="cm_merge_next">Flet med næste</string>
+    <string name="cm_split">Opdel</string>
+    <string name="cm_delete">Slet</string>
+    <string name="cm_case">Store/små bogstaver</string>
+    <string name="cm_lang">Sprog…</string>
+    <string name="case_upper">STORE BOGSTAVER</string>
+    <string name="case_lower">små bogstaver</string>
+    <string name="case_title">Store begyndelsesbogstaver</string>
+    <string name="dialog_language_title">Angiv sprogkode</string>
+
+    <!-- Rotation -->
+    <string name="rotate_left_cd">Drej siden 90 grader mod uret</string>
+    <string name="rotate_right_cd">Drej siden 90 grader med uret</string>
+
+    <!-- OCR models management -->
+    <string name="ocr_models_manage">OCR-modeller</string>
+    <string name="ocr_import_manual">Importer .traineddata…</string>
+    <string name="ocr_discover_packs">Find sprogpakker</string>
+    <string name="ocr_no_packs_found">Ingen sprogpakker fundet</string>
+    <string name="ocr_choose_pack">Vælg sprogpakke</string>
+    <string name="ocr_no_models_in_pack">Ingen modeller fundet i denne pakke</string>
+    <string name="ocr_choose_model">Vælg model til import</string>
+    <string name="ocr_import_success">Model importeret</string>
+    <string name="ocr_import_failed">Import mislykkedes</string>
+
+    <string name="ocr_delete_best_model">Slet Best-model</string>
+    <string name="ocr_nothing_to_delete">Ingen Best-model at slette for det aktuelle sprog</string>
+    <string name="ocr_delete_confirm_title">Slet Best-model?</string>
+    <string name="ocr_delete_confirm_msg">Vil du slette den importerede Best-model for %1$s? Den indbyggede Fast-model
+        vil stadig være tilgængelig.
+    </string>
+    <string name="ocr_delete_success">Model slettet</string>
+    <string name="ocr_delete_failed">Sletning mislykkedes</string>
+
+    <!-- OCR models hint -->
+    <string name="ocr_models_hint">For hurtigere genkendelse medfølger kompakte modeller. For højere nøjagtighed kan du
+        installere større “Best”-modeller. Ingen internetforbindelse er påkrævet.
+    </string>
+
+    <!-- OCR forbehandlingsmetoder – forklaring -->
+    <string name="ocr_explain_prep_modes">Forklar genkendelsestilstande</string>
+    <string name="ocr_prep_modes_title">Genkendelsestilstande: enkel forklaring</string>
+    <string name="ocr_prep_modes_message">Der er to måder at sende billeder til OCR-motoren:\n\n• Original (ingen
+        forbehandling) — hurtigst. Fotoet sendes, som det er. Bedst til allerede rene scanninger med høj kontrast. Kan
+        overse svag eller støjende tekst.\n\n• OpenCV Robust — ombygget for maksimal nøjagtighed på
+        vanskelige sider. Retter skævhed, normaliserer skygger og belysning, anvender kantbevarende støjreduktion og
+        intelligent opskalering. Vigtigt er, at Tesseract får et gråtonebillede i høj kvalitet (ikke hård sort/hvid), så
+        fine detaljer som løkker i “o” og små cifre bevares. Giver bedst nøjagtighed på svære sider, men er langsommere
+        og bruger mere hukommelse.\n\nOCR-efterbehandling: Retter typiske genkendelsesfejl som forvekslinger (0↔O,
+        1↔l↔I, rn↔m) og kontrollerer usikre ord mod en ordbog. Slået til som standard; slå fra ved tekniske koder eller
+        serienumre.
+    </string>
+
+    <!-- OCR forbehandlingsmetoder – valg -->
+    <string name="ocr_choose_prep_mode_menu">Genkendelsestilstand…</string>
+    <string name="ocr_choose_prep_mode_title">Vælg genkendelsestilstand</string>
+    <string name="ocr_mode_original">Original (ingen forbehandling)</string>
+    <string name="ocr_mode_quick">OpenCV Quick (hurtig)</string>
+    <string name="ocr_mode_robust">OpenCV Robust (høj kvalitet)</string>
+    <string name="opt_paddle_best_ocr">Bedste Paddle OCR-kvalitet (langsommere)</string>
+    <string name="ocr_prep_mode_set">Genkendelsestilstand sat til %1$s</string>
+
+    <!-- Labels -->
+    <string name="label_language">Sprog</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d O</string>
+    <string name="low_percent_format">Lav %1$d%%</string>
+    <string name="low_placeholder">Lav —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 O</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">Luk</string>
+    <string name="cd_zoom_chip_open_menu">Åbn zoommenu</string>
+    <string name="cd_minimap">Dokumentoversigt, tryk for at hoppe
+    </string>    <!-- A11y content descriptions for menu items -->    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">Indtast venligst en værdi</string>
+
+    <!-- Collections / Library (feature-flagged) -->
+    <string name="new_collection_title">Ny samling</string>
+    <string name="collection_name_hint">Navn på samling</string>
+    <string name="create">Opret</string>
+    <string name="collection_not_empty">Samlingen er ikke tom</string>
+    <string name="collection_items_count">%1$d element(er)</string>
+    <string name="deleted">Slettet</string>
+    <string name="open_collections">Samlinger</string>
+    <string name="index_existing_scans">Indekser eksisterende scanninger</string>
+    <string name="rename">Omdøb</string>
+    <string name="ok">OK</string>
+    <string name="no_scans_yet">Ingen scanninger endnu</string>
+    <string name="rename_collection_title">Omdøb samling</string>
+    <string name="action_add_to_collection">Føj til samling…</string>
+    <string name="place_in_collection_title">Føj til samling</string>
+    <string name="create_new_collection">Opret ny samling…</string>
+    <string name="scan_added_to_collection">Scanning tilføjet til "%1$s"</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">Bibliotekshandlinger</string>    <!-- Library list: collections membership -->
+    <string name="in_collections_prefix">I: %1$s</string>
+    <!-- Delete confirmation (ScanDetails) -->
+    <string name="delete_warning_irreversible">Filen vil blive slettet fra enheden. Denne handling kan ikke fortrydes.
+    </string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">Intet dokument at eksportere</string>
+    <string name="failed_to_export_document">Kunne ikke eksportere dokument</string>
+    <string name="error_during_export_with_reason">Fejl under eksport: %1$s</string>
+    <string name="document_exported">Dokument %1$s eksporteret</string>
+    <string name="document_multipage_exported">Dokument (flersidet) %1$s eksporteret</string>
+    <string name="no_target_selected">Ingen destination valgt</string>
+    <string name="image_exported">Billede %1$s eksporteret</string>
+    <string name="failed_to_export_image">Kunne ikke eksportere billede</string>
+    <string name="error_during_jpeg_export_with_reason">Fejl under JPEG-eksport: %1$s</string>
+    <string name="zip_exported">ZIP %1$s eksporteret</string>
+    <string name="failed_to_export_zip">Kunne ikke eksportere ZIP</string>
+    <string name="error_during_zip_export_with_reason">Fejl under ZIP-eksport: %1$s</string>
+    <string name="ocr_text_exported_as_txt">OCR-tekst eksporteret som TXT</string>
+    <string name="error_exporting_ocr_text_with_reason">Fejl ved eksport af OCR-tekst: %1$s</string>
+    <string name="no_document_to_share_export_first">Intet dokument at dele. Eksporter et dokument først.</string>
+    <string name="error_sharing_document_with_reason">Fejl ved deling af dokument: %1$s</string>
+    <string name="feature_scan_library_disabled">Funktionen for skanningsbibliotek er deaktiveret</string>
+    <string name="navigation_failed">Navigation mislykkedes</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">Manglende skannings-ID</string>
+    <string name="picker_failed">Valg mislykkedes</string>
+    <string name="share_failed">Deling mislykkedes</string>
+    <string name="no_app_found_to_open_file">Ingen app fundet til at åbne denne fil</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">Fjern fra denne samling?</string>
+    <string name="removed_from_collection">Fjernet fra samling</string>
+    <string name="indexed_new_items">Indekserede %1$d nye element(er)</string>
+    <string name="nothing_new_to_index">Intet nyt at indeksere</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">Dokument justeret</string>
+    <string name="a11y_hint_move_left">Flyt til venstre</string>
+    <string name="a11y_hint_move_right">Flyt til højre</string>
+    <string name="a11y_hint_move_up">Flyt op</string>
+    <string name="a11y_hint_move_down">Flyt ned</string>
+    <string name="a11y_hint_move_closer">Blíže k povrchu</string>
+    <string name="a11y_hint_move_back">Dále od povrchu</string>
+    <string name="a11y_hint_too_far">Kom tættere på. Dokumentet er for langt væk.</string>
+    <string name="a11y_hint_tilt_left">Vip til venstre</string>
+    <string name="a11y_hint_tilt_right">Vip til højre</string>
+    <string name="a11y_hint_tilt_forward">Vip fremad</string>
+    <string name="a11y_hint_tilt_back">Vip bagud</string>
+    <string name="a11y_hold_still">Hold stille</string>
+
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">Dokument registreret – klar til optagelse.</string>
+    <string name="a11y_no_document_detected">Intet dokument registreret.</string>
+    <string name="a11y_orientation_portrait_tip">Det ligner portræt. At holde telefonen lodret passer normalt bedst til
+        høje sider.
+    </string>
+    <string name="a11y_orientation_landscape_tip">Det ligner landskab. Prøv at holde telefonen vandret til brede
+        sider.
+    </string>
+    <string name="a11y_crop_summary_detected">Analyse af det optagne billede: dokument fundet.</string>
+    <string name="a11y_crop_summary_no_doc">Analyse af det optagede billede: intet dokument registreret.</string>
+    <string name="accessibility_mode_label">Tilgængelighedstilstand</string>
+    <string name="a11y_camera_ready">Kamera klar. Dobbelttryk på Scan for at optage.</string>
+    <string name="a11y_low_light_toggle_flash">Lavt lys. Dobbelttryk på Flash for at aktivere.</string>
+    <string name="a11y_capture_failed">Optagelse mislykkedes.</string>
+    <string name="a11y_volume_shutter_hint">Tip: I tilgængelighedstilstand kan du optage med lydstyrketasterne.</string>
+    <string name="a11y_capture_success">Billede optaget.
+    </string>    <!-- Tilgængelighed: beskrivelse af listeelement og meddelelser -->
+    <string name="page_n_of_m">Side %1$d af %2$d</string>
+    <string name="pages_count_announcement">Antal sider: %1$d</string>
+    <string name="export_started">Eksport startet</string>
+    <string name="page_removed">Side fjernet</string>
+    <string name="page_moved_to_position">Flyttet til position %1$d</string>
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">OCR auto-rotation (anvend også ved eksport)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">OCR-efterbehandling (ret almindelige fejl)</string>
+    <string name="opt_layout_analysis">Layoutanalyse (kolonner, tabeller)
+    </string>    <!-- Options: Experimental directional mapping fallback -->
+    <!-- Developer / Debug options -->
+    <!-- Library / Collections -->    <!-- PDF Import -->
+    <string name="error_unknown_file_type">Ukendt filtype</string>
+    <string name="error_unsupported_file_type">Denne filtype understøttes ikke</string>
+    <string name="error_cannot_open_pdf">Kunne ikke åbne PDF</string>
+    <string name="error_pdf_empty">PDF-filen indeholder ingen sider</string>
+    <string name="error_pdf_import_failed">Import af PDF mislykkedes</string>
+    <string name="error_pdf_page_render_failed">Kunne ikke gengive siden</string>
+    <string name="pdf_select_page">Vælg side</string>
+    <string name="pdf_page_number">Side %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">Vælg OCR-sprog</string>
+    <string name="ocr_max_languages_warning">Der må maksimalt vælges 2 sprog</string>
+    <string name="ocr_no_language_selected">Vælg venligst mindst ét sprog</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">Kassér ændringer?</string>
+    <string name="msg_discard_changes">Du har ændringer, der ikke er gemt. Vil du kassere dem?</string>
+    <string name="btn_discard">Kassér</string>
+
+    <string name="btn_reocr">Kør OCR igen</string>
+    <string name="reocr_processing">Kører OCR igen…</string>
+    <string name="reocr_success">Ordet er opdateret: %1$s</string>
+    <string name="reocr_failed">OCR mislykkedes</string>
+    <string name="reocr_no_language">Vælg venligst et sprog først</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">100 %</string>
+    <string name="zoom_200">200 %</string>
+    <string name="zoom_300">300 %</string>
+    <string name="zoom_400">400 %</string>
+    <string name="zoom_fit">Tilpas</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">Layout</string>
+    <string name="label_text">Tekst</string>
+    <string name="label_document">Dokument</string>
+
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">Sidestørrelse</string>
+    <string name="dpi_settings_label">DPI-indstillinger</string>
+    <string name="page_format_fit">Tilpas til billede (anbefalet)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+
+    <string name="restore_access">Gendan adgang</string>
+    <string name="status">Status</string>
+    <string name="ocr_text_editor_hint">Rediger OCR-tekst</string>
+
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">Indstillinger for oprydning af gennemførte scanninger</string>
+    <string name="cleanup_policy">Oprydningspolitik</string>
+    <string name="cleanup_policy_none">Ingen (behold alle)</string>
+    <string name="cleanup_policy_max_age">Efter alder</string>
+    <string name="cleanup_policy_max_count">Efter antal</string>
+    <string name="cleanup_policy_max_storage">Efter lagerplads</string>
+    <string name="cleanup_policy_combined">Kombineret</string>
+    <string name="cleanup_max_age_days">Maksimal alder (dage)</string>
+    <string name="cleanup_max_count">Maksimalt antal</string>
+    <string name="cleanup_max_storage_mb">Maksimal lagerplads (MB)</string>
+    <string name="cleanup_settings_saved">Oprydningsindstillinger gemt</string>
+    <string name="inbox_mode">Inbox-tilstand</string>
+    <string name="inbox_mode_enable">Aktivér standardeksportmappe</string>
+    <string name="inbox_select_folder">Vælg mappe</string>
+    <string name="inbox_folder_set">Inbox-mappe: %1$s</string>
+    <string name="inbox_folder_none">Ingen mappe valgt</string>
+    <string name="inbox_saved">✓ Gemt i Inbox</string>
+    <string name="inbox_permission_lost">Adgang til Inbox-mappe mistet. Vælg venligst en ny mappe.</string>
+    <string name="inbox_no_folder_selected">Vælg venligst en Inbox-mappe først.</string>
+    <string name="inbox_clear">Ryd Inbox-mappe</string>
+    <string name="inbox_filename_format">Filnavnformat</string>
+    <string name="inbox_auto_new_scan">Start ny scanning automatisk efter eksport</string>
+    <string name="inbox_filename_date_scan">Dato + Scan (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">Dato + tid + Scan (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">Kun dato (2026-03-04)</string>
+    <string name="pdf_bw_mode_none">Farve</string>
+    <!-- Translations added for missing strings -->
+    <string name="confirm_remove_page_title">Fjern side?</string>
+    <string name="confirm_remove_page_message">Vil du fjerne denne side fra filmstrimlen?</string>
+    <string name="crop_aspect_label">Højde-bredde-forhold</string>
+    <string name="crop_aspect_auto">Auto (anbefalet)</string>
+    <string name="crop_aspect_original">Behold original (ingen korrektion)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">Brugerdefineret…</string>
+    <string name="crop_aspect_custom_with_ratio">Brugerdefineret (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">Brugerdefineret forhold</string>
+    <string name="crop_aspect_custom_width_hint">Bredde</string>
+    <string name="crop_aspect_custom_height_hint">Højde</string>
+    <string name="crop_aspect_custom_invalid">Indtast positive tal mellem 1:1 og 1:20.</string>
+    <string name="crop_aspect_output_size_hint">Output: %1$d × %2$d px</string>
+    <string name="crop_hint_corner_off_image">Hjørne uden for billedet — output kan have sorte kanter</string>
+    <string name="crop_edge_dragged">Kant valgt. Træk for at flytte kanten.</string>
+    <!-- Document cleanup -->
+    <string name="document_cleanup_title">Dokumentoprydning</string>
+    <string name="document_cleanup_original">Original</string>
+    <string name="document_cleanup_natural">Naturlig</string>
+    <string name="document_cleanup_enhanced">Forbedret</string>
+    <string name="document_cleanup_clean_text">Ren tekst</string>
+    <string name="workflow_step_description">Trin %1$d af %2$d: %3$s</string>
+    <string name="search_scans">Søg i scanninger</string>
+</resources>

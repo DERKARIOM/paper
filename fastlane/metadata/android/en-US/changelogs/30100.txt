@@ -1,0 +1,10 @@
+MakeACopy 3.1.0 (Release)
+
+* Upgraded document detection model from ONNX small to large for higher accuracy (FP16-quantized, 50% smaller)
+* Added exposure correction for improved scan quality
+* Updated OpenCV to 4.13.0 for better image processing
+* Updated ONNX Runtime to v1.24.1 for faster edge detection
+* New: Light edition available with English and German OCR (~67 MB vs ~106 MB per ABI)
+* Improved code quality and maintainability
+* Performance optimizations throughout the app
+* Fully offline, no cloud or tracking

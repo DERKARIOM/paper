@@ -1,0 +1,9 @@
+MakeACopy 3.3.0 (Release)
+* Major internal refactoring for improved code quality and maintainability
+* Introduced Hilt dependency injection — replaced all manual singletons
+* Significantly expanded test coverage with 200+ new unit tests
+* CI pipeline now includes automated quality gates (compile, test, lint)
+* Fixed deprecation warnings and resolved all Android Lint issues (0 issues)
+* Repository pattern consistently applied across all UI components
+* Minor bug fixes
+* Fully offline, no cloud or tracking

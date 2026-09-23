@@ -1,0 +1,1327 @@
+{
+  "filename": "three_column_s70",
+  "description": "Three-column full-page document",
+  "seed": 70,
+  "difficulty": "medium",
+  "pages": [
+    {
+      "page_number": 1,
+      "width_pt": 595.2755905511812,
+      "height_pt": 841.8897637795277,
+      "zones": [
+        {
+          "zone_id": "z0",
+          "role": "paragraph",
+          "reading_order": 0,
+          "bbox": [
+            36.0,
+            409.89,
+            198.43,
+            803.89
+          ],
+          "lines": [
+            {
+              "line_id": "z0l0",
+              "text": "Neque porro quisquam est, qui dolorem",
+              "bbox": [
+                36.0,
+                791.89,
+                185.29,
+                802.39
+              ],
+              "line_order_in_zone": 0,
+              "global_reading_order": 0
+            },
+            {
+              "line_id": "z0l1",
+              "text": "ipsum quia dolor sit.",
+              "bbox": [
+                36.0,
+                779.89,
+                111.58,
+                790.39
+              ],
+              "line_order_in_zone": 1,
+              "global_reading_order": 1
+            },
+            {
+              "line_id": "z0l2",
+              "text": "Quis autem vel eum iure reprehenderit qui",
+              "bbox": [
+                36.0,
+                767.89,
+                194.73,
+                778.39
+              ],
+              "line_order_in_zone": 2,
+              "global_reading_order": 2
+            },
+            {
+              "line_id": "z0l3",
+              "text": "in ea voluptate.",
+              "bbox": [
+                36.0,
+                755.89,
+                93.65,
+                766.39
+              ],
+              "line_order_in_zone": 3,
+              "global_reading_order": 3
+            },
+            {
+              "line_id": "z0l4",
+              "text": "Lorem ipsum dolor sit amet, consectetur",
+              "bbox": [
+                36.0,
+                743.89,
+                187.16,
+                754.39
+              ],
+              "line_order_in_zone": 4,
+              "global_reading_order": 4
+            },
+            {
+              "line_id": "z0l5",
+              "text": "adipiscing elit.",
+              "bbox": [
+                36.0,
+                731.89,
+                89.38,
+                742.39
+              ],
+              "line_order_in_zone": 5,
+              "global_reading_order": 5
+            },
+            {
+              "line_id": "z0l6",
+              "text": "Excepteur sint occaecat cupidatat non",
+              "bbox": [
+                36.0,
+                719.89,
+                179.63,
+                730.39
+              ],
+              "line_order_in_zone": 6,
+              "global_reading_order": 6
+            },
+            {
+              "line_id": "z0l7",
+              "text": "proident, sunt in culpa.",
+              "bbox": [
+                36.0,
+                707.89,
+                121.52,
+                718.39
+              ],
+              "line_order_in_zone": 7,
+              "global_reading_order": 7
+            },
+            {
+              "line_id": "z0l8",
+              "text": "Duis aute irure dolor in reprehenderit in",
+              "bbox": [
+                36.0,
+                695.89,
+                183.39,
+                706.39
+              ],
+              "line_order_in_zone": 8,
+              "global_reading_order": 8
+            },
+            {
+              "line_id": "z0l9",
+              "text": "voluptate velit.",
+              "bbox": [
+                36.0,
+                683.89,
+                90.33,
+                694.39
+              ],
+              "line_order_in_zone": 9,
+              "global_reading_order": 9
+            },
+            {
+              "line_id": "z0l10",
+              "text": "Nemo enim ipsam voluptatem quia",
+              "bbox": [
+                36.0,
+                671.89,
+                166.85,
+                682.39
+              ],
+              "line_order_in_zone": 10,
+              "global_reading_order": 10
+            },
+            {
+              "line_id": "z0l11",
+              "text": "voluptas sit aspernatur.",
+              "bbox": [
+                36.0,
+                659.89,
+                123.87,
+                670.39
+              ],
+              "line_order_in_zone": 11,
+              "global_reading_order": 11
+            },
+            {
+              "line_id": "z0l12",
+              "text": "Ut enim ad minim veniam, quis nostrud",
+              "bbox": [
+                36.0,
+                647.89,
+                182.91,
+                658.39
+              ],
+              "line_order_in_zone": 12,
+              "global_reading_order": 12
+            },
+            {
+              "line_id": "z0l13",
+              "text": "exercitation ullamco.",
+              "bbox": [
+                36.0,
+                635.89,
+                113.47,
+                646.39
+              ],
+              "line_order_in_zone": 13,
+              "global_reading_order": 13
+            },
+            {
+              "line_id": "z0l14",
+              "text": "Sed do eiusmod tempor incididunt ut",
+              "bbox": [
+                36.0,
+                623.89,
+                173.96,
+                634.39
+              ],
+              "line_order_in_zone": 14,
+              "global_reading_order": 14
+            },
+            {
+              "line_id": "z0l15",
+              "text": "labore et dolore magna aliqua.",
+              "bbox": [
+                36.0,
+                611.89,
+                150.81,
+                622.39
+              ],
+              "line_order_in_zone": 15,
+              "global_reading_order": 15
+            },
+            {
+              "line_id": "z0l16",
+              "text": "Neque porro quisquam est, qui dolorem",
+              "bbox": [
+                36.0,
+                599.89,
+                185.29,
+                610.39
+              ],
+              "line_order_in_zone": 16,
+              "global_reading_order": 16
+            },
+            {
+              "line_id": "z0l17",
+              "text": "ipsum quia dolor sit.",
+              "bbox": [
+                36.0,
+                587.89,
+                111.58,
+                598.39
+              ],
+              "line_order_in_zone": 17,
+              "global_reading_order": 17
+            },
+            {
+              "line_id": "z0l18",
+              "text": "Quis autem vel eum iure reprehenderit qui",
+              "bbox": [
+                36.0,
+                575.89,
+                194.73,
+                586.39
+              ],
+              "line_order_in_zone": 18,
+              "global_reading_order": 18
+            },
+            {
+              "line_id": "z0l19",
+              "text": "in ea voluptate.",
+              "bbox": [
+                36.0,
+                563.89,
+                93.65,
+                574.39
+              ],
+              "line_order_in_zone": 19,
+              "global_reading_order": 19
+            },
+            {
+              "line_id": "z0l20",
+              "text": "Lorem ipsum dolor sit amet, consectetur",
+              "bbox": [
+                36.0,
+                551.89,
+                187.16,
+                562.39
+              ],
+              "line_order_in_zone": 20,
+              "global_reading_order": 20
+            },
+            {
+              "line_id": "z0l21",
+              "text": "adipiscing elit.",
+              "bbox": [
+                36.0,
+                539.89,
+                89.38,
+                550.39
+              ],
+              "line_order_in_zone": 21,
+              "global_reading_order": 21
+            },
+            {
+              "line_id": "z0l22",
+              "text": "Excepteur sint occaecat cupidatat non",
+              "bbox": [
+                36.0,
+                527.89,
+                179.63,
+                538.39
+              ],
+              "line_order_in_zone": 22,
+              "global_reading_order": 22
+            },
+            {
+              "line_id": "z0l23",
+              "text": "proident, sunt in culpa.",
+              "bbox": [
+                36.0,
+                515.89,
+                121.52,
+                526.39
+              ],
+              "line_order_in_zone": 23,
+              "global_reading_order": 23
+            },
+            {
+              "line_id": "z0l24",
+              "text": "Duis aute irure dolor in reprehenderit in",
+              "bbox": [
+                36.0,
+                503.89,
+                183.39,
+                514.39
+              ],
+              "line_order_in_zone": 24,
+              "global_reading_order": 24
+            },
+            {
+              "line_id": "z0l25",
+              "text": "voluptate velit.",
+              "bbox": [
+                36.0,
+                491.89,
+                90.33,
+                502.39
+              ],
+              "line_order_in_zone": 25,
+              "global_reading_order": 25
+            },
+            {
+              "line_id": "z0l26",
+              "text": "Nemo enim ipsam voluptatem quia",
+              "bbox": [
+                36.0,
+                479.89,
+                166.85,
+                490.39
+              ],
+              "line_order_in_zone": 26,
+              "global_reading_order": 26
+            },
+            {
+              "line_id": "z0l27",
+              "text": "voluptas sit aspernatur.",
+              "bbox": [
+                36.0,
+                467.89,
+                123.87,
+                478.39
+              ],
+              "line_order_in_zone": 27,
+              "global_reading_order": 27
+            },
+            {
+              "line_id": "z0l28",
+              "text": "Ut enim ad minim veniam, quis nostrud",
+              "bbox": [
+                36.0,
+                455.89,
+                182.91,
+                466.39
+              ],
+              "line_order_in_zone": 28,
+              "global_reading_order": 28
+            },
+            {
+              "line_id": "z0l29",
+              "text": "exercitation ullamco.",
+              "bbox": [
+                36.0,
+                443.89,
+                113.47,
+                454.39
+              ],
+              "line_order_in_zone": 29,
+              "global_reading_order": 29
+            },
+            {
+              "line_id": "z0l30",
+              "text": "Sed do eiusmod tempor incididunt ut",
+              "bbox": [
+                36.0,
+                431.89,
+                173.96,
+                442.39
+              ],
+              "line_order_in_zone": 30,
+              "global_reading_order": 30
+            },
+            {
+              "line_id": "z0l31",
+              "text": "labore et dolore magna aliqua.",
+              "bbox": [
+                36.0,
+                419.89,
+                150.81,
+                430.39
+              ],
+              "line_order_in_zone": 31,
+              "global_reading_order": 31
+            }
+          ],
+          "column_index": 0,
+          "column_span": 1,
+          "text": "Neque porro quisquam est, qui dolorem\nipsum quia dolor sit.\nQuis autem vel eum iure reprehenderit qui\nin ea voluptate.\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.\nNeque porro quisquam est, qui dolorem\nipsum quia dolor sit.\nQuis autem vel eum iure reprehenderit qui\nin ea voluptate.\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.",
+          "is_textual": true
+        },
+        {
+          "zone_id": "z1",
+          "role": "paragraph",
+          "reading_order": 1,
+          "bbox": [
+            216.43,
+            409.89,
+            378.85,
+            803.89
+          ],
+          "lines": [
+            {
+              "line_id": "z1l0",
+              "text": "Quis autem vel eum iure reprehenderit qui",
+              "bbox": [
+                216.43,
+                791.89,
+                375.15,
+                802.39
+              ],
+              "line_order_in_zone": 0,
+              "global_reading_order": 32
+            },
+            {
+              "line_id": "z1l1",
+              "text": "in ea voluptate.",
+              "bbox": [
+                216.43,
+                779.89,
+                274.07,
+                790.39
+              ],
+              "line_order_in_zone": 1,
+              "global_reading_order": 33
+            },
+            {
+              "line_id": "z1l2",
+              "text": "Lorem ipsum dolor sit amet, consectetur",
+              "bbox": [
+                216.43,
+                767.89,
+                367.59,
+                778.39
+              ],
+              "line_order_in_zone": 2,
+              "global_reading_order": 34
+            },
+            {
+              "line_id": "z1l3",
+              "text": "adipiscing elit.",
+              "bbox": [
+                216.43,
+                755.89,
+                269.81,
+                766.39
+              ],
+              "line_order_in_zone": 3,
+              "global_reading_order": 35
+            },
+            {
+              "line_id": "z1l4",
+              "text": "Excepteur sint occaecat cupidatat non",
+              "bbox": [
+                216.43,
+                743.89,
+                360.06,
+                754.39
+              ],
+              "line_order_in_zone": 4,
+              "global_reading_order": 36
+            },
+            {
+              "line_id": "z1l5",
+              "text": "proident, sunt in culpa.",
+              "bbox": [
+                216.43,
+                731.89,
+                301.94,
+                742.39
+              ],
+              "line_order_in_zone": 5,
+              "global_reading_order": 37
+            },
+            {
+              "line_id": "z1l6",
+              "text": "Duis aute irure dolor in reprehenderit in",
+              "bbox": [
+                216.43,
+                719.89,
+                363.82,
+                730.39
+              ],
+              "line_order_in_zone": 6,
+              "global_reading_order": 38
+            },
+            {
+              "line_id": "z1l7",
+              "text": "voluptate velit.",
+              "bbox": [
+                216.43,
+                707.89,
+                270.76,
+                718.39
+              ],
+              "line_order_in_zone": 7,
+              "global_reading_order": 39
+            },
+            {
+              "line_id": "z1l8",
+              "text": "Nemo enim ipsam voluptatem quia",
+              "bbox": [
+                216.43,
+                695.89,
+                347.27,
+                706.39
+              ],
+              "line_order_in_zone": 8,
+              "global_reading_order": 40
+            },
+            {
+              "line_id": "z1l9",
+              "text": "voluptas sit aspernatur.",
+              "bbox": [
+                216.43,
+                683.89,
+                304.3,
+                694.39
+              ],
+              "line_order_in_zone": 9,
+              "global_reading_order": 41
+            },
+            {
+              "line_id": "z1l10",
+              "text": "Ut enim ad minim veniam, quis nostrud",
+              "bbox": [
+                216.43,
+                671.89,
+                363.33,
+                682.39
+              ],
+              "line_order_in_zone": 10,
+              "global_reading_order": 42
+            },
+            {
+              "line_id": "z1l11",
+              "text": "exercitation ullamco.",
+              "bbox": [
+                216.43,
+                659.89,
+                293.89,
+                670.39
+              ],
+              "line_order_in_zone": 11,
+              "global_reading_order": 43
+            },
+            {
+              "line_id": "z1l12",
+              "text": "Sed do eiusmod tempor incididunt ut",
+              "bbox": [
+                216.43,
+                647.89,
+                354.38,
+                658.39
+              ],
+              "line_order_in_zone": 12,
+              "global_reading_order": 44
+            },
+            {
+              "line_id": "z1l13",
+              "text": "labore et dolore magna aliqua.",
+              "bbox": [
+                216.43,
+                635.89,
+                331.23,
+                646.39
+              ],
+              "line_order_in_zone": 13,
+              "global_reading_order": 45
+            },
+            {
+              "line_id": "z1l14",
+              "text": "Neque porro quisquam est, qui dolorem",
+              "bbox": [
+                216.43,
+                623.89,
+                365.71,
+                634.39
+              ],
+              "line_order_in_zone": 14,
+              "global_reading_order": 46
+            },
+            {
+              "line_id": "z1l15",
+              "text": "ipsum quia dolor sit.",
+              "bbox": [
+                216.43,
+                611.89,
+                292.01,
+                622.39
+              ],
+              "line_order_in_zone": 15,
+              "global_reading_order": 47
+            },
+            {
+              "line_id": "z1l16",
+              "text": "Quis autem vel eum iure reprehenderit qui",
+              "bbox": [
+                216.43,
+                599.89,
+                375.15,
+                610.39
+              ],
+              "line_order_in_zone": 16,
+              "global_reading_order": 48
+            },
+            {
+              "line_id": "z1l17",
+              "text": "in ea voluptate.",
+              "bbox": [
+                216.43,
+                587.89,
+                274.07,
+                598.39
+              ],
+              "line_order_in_zone": 17,
+              "global_reading_order": 49
+            },
+            {
+              "line_id": "z1l18",
+              "text": "Lorem ipsum dolor sit amet, consectetur",
+              "bbox": [
+                216.43,
+                575.89,
+                367.59,
+                586.39
+              ],
+              "line_order_in_zone": 18,
+              "global_reading_order": 50
+            },
+            {
+              "line_id": "z1l19",
+              "text": "adipiscing elit.",
+              "bbox": [
+                216.43,
+                563.89,
+                269.81,
+                574.39
+              ],
+              "line_order_in_zone": 19,
+              "global_reading_order": 51
+            },
+            {
+              "line_id": "z1l20",
+              "text": "Excepteur sint occaecat cupidatat non",
+              "bbox": [
+                216.43,
+                551.89,
+                360.06,
+                562.39
+              ],
+              "line_order_in_zone": 20,
+              "global_reading_order": 52
+            },
+            {
+              "line_id": "z1l21",
+              "text": "proident, sunt in culpa.",
+              "bbox": [
+                216.43,
+                539.89,
+                301.94,
+                550.39
+              ],
+              "line_order_in_zone": 21,
+              "global_reading_order": 53
+            },
+            {
+              "line_id": "z1l22",
+              "text": "Duis aute irure dolor in reprehenderit in",
+              "bbox": [
+                216.43,
+                527.89,
+                363.82,
+                538.39
+              ],
+              "line_order_in_zone": 22,
+              "global_reading_order": 54
+            },
+            {
+              "line_id": "z1l23",
+              "text": "voluptate velit.",
+              "bbox": [
+                216.43,
+                515.89,
+                270.76,
+                526.39
+              ],
+              "line_order_in_zone": 23,
+              "global_reading_order": 55
+            },
+            {
+              "line_id": "z1l24",
+              "text": "Nemo enim ipsam voluptatem quia",
+              "bbox": [
+                216.43,
+                503.89,
+                347.27,
+                514.39
+              ],
+              "line_order_in_zone": 24,
+              "global_reading_order": 56
+            },
+            {
+              "line_id": "z1l25",
+              "text": "voluptas sit aspernatur.",
+              "bbox": [
+                216.43,
+                491.89,
+                304.3,
+                502.39
+              ],
+              "line_order_in_zone": 25,
+              "global_reading_order": 57
+            },
+            {
+              "line_id": "z1l26",
+              "text": "Ut enim ad minim veniam, quis nostrud",
+              "bbox": [
+                216.43,
+                479.89,
+                363.33,
+                490.39
+              ],
+              "line_order_in_zone": 26,
+              "global_reading_order": 58
+            },
+            {
+              "line_id": "z1l27",
+              "text": "exercitation ullamco.",
+              "bbox": [
+                216.43,
+                467.89,
+                293.89,
+                478.39
+              ],
+              "line_order_in_zone": 27,
+              "global_reading_order": 59
+            },
+            {
+              "line_id": "z1l28",
+              "text": "Sed do eiusmod tempor incididunt ut",
+              "bbox": [
+                216.43,
+                455.89,
+                354.38,
+                466.39
+              ],
+              "line_order_in_zone": 28,
+              "global_reading_order": 60
+            },
+            {
+              "line_id": "z1l29",
+              "text": "labore et dolore magna aliqua.",
+              "bbox": [
+                216.43,
+                443.89,
+                331.23,
+                454.39
+              ],
+              "line_order_in_zone": 29,
+              "global_reading_order": 61
+            },
+            {
+              "line_id": "z1l30",
+              "text": "Neque porro quisquam est, qui dolorem",
+              "bbox": [
+                216.43,
+                431.89,
+                365.71,
+                442.39
+              ],
+              "line_order_in_zone": 30,
+              "global_reading_order": 62
+            },
+            {
+              "line_id": "z1l31",
+              "text": "ipsum quia dolor sit.",
+              "bbox": [
+                216.43,
+                419.89,
+                292.01,
+                430.39
+              ],
+              "line_order_in_zone": 31,
+              "global_reading_order": 63
+            }
+          ],
+          "column_index": 1,
+          "column_span": 1,
+          "text": "Quis autem vel eum iure reprehenderit qui\nin ea voluptate.\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.\nNeque porro quisquam est, qui dolorem\nipsum quia dolor sit.\nQuis autem vel eum iure reprehenderit qui\nin ea voluptate.\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.\nNeque porro quisquam est, qui dolorem\nipsum quia dolor sit.",
+          "is_textual": true
+        },
+        {
+          "zone_id": "z2",
+          "role": "paragraph",
+          "reading_order": 2,
+          "bbox": [
+            396.85,
+            409.89,
+            559.28,
+            803.89
+          ],
+          "lines": [
+            {
+              "line_id": "z2l0",
+              "text": "Lorem ipsum dolor sit amet, consectetur",
+              "bbox": [
+                396.85,
+                791.89,
+                548.01,
+                802.39
+              ],
+              "line_order_in_zone": 0,
+              "global_reading_order": 64
+            },
+            {
+              "line_id": "z2l1",
+              "text": "adipiscing elit.",
+              "bbox": [
+                396.85,
+                779.89,
+                450.23,
+                790.39
+              ],
+              "line_order_in_zone": 1,
+              "global_reading_order": 65
+            },
+            {
+              "line_id": "z2l2",
+              "text": "Excepteur sint occaecat cupidatat non",
+              "bbox": [
+                396.85,
+                767.89,
+                540.48,
+                778.39
+              ],
+              "line_order_in_zone": 2,
+              "global_reading_order": 66
+            },
+            {
+              "line_id": "z2l3",
+              "text": "proident, sunt in culpa.",
+              "bbox": [
+                396.85,
+                755.89,
+                482.37,
+                766.39
+              ],
+              "line_order_in_zone": 3,
+              "global_reading_order": 67
+            },
+            {
+              "line_id": "z2l4",
+              "text": "Duis aute irure dolor in reprehenderit in",
+              "bbox": [
+                396.85,
+                743.89,
+                544.24,
+                754.39
+              ],
+              "line_order_in_zone": 4,
+              "global_reading_order": 68
+            },
+            {
+              "line_id": "z2l5",
+              "text": "voluptate velit.",
+              "bbox": [
+                396.85,
+                731.89,
+                451.18,
+                742.39
+              ],
+              "line_order_in_zone": 5,
+              "global_reading_order": 69
+            },
+            {
+              "line_id": "z2l6",
+              "text": "Nemo enim ipsam voluptatem quia",
+              "bbox": [
+                396.85,
+                719.89,
+                527.7,
+                730.39
+              ],
+              "line_order_in_zone": 6,
+              "global_reading_order": 70
+            },
+            {
+              "line_id": "z2l7",
+              "text": "voluptas sit aspernatur.",
+              "bbox": [
+                396.85,
+                707.89,
+                484.72,
+                718.39
+              ],
+              "line_order_in_zone": 7,
+              "global_reading_order": 71
+            },
+            {
+              "line_id": "z2l8",
+              "text": "Ut enim ad minim veniam, quis nostrud",
+              "bbox": [
+                396.85,
+                695.89,
+                543.76,
+                706.39
+              ],
+              "line_order_in_zone": 8,
+              "global_reading_order": 72
+            },
+            {
+              "line_id": "z2l9",
+              "text": "exercitation ullamco.",
+              "bbox": [
+                396.85,
+                683.89,
+                474.32,
+                694.39
+              ],
+              "line_order_in_zone": 9,
+              "global_reading_order": 73
+            },
+            {
+              "line_id": "z2l10",
+              "text": "Sed do eiusmod tempor incididunt ut",
+              "bbox": [
+                396.85,
+                671.89,
+                534.81,
+                682.39
+              ],
+              "line_order_in_zone": 10,
+              "global_reading_order": 74
+            },
+            {
+              "line_id": "z2l11",
+              "text": "labore et dolore magna aliqua.",
+              "bbox": [
+                396.85,
+                659.89,
+                511.66,
+                670.39
+              ],
+              "line_order_in_zone": 11,
+              "global_reading_order": 75
+            },
+            {
+              "line_id": "z2l12",
+              "text": "Neque porro quisquam est, qui dolorem",
+              "bbox": [
+                396.85,
+                647.89,
+                546.14,
+                658.39
+              ],
+              "line_order_in_zone": 12,
+              "global_reading_order": 76
+            },
+            {
+              "line_id": "z2l13",
+              "text": "ipsum quia dolor sit.",
+              "bbox": [
+                396.85,
+                635.89,
+                472.43,
+                646.39
+              ],
+              "line_order_in_zone": 13,
+              "global_reading_order": 77
+            },
+            {
+              "line_id": "z2l14",
+              "text": "Quis autem vel eum iure reprehenderit qui",
+              "bbox": [
+                396.85,
+                623.89,
+                555.58,
+                634.39
+              ],
+              "line_order_in_zone": 14,
+              "global_reading_order": 78
+            },
+            {
+              "line_id": "z2l15",
+              "text": "in ea voluptate.",
+              "bbox": [
+                396.85,
+                611.89,
+                454.5,
+                622.39
+              ],
+              "line_order_in_zone": 15,
+              "global_reading_order": 79
+            },
+            {
+              "line_id": "z2l16",
+              "text": "Lorem ipsum dolor sit amet, consectetur",
+              "bbox": [
+                396.85,
+                599.89,
+                548.01,
+                610.39
+              ],
+              "line_order_in_zone": 16,
+              "global_reading_order": 80
+            },
+            {
+              "line_id": "z2l17",
+              "text": "adipiscing elit.",
+              "bbox": [
+                396.85,
+                587.89,
+                450.23,
+                598.39
+              ],
+              "line_order_in_zone": 17,
+              "global_reading_order": 81
+            },
+            {
+              "line_id": "z2l18",
+              "text": "Excepteur sint occaecat cupidatat non",
+              "bbox": [
+                396.85,
+                575.89,
+                540.48,
+                586.39
+              ],
+              "line_order_in_zone": 18,
+              "global_reading_order": 82
+            },
+            {
+              "line_id": "z2l19",
+              "text": "proident, sunt in culpa.",
+              "bbox": [
+                396.85,
+                563.89,
+                482.37,
+                574.39
+              ],
+              "line_order_in_zone": 19,
+              "global_reading_order": 83
+            },
+            {
+              "line_id": "z2l20",
+              "text": "Duis aute irure dolor in reprehenderit in",
+              "bbox": [
+                396.85,
+                551.89,
+                544.24,
+                562.39
+              ],
+              "line_order_in_zone": 20,
+              "global_reading_order": 84
+            },
+            {
+              "line_id": "z2l21",
+              "text": "voluptate velit.",
+              "bbox": [
+                396.85,
+                539.89,
+                451.18,
+                550.39
+              ],
+              "line_order_in_zone": 21,
+              "global_reading_order": 85
+            },
+            {
+              "line_id": "z2l22",
+              "text": "Nemo enim ipsam voluptatem quia",
+              "bbox": [
+                396.85,
+                527.89,
+                527.7,
+                538.39
+              ],
+              "line_order_in_zone": 22,
+              "global_reading_order": 86
+            },
+            {
+              "line_id": "z2l23",
+              "text": "voluptas sit aspernatur.",
+              "bbox": [
+                396.85,
+                515.89,
+                484.72,
+                526.39
+              ],
+              "line_order_in_zone": 23,
+              "global_reading_order": 87
+            },
+            {
+              "line_id": "z2l24",
+              "text": "Ut enim ad minim veniam, quis nostrud",
+              "bbox": [
+                396.85,
+                503.89,
+                543.76,
+                514.39
+              ],
+              "line_order_in_zone": 24,
+              "global_reading_order": 88
+            },
+            {
+              "line_id": "z2l25",
+              "text": "exercitation ullamco.",
+              "bbox": [
+                396.85,
+                491.89,
+                474.32,
+                502.39
+              ],
+              "line_order_in_zone": 25,
+              "global_reading_order": 89
+            },
+            {
+              "line_id": "z2l26",
+              "text": "Sed do eiusmod tempor incididunt ut",
+              "bbox": [
+                396.85,
+                479.89,
+                534.81,
+                490.39
+              ],
+              "line_order_in_zone": 26,
+              "global_reading_order": 90
+            },
+            {
+              "line_id": "z2l27",
+              "text": "labore et dolore magna aliqua.",
+              "bbox": [
+                396.85,
+                467.89,
+                511.66,
+                478.39
+              ],
+              "line_order_in_zone": 27,
+              "global_reading_order": 91
+            },
+            {
+              "line_id": "z2l28",
+              "text": "Neque porro quisquam est, qui dolorem",
+              "bbox": [
+                396.85,
+                455.89,
+                546.14,
+                466.39
+              ],
+              "line_order_in_zone": 28,
+              "global_reading_order": 92
+            },
+            {
+              "line_id": "z2l29",
+              "text": "ipsum quia dolor sit.",
+              "bbox": [
+                396.85,
+                443.89,
+                472.43,
+                454.39
+              ],
+              "line_order_in_zone": 29,
+              "global_reading_order": 93
+            },
+            {
+              "line_id": "z2l30",
+              "text": "Quis autem vel eum iure reprehenderit qui",
+              "bbox": [
+                396.85,
+                431.89,
+                555.58,
+                442.39
+              ],
+              "line_order_in_zone": 30,
+              "global_reading_order": 94
+            },
+            {
+              "line_id": "z2l31",
+              "text": "in ea voluptate.",
+              "bbox": [
+                396.85,
+                419.89,
+                454.5,
+                430.39
+              ],
+              "line_order_in_zone": 31,
+              "global_reading_order": 95
+            }
+          ],
+          "column_index": 2,
+          "column_span": 1,
+          "text": "Lorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.\nNeque porro quisquam est, qui dolorem\nipsum quia dolor sit.\nQuis autem vel eum iure reprehenderit qui\nin ea voluptate.\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.\nNeque porro quisquam est, qui dolorem\nipsum quia dolor sit.\nQuis autem vel eum iure reprehenderit qui\nin ea voluptate.",
+          "is_textual": true
+        }
+      ],
+      "expected_zone_order": [
+        "z0",
+        "z1",
+        "z2"
+      ],
+      "expected_line_order": [
+        "z0l0",
+        "z0l1",
+        "z0l2",
+        "z0l3",
+        "z0l4",
+        "z0l5",
+        "z0l6",
+        "z0l7",
+        "z0l8",
+        "z0l9",
+        "z0l10",
+        "z0l11",
+        "z0l12",
+        "z0l13",
+        "z0l14",
+        "z0l15",
+        "z0l16",
+        "z0l17",
+        "z0l18",
+        "z0l19",
+        "z0l20",
+        "z0l21",
+        "z0l22",
+        "z0l23",
+        "z0l24",
+        "z0l25",
+        "z0l26",
+        "z0l27",
+        "z0l28",
+        "z0l29",
+        "z0l30",
+        "z0l31",
+        "z1l0",
+        "z1l1",
+        "z1l2",
+        "z1l3",
+        "z1l4",
+        "z1l5",
+        "z1l6",
+        "z1l7",
+        "z1l8",
+        "z1l9",
+        "z1l10",
+        "z1l11",
+        "z1l12",
+        "z1l13",
+        "z1l14",
+        "z1l15",
+        "z1l16",
+        "z1l17",
+        "z1l18",
+        "z1l19",
+        "z1l20",
+        "z1l21",
+        "z1l22",
+        "z1l23",
+        "z1l24",
+        "z1l25",
+        "z1l26",
+        "z1l27",
+        "z1l28",
+        "z1l29",
+        "z1l30",
+        "z1l31",
+        "z2l0",
+        "z2l1",
+        "z2l2",
+        "z2l3",
+        "z2l4",
+        "z2l5",
+        "z2l6",
+        "z2l7",
+        "z2l8",
+        "z2l9",
+        "z2l10",
+        "z2l11",
+        "z2l12",
+        "z2l13",
+        "z2l14",
+        "z2l15",
+        "z2l16",
+        "z2l17",
+        "z2l18",
+        "z2l19",
+        "z2l20",
+        "z2l21",
+        "z2l22",
+        "z2l23",
+        "z2l24",
+        "z2l25",
+        "z2l26",
+        "z2l27",
+        "z2l28",
+        "z2l29",
+        "z2l30",
+        "z2l31"
+      ],
+      "full_text": "Neque porro quisquam est, qui dolorem\nipsum quia dolor sit.\nQuis autem vel eum iure reprehenderit qui\nin ea voluptate.\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.\nNeque porro quisquam est, qui dolorem\nipsum quia dolor sit.\nQuis autem vel eum iure reprehenderit qui\nin ea voluptate.\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.\nQuis autem vel eum iure reprehenderit qui\nin ea voluptate.\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.\nNeque porro quisquam est, qui dolorem\nipsum quia dolor sit.\nQuis autem vel eum iure reprehenderit qui\nin ea voluptate.\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.\nNeque porro quisquam est, qui dolorem\nipsum quia dolor sit.\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.\nNeque porro quisquam est, qui dolorem\nipsum quia dolor sit.\nQuis autem vel eum iure reprehenderit qui\nin ea voluptate.\nLorem ipsum dolor sit amet, consectetur\nadipiscing elit.\nExcepteur sint occaecat cupidatat non\nproident, sunt in culpa.\nDuis aute irure dolor in reprehenderit in\nvoluptate velit.\nNemo enim ipsam voluptatem quia\nvoluptas sit aspernatur.\nUt enim ad minim veniam, quis nostrud\nexercitation ullamco.\nSed do eiusmod tempor incididunt ut\nlabore et dolore magna aliqua.\nNeque porro quisquam est, qui dolorem\nipsum quia dolor sit.\nQuis autem vel eum iure reprehenderit qui\nin ea voluptate.",
+      "coordinate_system": {
+        "origin": "bottom_left",
+        "unit": "pt"
+      }
+    }
+  ],
+  "rotation_deg": 0.0
+}

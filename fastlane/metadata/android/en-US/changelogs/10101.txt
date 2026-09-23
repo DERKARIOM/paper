@@ -1,0 +1,8 @@
+* Improved OCR text layer: words are grouped into lines, aligned more precisely, and extracted as full phrases.
+* Better baseline, font sizing, and spacing.
+* Bugfix for split words in PDFs.
+* Added grayscale option and stronger image scaling.
+* Orientation-aware OCR: We now pass the camera’s capture rotation to OCR and rotate the image accordingly before processing. This fixes garbled preview text for landscape shots and improves recognition quality.
+* Fixed: OCR preview showed “gibberish” when the document was captured horizontally.
+* Minor stability and logging improvements around image capture → OCR handoff.
+* PDF text layer: Stabilized spacing by ignoring micro kerning adjustments (< 0.75 pt) and adding a safe fallback when getStringWidth() isn’t reliable. Results in cleaner copy/select (no “chopped” words) while keeping the overlay perfectly aligned.

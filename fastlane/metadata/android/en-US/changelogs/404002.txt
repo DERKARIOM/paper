@@ -1,0 +1,5 @@
+MakeACopy 4.4.0
+* New camera zoom/lens menu with saved zoom levels.
+* Improved camera controls and accessibility labels.
+* Fixed searchable PDF text layer line grouping for more reliable text selection and copy/paste.
+* Updated translations, OpenCV handling and dependencies.

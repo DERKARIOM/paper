@@ -1,0 +1,491 @@
+<resources>
+    <string name="app_name">MakeACopy</string>
+
+    <string name="tip_text_mode_editing">Текстовый режим: Разрывы строк и знаки препинания в настоящее время
+        нормализуются до пробелов. Если введено меньше слов, чем было распознано, оставшиеся слова OCR остаются без
+        изменений. Изменения применяются после короткой паузы.
+    </string>
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">Камера</string>
+    <string name="title_crop">Обрезка</string>
+    <string name="title_ocr">Распознавание</string>
+    <string name="title_export">Экспорт</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">Сканировать</string>
+    <string name="btn_crop">Обрезать</string>
+    <string name="btn_process">Обработать</string>
+    <string name="btn_share">Поделиться</string>
+    <string name="btn_share_text">Поделиться текстом</string>
+    <string name="next">Далее</string>
+    <string name="back">Назад</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">Для сканирования документов требуется разрешение на камеру</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">Камера готова. Нажмите кнопку, чтобы отсканировать
+        документ.
+    </string>
+    <string name="captured_image">Снятое изображение</string>
+    <string name="image_to_crop">Изображение для обрезки</string>
+    <string name="cropped_image">Обрезанное изображение</string>
+    <string name="document_preview">Предпросмотр документа</string>
+    <string name="include_ocr_text">Экспортировать OCR как отдельный TXT</string>
+    <string name="ocr_results_will_appear_here">Результаты OCR будут показаны здесь</string>
+    <string name="ocr_no_text_detected">Текст не распознан</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Отрегулируйте углы
+        трапеции, чтобы выбрать область обрезки, затем нажмите «Обрезать».
+    </string>
+    <string name="no_document_ready_process_ocr_first">Документ не готов. Сначала выполните OCR.</string>
+    <string name="document_ready_for_export">Документ готов к экспорту</string>
+    <string name="processing_image">Обработка изображения…</string>
+    <string name="no_image_processed_crop_an_image_first">Изображение не обработано. Сначала обрежьте изображение.
+    </string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR завершён. Нажмите кнопку, чтобы
+        перейти к экспорту.
+    </string>
+
+    <string name="ocr_found_rotation">Обнаружен поворот: %1$d°</string>
+    <string name="ocr_score">Оценка OCR: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">Обнаружен поворот: %1$d° — оценка OCR: %2$d%%</string>
+
+    <!-- Дополнительное объяснение, добавленное в диалог «Пояснение режимов распознавания» -->
+    <string name="ocr_prep_modes_autorotate_note">Автоматический поворот OCR: При включении OCR также проверяет страницу
+        с шагом 90° (0/90/180/270) и выбирает лучший результат. Обнаруженный поворот может быть автоматически применён
+        при экспорте, если вы не поворачивали страницу вручную. Этот параметр можно включить или выключить в разделе
+        «Выбрать режим распознавания».
+    </string>
+
+    <string name="initializing_camera">Инициализация камеры…</string>
+    <string name="resetting_camera">Сброс камеры…</string>
+    <string name="error_initializing_camera">Ошибка инициализации камеры: %1$s</string>
+    <string name="error_camera_provider_null">Не удалось инициализировать камеру — провайдер равен null</string>
+    <string name="error_camera_not_initialized">Камера не инициализирована. Повторите попытку.</string>
+    <string name="error_image_capture_failed">Ошибка захвата изображения: %1$s</string>
+    <string name="error_displaying_image">Ошибка отображения изображения: %1$s</string>
+    <string name="error_resetting_camera">Ошибка сброса камеры: %1$s</string>
+    <string name="error_toggling_flashlight">Ошибка переключения фонарика: %1$s</string>
+    <string name="error_camera_preview_failed">Не удалось запустить предпросмотр камеры. Повторите попытку.</string>
+
+    <string name="share_logs">Поделиться журналами</string>
+    <string name="share_logs_subject">Диагностические журналы MakeACopy</string>
+    <string name="share_logs_chooser_title">Поделиться журналами через…</string>
+    <string name="share_logs_error">Не удалось подготовить журналы: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">Оттенки серого</string>
+    <string name="export_as_jpeg">Экспорт как JPEG</string>
+    <string name="export_format_label">Формат экспорта</string>
+    <string name="export_as_pdf">Экспорт как PDF (по умолчанию)</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">Переключить фонарик</string>
+    <string name="flashlight_on">Фонарик включён</string>
+    <string name="flashlight_off">Фонарик выключен</string>
+    <string name="flashlight_not_available">На этом устройстве нет фонарика</string>
+    <string name="low_light_detected">Обнаружено слабое освещение. Включить фонарик?</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">EV %1$s</string>
+    <string name="exposure_compensation_cd">Ползунок компенсации экспозиции</string>
+    <string name="exposure_compensation_option">Компенсация экспозиции</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">Ползунок ручной фокусировки</string>
+    <string name="manual_focus_af_button_cd">Переключиться на автофокус</string>
+    <string name="autofocus_enabled">Автофокус включён</string>
+    <string name="manual_focus_locked">Ручная фокусировка зафиксирована</string>
+    <string name="manual_focus_option">Ручная фокусировка</string>
+    <string name="focus_quality_option">Индикатор качества фокусировки</string>
+    <string name="tap_to_focus_started">Фокусировка…</string>
+    <string name="tap_to_focus_done">Фокус настроен</string>
+    <string name="tap_to_focus_requested">Фокусировка запрошена</string>
+    <string name="tap_to_focus_not_locked">Не удалось зафиксировать фокус здесь</string>
+    <string name="tap_to_focus_not_supported">Фокусировка касанием здесь не поддерживается</string>
+    <string name="tap_to_focus_failed">Не удалось сфокусироваться здесь</string>
+    <string name="focus_quality_low">Качество фокусировки: низкое</string>
+    <string name="focus_quality_good">Качество фокусировки: хорошее</string>
+    <string name="focus_quality_excellent">Качество фокусировки: отличное</string>
+    <string name="camera_zoom_title">Зум / объектив</string>
+    <string name="camera_zoom_cd">Выбрать зум или объектив</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">Зум недоступен на этом устройстве</string>
+
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">Цвет</string>
+    <string name="jpeg_mode_auto">Оттенки серого</string>
+    <string name="jpeg_mode_bw_text">Чёрно-белый</string>
+    <string name="jpeg_mode_bw_robust">Чёрно-белый (устойчивый) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">Надёжная предварительная обработка OCR (JPEG)</string>
+
+    <string name="pdf_bw_mode_robust">Чёрно-белый</string>
+    <string name="pdf_bw_mode_classic">Ч/Б (классический)</string>
+    <string name="pdf_bw_mode_ocr_robust">Надёжная предварительная обработка OCR (PDF)</string>
+
+    <string name="jpeg_mode_gray_clean">Очищенные оттенки серого (высокочастотный фильтр) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">Очищенные цвета (высокочастотный фильтр) (JPEG)</string>
+    <string name="pdf_bw_mode_grayscale_clean">Оттенки серого — очищенные (высокочастотный фильтр)</string>
+    <string name="pdf_bw_mode_color_clean">Цвет — очищенный (высокочастотный фильтр)</string>
+    <string name="skip_ocr_export_only">Пропустить OCR (только экспорт)</string>
+    <string name="skip_cropping">Пропустить обрезку</string>
+    <string name="skip_edge_detection">Пропустить определение краёв</string>
+    <string name="preview_corner_detection">Предпросмотр обнаружения углов</string>
+    <string name="btn_pick_image">Загрузить</string>
+    <string name="pick_image_cd">Загрузить существующее изображение</string>
+    <!-- Multipage Export (v1 increment) -->
+    <string name="add_another_page">Добавить страницу</string>
+
+    <string name="clear_all_pages">Очистить все</string>
+    <string name="remove_this_page">Удалить эту страницу</string>
+    <string name="multipage_not_implemented">Многостраничный экспорт ещё не реализован</string>
+
+    <!-- Reorder A11y controls -->
+    <string name="move_page_left">Переместить страницу влево</string>
+    <string name="move_page_right">Переместить страницу вправо</string>
+
+    <!-- Back confirmation for clearing multipage session -->
+    <string name="confirm_clear_multipage_title">Удалить страницы?</string>
+    <string name="confirm_clear_multipage_message">Добавлено несколько страниц. Удалить все страницы и вернуться?
+    </string>
+    <string name="cancel">Отмена</string>
+
+    <!-- Clear-all confirmation for trash icon in multipage -->
+    <string name="confirm_clear_pages_title">Очистить все страницы?</string>
+    <string name="confirm_clear_pages_message">Удалить все страницы из ленты миниатюр?</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">Выберите из завершённых сканов</string>
+    <string name="picker_empty">Завершённые сканы не найдены</string>
+    <string name="done">Далее</string>
+    <!-- Library default collection -->
+    <string name="collection_completed_scans">Завершённые сканы</string>
+    <string name="thumbnail">Миниатюра</string>
+    <string name="delete">Удалить</string>
+
+    <!-- Picker bulk actions -->
+    <string name="select_all">Выбрать все</string>
+    <string name="deselect_all">Снять выделение со всех</string>
+
+    <string name="added_pages_from_registry">Добавлено %1$d страниц(ы) из реестра</string>
+
+    <!-- Add page options dialog -->    <!-- Picker states -->
+    <string name="missing_file">Файл отсутствует</string>
+
+    <!-- Inline OCR cues -->
+    <string name="ocr_processing_started">Выполняется OCR…</string>
+    <string name="ocr_processing_finished">Для этой страницы добавлен текст OCR</string>
+    <string name="ocr_processing_failed">Сбой встроенного OCR</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">Удалить из реестра</string>
+    <string name="remove_from_registry_message">Удалить эту запись и связанные файлы?</string>
+    <string name="remove">Удалить</string>
+    <string name="removed_from_registry_toast">Запись удалена</string>
+
+    <!-- PDF quality presets (Phase 1) -->
+    <string name="pdf_quality_title">Качество/размер PDF</string>
+    <string name="pdf_preset_high">Высокое (300 dpi, q85)</string>
+    <string name="pdf_preset_standard">Стандартное (200 dpi, q72)</string>
+    <string name="pdf_preset_small">Небольшое (150 dpi, q62)</string>
+    <string name="pdf_preset_very_small">Очень маленькое (110 dpi, q52)</string>
+    <string name="pdf_text_layer_mode_title">Текстовый слой PDF</string>
+    <string name="pdf_text_layer_mode_line_based">По строкам (рекомендуется)</string>
+    <string name="pdf_text_layer_mode_word_positioned">По позициям слов (совместимость)</string>
+    <string name="export_options_title">Параметры экспорта</string>
+    <string name="jpeg_enhancement_title">Цвет вывода JPEG</string>
+    <string name="btn_options">Параметры</string>
+    <string name="btn_save">Сохранить</string>
+    <string name="btn_new">Новое сканирование</string>
+    <string name="btn_review">Проверить</string>
+    <string name="edit_word_title">Редактировать слово</string>
+    <string name="cm_edit">Редактировать…</string>
+    <string name="cm_merge_next">Объединить со следующим</string>
+    <string name="cm_split">Разделить</string>
+    <string name="cm_delete">Удалить</string>
+    <string name="cm_case">Регистр</string>
+    <string name="cm_lang">Язык…</string>
+    <string name="case_upper">ПРОПИСНЫЕ БУКВЫ</string>
+    <string name="case_lower">строчные буквы</string>
+    <string name="case_title">Первая буква заглавная</string>
+    <string name="dialog_language_title">Указать код языка</string>
+
+    <!-- Rotation (post-crop) -->
+    <string name="rotate_left_cd">Повернуть страницу на 90° против часовой стрелки</string>
+    <string name="rotate_right_cd">Повернуть страницу на 90° по часовой стрелке</string>
+
+    <!-- Управление моделями OCR (прототип) -->
+    <string name="ocr_models_manage">Модели OCR</string>
+    <string name="ocr_import_manual">Импортировать .traineddata…</string>
+    <string name="ocr_discover_packs">Найти языковые пакеты</string>
+    <string name="ocr_no_packs_found">Языковые пакеты не найдены</string>
+    <string name="ocr_choose_pack">Выберите языковой пакет</string>
+    <string name="ocr_no_models_in_pack">В этом пакете моделей не найдено</string>
+    <string name="ocr_choose_model">Выберите модель для импорта</string>
+    <string name="ocr_import_success">Модель импортирована</string>
+    <string name="ocr_import_failed">Ошибка импорта</string>
+
+    <string name="ocr_delete_best_model">Удалить модель Best</string>
+    <string name="ocr_nothing_to_delete">Нет модели Best для удаления для текущего языка</string>
+    <string name="ocr_delete_confirm_title">Удалить модель Best?</string>
+    <string name="ocr_delete_confirm_msg">Удалить импортированную модель Best для %1$s? Встроенная модель Fast останется
+        доступной.
+    </string>
+    <string name="ocr_delete_success">Модель удалена</string>
+    <string name="ocr_delete_failed">Не удалось удалить</string>
+
+    <!-- Подсказка по моделям OCR -->
+    <string name="ocr_models_hint">Для более быстрой распознаваемости включены компактные модели. Для большей точности
+        вы можете установить более крупные модели «Best». Подключение к интернету не требуется.
+    </string>
+
+    <!-- Режимы распознавания OCR – объяснение -->
+    <string name="ocr_explain_prep_modes">Объяснить режимы распознавания</string>
+    <string name="ocr_prep_modes_title">Режимы распознавания: простое объяснение</string>
+    <string name="ocr_prep_modes_message">Существует два способа передачи изображений в OCR-движок:\n\n• Оригинал (без
+        предварительной обработки) — самый быстрый. Фотография передаётся без изменений. Лучше всего подходит для уже
+        чистых сканов с высоким контрастом. Может пропустить бледный или зашумлённый текст.\n\n• OpenCV Надёжный — переработан для
+        максимальной точности на сложных страницах. Исправляет перекос, нормализует тени и освещение, применяет
+        шумоподавление с сохранением границ и интеллектуальное масштабирование. Важно, что Tesseract получает
+        высококачественное изображение в оттенках серого (а не жёсткое чёрно-белое), чтобы сохранить мелкие детали,
+        такие как петли буквы «o» и маленькие цифры. Обеспечивает наилучшую точность на сложных страницах, но работает
+        медленнее и использует больше памяти.\n\nПостобработка OCR: Исправляет типичные ошибки распознавания, такие как
+        путаница (0↔O, 1↔l↔I, rn↔m), и проверяет сомнительные слова по словарю. Включена по умолчанию; отключайте для
+        технических кодов или серийных номеров.
+    </string>
+
+    <!-- Выбор режима распознавания OCR -->
+    <string name="ocr_choose_prep_mode_menu">Режим распознавания…</string>
+    <string name="ocr_choose_prep_mode_title">Выберите режим распознавания</string>
+    <string name="ocr_mode_original">Оригинал (без предварительной обработки)</string>
+    <string name="ocr_mode_quick">OpenCV Quick (быстрый)</string>
+    <string name="ocr_mode_robust">OpenCV Robust (высокое качество)</string>
+    <string name="opt_paddle_best_ocr">Лучшее качество Paddle OCR (медленнее)</string>
+    <string name="ocr_prep_mode_set">Режим распознавания установлен на %1$s</string>
+
+    <!-- Labels -->
+    <string name="label_language">Язык</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d С</string>
+    <string name="low_percent_format">Низкая %1$d%%</string>
+    <string name="low_placeholder">Низкая —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 С</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">Закрыть</string>
+    <string name="cd_zoom_chip_open_menu">Открыть меню масштаба</string>
+    <string name="cd_minimap">Обзор документа, нажмите, чтобы перейти
+    </string>    <!-- A11y content descriptions for menu items -->    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">Введите значение</string>
+
+    <!-- Collections / Library (feature-flagged) -->
+    <string name="new_collection_title">Новая коллекция</string>
+    <string name="collection_name_hint">Название коллекции</string>
+    <string name="create">Создать</string>
+    <string name="collection_not_empty">Коллекция не пуста</string>
+    <string name="collection_items_count">%1$d элемент(ов)</string>
+    <string name="deleted">Удалено</string>
+    <string name="open_collections">Коллекции</string>
+    <string name="index_existing_scans">Индексировать существующие сканы</string>
+    <string name="rename">Переименовать</string>
+    <string name="ok">OK</string>
+    <string name="no_scans_yet">Пока нет сканов</string>
+    <string name="rename_collection_title">Переименовать коллекцию</string>
+    <string name="action_add_to_collection">Добавить в коллекцию…</string>
+    <string name="place_in_collection_title">Добавить в коллекцию</string>
+    <string name="create_new_collection">Создать новую коллекцию…</string>
+    <string name="scan_added_to_collection">Скан добавлен в «%1$s»</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">Действия библиотеки</string>    <!-- Library list: collections membership -->
+    <string name="in_collections_prefix">В: %1$s</string>
+    <!-- Delete confirmation (ScanDetails) -->
+    <string name="delete_warning_irreversible">Файл будет удалён с устройства. Это действие нельзя отменить.</string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">Нет документа для экспорта</string>
+    <string name="failed_to_export_document">Не удалось экспортировать документ</string>
+    <string name="error_during_export_with_reason">Ошибка при экспорте: %1$s</string>
+    <string name="document_exported">Документ %1$s экспортирован</string>
+    <string name="document_multipage_exported">Документ (многостраничный) %1$s экспортирован</string>
+    <string name="no_target_selected">Цель не выбрана</string>
+    <string name="image_exported">Изображение %1$s экспортировано</string>
+    <string name="failed_to_export_image">Не удалось экспортировать изображение</string>
+    <string name="error_during_jpeg_export_with_reason">Ошибка при экспорте JPEG: %1$s</string>
+    <string name="zip_exported">ZIP %1$s экспортирован</string>
+    <string name="failed_to_export_zip">Не удалось экспортировать ZIP</string>
+    <string name="error_during_zip_export_with_reason">Ошибка при экспорте ZIP: %1$s</string>
+    <string name="ocr_text_exported_as_txt">Текст OCR экспортирован как TXT</string>
+    <string name="error_exporting_ocr_text_with_reason">Ошибка при экспорте текста OCR: %1$s</string>
+    <string name="no_document_to_share_export_first">Нет документа для общего доступа. Сначала экспортируйте документ.
+    </string>
+    <string name="error_sharing_document_with_reason">Ошибка при обмене документом: %1$s</string>
+    <string name="feature_scan_library_disabled">Функция библиотеки сканов отключена</string>
+    <string name="navigation_failed">Ошибка навигации</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">Отсутствует идентификатор скана</string>
+    <string name="picker_failed">Ошибка выбора</string>
+    <string name="share_failed">Ошибка при обмене</string>
+    <string name="no_app_found_to_open_file">Не найдено приложение для открытия этого файла</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">Удалить из этой коллекции?</string>
+    <string name="removed_from_collection">Удалено из коллекции</string>
+    <string name="indexed_new_items">Проиндексировано %1$d новых элемент(ов)</string>
+    <string name="nothing_new_to_index">Нет новых элементов для индексирования</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">Документ выровнен</string>
+    <string name="a11y_hint_move_left">Сместитесь влево</string>
+    <string name="a11y_hint_move_right">Сместитесь вправо</string>
+    <string name="a11y_hint_move_up">Сместитесь вверх</string>
+    <string name="a11y_hint_move_down">Сместитесь вниз</string>
+    <string name="a11y_hint_move_closer">Ближе к поверхности</string>
+    <string name="a11y_hint_move_back">Дальше от поверхности</string>
+    <string name="a11y_hint_too_far">Подойдите ближе. Документ слишком далеко.</string>
+    <string name="a11y_hint_tilt_left">Наклоните влево</string>
+    <string name="a11y_hint_tilt_right">Наклоните вправо</string>
+    <string name="a11y_hint_tilt_forward">Наклоните вперёд</string>
+    <string name="a11y_hint_tilt_back">Наклоните назад</string>
+    <string name="a11y_hold_still">Держите неподвижно</string>
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">Документ обнаружен — готов к съёмке.</string>
+    <string name="a11y_no_document_detected">Документ не обнаружен.</string>
+    <string name="a11y_orientation_portrait_tip">Похоже на портретную ориентацию. Держать телефон вертикально обычно
+        лучше всего подходит для высоких страниц.
+    </string>
+    <string name="a11y_orientation_landscape_tip">Похоже на альбомную ориентацию. Попробуйте держать телефон
+        горизонтально для широких страниц.
+    </string>
+    <string name="a11y_crop_summary_detected">Анализ захваченного изображения: документ обнаружен.</string>
+    <string name="a11y_crop_summary_no_doc">Анализ полученного изображения: документ не обнаружен.</string>
+    <string name="accessibility_mode_label">Режим доступности</string>
+    <string name="a11y_camera_ready">Камера готова. Дважды нажмите «Сканировать», чтобы сделать снимок.</string>
+    <string name="a11y_low_light_toggle_flash">Обнаружено мало света. Дважды нажмите «Вспышка», чтобы включить.</string>
+    <string name="a11y_capture_failed">Съёмка не удалась.</string>
+    <string name="a11y_volume_shutter_hint">Подсказка: в режиме доступности можно снимать кнопками громкости.</string>
+    <string name="a11y_capture_success">Изображение сохранено.
+    </string>    <!-- Доступность: описание элементов списка и объявления -->
+    <string name="page_n_of_m">Страница %1$d из %2$d</string>
+    <string name="pages_count_announcement">Страниц: %1$d</string>
+    <string name="export_started">Экспорт начат</string>
+    <string name="page_removed">Страница удалена</string>
+    <string name="page_moved_to_position">Перемещено на позицию %1$d</string>
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">Автоматическое поворот OCR (также применять при экспорте)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">Постобработка OCR (исправление частых ошибок)</string>
+    <string name="opt_layout_analysis">Анализ макета (колонки, таблицы)</string>
+    <!-- Options: Experimental directional mapping fallback -->
+    <!-- Developer / Debug options -->
+    <!-- Library / Collections -->    <!-- PDF Import -->
+    <string name="error_unknown_file_type">Неизвестный тип файла</string>
+    <string name="error_unsupported_file_type">Этот тип файла не поддерживается</string>
+    <string name="error_cannot_open_pdf">Не удалось открыть PDF</string>
+    <string name="error_pdf_empty">PDF не содержит страниц</string>
+    <string name="error_pdf_import_failed">Не удалось импортировать PDF</string>
+    <string name="error_pdf_page_render_failed">Не удалось отобразить страницу</string>
+    <string name="pdf_select_page">Выбрать страницу</string>
+    <string name="pdf_page_number">Страница %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">Выберите языки OCR</string>
+    <string name="ocr_max_languages_warning">Разрешено не более 2 языков</string>
+    <string name="ocr_no_language_selected">Пожалуйста, выберите хотя бы один язык</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">Отменить изменения?</string>
+    <string name="msg_discard_changes">У тебя есть несохранённые изменения. Хочешь их отменить?</string>
+    <string name="btn_discard">Отменить</string>
+
+    <string name="btn_reocr">Запустить OCR заново</string>
+    <string name="reocr_processing">Повторный запуск OCR…</string>
+    <string name="reocr_success">Слово обновлено: %1$s</string>
+    <string name="reocr_failed">Повторный запуск OCR не удался</string>
+    <string name="reocr_no_language">Сначала выбери язык</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">100 %</string>
+    <string name="zoom_200">200 %</string>
+    <string name="zoom_300">300 %</string>
+    <string name="zoom_400">400 %</string>
+    <string name="zoom_fit">По размеру</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">Макет</string>
+    <string name="label_text">Текст</string>
+    <string name="label_document">Документ</string>
+
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">Размер страницы</string>
+    <string name="dpi_settings_label">Настройки DPI</string>
+    <string name="page_format_fit">По размеру изображения (рекомендуется)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+
+    <string name="restore_access">Восстановить доступ</string>
+    <string name="status">Статус</string>
+    <string name="ocr_text_editor_hint">Редактировать текст OCR</string>
+
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">Настройки очистки завершённых сканов</string>
+    <string name="cleanup_policy">Политика очистки</string>
+    <string name="cleanup_policy_none">Нет (сохранять всё)</string>
+    <string name="cleanup_policy_max_age">По сроку хранения</string>
+    <string name="cleanup_policy_max_count">По количеству</string>
+    <string name="cleanup_policy_max_storage">По объёму хранения</string>
+    <string name="cleanup_policy_combined">Комбинированная</string>
+    <string name="cleanup_max_age_days">Максимальный срок (дни)</string>
+    <string name="cleanup_max_count">Максимальное количество</string>
+    <string name="cleanup_max_storage_mb">Максимальный объём хранения (МБ)</string>
+    <string name="cleanup_settings_saved">Настройки очистки сохранены</string>
+    <string name="inbox_mode">Режим Входящие</string>
+    <string name="inbox_mode_enable">Включить папку экспорта по умолчанию</string>
+    <string name="inbox_select_folder">Выбрать папку</string>
+    <string name="inbox_folder_set">Папка Inbox: %1$s</string>
+    <string name="inbox_folder_none">Папка не выбрана</string>
+    <string name="inbox_saved">✓ Сохранено в Inbox</string>
+    <string name="inbox_permission_lost">Доступ к папке Inbox потерян. Выберите новую папку.</string>
+    <string name="inbox_no_folder_selected">Сначала выберите папку Inbox.</string>
+    <string name="inbox_clear">Очистить папку Inbox</string>
+    <string name="inbox_filename_format">Формат имени файла</string>
+    <string name="inbox_auto_new_scan">Автоматически начать новое сканирование после экспорта</string>
+    <string name="inbox_filename_date_scan">Дата + Scan (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">Дата + время + Scan (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">Только дата (2026-03-04)</string>
+    <string name="pdf_bw_mode_none">Цвет</string>
+    <!-- Translations added for missing strings -->
+    <string name="confirm_remove_page_title">Удалить страницу?</string>
+    <string name="confirm_remove_page_message">Удалить эту страницу из киноленты?</string>
+    <string name="crop_aspect_label">Соотношение сторон</string>
+    <string name="crop_aspect_auto">Авто (рекомендуется)</string>
+    <string name="crop_aspect_original">Оставить оригинал (без коррекции)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">Свое…</string>
+    <string name="crop_aspect_custom_with_ratio">Свое (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">Своё соотношение сторон</string>
+    <string name="crop_aspect_custom_width_hint">Ширина</string>
+    <string name="crop_aspect_custom_height_hint">Высота</string>
+    <string name="crop_aspect_custom_invalid">Введите положительные числа от 1:1 до 1:20.</string>
+    <string name="crop_aspect_output_size_hint">Вывод: %1$d × %2$d px</string>
+    <string name="crop_hint_corner_off_image">Угол вне изображения — на выходе возможны чёрные поля</string>
+    <string name="crop_edge_dragged">Край выбран. Перетащите, чтобы переместить край.</string>
+    <!-- Document cleanup -->
+    <string name="document_cleanup_title">Очистка документа</string>
+    <string name="document_cleanup_original">Оригинал</string>
+    <string name="document_cleanup_natural">Естественный</string>
+    <string name="document_cleanup_enhanced">Улучшенный</string>
+    <string name="document_cleanup_clean_text">Чистый текст</string>
+    <string name="workflow_step_description">Шаг %1$d из %2$d: %3$s</string>
+    <string name="search_scans">Поиск сканов</string>
+</resources>

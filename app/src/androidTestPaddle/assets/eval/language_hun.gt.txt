@@ -1,0 +1,4 @@
+Magyar
+Nyelvi minta
+Árvíztűrő tükörfúrógép ellenőrzi a szöveg felismerését.
+Példa szövegfelismerésre.

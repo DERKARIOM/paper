@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!-- Status / Titel -->
+    <TextView
+            android:id="@+id/text_export"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/document_ready_for_export"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:accessibilityHeading="true"
+            android:accessibilityLiveRegion="polite"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Workflow stepper: Camera → Crop → OCR → Export (step 4) -->
+    <de.schliweb.makeacopy.ui.views.WorkflowStepperView
+            android:id="@+id/workflow_stepper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:currentStep="4"
+            app:layout_constraintTop_toBottomOf="@id/text_export"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Dokument-Vorschau (mit Pinch-Zoom und Pan) -->
+    <de.schliweb.makeacopy.ui.export.view.ZoomableImageView
+            android:id="@+id/document_preview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/document_preview"
+            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
+            app:layout_constraintBottom_toTopOf="@+id/pages_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- OCR badge overlay (analogous to filmstrip badge in item_export_page.xml):
+         shows [OCR] (green) when the currently previewed page already has OCR text on disk,
+         or [⚠] (orange) when OCR is missing. Tapping the badge while OCR is missing
+         triggers a background OCR run for the active page. Default hidden; ExportFragment
+         toggles visibility/state in updatePreviewOcrBadge(). -->
+    <TextView
+            android:id="@+id/preview_ocr_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="#33000000"
+            android:elevation="6dp"
+            android:minHeight="48dp"
+            android:minWidth="48dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:contentDescription="@string/document_preview"
+            app:layout_constraintTop_toTopOf="@id/document_preview"
+            app:layout_constraintStart_toStartOf="@id/document_preview" />
+
+    <!-- Edit-Overlay (FR #72): re-enter CropFragment to adjust the trapezoid for the
+         currently displayed preview page. Default hidden; ExportFragment toggles visibility
+         based on whether the original image source for this page is reachable. -->
+    <ImageButton
+            android:id="@+id/button_edit_crop"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_edit"
+            android:contentDescription="@string/btn_edit_crop"
+            app:tooltipText="@string/btn_edit_crop"
+            android:background="@drawable/bg_circle_scrim"
+            android:elevation="6dp"
+            app:tint="@android:color/white"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/document_preview"
+            app:layout_constraintEnd_toEndOf="@id/document_preview" />
+
+    <!-- Mehrseiten: Container -->
+    <LinearLayout
+            android:id="@+id/pages_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/document_preview"
+            app:layout_constraintBottom_toTopOf="@id/pages_actions_row"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pages_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:overScrollMode="never"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="none"/>
+
+    </LinearLayout>
+
+    <!-- Pages actions row: always visible (Add), Clear toggled in code -->
+    <LinearLayout
+            android:id="@+id/pages_actions_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/export_format_toggle">
+
+        <!-- Options (gear) to the left of Plus -->
+        <ImageButton
+                android:id="@+id/button_options"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:contentDescription="@string/btn_options"
+                android:src="@drawable/ic_tune"
+                app:tint="?attr/colorControlNormal"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                app:tooltipText="@string/btn_options"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+        <ImageButton
+                android:id="@+id/button_add_page"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:contentDescription="@string/add_another_page"
+                android:src="@drawable/ic_add"
+                app:tint="?attr/colorControlNormal"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                app:tooltipText="@string/add_another_page"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+        <!-- Library actions icon placed to the left of the trash icon -->
+        <ImageButton
+                android:id="@+id/button_library_actions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:contentDescription="@string/library_actions"
+                android:src="@drawable/ic_library"
+                app:tint="?attr/colorControlNormal"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                app:tooltipText="@string/library_actions"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+        <ImageButton
+                android:id="@+id/button_clear_pages"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:contentDescription="@string/clear_all_pages"
+                android:src="@drawable/ic_delete"
+                app:tint="?attr/colorControlNormal"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                app:tooltipText="@string/clear_all_pages"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+        <!-- Share icon identical behavior to Share button -->
+        <ImageButton
+                android:id="@+id/button_share_small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:contentDescription="@string/btn_share"
+                android:src="@drawable/ic_share"
+                app:tint="?attr/colorControlNormal"
+                android:enabled="false"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                app:tooltipText="@string/btn_share"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+    </LinearLayout>
+
+    <!-- Inline export format selector (segmented buttons) -->
+    <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/export_format_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:contentDescription="@string/export_format_label"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/export_options_group">
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/format_pdf"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="96dp"
+                android:text="@string/export_format_pdf" />
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/format_jpeg"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="96dp"
+                android:text="@string/export_format_jpeg" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <!-- Optionen & Button -->
+    <LinearLayout
+            android:id="@+id/export_options_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="?attr/colorSurfaceContainer"
+            android:padding="8dp"
+            android:elevation="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Button Container for Options, Export and Share -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
+
+
+            <!-- Back-Button (New) -->
+            <Button
+                    android:id="@+id/button_back"
+                    style="@style/Widget.MakeACopy.Button.Tonal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="4dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="@string/btn_new"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+            <!-- Add-Button (Middle) -->
+            <Button
+                    android:id="@+id/button_add_scan"
+                    style="@style/Widget.MakeACopy.Button.Tonal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="@string/add_another_page"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+            <!-- Export-Button (Right) -->
+            <Button
+                    android:id="@+id/button_export"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="@string/btn_save"
+                    android:enabled="false"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+        </LinearLayout>
+
+        <!-- Progress indicator for long exports (multi-page PDF/JPEG) -->
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/export_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            android:max="100"
+            android:indeterminate="false" />
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Canonical -->
+    <link rel="canonical" href="https://egdels.github.io/makeacopy/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://egdels.github.io/makeacopy/" />
+    <meta property="og:title" content="MakeACopy – Privacy-Friendly Document Scanner" />
+    <meta property="og:description" content="Scan. Save. Share. A lightweight, privacy-friendly document scanner with OCR. 100% offline, open source, and ad-free." />
+    <meta property="og:image" content="https://egdels.github.io/makeacopy/og/makeacopy-1200x630.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="MakeACopy" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="de_DE" />
+    <meta property="og:locale:alternate" content="fr_FR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MakeACopy – Privacy-Friendly Document Scanner" />
+    <meta name="twitter:description" content="Scan. Save. Share. Lightweight OCR scanning, fully offline, open source, and ad-free." />
+    <meta name="twitter:image" content="https://egdels.github.io/makeacopy/og/makeacopy-1200x630.png" />
+
+    <!-- Basic SEO -->
+    <meta name="description" content="MakeACopy is a lightweight, privacy-friendly OCR document scanner for Android. Works completely offline, no ads, open source." />
+    <meta name="robots" content="index,follow" />
+    <title>MakeACopy - Document Scanner App</title>
+    <!-- Language alternates -->
+    <link rel="alternate" hreflang="en" href="https://egdels.github.io/makeacopy/index.html" />
+    <link rel="alternate" hreflang="de" href="https://egdels.github.io/makeacopy/index_de.html" />
+    <link rel="alternate" hreflang="fr" href="https://egdels.github.io/makeacopy/index_fr.html" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #4A90E2;
+        }
+        h2 {
+            color: #607D8B;
+            margin-top: 30px;
+        }
+        a {
+            color: #0B63CE; /* higher contrast */
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        a:hover,
+        a:focus-visible {
+            text-decoration-thickness: 2px;
+            text-underline-offset: 3px;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .nav-links {
+            margin: 20px 0;
+        }
+        :focus-visible {
+            outline: 3px solid #ffab00;
+            outline-offset: 2px;
+        }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+        }
+        .skip-link:focus {
+            left: 12px;
+            top: 12px;
+            z-index: 1000;
+            background: #000;
+            color: #fff;
+            padding: 8px 12px;
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <nav class="nav-links" aria-label="Primary">
+        <a href="https://github.com/egdels/makeacopy/releases">Download APK</a> | 
+        <a href="https://github.com/egdels/makeacopy">View on GitHub</a> | 
+        <a href="index_de.html" hreflang="de">Deutsch</a> | 
+        <a href="index_fr.html" hreflang="fr">Français</a> | 
+        <a href="#faq">FAQ</a>
+    </nav>
+    <main id="main">
+    <h1>MakeACopy</h1>
+    
+    <p>MakeACopy is an open-source document scanner app for Android that allows you to digitize paper documents with OCR functionality. The app is designed to be privacy-friendly, working completely offline without any cloud connection or tracking.</p>
+    
+    <nav class="nav-links" aria-label="Language">
+        <ul>
+            <li style="display:inline; margin-right:8px;"><a href="index.html" hreflang="en" aria-current="page">English</a></li>
+            <li style="display:inline; margin-right:8px;"><a href="index_de.html" hreflang="de">Deutsch</a></li>
+            <li style="display:inline; margin-right:8px;"><a href="index_fr.html" hreflang="fr">Français</a></li>
+        </ul>
+    </nav>
+    
+    <div class="store-badges" style="margin: 10px 0;">
+        <a href="https://f-droid.org/packages/de.schliweb.makeacopy/"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80"></a>
+        <a href="https://play.google.com/store/apps/details?id=de.schliweb.makeacopy"><img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80"></a>
+    </div>
+    
+    <h2>Features</h2>
+    
+    <ul>
+        <li><strong>Camera Scanning</strong>: Capture documents using the device camera</li>
+        <li><strong>Edge Detection</strong>: Automatic document edge detection using OpenCV, optionally enhanced by a custom-trained ONNX inference model</li>
+        <li><strong>Perspective Correction</strong>: Adjust and crop documents with manual or automatic perspective correction</li>
+        <li><strong>Image Enhancement</strong>: Apply filters (grayscale, contrast, sharpening)</li>
+        <li><strong>OCR</strong>: Offline text recognition with PaddleOCR in the published paddle flavor; the standard Tesseract flavor remains available via GitHub Releases</li>
+        <li><strong>OCR Review</strong>: Interactive review and correction of OCR results with word-level editing, dictionary-based suggestions, confidence highlighting, and re-OCR for individual words</li>
+        <li><strong>PDF Export</strong>: Save as searchable PDF with recognized text</li>
+        <li><strong>JPEG Export</strong>: Export scans as high-quality JPEG images (configurable quality, color/BW)</li>
+        <li><strong>Multi-page Scanning</strong>: Combine multiple pages into one document; reorder and manage pages before export</li>
+        <li><strong>Last Scans</strong>: Quickly access and reuse your most recent scans</li>
+        <li><strong>Inbox Mode</strong>: Configure a default export folder (via SAF) for frictionless scanning — documents are saved automatically without a file picker, ideal for paperless-ngx, Nextcloud, or Syncthing workflows</li>
+        <li><strong>Share & Save</strong>: Export locally or share with other apps</li>
+        <li><strong>Dark Mode</strong>: Material 3 theme with day/night support</li>
+        <li><strong>Privacy-Focused</strong>: 100% offline functionality, no internet connection required</li>
+    </ul>
+    
+    <h2>OCR Languages</h2>
+    <p>MakeACopy supports offline OCR using PaddleOCR in the published paddle flavor. You can select the language or script group during the OCR step.</p>
+    <ul>
+        <li>English (English)</li>
+        <li>German (Latin)</li>
+        <li>French (Latin)</li>
+        <li>Italian (Latin)</li>
+        <li>Spanish (Latin)</li>
+        <li>Portuguese (Latin)</li>
+        <li>Dutch (Latin)</li>
+        <li>Polish (Latin)</li>
+        <li>Czech (Latin)</li>
+        <li>Slovak (Latin)</li>
+        <li>Hungarian (Latin)</li>
+        <li>Romanian (Latin)</li>
+        <li>Danish (Latin)</li>
+        <li>Norwegian (Latin)</li>
+        <li>Swedish (Latin)</li>
+        <li>Turkish (Latin)</li>
+        <li>Chinese (Simplified) (Chinese)</li>
+        <li>Chinese (Traditional) (Chinese)</li>
+        <li>Russian (East Slavic)</li>
+        <li>Thai (Thai)</li>
+        <li>Arabic (Arabic)</li>
+        <li>Persian/Farsi (Arabic)</li>
+        <li>Hindi (Devanagari)</li>
+        <li>Greek (Greek)</li>
+    </ul>
+    <p><em>Note:</em> For Chinese, the app includes suitable CJK fonts to improve PDF text rendering. For Arabic and Persian, the Noto Naskh Arabic font is included for proper RTL (right-to-left) rendering in PDF exports. For Hindi, the Noto Sans Devanagari font is included for proper Devanagari rendering in PDF exports.</p>
+
+    <h2>App variants and OCR backends</h2>
+    <p>MakeACopy publishes the paddle flavor with PaddleOCR for F-Droid and Google Play. The standard Tesseract flavor remains available for users who still need Tesseract language data or workflows:</p>
+    <ul>
+        <li><strong>Paddle flavor</strong>: the published app variant using PaddleOCR only, without Tesseract runtime or Tesseract language data.</li>
+        <li><strong>Standard flavor (Tesseract)</strong>: the Tesseract-based variant with optional language-pack APKs, offered via GitHub Releases.</li>
+    </ul>
+    <p>In the paddle flavor, choose the closest script or language group in the OCR language selector. For example, choose <strong>Latin</strong> for German documents.</p>
+    <table>
+        <thead>
+        <tr><th>Document language</th><th>Choose in the OCR language selector</th></tr>
+        </thead>
+        <tbody>
+        <tr><td>English</td><td>English</td></tr>
+        <tr><td>German, French, Italian, Spanish, Portuguese, Dutch, Polish, Czech, Slovak, Hungarian, Romanian, Danish, Norwegian, Swedish, Turkish</td><td>Latin</td></tr>
+        <tr><td>Chinese Simplified or Traditional</td><td>Chinese</td></tr>
+        <tr><td>Russian</td><td>East Slavic</td></tr>
+        <tr><td>Thai</td><td>Thai</td></tr>
+        <tr><td>Arabic and Persian/Farsi</td><td>Arabic</td></tr>
+        <tr><td>Hindi</td><td>Devanagari</td></tr>
+        <tr><td>Greek</td><td>Greek</td></tr>
+        </tbody>
+    </table>
+    <p>The F-Droid and Google Play links point to the paddle flavor. Use GitHub Releases if you need the standard Tesseract flavor.</p>
+
+    <h2>Screenshots</h2>
+    
+    <p align="center">
+        <img src="https://raw.githubusercontent.com/egdels/makeacopy/main/fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" alt="" role="presentation" width="110" />
+        <img src="https://raw.githubusercontent.com/egdels/makeacopy/main/fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png" alt="" role="presentation" width="110" />
+        <img src="https://raw.githubusercontent.com/egdels/makeacopy/main/fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" alt="" role="presentation" width="110" />
+        <img src="https://raw.githubusercontent.com/egdels/makeacopy/main/fastlane/metadata/android/en-US/images/phoneScreenshots/4_en-US.png" alt="" role="presentation" width="110" />
+    </p>
+    
+    <h2>How to Use</h2>
+    
+    <ol>
+        <li><strong>Scan Document</strong>: Open the app and tap the scan button to capture a document</li>
+        <li><strong>Adjust Corners</strong>: Fine-tune the detected document edges</li>
+        <li><strong>Crop & Enhance</strong>: Apply the crop and enhance the image if needed</li>
+        <li><strong>OCR Processing</strong>: The app will recognize text in the document</li>
+        <li><strong>Export & Share</strong>: Save as PDF or share with other apps</li>
+    </ol>
+    
+    <h2>Privacy</h2>
+    
+    <p>MakeACopy is designed with privacy in mind:</p>
+    
+    <ul>
+        <li>No internet connection required</li>
+        <li>No server requests or telemetry</li>
+        <li>OCR processing happens locally on your device</li>
+        <li>Required permissions: Camera, File Storage</li>
+        <li>No third-party connections</li>
+    </ul>
+    
+    <p>For more details, see our <a href="privacy.html">Privacy Policy</a>.</p>
+    
+    <h2>Installation</h2>
+    
+    <h3>F-Droid</h3>
+    
+    <p>MakeACopy is available on F-Droid: <a href="https://f-droid.org/packages/de.schliweb.makeacopy/">f-droid.org/packages/de.schliweb.makeacopy</a>.
+        For F-Droid compliance, all native components are built from source: OpenCV native libraries (from the
+        <code>external/opencv</code> submodule) and ONNX Runtime (XNNPACK and NNAPI, Java bindings) from
+        <code>external/onnxruntime</code>. The resulting libraries are integrated into the app during the build; no prebuilt
+        binaries are stored in the repository.</p>
+    <p>The F-Droid and Google Play listings provide the paddle flavor. The standard Tesseract flavor is offered through GitHub Releases.</p>
+    
+    <h3>GitHub Releases</h3>
+    
+    <p>You can download the latest APK from the <a href="https://github.com/egdels/makeacopy/releases">Releases</a> page.</p>
+
+    <h2>APK Verification</h2>
+
+    <p>
+        To verify the authenticity of MakeACopy releases, compare the signing certificate fingerprint below with the output of
+        <code>apksigner</code> or <code>AppVerifier</code>.
+    </p>
+
+    <h3>SHA-256</h3>
+    <ul>
+        <li><strong>Upload key (GitHub / F-Droid / sideload APKs)</strong><br>
+            <code>AE:32:2D:3F:B7:1A:FE:21:DF:47:27:E3:7A:5C:68:03:51:1D:5A:2F:E1:FC:31:35:43:0C:EE:06:99:FA:1B:34</code>
+        </li>
+        <li><strong>Google Play App Signing key (Play Store releases)</strong><br>
+            <code>C0:71:44:39:CB:51:62:32:A4:47:91:7A:6F:C2:28:1E:45:FA:AA:DD:37:F8:30:B1:01:1F:B4:85:68:8E:0D:64</code>
+        </li>
+    </ul>
+
+    <h3>Verification Commands</h3>
+    <pre><code class="language-bash">
+# Using apksigner (from Android SDK build-tools)
+apksigner verify --print-certs MakeACopy-vX.Y.Z.apk
+
+# Using AppVerifier (https://github.com/soupslurpr/AppVerifier)
+appverifier verify MakeACopy-vX.Y.Z.apk
+</code></pre>
+
+
+    <h2>❤️ Support this project</h2>
+    <p>MakeACopy is free and open source. If you find it useful, please consider supporting development:</p>
+    <p>
+        <a href="https://ko-fi.com/egdels"><img alt="Ko-fi" src="https://img.shields.io/badge/Buy%20me%20a%20coffee-Ko--fi-orange"></a>
+        <a href="https://paypal.me/egdels"><img alt="PayPal" src="https://img.shields.io/badge/Donate-PayPal-blue"></a>
+    </p>
+    
+    <h2 id="faq">FAQ</h2>
+
+    <h3 id="faq-scanning">Scanning (Camera)</h3>
+    <ul>
+        <li><strong>The image is blurry / text is hard to read</strong><br>
+            - Ensure sufficient lighting; avoid dim, warm ambient light. <br>
+            - Hold the device steady or brace it. <br>
+            - Trigger autofocus by tapping the relevant area in the viewfinder (if available). <br>
+            - Increase the distance slightly and crop later — being too close can make focusing harder.
+        </li>
+        <li><strong>Strong shadows or reflections</strong><br>
+            - Light the document evenly from multiple sides. <br>
+            - Avoid direct light sources that cause glare (e.g., on glossy paper). <br>
+            - Place the document on a matte, high-contrast background.
+        </li>
+        <li><strong>The image is too dark/bright</strong><br>
+            - Improve the lighting. <br>
+            - Use the flash only if needed — it can cause reflections.
+        </li>
+        <li><strong>Distorted perspective</strong><br>
+            - Shoot as straight-on and parallel to the document surface as possible.
+        </li>
+        <li id="faq-score-meaning"><strong>What does the framing/quality score mean?</strong><br>
+            Accessibility Mode can announce a percentage (0–100%) while you align the page. This value is a confidence indicator for the current corner detection: it is based on (a) the detected quadrilateral’s area relative to the image, (b) how rectangular the corners are (angles closer to 90°), and (c) how symmetric opposite side lengths are.<br>
+            <br>
+            Important: stability over multiple frames is used separately to keep announcements calm — it is not part of this percentage.
+        </li>
+        <li id="faq-score-improve"><strong>How can I improve the score?</strong><br>
+            - Use even, bright lighting; avoid glare and hard shadows (see tips above).<br>
+            - Hold the phone <em>parallel</em> to the page; try not to tilt it. Keep a small margin around the paper so all four
+              corners are visible.<br>
+            - If you are too close, focus may struggle and corners may be cut off — move a little further away and crop later.<br>
+            - Place the paper on a high‑contrast, matte background so edges are easier to detect.<br>
+            - Keep still for a moment so the detection can stabilize; rest your hands or elbows if possible.<br>
+            - Match orientation: for A4/Letter, portrait usually fits best; for wide receipts or cards, try landscape.
+        </li>
+        <li id="faq-portrait-vs-landscape"><strong>Should I hold the phone in portrait or landscape while capturing?</strong><br>
+            A4/Letter: portrait usually fits best. Very wide items (receipts, cards): try landscape. Guidance adapts to how you hold the phone.
+        </li>
+        <li id="faq-directional-hints-landscape"><strong>What do “left/right/up/down” mean if I hold the phone in landscape?</strong><br>
+            Note about holding the phone (landscape): the camera screen stays in portrait orientation. The directional hints (“left/right/up/down”) refer to the upright-aligned preview.<br>
+            <br>
+            If you hold the phone sideways, depending on your device/Android version,
+            - the hints may still behave like in portrait (because the UI does not switch to landscape), or
+            - the internal analysis axes may follow the display’s rotation.<br>
+            <br>
+            If “left/right/up/down” feels confusing, return to portrait or rotate the phone by 180° and check whether the hints make more sense.
+        </li>
+        <li id="faq-move-back"><strong>I keep hearing “Move back” all the time</strong><br>
+            The app suppresses distance prompts without a clear document and rate‑limits repeats. Improve light (use flashlight), include the whole page with a small margin, and hold still briefly.
+        </li>
+        <li id="faq-orientation-tip"><strong>Does the app suggest portrait vs. landscape?</strong><br>
+            Yes. In Accessibility Mode, the app can suggest whether portrait or landscape seems more appropriate for the current page.<br>
+            <br>
+            The tip is only given when
+            - the estimate is sufficiently confident (confidence ≥ 0.30), and
+            - no plausible document is currently detected (so it does not override the normal guidance).<br>
+            <br>
+            To stay calm, the tip goes through the same guidance logic as other announcements (brief stability over multiple frames) and is rate-limited.
+        </li>
+    </ul>
+
+    <h3>Edge Detection</h3>
+    <ul>
+        <li><strong>Document borders are detected incorrectly</strong><br>
+            - Ensure good contrast between the document and the background (e.g., light paper on a dark table). <br>
+            - Flatten the paper (no waves/creases) and align it straight. <br>
+            - Avoid shadows that could be interpreted as edges.
+        </li>
+        <li><strong>No automatic detection</strong><br>
+            - Retake the shot with better lighting. <br>
+            - Use <em>manual corner adjustment</em> after the scan to move points.
+        </li>
+        <li><strong>Result is skewed or cropped</strong><br>
+            - After automatic detection, check all four points and adjust them manually if needed. <br>
+        </li>
+    </ul>
+
+    <h3>OCR (Text Recognition)</h3>
+    <ul>
+        <li><strong>OCR barely recognizes any text</strong><br>
+            - Make sure the correct <em>language</em> is selected. <br>
+            - Scan in good quality: sharp, sufficient light, low noise. <br>
+            - Avoid very small text — fill more of the page or scan closer (without blur).
+        </li>
+        <li><strong>Wrong language / accents are not recognized</strong><br>
+            - Choose the appropriate OCR language in the app. <br>
+            - For higher accuracy in Latin languages, install the <em>Language Pack: MakeACopy OCR Latin (Best)</em> (Play Store link above on this page).
+        </li>
+        <li><strong>Mixed languages in the document</strong><br>
+            - If possible, scan sections separately per language. <br>
+            - Alternatively, choose the primary language; mixed text can reduce recognition accuracy.
+        </li>
+        <li><strong>Handwriting is not recognized</strong><br>
+            - Tesseract is primarily designed for printed text; handwriting is only recognized to a limited extent. <br>
+            - Better results with clear, print-like handwriting; otherwise consider manual transcription.
+        </li>
+        <li><strong>OCR rotation/orientation is wrong</strong><br>
+            - The app detects orientation automatically: it internally tries OCR at 90° steps (0°, 90°, 180°, 270°) and uses the best result. For pages that are already correctly aligned, it exits early to save time. <br>
+            - If the page is heavily skewed, rotate it before OCR using the rotate buttons in 90° steps until text lines are horizontal. <br>
+            - Avoid strong perspective; align the document as straight as possible.
+        </li>
+        <li id="faq-ocr-auto-rotate-apply-export"><strong>What does the “OCR auto-rotate (also apply to export)” option do?</strong><br>
+            When enabled, the app runs OCR with additional 90° rotations (0°, 90°, 180°, 270°) and picks the best result (by mean OCR confidence; ties are broken by text length). If the first attempt (0°) is already strong enough, it skips the remaining rotations to save time.<br>
+            <br>
+            It also applies the detected rotation to the current scan so the exported image/PDF will be rotated accordingly. When disabled, OCR is only run in the current orientation and nothing is automatically rotated for export.
+        </li>
+        <li><strong>Search in the PDF does not work</strong><br>
+            - Check whether the selected language was correct; the wrong language produces mismatched recognized text. <br>
+            - Alternatively, you can export the OCR text separately as a TXT file.
+        </li>
+        <li><strong>What do the recognition modes mean?</strong><br>
+            In the app, before text recognition you can choose how to prepare the image for Tesseract:
+            <br>
+            - <strong>Original (no pre-processing)</strong>: Fastest. The photo is passed to OCR unchanged. Good for already clean, high-contrast scans; may miss faint or "dirty" text. <br>
+            - <strong>OpenCV Quick</strong>: Fast, light pre-processing (grayscale, slight denoising, automatic black/white, optionally slight upscaling). A good default for most photos — a solid balance of speed and quality. <br>
+            - <strong>OpenCV Robust</strong>: Maximum accuracy for difficult pages (deskew, normalize lighting, edge-preserving denoising, smart upscaling). Produces a high-quality grayscale image for Tesseract. Best accuracy, but slower and more memory intensive. <br>
+            <em>Note:</em> For most cases, “OpenCV Quick” is recommended; for very tough pages use “OpenCV Robust”.
+        </li>
+        <li id="faq-ocr-post-processing"><strong>What does the "OCR post-processing (correct common errors)" option do?</strong><br>
+            This option automatically improves the recognized text after OCR processing. It is enabled by default and can be toggled in the "Choose recognition mode" dialog.<br>
+            <br>
+            <strong>What gets corrected?</strong><br>
+            - <em>Character confusions</em>: 0 ↔ O (zero vs. letter O), 1 ↔ l ↔ I (one vs. lowercase L vs. uppercase I), 5 ↔ S, 8 ↔ B, 2 ↔ Z<br>
+            - <em>Ligature corrections</em>: "rn" → "m", "cl" → "d", "vv" → "w" (character sequences that look like other letters)<br>
+            - <em>Context-aware corrections</em>: In numeric sequences, letters are corrected to digits (e.g., "1O23" → "1023"); in text passages, digits are corrected to letters (e.g., "H0use" → "House")<br>
+            - <em>Dictionary-based correction</em>: Words with low recognition confidence (below 70%) are checked against a dictionary and replaced if a match is found<br>
+            - <em>Language-specific corrections</em>: For German, e.g., correction of umlauts and ß ("Strasse" → "Straße")<br>
+            <br>
+            <strong>When to disable?</strong><br>
+            In most cases, post-processing improves text quality. However, it may be useful to disable it if the text contains many technical codes or serial numbers, intentional mixtures of letters and numbers, or if the original text must be preserved exactly.
+        </li>
+        <li><strong>How do I manage language packs / OCR models?</strong><br>
+            - Open the OCR view of a scan and tap the menu (⋮) → “OCR models”. <br>
+            - “Import .traineddata…”: Import a single Tesseract model file from the device/storage. <br>
+            - “Discover language packs”: Find installed Language‑Pack apps (e.g., “MakeACopy OCR Latin (Best)”) and import models from them. <br>
+            - “Delete Best model”: Remove a previously imported Best model for the currently selected language (the built‑in fast model remains available). <br>
+            <em>Tip:</em> The app ships with compact, fast models. For higher accuracy you can optionally install larger “Best” models via a Language‑Pack (link above on this page). No internet connection is required.
+        </li>
+    </ul>
+
+    <h3 id="faq-ocr-review">OCR Review</h3>
+    <ul>
+        <li><strong>What is OCR Review?</strong><br>
+            OCR Review is an interactive screen where you can check and correct the recognized text before exporting. It shows each recognized word as a box overlaid on the document, with color-coded confidence highlighting (green = high confidence, red = low confidence).
+        </li>
+        <li><strong>How do I open OCR Review?</strong><br>
+            After OCR processing is complete, tap the "Review" button (pen icon) in the OCR screen. This opens the Review screen where you can inspect and edit the results.
+        </li>
+        <li><strong>What are the different view modes?</strong><br>
+            The Review screen has three tabs:<br>
+            - <strong>Layout</strong>: Shows word boxes overlaid on a neutral background. Tap a word to edit it, long-press for more options.<br>
+            - <strong>Document</strong>: Shows the original scanned image with word boxes overlaid. Useful for comparing OCR results with the actual document.<br>
+            - <strong>Text</strong>: A plain text editor view where you can edit the full text directly.
+        </li>
+        <li id="faq-ocr-review-tap-vs-longpress"><strong>What is the difference between tap and long-press on a word?</strong><br>
+            <strong>Tap (short click)</strong>: Opens the inline edit dialog where you can:<br>
+            - Edit the word text directly<br>
+            - See dictionary-based suggestions (if available) and tap a suggestion to apply it<br>
+            <br>
+            <strong>Long-press (hold)</strong>: Opens a context menu with additional options:<br>
+            - <em>Edit…</em>: Same as tap — opens the inline edit dialog<br>
+            - <em>Merge with next</em>: Combines this word with the following word into one<br>
+            - <em>Split</em>: Splits the word in the middle into two separate words<br>
+            - <em>Delete</em>: Removes the word entirely<br>
+            - <em>Case</em>: Change capitalization (UPPERCASE, lowercase, Title Case)<br>
+            - <em>Language…</em>: Set the language for this specific word and optionally re-run OCR for just this word
+        </li>
+        <li><strong>What are the dictionary suggestions?</strong><br>
+            When you tap a word to edit it, the app shows suggestions from the dictionary based on similarity to the current word. This helps correct common OCR errors. Tap a suggestion chip to apply it. Suggestions are ranked by Levenshtein similarity with special weighting for typical OCR confusions (0↔O, 1↔l, 5↔S, etc.).
+        </li>
+        <li><strong>What does "Re-OCR" do?</strong><br>
+            In the language dialog (long-press → Language…), you can select a different language and tap "Re-OCR". This re-runs text recognition for just that single word using the selected language. Useful when a word in a different script (e.g., Persian in an English document) was misrecognized.
+        </li>
+        <li><strong>How do I save my changes?</strong><br>
+            Tap the "Save" button at the bottom of the Review screen. This applies your corrections to the OCR result. If you tap "Back" or the X button with unsaved changes, you will be asked whether to discard them.
+        </li>
+        <li><strong>What do the color-coded boxes mean?</strong><br>
+            - <strong>Green/teal border</strong>: High confidence — the OCR engine is fairly certain about this word<br>
+            - <strong>Red border</strong>: Low confidence (below 60%) — the word may need manual review<br>
+            - <strong>Yellow border</strong>: Currently selected word
+        </li>
+    </ul>
+
+    <p>More questions? Please open an issue: <a href="https://github.com/egdels/makeacopy/issues">github.com/egdels/makeacopy/issues</a>.</p>
+
+    <h2>License</h2>
+    
+    <p>MakeACopy is licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</p>
+    
+    <pre>
+Copyright 2025 Christian Kierdorf
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+    </pre>
+</main>
+</body>
+</html>

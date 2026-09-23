@@ -1,0 +1,7 @@
+MakeACopy 3.4.0 (Release)
+* Added Turkish language support for OCR
+* Added configurable cleanup for completed scans (by age, count, or storage)
+* Independent storage locations for import and export
+* Fully offline, no cloud or tracking
+
+Hint: This is a release candidate - feedback and bug reports are welcome!

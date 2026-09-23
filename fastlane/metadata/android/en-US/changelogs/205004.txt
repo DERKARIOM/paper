@@ -1,0 +1,22 @@
+MakeACopy 2.5.0 (Release)
+
+What’s new
+
+- Improved document edge detection and perspective correction, especially for
+distorted or angled pages.
+- Faster image capture: reduced focus timeout and paused live analysis during
+capture for improved responsiveness.
+- Enhanced corner detection with toggle support for OpenCV/ONNX detectors,
+Hough line-based fallback, dynamic threshold adjustment, low-light handling,
+and consensus-based fusion for improved precision.
+
+Bug fixes
+
+- Fixed minimap thumbnail not reflecting user-defined image rotation in OCR review.
+- Fixed connected components analysis for OCR preprocessing (was incorrectly
+analyzing background instead of text).
+- Fixed memory leak in border noise clearing (SubMat resources now properly released).
+- Fixed inconsistent angle validation in ONNX corner detection.
+- Improved resource management for OpenCV contour processing.
+- Fixed HTML entity encoding in OCR text display (e.g., &#39; now correctly shows
+as apostrophe in OCR Review and PDF export).

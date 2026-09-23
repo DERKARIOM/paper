@@ -1,0 +1,4 @@
+MakeACopy 3.3.1 (Release)
+* Fixed crash on certain Android 15 devices (e.g. Redmi Note 13 Pro 5G) when starting OCR processing
+  — switched from OpenMP-enabled Tesseract to non-OpenMP variant to avoid sched_setaffinity crashes
+* Fully offline, no cloud or tracking

@@ -1,0 +1,18 @@
+Major OCR improvements:
+* Higher recognition accuracy and stability
+* Faster processing on typical documents
+* Better multi-language handling
+* More consistent, searchable PDF output
+* Improved text extraction across diverse layouts
+
+Camera improvements:
+* Camera rotation now updates automatically
+* Flash detection improved (CameraX API)
+* Light sensor tied to lifecycle (saves battery)
+* Torch separated from capture flash
+* Safer camera re-init on errors
+* Better memory cleanup for previews
+* Localized error messages
+* FileProvider authority centralized
+* Low-light prompt improved
+* Back navigation refined

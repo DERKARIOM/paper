@@ -1,0 +1,12 @@
+MakeACopy Eval Sample
+Left Column
+This left column contains running body text used to
+evaluate reading-order reconstruction in the PaddleOCR
+pipeline. The OCR engine should keep this column
+separated from the right one and preserve line breaks
+faithfully.
+Right Column
+The right column repeats a similar pattern with different
+words: alpha beta gamma delta epsilon zeta eta theta
+iota kappa lambda mu nu xi omicron pi rho sigma tau
+upsilon phi chi psi omega.

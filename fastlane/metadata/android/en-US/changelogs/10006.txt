@@ -1,0 +1,5 @@
+* The PDF image is now inserted without white borders at the top, bottom, left, and right. The scaling has been adjusted so that the image fills the page as much as possible.
+* The positioning of the OCR text layer remains precise and is aligned with the image.
+* Minor optimizations and code comments for better traceability of the scaling logic.
+
+Note: For images with a different aspect ratio than the page, a minimal border may remain to avoid distortion.

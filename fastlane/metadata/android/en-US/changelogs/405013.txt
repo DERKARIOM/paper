@@ -1,0 +1,6 @@
+MakeACopy 4.5.1
+* Fixed a device-dependent aspect-ratio mismatch: preview, live overlay and the captured image now share the same field of view.
+* Live document corners align more accurately with the camera preview.
+* More stable crop screen: corner detection no longer runs twice during layout, keeping the accurate result.
+* Consistent thumbnails across lists and export (no more cropped previews).
+* Unified text sizes for a cleaner, more polished UI.

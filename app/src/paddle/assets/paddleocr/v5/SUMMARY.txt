@@ -1,0 +1,31 @@
+FORMAT=ORT (basic optimization, reduced ops build)
+OPSET=11
+
+Recognition models (multi-model V5) and dictionaries:
+
+file                                                  size
+----                                                  ----
+det.ort                                            4898208
+arabic_PP-OCRv5_mobile_rec.ort                     8106064
+arabic_PP-OCRv5_mobile_rec_dict.txt                   2371
+cyrillic_PP-OCRv5_mobile_rec.ort                   8155912
+cyrillic_PP-OCRv5_mobile_rec_dict.txt                 2783
+devanagari_PP-OCRv5_mobile_rec.ort                 8019424
+devanagari_PP-OCRv5_mobile_rec_dict.txt               1945
+el_PP-OCRv5_mobile_rec.ort                         7915848
+el_PP-OCRv5_mobile_rec_dict.txt                       1105
+en_PP-OCRv5_mobile_rec.ort                         7955536
+en_PP-OCRv5_mobile_rec_dict.txt                       1418
+eslav_PP-OCRv5_mobile_rec.ort                      7994744
+eslav_PP-OCRv5_mobile_rec_dict.txt                    1665
+latin_PP-OCRv5_mobile_rec.ort                      8149136
+latin_PP-OCRv5_mobile_rec_dict.txt                    2618
+PP-OCRv5_mobile_rec.ort                           16641888
+PP-OCRv5_mobile_rec_dict.txt                         74014
+th_PP-OCRv5_mobile_rec.ort                         7998128
+th_PP-OCRv5_mobile_rec_dict.txt                       1769
+
+Notes:
+- Only *.ort, *_dict.txt, paddleocr_v5.required_operators.config, SHA256SUMS, SUMMARY.txt are shipped.
+- *.onnx assets MUST NOT be present (enforced at build by failOnPaddleOnnxAssets and at runtime by PaddleAssets.rejectOnnxAssetsOrThrow).
+- SHA256SUMS pins only *_dict.txt; *.ort files are verified by existence and non-zero size only (basic-opt ORT not byte-reproducible across toolchains).

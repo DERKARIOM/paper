@@ -1,0 +1,5 @@
+MakeACopy 3.0.1 (Bug-Fix)
+
+* Fixed repeated ML model loading during live camera analysis.
+* Document detection now starts significantly faster.
+* Fully offline, no cloud or tracking.

@@ -1,0 +1,493 @@
+<resources>
+    <string name="app_name">MakeACopy</string>
+
+    <string name="tip_text_mode_editing">Tekstmodus: Regelafbrekingen en interpunctie worden momenteel genormaliseerd
+        tot spaties. Als er minder woorden worden ingevoerd dan herkend, blijven de overige OCR-woorden ongewijzigd.
+        Wijzigingen worden toegepast na een korte pauze.
+    </string>
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">Camera</string>
+    <string name="title_crop">Bijsnijden</string>
+    <string name="title_ocr">OCR</string>
+    <string name="title_export">Exporteren</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">Scannen</string>
+    <string name="btn_crop">Bijsnijden</string>
+    <string name="btn_process">Verwerken</string>
+    <string name="btn_share">Delen</string>
+    <string name="btn_share_text">Tekst delen</string>
+    <string name="next">Verder</string>
+    <string name="back">Terug</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">Cameratoestemming is vereist om documenten te scannen</string>
+    <string name="confirm">Bevestigen</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">Camera klaar. Tik op de knop om een document te
+        scannen.
+    </string>
+    <string name="captured_image">Vastgelegde afbeelding</string>
+    <string name="image_to_crop">Afbeelding om bij te snijden</string>
+    <string name="cropped_image">Bijsneden afbeelding</string>
+    <string name="document_preview">Documentvoorbeeld</string>
+    <string name="include_ocr_text">OCR als apart TXT-bestand exporteren</string>
+    <string name="ocr_results_will_appear_here">OCR‑resultaten verschijnen hier</string>
+    <string name="ocr_no_text_detected">Geen tekst gedetecteerd</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Pas de hoeken van
+        het trapezium aan om het gebied te selecteren en tik daarna op Bijsnijden.
+    </string>
+    <string name="no_document_ready_process_ocr_first">Geen document gereed. Voer eerst OCR uit.</string>
+    <string name="document_ready_for_export">Document klaar om te exporteren</string>
+    <string name="processing_image">Afbeelding verwerken…</string>
+    <string name="no_image_processed_crop_an_image_first">Geen afbeelding verwerkt. Snijd eerst een afbeelding bij.
+    </string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR voltooid. Tik op de knop om door te
+        gaan naar exporteren.
+    </string>
+
+    <string name="ocr_found_rotation">Gevonden rotatie: %1$d°</string>
+    <string name="ocr_score">OCR-score: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">Gevonden rotatie: %1$d° — OCR-score: %2$d%%</string>
+
+    <!-- Extra uitleg toegevoegd in het dialoogvenster ‘Herkenningsmodi uitleggen’ -->
+    <string name="ocr_prep_modes_autorotate_note">OCR automatische rotatie: Wanneer ingeschakeld, probeert OCR de pagina
+        ook in stappen van 90° (0/90/180/270) en kiest het beste resultaat. De gevonden rotatie kan tijdens het
+        exporteren automatisch worden toegepast als je de pagina niet handmatig hebt geroteerd. Deze optie kan worden
+        in- of uitgeschakeld in ‘Kies herkenningsmodus’.
+    </string>
+
+    <string name="initializing_camera">Camera initialiseren…</string>
+    <string name="resetting_camera">Camera resetten…</string>
+    <string name="error_initializing_camera">Fout bij initialiseren camera: %1$s</string>
+    <string name="error_camera_provider_null">Initialiseren mislukt – provider is null</string>
+    <string name="error_camera_not_initialized">Camera niet geïnitialiseerd. Probeer het opnieuw.</string>
+    <string name="error_image_capture_failed">Opname mislukt: %1$s</string>
+    <string name="error_displaying_image">Fout bij weergeven afbeelding: %1$s</string>
+    <string name="error_resetting_camera">Fout bij resetten camera: %1$s</string>
+    <string name="error_toggling_flashlight">Fout bij schakelen zaklamp: %1$s</string>
+    <string name="error_camera_preview_failed">Voorbeeld van de camera kon niet starten. Probeer opnieuw.</string>
+
+    <string name="share_logs">Logbestanden delen</string>
+    <string name="share_logs_subject">MakeACopy diagnostische logbestanden</string>
+    <string name="share_logs_chooser_title">Logbestanden delen via…</string>
+    <string name="share_logs_error">Kon logbestanden niet voorbereiden: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">Grijstinten</string>
+    <string name="export_as_jpeg">Exporteren als JPEG</string>
+    <string name="export_format_label">Exportformaat</string>
+    <string name="export_as_pdf">Exporteren als PDF (standaard)</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">Zaklamp schakelen</string>
+    <string name="flashlight_on">Zaklamp aan</string>
+    <string name="flashlight_off">Zaklamp uit</string>
+    <string name="flashlight_not_available">Zaklamp niet beschikbaar op dit apparaat</string>
+    <string name="low_light_detected">Weinig licht gedetecteerd. Zaklamp inschakelen?</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">EV %1$s</string>
+    <string name="exposure_compensation_cd">Schuifregelaar belichtingscompensatie</string>
+    <string name="exposure_compensation_option">Belichtingscompensatie</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">Schuifregelaar voor handmatige focus</string>
+    <string name="manual_focus_af_button_cd">Overschakelen naar autofocus</string>
+    <string name="autofocus_enabled">Autofocus ingeschakeld</string>
+    <string name="manual_focus_locked">Handmatige focus vergrendeld</string>
+    <string name="manual_focus_option">Handmatige focus</string>
+    <string name="focus_quality_option">Indicator voor scherpstelkwaliteit</string>
+    <string name="tap_to_focus_started">Scherpstellen…</string>
+    <string name="tap_to_focus_done">Focus aangepast</string>
+    <string name="tap_to_focus_requested">Focus aangevraagd</string>
+    <string name="tap_to_focus_not_locked">Focus kon hier niet worden vergrendeld</string>
+    <string name="tap_to_focus_not_supported">Tikfocus wordt hier niet ondersteund</string>
+    <string name="tap_to_focus_failed">Kon hier niet scherpstellen</string>
+    <string name="focus_quality_low">Scherpstelkwaliteit: laag</string>
+    <string name="focus_quality_good">Scherpstelkwaliteit: goed</string>
+    <string name="focus_quality_excellent">Scherpstelkwaliteit: uitstekend</string>
+    <string name="camera_zoom_title">Zoom / lens</string>
+    <string name="camera_zoom_cd">Zoom of lens kiezen</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">Zoom is niet beschikbaar op dit apparaat</string>
+
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">Kleur</string>
+    <string name="jpeg_mode_auto">Grijstinten</string>
+    <string name="jpeg_mode_bw_text">Zwart-wit</string>
+    <string name="jpeg_mode_bw_robust">Zwart-wit (robuust) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">Robuuste OCR-voorverwerking (JPEG)</string>
+
+    <string name="pdf_bw_mode_robust">Zwart-wit</string>
+    <string name="pdf_bw_mode_classic">Z/W (klassiek)</string>
+    <string name="pdf_bw_mode_ocr_robust">Robuuste OCR-voorverwerking (PDF)</string>
+    <string name="jpeg_mode_gray_clean">Opgeschoonde grijswaarden (hoogdoorlaatfilter) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">Opgeschoonde kleuren (hoogdoorlaatfilter) (JPEG)</string>
+    <string name="pdf_bw_mode_grayscale_clean">Grijswaarden – opgeschoond (hoogdoorlaat)</string>
+    <string name="pdf_bw_mode_color_clean">Kleur – opgeschoond (hoogdoorlaat)</string>
+    <string name="skip_ocr_export_only">OCR overslaan (alleen exporteren)</string>
+    <string name="skip_cropping">Bijsnijden overslaan</string>
+    <string name="skip_edge_detection">Randdetectie overslaan</string>
+    <string name="preview_corner_detection">Voorbeeld van hoekdetectie</string>
+    <string name="btn_pick_image">Laden</string>
+    <string name="pick_image_cd">Bestaande afbeelding laden</string>
+    <!-- Multipage Export (v1 increment) -->
+    <string name="add_another_page">Pagina toevoegen</string>
+    <string name="clear_all_pages">Alles wissen</string>
+    <string name="remove_this_page">Deze pagina verwijderen</string>
+    <string name="multipage_not_implemented">Meerdere pagina\'s exporteren is nog niet geïmplementeerd</string>
+
+    <!-- Reorder A11y controls -->
+    <string name="move_page_left">Pagina naar links verplaatsen</string>
+    <string name="move_page_right">Pagina naar rechts verplaatsen</string>
+
+    <!-- Back confirmation for clearing multipage session -->
+    <string name="confirm_clear_multipage_title">Pagina\'s verwijderen?</string>
+    <string name="confirm_clear_multipage_message">Er zijn meerdere pagina\'s toegevoegd. Wil je alle pagina\'s
+        verwijderen en teruggaan?
+    </string>
+    <string name="cancel">Annuleren</string>
+
+    <!-- Clear-all confirmation for trash icon in multipage -->
+    <string name="confirm_clear_pages_title">Alle pagina\'s wissen?</string>
+    <string name="confirm_clear_pages_message">Wil je alle pagina\'s verwijderen uit de filmstrip?</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">Kies uit voltooide scans</string>
+    <string name="picker_empty">Geen voltooide scans gevonden</string>
+    <!-- Library default collection -->
+    <string name="collection_completed_scans">Voltooide scans</string>
+    <string name="done">Verder</string>
+    <string name="thumbnail">Miniatuur</string>
+    <string name="delete">Verwijderen</string>
+
+    <!-- Picker bulk actions -->
+    <string name="select_all">Alles selecteren</string>
+    <string name="deselect_all">Alles deselecteren</string>
+
+    <string name="added_pages_from_registry">%1$d pagina(\'s) toegevoegd uit register</string>
+
+    <!-- Add page options dialog -->    <!-- Picker states -->
+    <string name="missing_file">Bestand ontbreekt</string>
+
+    <!-- Inline OCR cues -->
+    <string name="ocr_processing_started">OCR uitvoeren…</string>
+    <string name="ocr_processing_finished">OCR toegevoegd voor deze pagina</string>
+    <string name="ocr_processing_failed">Inline OCR mislukt</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">Uit register verwijderen</string>
+    <string name="remove_from_registry_message">Dit item en de bijbehorende bestanden verwijderen?</string>
+    <string name="remove">Verwijderen</string>
+    <string name="removed_from_registry_toast">Item verwijderd</string>
+
+    <!-- PDF quality presets (Phase 1) -->
+    <string name="pdf_quality_title">PDF‑kwaliteit / -grootte</string>
+    <string name="pdf_preset_high">Hoog (300 dpi, q85)</string>
+    <string name="pdf_preset_standard">Standaard (200 dpi, q72)</string>
+    <string name="pdf_preset_small">Klein (150 dpi, q62)</string>
+    <string name="pdf_preset_very_small">Zeer klein (110 dpi, q52)</string>
+    <string name="pdf_text_layer_mode_title">PDF-tekstlaag</string>
+    <string name="pdf_text_layer_mode_line_based">Regelgebaseerd (aanbevolen)</string>
+    <string name="pdf_text_layer_mode_word_positioned">Woordgepositioneerd (compatibiliteit)</string>
+    <string name="export_options_title">Exportopties</string>
+    <string name="jpeg_enhancement_title">JPEG‑uitvoerkleur</string>
+    <string name="btn_options">Opties</string>
+    <string name="btn_save">Opslaan</string>
+    <string name="btn_new">Nieuwe scan</string>
+    <string name="btn_review">Beoordelen</string>
+    <string name="edit_word_title">Woord bewerken</string>
+    <string name="cm_edit">Bewerken…</string>
+    <string name="cm_merge_next">Samenvoegen met volgende</string>
+    <string name="cm_split">Splitsen</string>
+    <string name="cm_delete">Verwijderen</string>
+    <string name="cm_case">Hoofd-/kleine letters</string>
+    <string name="cm_lang">Taal…</string>
+    <string name="case_upper">HOOFDLETTERS</string>
+    <string name="case_lower">kleine letters</string>
+    <string name="case_title">Hoofdletters aan het begin</string>
+    <string name="dialog_language_title">Taalcode instellen</string>
+    <!-- Rotation (post-crop) -->
+    <string name="rotate_left_cd">Pagina 90 graden tegen de klok in draaien</string>
+    <string name="rotate_right_cd">Pagina 90 graden met de klok mee draaien</string>
+
+    <!-- OCR models management (prototype) -->
+    <string name="ocr_models_manage">OCR‑modellen</string>
+    <string name="ocr_import_manual">.traineddata importeren…</string>
+    <string name="ocr_discover_packs">Taalpakketten ontdekken</string>
+    <string name="ocr_no_packs_found">Geen talpakketten gevonden</string>
+    <string name="ocr_choose_pack">Taalpakket kiezen</string>
+    <string name="ocr_no_models_in_pack">Geen modellen gevonden in dit pakket</string>
+    <string name="ocr_choose_model">Model kiezen om te importeren</string>
+    <string name="ocr_import_success">Model geïmporteerd</string>
+    <string name="ocr_import_failed">Importeren mislukt</string>
+
+    <string name="ocr_delete_best_model">Best-model verwijderen</string>
+    <string name="ocr_nothing_to_delete">Geen Best-model om te verwijderen voor de huidige taal</string>
+    <string name="ocr_delete_confirm_title">Best-model verwijderen?</string>
+    <string name="ocr_delete_confirm_msg">Het geïmporteerde Best-model voor %1$s verwijderen? Het ingebouwde Fast-model
+        blijft beschikbaar.
+    </string>
+    <string name="ocr_delete_success">Model verwijderd</string>
+    <string name="ocr_delete_failed">Verwijderen mislukt</string>
+
+    <!-- OCR models hint -->
+    <string name="ocr_models_hint">Voor snellere herkenning zijn compacte modellen inbegrepen. Voor hogere
+        nauwkeurigheid kun je grotere "Best"‑modellen installeren. Er is geen internetverbinding nodig.
+    </string>
+
+    <!-- OCR-herkenningsmodi – uitleg -->
+    <string name="ocr_explain_prep_modes">Herkenningsmodi uitleggen</string>
+    <string name="ocr_prep_modes_title">Herkenningsmodi: eenvoudige uitleg</string>
+    <string name="ocr_prep_modes_message">Er zijn twee manieren om afbeeldingen naar de OCR-engine te sturen:\n\n•
+        Origineel (geen voorbewerking) — het snelst. De foto wordt ongewijzigd verzonden. Het meest geschikt voor al
+        schone scans met hoog contrast. Kan zwakke of ruisachtige tekst missen.\n\n• OpenCV
+        Robuust — opnieuw ontworpen voor maximale nauwkeurigheid bij moeilijke pagina’s. Corrigeert scheefstand,
+        normaliseert schaduwen en belichting, past randbehoudende ruisonderdrukking en slimme opschaling toe. Belangrijk
+        is dat Tesseract een grijswaardenafbeelding van hoge kwaliteit ontvangt (geen hard zwart-wit) om fijne details
+        zoals lussen in de letter “o” en kleine cijfers te behouden. Biedt de beste nauwkeurigheid op complexe pagina’s,
+        maar is langzamer en gebruikt meer geheugen.\n\nOCR-nabewerking: Corrigeert typische herkenningsfouten zoals
+        verwarringen (0↔O, 1↔l↔I, rn↔m) en controleert onzekere woorden met behulp van een woordenboek. Standaard
+        ingeschakeld; schakel dit uit voor technische codes of serienummers.
+    </string>
+
+    <!-- OCR-herkenningsmodi – selectie -->
+    <string name="ocr_choose_prep_mode_menu">Herkenningsmodus…</string>
+    <string name="ocr_choose_prep_mode_title">Kies herkenningsmodus</string>
+    <string name="ocr_mode_original">Origineel (geen voorbewerking)</string>
+    <string name="ocr_mode_quick">OpenCV Quick (snel)</string>
+    <string name="ocr_mode_robust">OpenCV Robust (hoge kwaliteit)</string>
+    <string name="opt_paddle_best_ocr">Beste Paddle OCR-kwaliteit (langzamer)</string>
+    <string name="ocr_prep_mode_set">Herkenningsmodus ingesteld op %1$s</string>
+
+    <!-- Labels -->
+    <string name="label_language">Taal</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d W</string>
+    <string name="low_percent_format">Laag %1$d%%</string>
+    <string name="low_placeholder">Laag —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 W</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">Sluiten</string>
+    <string name="cd_zoom_chip_open_menu">Zoommenu openen</string>
+    <string name="cd_minimap">Documentoverzicht, tik om te springen
+    </string>    <!-- A11y content descriptions for menu items -->    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">Voer een waarde in</string>
+
+    <!-- Collections / Library (feature-flagged) -->
+    <string name="new_collection_title">Nieuwe verzameling</string>
+    <string name="collection_name_hint">Naam van de verzameling</string>
+    <string name="create">Aanmaken</string>
+    <string name="collection_not_empty">Verzameling is niet leeg</string>
+    <string name="collection_items_count">%1$d item(s)</string>
+    <string name="deleted">Verwijderd</string>
+    <string name="open_collections">Verzamelingen</string>
+    <string name="index_existing_scans">Bestaande scans indexeren</string>
+    <string name="rename">Hernoemen</string>
+    <string name="ok">OK</string>
+    <string name="no_scans_yet">Nog geen scans</string>
+    <string name="rename_collection_title">Verzameling hernoemen</string>
+    <string name="action_add_to_collection">Toevoegen aan verzameling…</string>
+    <string name="place_in_collection_title">Toevoegen aan verzameling</string>
+    <string name="create_new_collection">Nieuwe verzameling aanmaken…</string>
+    <string name="scan_added_to_collection">Scan toegevoegd aan “%1$s”</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">Bibliotheekacties</string>    <!-- Library list: collections membership -->
+    <string name="in_collections_prefix">In: %1$s</string>
+    <!-- Delete confirmation (ScanDetails) -->
+    <string name="delete_warning_irreversible">Het bestand wordt van het apparaat verwijderd. Deze actie kan niet
+        ongedaan worden gemaakt.
+    </string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">Geen document om te exporteren</string>
+    <string name="failed_to_export_document">Exporteren van document mislukt</string>
+    <string name="error_during_export_with_reason">Fout tijdens exporteren: %1$s</string>
+    <string name="document_exported">Document %1$s geëxporteerd</string>
+    <string name="document_multipage_exported">Document (meerdere pagina’s) %1$s geëxporteerd</string>
+    <string name="no_target_selected">Geen doel geselecteerd</string>
+    <string name="image_exported">Afbeelding %1$s geëxporteerd</string>
+    <string name="failed_to_export_image">Exporteren van afbeelding mislukt</string>
+    <string name="error_during_jpeg_export_with_reason">Fout tijdens JPEG-export: %1$s</string>
+    <string name="zip_exported">ZIP %1$s geëxporteerd</string>
+    <string name="failed_to_export_zip">Exporteren van ZIP mislukt</string>
+    <string name="error_during_zip_export_with_reason">Fout tijdens ZIP-export: %1$s</string>
+    <string name="ocr_text_exported_as_txt">OCR-tekst geëxporteerd als TXT</string>
+    <string name="error_exporting_ocr_text_with_reason">Fout bij exporteren van OCR-tekst: %1$s</string>
+    <string name="no_document_to_share_export_first">Geen document om te delen. Exporteer eerst een document.</string>
+    <string name="error_sharing_document_with_reason">Fout bij het delen van document: %1$s</string>
+    <string name="feature_scan_library_disabled">Scanbibliotheekfunctie is uitgeschakeld</string>
+    <string name="navigation_failed">Navigatie mislukt</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">Scan-ID ontbreekt</string>
+    <string name="picker_failed">Selectie mislukt</string>
+    <string name="share_failed">Delen mislukt</string>
+    <string name="no_app_found_to_open_file">Geen app gevonden om dit bestand te openen</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">Verwijderen uit deze collectie?</string>
+    <string name="removed_from_collection">Verwijderd uit collectie</string>
+    <string name="indexed_new_items">%1$d nieuw(e) item(s) geïndexeerd</string>
+    <string name="nothing_new_to_index">Niets nieuws om te indexeren</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">Document uitgelijnd</string>
+    <string name="a11y_hint_move_left">Beweeg naar links</string>
+    <string name="a11y_hint_move_right">Beweeg naar rechts</string>
+    <string name="a11y_hint_move_up">Beweeg omhoog</string>
+    <string name="a11y_hint_move_down">Beweeg omlaag</string>
+    <string name="a11y_hint_move_closer">Dichter bij het oppervlak</string>
+    <string name="a11y_hint_move_back">Verder van het oppervlak</string>
+    <string name="a11y_hint_too_far">Kom dichterbij. Het document is te ver weg.</string>
+    <string name="a11y_hint_tilt_left">Kantel naar links</string>
+    <string name="a11y_hint_tilt_right">Kantel naar rechts</string>
+    <string name="a11y_hint_tilt_forward">Kantel naar voren</string>
+    <string name="a11y_hint_tilt_back">Kantel naar achteren</string>
+    <string name="a11y_hold_still">Houd stil</string>
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">Document gedetecteerd — klaar om vast te leggen.</string>
+    <string name="a11y_no_document_detected">Geen document gedetecteerd.</string>
+    <string name="a11y_orientation_portrait_tip">Dit lijkt portretstand. Het vasthouden van de telefoon in portretmodus
+        werkt meestal het beste voor hoge pagina’s.
+    </string>
+    <string name="a11y_orientation_landscape_tip">Dit lijkt liggend. Probeer de telefoon in liggende stand te houden
+        voor brede pagina’s.
+    </string>
+    <string name="a11y_crop_summary_detected">Analyse van de vastgelegde afbeelding: document gedetecteerd.</string>
+    <string name="a11y_crop_summary_no_doc">Analyse van de vastgelegde afbeelding: geen document gedetecteerd.</string>
+    <string name="accessibility_mode_label">Toegankelijkheidsmodus</string>
+    <string name="a11y_camera_ready">Camera klaar. Dubbel tik op Scannen om vast te leggen.</string>
+    <string name="a11y_low_light_toggle_flash">Weinig licht gedetecteerd. Dubbel tik op Flits om in te schakelen.
+    </string>
+    <string name="a11y_capture_failed">Vastleggen mislukt.</string>
+    <string name="a11y_volume_shutter_hint">Tip: In de toegankelijkheidsmodus kunt u ook met de volumetoetsen
+        vastleggen.
+    </string>
+    <string name="a11y_capture_success">Afbeelding vastgelegd.
+    </string>    <!-- Toegankelijkheid: beschrijving van lijstitems en aankondigingen -->
+    <string name="page_n_of_m">Pagina %1$d van %2$d</string>
+    <string name="pages_count_announcement">Pagina’s: %1$d</string>
+    <string name="export_started">Export gestart</string>
+    <string name="page_removed">Pagina verwijderd</string>
+    <string name="page_moved_to_position">Verplaatst naar positie %1$d</string>
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">OCR automatisch roteren (ook toepassen bij exporteren)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">OCR-nabewerking (veelvoorkomende fouten corrigeren)</string>
+    <string name="opt_layout_analysis">Lay-outanalyse (kolommen, tabellen)
+    </string>    <!-- Options: Experimental directional mapping fallback -->
+    <!-- Developer / Debug options -->    <!-- Library / Collections -->    <!-- PDF Import -->
+    <string name="error_unknown_file_type">Onbekend bestandstype</string>
+    <string name="error_unsupported_file_type">Dit bestandstype wordt niet ondersteund</string>
+    <string name="error_cannot_open_pdf">Kan PDF niet openen</string>
+    <string name="error_pdf_empty">De PDF bevat geen pagina’s</string>
+    <string name="error_pdf_import_failed">Importeren van PDF mislukt</string>
+    <string name="error_pdf_page_render_failed">Pagina kan niet worden weergegeven</string>
+    <string name="pdf_select_page">Pagina selecteren</string>
+    <string name="pdf_page_number">Pagina %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">OCR-talen selecteren</string>
+    <string name="ocr_max_languages_warning">Maximaal 2 talen toegestaan</string>
+    <string name="ocr_no_language_selected">Selecteer ten minste één taal</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">Wijzigingen verwerpen?</string>
+    <string name="msg_discard_changes">Je hebt niet-opgeslagen wijzigingen. Wil je deze verwerpen?</string>
+    <string name="btn_discard">Verwerpen</string>
+
+    <string name="btn_reocr">OCR opnieuw uitvoeren</string>
+    <string name="reocr_processing">OCR opnieuw uitvoeren…</string>
+    <string name="reocr_success">Woord bijgewerkt: %1$s</string>
+    <string name="reocr_failed">OCR opnieuw uitvoeren mislukt</string>
+    <string name="reocr_no_language">Selecteer eerst een taal</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">100 %</string>
+    <string name="zoom_200">200 %</string>
+    <string name="zoom_300">300 %</string>
+    <string name="zoom_400">400 %</string>
+    <string name="zoom_fit">Aanpassen</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">Indeling</string>
+    <string name="label_text">Tekst</string>
+    <string name="label_document">Document</string>
+
+
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">Paginaformaat</string>
+    <string name="dpi_settings_label">DPI-instellingen</string>
+    <string name="page_format_fit">Aanpassen aan afbeelding (aanbevolen)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+
+    <string name="restore_access">Toegang herstellen</string>
+    <string name="status">Status</string>
+    <string name="ocr_text_editor_hint">OCR-tekst bewerken</string>
+
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">Instellingen voor opschonen van voltooide scans</string>
+    <string name="cleanup_policy">Opschoningsbeleid</string>
+    <string name="cleanup_policy_none">Geen (alles behouden)</string>
+    <string name="cleanup_policy_max_age">Op leeftijd</string>
+    <string name="cleanup_policy_max_count">Op aantal</string>
+    <string name="cleanup_policy_max_storage">Op opslagruimte</string>
+    <string name="cleanup_policy_combined">Gecombineerd</string>
+    <string name="cleanup_max_age_days">Maximale leeftijd (dagen)</string>
+    <string name="cleanup_max_count">Maximaal aantal</string>
+    <string name="cleanup_max_storage_mb">Maximale opslagruimte (MB)</string>
+    <string name="cleanup_settings_saved">Opschoningsinstellingen opgeslagen</string>
+    <string name="inbox_mode">Inbox-modus</string>
+    <string name="inbox_mode_enable">Standaard exportmap inschakelen</string>
+    <string name="inbox_select_folder">Map selecteren</string>
+    <string name="inbox_folder_set">Inbox-map: %1$s</string>
+    <string name="inbox_folder_none">Geen map geselecteerd</string>
+    <string name="inbox_saved">✓ Opgeslagen in Inbox</string>
+    <string name="inbox_permission_lost">Toegang tot Inbox-map verloren. Selecteer een nieuwe map.</string>
+    <string name="inbox_no_folder_selected">Selecteer eerst een Inbox-map.</string>
+    <string name="inbox_clear">Inbox-map wissen</string>
+    <string name="inbox_filename_format">Bestandsnaamformaat</string>
+    <string name="inbox_auto_new_scan">Na export automatisch nieuwe scan starten</string>
+    <string name="inbox_filename_date_scan">Datum + Scan (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">Datum + tijd + Scan (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">Alleen datum (2026-03-04)</string>
+    <string name="pdf_bw_mode_none">Kleur</string>
+    <!-- Translations added for missing strings -->
+    <string name="confirm_remove_page_title">Pagina verwijderen?</string>
+    <string name="confirm_remove_page_message">Wil je deze pagina uit de filmstrip verwijderen?</string>
+    <string name="crop_aspect_label">Beeldverhouding</string>
+    <string name="crop_aspect_auto">Automatisch (aanbevolen)</string>
+    <string name="crop_aspect_original">Origineel behouden (geen correctie)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">Aangepast…</string>
+    <string name="crop_aspect_custom_with_ratio">Aangepast (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">Aangepaste beeldverhouding</string>
+    <string name="crop_aspect_custom_width_hint">Breedte</string>
+    <string name="crop_aspect_custom_height_hint">Hoogte</string>
+    <string name="crop_aspect_custom_invalid">Voer positieve getallen in tussen 1:1 en 1:20.</string>
+    <string name="crop_aspect_output_size_hint">Uitvoer: %1$d × %2$d px</string>
+    <string name="crop_hint_corner_off_image">Hoek buiten afbeelding — uitvoer kan zwarte randen bevatten</string>
+    <string name="crop_edge_dragged">Rand geselecteerd. Sleep om de rand te verplaatsen.</string>
+    <!-- Document cleanup -->
+    <string name="document_cleanup_title">Documentopschoning</string>
+    <string name="document_cleanup_original">Origineel</string>
+    <string name="document_cleanup_natural">Natuurlijk</string>
+    <string name="document_cleanup_enhanced">Verbeterd</string>
+    <string name="document_cleanup_clean_text">Schone tekst</string>
+    <string name="workflow_step_description">Stap %1$d van %2$d: %3$s</string>
+    <string name="search_scans">Scans zoeken</string>
+</resources>

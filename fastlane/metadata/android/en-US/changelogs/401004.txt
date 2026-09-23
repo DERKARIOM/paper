@@ -1,0 +1,8 @@
+MakeACopy 4.1.0
+* Improved OCR architecture with separate Standard and Paddle implementations.
+* Enhanced Paddle OCR processing and safer crop validation.
+* Improved OCR review reading order, including RTL-aware word ordering and rendering.
+* Improved searchable PDF export with a fallback text layer when word boxes are unavailable.
+* Refined RTL handling so TXT export keeps logical text while PDF export applies PDF-specific reordering.
+* Paddle builds now include the correct edition assets alongside Paddle assets.
+* Note: Paddle builds are currently available on GitHub only.

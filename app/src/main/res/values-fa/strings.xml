@@ -1,0 +1,486 @@
+<resources>
+    <string name="app_name">MakeACopy</string>
+
+    <!-- OCR Review: Text mode editor tooltip documenting current behavior -->
+    <string name="tip_text_mode_editing">حالت متن: در حال حاضر شکست خط‌ها و علائم نگارشی به فاصله تبدیل می‌شوند. اگر
+        تعداد کلمات واردشده کمتر از کلمات تشخیص‌داده‌شده باشد، کلمات باقی‌ماندهٔ OCR بدون تغییر می‌مانند. تغییرات پس از
+        یک مکث کوتاه اعمال می‌شوند.
+    </string>
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">دوربین</string>
+    <string name="title_crop">برش</string>
+    <string name="title_ocr">OCR</string>
+    <string name="title_export">خروجی</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">اسکن</string>
+    <string name="btn_crop">برش</string>
+    <string name="btn_process">پردازش</string>
+    <string name="btn_share">اشتراک‌گذاری</string>
+    <string name="btn_share_text">اشتراک‌گذاری متن</string>
+    <string name="next">بعدی</string>
+    <string name="back">بازگشت</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">برای اسکن اسناد، مجوز دوربین لازم است</string>
+    <string name="confirm">تأیید</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">دوربین آماده است. برای اسکن یک سند، دکمه را بزنید.
+    </string>
+    <string name="captured_image">تصویر ثبت‌شده</string>
+    <string name="image_to_crop">تصویر برای برش</string>
+    <string name="cropped_image">تصویر برش‌خورده</string>
+    <string name="document_preview">پیش‌نمایش سند</string>
+    <string name="include_ocr_text">صادرکردن OCR به‌عنوان فایل TXT جداگانه</string>
+    <string name="ocr_results_will_appear_here">نتایج OCR اینجا نمایش داده می‌شود</string>
+    <string name="ocr_no_text_detected">هیچ متنی شناسایی نشد</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">گوشه‌های ذوزنقه را
+        تنظیم کنید تا ناحیهٔ برش انتخاب شود، سپس دکمهٔ «برش» را بزنید.
+    </string>
+    <string name="no_document_ready_process_ocr_first">هیچ سندی آماده نیست. ابتدا OCR را پردازش کنید.</string>
+    <string name="document_ready_for_export">سند برای خروجی‌گرفتن آماده است</string>
+    <string name="processing_image">در حال پردازش تصویر…</string>
+    <string name="no_image_processed_crop_an_image_first">هیچ تصویری پردازش نشده است. ابتدا یک تصویر را برش دهید.
+    </string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">پردازش OCR کامل شد. برای رفتن به خروجی،
+        دکمه را بزنید.
+    </string>
+    <string name="ocr_found_rotation">چرخش پیدا شد: %1$d°</string>
+    <string name="ocr_score">امتیاز OCR: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">چرخش پیدا شد: %1$d° — امتیاز OCR: %2$d%%</string>
+
+    <!-- Extra explanation appended in “Explain recognition modes” dialog -->
+    <string name="ocr_prep_modes_autorotate_note">چرخش خودکار OCR: وقتی فعال باشد، OCR صفحه را در گام‌های ۹۰ درجه
+        (0/90/180/270) هم امتحان می‌کند و بهترین نتیجه را انتخاب می‌کند. اگر دستی صفحه را نچرخانده باشید، چرخشِ پیدا‌شده
+        می‌تواند هنگام خروجی به‌صورت خودکار اعمال شود. می‌توانید این گزینه را در «انتخاب حالت تشخیص» روشن/خاموش کنید.
+    </string>
+
+    <string name="initializing_camera">در حال راه‌اندازی دوربین…</string>
+    <string name="resetting_camera">در حال بازنشانی دوربین…</string>
+    <string name="error_initializing_camera">خطا در راه‌اندازی دوربین: %1$s</string>
+    <string name="error_camera_provider_null">راه‌اندازی دوربین ناموفق بود – ارائه‌دهنده null است</string>
+    <string name="error_camera_not_initialized">دوربین راه‌اندازی نشده است. لطفاً دوباره تلاش کنید.</string>
+    <string name="error_image_capture_failed">گرفتن تصویر ناموفق بود: %1$s</string>
+    <string name="error_displaying_image">خطا در نمایش تصویر: %1$s</string>
+    <string name="error_resetting_camera">خطا در بازنشانی دوربین: %1$s</string>
+    <string name="error_toggling_flashlight">خطا در تغییر وضعیت چراغ‌قوه: %1$s</string>
+    <string name="error_camera_preview_failed">شروع پیش‌نمایش دوربین ناموفق بود. لطفاً دوباره تلاش کنید.</string>
+
+    <!-- Logging / Share logs -->
+    <string name="share_logs">اشتراک‌گذاری لاگ‌ها</string>
+    <string name="share_logs_subject">لاگ‌های عیب‌یابی MakeACopy</string>
+    <string name="share_logs_chooser_title">اشتراک‌گذاری لاگ‌ها از طریق…</string>
+    <string name="share_logs_error">آماده‌سازی لاگ‌ها ممکن نشد: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">خاکستری</string>
+    <string name="export_as_jpeg">خروجی به صورت JPEG</string>
+    <string name="export_format_label">قالب خروجی</string>
+    <string name="export_as_pdf">خروجی به صورت PDF (پیش‌فرض)</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">تغییر وضعیت چراغ‌قوه</string>
+    <string name="flashlight_on">چراغ‌قوه روشن</string>
+    <string name="flashlight_off">چراغ‌قوه خاموش</string>
+    <string name="flashlight_not_available">چراغ‌قوه در این دستگاه در دسترس نیست</string>
+    <string name="low_light_detected">نور کم تشخیص داده شد. چراغ‌قوه روشن شود؟</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">جبران نوردهی %1$s</string>
+    <string name="exposure_compensation_cd">لغزنده جبران نوردهی</string>
+    <string name="exposure_compensation_option">جبران نوردهی</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">لغزندهٔ فوکوس دستی</string>
+    <string name="manual_focus_af_button_cd">تغییر به فوکوس خودکار</string>
+    <string name="autofocus_enabled">فوکوس خودکار فعال شد</string>
+    <string name="manual_focus_locked">فوکوس دستی قفل شد</string>
+    <string name="manual_focus_option">فوکوس دستی</string>
+    <string name="focus_quality_option">نشانگر کیفیت فوکوس</string>
+    <string name="tap_to_focus_started">در حال فوکوس…</string>
+    <string name="tap_to_focus_done">فوکوس تنظیم شد</string>
+    <string name="tap_to_focus_requested">درخواست فوکوس ثبت شد</string>
+    <string name="tap_to_focus_not_locked">فوکوس در اینجا قفل نشد</string>
+    <string name="tap_to_focus_not_supported">فوکوس با لمس در اینجا پشتیبانی نمی‌شود</string>
+    <string name="tap_to_focus_failed">امکان فوکوس در اینجا نبود</string>
+    <string name="focus_quality_low">کیفیت فوکوس: کم</string>
+    <string name="focus_quality_good">کیفیت فوکوس: خوب</string>
+    <string name="focus_quality_excellent">کیفیت فوکوس: عالی</string>
+    <string name="camera_zoom_title">زوم / لنز</string>
+    <string name="camera_zoom_cd">زوم یا لنز را انتخاب کنید</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">زوم در این دستگاه در دسترس نیست</string>
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">رنگی</string>
+    <string name="jpeg_mode_auto">خاکستری</string>
+    <string name="jpeg_mode_bw_text">سیاه و سفید</string>
+    <string name="jpeg_mode_bw_robust">سیاه &amp; سفید (مقاوم) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">پیش‌پردازش مقاوم برای OCR (JPEG)</string>
+    <string name="pdf_bw_mode_robust">سیاه و سفید</string>
+    <string name="pdf_bw_mode_classic">سیاه‌وسفید (کلاسیک)</string>
+    <string name="pdf_bw_mode_ocr_robust">پیش‌پردازش مقاوم برای OCR (PDF)</string>
+    <string name="jpeg_mode_gray_clean">خاکستری تمیز (فیلتر گذر بالا) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">رنگ تمیز (فیلتر گذر بالا) (JPEG)</string>
+    <string name="pdf_bw_mode_grayscale_clean">خاکستریِ تمیز (فیلتر بالاگذر)</string>
+    <string name="pdf_bw_mode_color_clean">رنگیِ تمیز (فیلتر بالاگذر)</string>
+    <string name="skip_ocr_export_only">رد کردن OCR (فقط خروجی)</string>
+    <string name="preview_corner_detection">پیش‌نمایش تشخیص گوشه‌ها</string>
+    <string name="skip_cropping">رد کردن برش</string>
+    <string name="skip_edge_detection">رد شدن از تشخیص لبه</string>
+    <string name="btn_pick_image">بارگذاری</string>
+    <string name="pick_image_cd">بارگذاری تصویر موجود</string>
+    <!-- Multipage Export (v1 increment) -->
+    <string name="add_another_page">افزودن صفحه</string>
+    <string name="clear_all_pages">پاک کردن همه</string>
+    <string name="remove_this_page">حذف این صفحه</string>
+    <string name="multipage_not_implemented">خروجی چندصفحه‌ای هنوز پیاده‌سازی نشده است</string>
+
+    <!-- Reorder A11y controls -->
+    <string name="move_page_left">جابجایی صفحه به چپ</string>
+    <string name="move_page_right">جابجایی صفحه به راست</string>
+
+    <!-- Back confirmation for clearing multipage session -->
+    <string name="confirm_clear_multipage_title">صفحات حذف شوند؟</string>
+    <string name="confirm_clear_multipage_message">چند صفحه اضافه شده است. آیا می‌خواهید همهٔ صفحات حذف شوند و
+        برگردید؟
+    </string>
+    <string name="cancel">لغو</string>
+
+    <!-- Clear-all confirmation for trash icon in multipage -->
+    <string name="confirm_clear_pages_title">همهٔ صفحات پاک شوند؟</string>
+    <string name="confirm_clear_pages_message">آیا می‌خواهید همهٔ صفحات از نوار فیلم حذف شوند؟</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">از اسکن‌های تکمیل‌شده انتخاب کنید</string>
+    <string name="picker_empty">هیچ اسکن تکمیل‌شده‌ای پیدا نشد</string>
+    <!-- Library default collection -->
+    <string name="collection_completed_scans">اسکن‌های تکمیل‌شده</string>
+    <string name="done">بعدی</string>
+    <string name="thumbnail">تصویر بندانگشتی</string>
+    <string name="delete">حذف</string>
+
+    <!-- Picker bulk actions -->
+    <string name="select_all">انتخاب همه</string>
+    <string name="deselect_all">لغو انتخاب همه</string>
+
+    <string name="added_pages_from_registry">تعداد %1$d صفحه از رجیستری اضافه شد</string>
+
+    <!-- Add page options dialog -->    <!-- Picker states -->
+    <string name="missing_file">فایل موجود نیست</string>
+
+    <!-- Inline OCR cues -->
+    <string name="ocr_processing_started">در حال اجرای OCR…</string>
+    <string name="ocr_processing_finished">OCR برای این صفحه اضافه شد</string>
+    <string name="ocr_processing_failed">OCR درون‌خطی ناموفق بود</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">حذف از رجیستری</string>
+    <string name="remove_from_registry_message">این مورد و فایل‌های مرتبط با آن حذف شوند؟</string>
+    <string name="remove">حذف</string>
+    <string name="removed_from_registry_toast">مورد حذف شد</string>
+    <!-- PDF quality presets (Phase 1) -->
+    <string name="pdf_quality_title">کیفیت / حجم PDF</string>
+    <string name="pdf_preset_high">بالا (300 dpi، q85)</string>
+    <string name="pdf_preset_standard">استاندارد (200 dpi، q72)</string>
+    <string name="pdf_preset_small">کوچک (150 dpi، q62)</string>
+    <string name="pdf_preset_very_small">خیلی کوچک (110 dpi، q52)</string>
+    <string name="pdf_text_layer_mode_title">لایهٔ متن PDF</string>
+    <string name="pdf_text_layer_mode_line_based">مبتنی بر خط (توصیه‌شده)</string>
+    <string name="pdf_text_layer_mode_word_positioned">موقعیت‌دهی بر اساس واژه (سازگاری)</string>
+    <string name="export_options_title">گزینه‌های خروجی</string>
+    <string name="jpeg_enhancement_title">رنگ خروجی JPEG</string>
+    <string name="btn_options">گزینه‌ها</string>
+    <string name="btn_save">ذخیره</string>
+    <string name="btn_new">اسکن جدید</string>
+    <string name="btn_review">بازبینی</string>
+    <string name="edit_word_title">ویرایش کلمه</string>
+    <string name="cm_edit">ویرایش…</string>
+    <string name="cm_merge_next">ادغام با بعدی</string>
+    <string name="cm_split">تقسیم</string>
+    <string name="cm_delete">حذف</string>
+    <string name="cm_case">حروف</string>
+    <string name="cm_lang">زبان…</string>
+    <string name="case_upper">حروف بزرگ</string>
+    <string name="case_lower">حروف کوچک</string>
+    <string name="case_title">حروف عنوانی</string>
+    <string name="dialog_language_title">تنظیم کد زبان</string>
+    <!-- Rotation (post-crop) -->
+    <string name="rotate_left_cd">چرخاندن صفحه ۹۰ درجه خلاف جهت عقربه‌های ساعت</string>
+    <string name="rotate_right_cd">چرخاندن صفحه ۹۰ درجه در جهت عقربه‌های ساعت</string>
+
+    <!-- OCR models management (prototype) -->
+    <string name="ocr_models_manage">مدل‌های OCR</string>
+    <string name="ocr_import_manual">وارد کردن ‎.traineddata…</string>
+    <string name="ocr_discover_packs">یافتن بسته‌های زبانی</string>
+    <string name="ocr_no_packs_found">هیچ بستهٔ زبانی پیدا نشد</string>
+    <string name="ocr_choose_pack">انتخاب بستهٔ زبانی</string>
+    <string name="ocr_no_models_in_pack">هیچ مدلی در این بسته پیدا نشد</string>
+    <string name="ocr_choose_model">مدل را برای وارد کردن انتخاب کنید</string>
+    <string name="ocr_import_success">مدل وارد شد</string>
+    <string name="ocr_import_failed">وارد کردن ناموفق بود</string>
+
+    <!-- OCR models: delete local Best -->
+    <string name="ocr_delete_best_model">حذف مدل Best</string>
+    <string name="ocr_nothing_to_delete">برای زبان فعلی هیچ مدل Best برای حذف وجود ندارد</string>
+    <string name="ocr_delete_confirm_title">مدل Best حذف شود؟</string>
+    <string name="ocr_delete_confirm_msg">مدل Best واردشده برای %1$s حذف شود؟ مدل Fast داخلی همچنان در دسترس خواهد
+        بود.
+    </string>
+    <string name="ocr_delete_success">مدل حذف شد</string>
+    <string name="ocr_delete_failed">حذف ناموفق بود</string>
+
+    <!-- OCR models hint -->
+    <string name="ocr_models_hint">برای تشخیص سریع‌تر، مدل‌های کم‌حجم شامل شده‌اند. برای دقت بالاتر، می‌توانید مدل‌های
+        بزرگ‌تر «Best» را نصب کنید. اتصال اینترنت لازم نیست.
+    </string>
+
+    <!-- OCR prep modes explanation -->
+    <string name="ocr_explain_prep_modes">توضیح حالت‌های تشخیص</string>
+    <string name="ocr_prep_modes_title">حالت‌های تشخیص: توضیح ساده</string>
+    <string name="ocr_prep_modes_message">دو روش برای ارسال تصاویر به موتور OCR وجود دارد:\n\n• اصلی (بدون پیش‌پردازش) —
+        سریع‌ترین حالت. عکس به همان شکل ارسال می‌شود. مناسب برای اسکن‌های تمیز و با کنتراست بالا. ممکن است متن‌های
+        کم‌رنگ یا پرنویز را از دست بدهد.\n\n• OpenCV مقاوم — بازطراحی‌شده برای بیشترین دقت در صفحات دشوار. کجی تصویر را اصلاح می‌کند، سایه‌ها و
+        روشنایی را نرمال‌سازی می‌کند، کاهش نویز با حفظ لبه‌ها و بزرگ‌نمایی هوشمند اعمال می‌کند. نکتهٔ مهم این است که به
+        Tesseract یک تصویر خاکستری با کیفیت بالا (نه سیاه‌وسفید سخت) داده می‌شود تا جزئیات ظریف مانند حلقه‌های حرف «o» و
+        ارقام کوچک حفظ شوند. بهترین دقت را برای صفحات سخت ارائه می‌دهد، اما کندتر است و حافظهٔ بیشتری مصرف
+        می‌کند.\n\nپردازش پس از OCR: خطاهای رایج تشخیص مانند اشتباهات (0↔O، 1↔l↔I، rn↔m) را اصلاح می‌کند و واژه‌های
+        نامطمئن را با یک فرهنگ لغت بررسی می‌کند. به‌طور پیش‌فرض فعال است؛ برای کدهای فنی یا شماره‌های سریال آن را
+        غیرفعال کنید.
+    </string>
+
+    <!-- OCR prep modes selection -->
+    <string name="ocr_choose_prep_mode_menu">حالت تشخیص…</string>
+    <string name="ocr_choose_prep_mode_title">حالت تشخیص را انتخاب کنید</string>
+    <string name="ocr_mode_original">اصلی (بدون پیش‌پردازش)</string>
+    <string name="ocr_mode_quick">OpenCV Quick (سریع)</string>
+    <string name="ocr_mode_robust">OpenCV Robust (کیفیت بالا)</string>
+    <string name="opt_paddle_best_ocr">بهترین کیفیت Paddle OCR (کندتر)</string>
+    <string name="ocr_prep_mode_set">حالت تشخیص روی %1$s تنظیم شد</string>
+
+    <!-- Labels -->
+    <string name="label_language">زبان</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d ک</string>
+    <string name="low_percent_format">کم %1$d%%</string>
+    <string name="low_placeholder">کم —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 ک</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">بستن</string>
+    <string name="cd_zoom_chip_open_menu">باز کردن منوی بزرگ‌نمایی</string>
+    <string name="cd_minimap">نمای کلی سند، برای رفتن ضربه بزنید
+    </string>    <!-- A11y content descriptions for menu items -->    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">لطفاً یک مقدار وارد کنید</string>
+
+    <!-- Collections / Library (feature-flagged) -->
+    <string name="new_collection_title">مجموعهٔ جدید</string>
+    <string name="collection_name_hint">نام مجموعه</string>
+    <string name="create">ایجاد</string>
+    <string name="collection_not_empty">مجموعه خالی نیست</string>
+    <string name="collection_items_count">%1$d مورد</string>
+    <string name="deleted">حذف شد</string>
+    <string name="open_collections">مجموعه‌ها</string>
+    <string name="index_existing_scans">فهرست‌کردن اسکن‌های موجود</string>
+    <string name="rename">تغییر نام</string>
+    <string name="ok">باشه</string>
+    <string name="no_scans_yet">هنوز اسکن‌ای وجود ندارد</string>
+    <string name="rename_collection_title">تغییر نام مجموعه</string>
+    <string name="action_add_to_collection">افزودن به مجموعه…</string>
+    <string name="place_in_collection_title">افزودن به مجموعه</string>
+    <string name="create_new_collection">ایجاد مجموعهٔ جدید…</string>
+    <string name="scan_added_to_collection">اسکن به \"%1$s\" اضافه شد</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">اقدامات کتابخانه</string>    <!-- Library list: collections membership -->
+    <string name="in_collections_prefix">در: %1$s</string>
+    <!-- Delete confirmation (ScanDetails) -->
+    <string name="delete_warning_irreversible">فایل از دستگاه حذف خواهد شد. این عمل قابل بازگشت نیست.</string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">هیچ سندی برای خروجی وجود ندارد</string>
+    <string name="failed_to_export_document">خروجی گرفتن از سند ناموفق بود</string>
+    <string name="error_during_export_with_reason">خطا هنگام خروجی: %1$s</string>
+    <string name="document_exported">سند %1$s خروجی گرفته شد</string>
+    <string name="document_multipage_exported">سند (چندصفحه‌ای) %1$s خروجی گرفته شد</string>
+    <string name="no_target_selected">هیچ مقصدی انتخاب نشده است</string>
+    <string name="image_exported">تصویر %1$s خروجی گرفته شد</string>
+    <string name="failed_to_export_image">خروجی گرفتن از تصویر ناموفق بود</string>
+    <string name="error_during_jpeg_export_with_reason">خطا هنگام خروجی JPEG: %1$s</string>
+    <string name="zip_exported">ZIP %1$s خروجی گرفته شد</string>
+    <string name="failed_to_export_zip">خروجی گرفتن از ZIP ناموفق بود</string>
+    <string name="error_during_zip_export_with_reason">خطا هنگام خروجی ZIP: %1$s</string>
+    <string name="ocr_text_exported_as_txt">متن OCR به صورت TXT خروجی گرفته شد</string>
+    <string name="error_exporting_ocr_text_with_reason">خطا هنگام خروجی گرفتن متن OCR: %1$s</string>
+    <string name="no_document_to_share_export_first">هیچ سندی برای اشتراک‌گذاری وجود ندارد. ابتدا یک سند خروجی بگیرید.
+    </string>
+    <string name="error_sharing_document_with_reason">خطا هنگام اشتراک‌گذاری سند: %1$s</string>
+    <string name="feature_scan_library_disabled">ویژگی کتابخانهٔ اسکن غیرفعال است</string>
+    <string name="navigation_failed">ناوبری ناموفق بود</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">شناسهٔ اسکن موجود نیست</string>
+    <string name="picker_failed">انتخاب‌گر ناموفق بود</string>
+    <string name="share_failed">اشتراک‌گذاری ناموفق بود</string>
+    <string name="no_app_found_to_open_file">هیچ برنامه‌ای برای باز کردن فایل پیدا نشد</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">از این مجموعه حذف شود؟</string>
+    <string name="removed_from_collection">از مجموعه حذف شد</string>
+    <string name="indexed_new_items">%1$d مورد جدید فهرست شد</string>
+    <string name="nothing_new_to_index">چیز جدیدی برای فهرست‌کردن نیست</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">سند تراز است</string>
+    <string name="a11y_hint_move_left">به چپ حرکت کنید</string>
+    <string name="a11y_hint_move_right">به راست حرکت کنید</string>
+    <string name="a11y_hint_move_up">به بالا حرکت کنید</string>
+    <string name="a11y_hint_move_down">به پایین حرکت کنید</string>
+    <string name="a11y_hint_move_closer">به سطح نزدیک‌تر شوید</string>
+    <string name="a11y_hint_move_back">از سطح دورتر شوید</string>
+    <string name="a11y_hint_too_far">نزدیک‌تر شوید. سند بیش از حد دور است.</string>
+    <string name="a11y_hint_tilt_left">به چپ متمایل شوید</string>
+    <string name="a11y_hint_tilt_right">به راست متمایل شوید</string>
+    <string name="a11y_hint_tilt_forward">به جلو متمایل شوید</string>
+    <string name="a11y_hint_tilt_back">به عقب متمایل شوید</string>
+    <string name="a11y_hold_still">بی‌حرکت بمانید</string>
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">سند شناسایی شد – آمادهٔ ثبت.</string>
+    <string name="a11y_no_document_detected">هیچ سندی شناسایی نشد.</string>
+    <string name="a11y_orientation_portrait_tip">به نظر می‌رسد حالت عمودی است. نگه‌داشتن گوشی به صورت عمودی معمولاً برای
+        صفحات بلند بهتر است.
+    </string>
+    <string name="a11y_orientation_landscape_tip">به نظر می‌رسد حالت افقی است. برای صفحات عریض، گوشی را افقی نگه
+        دارید.
+    </string>
+    <string name="a11y_crop_summary_detected">تحلیل تصویر ثبت‌شده: سند شناسایی شد.</string>
+    <string name="a11y_crop_summary_no_doc">تحلیل تصویر ثبت‌شده: هیچ سندی شناسایی نشد.</string>
+    <string name="accessibility_mode_label">حالت دسترس‌پذیری</string>
+    <string name="a11y_camera_ready">دوربین آماده است. برای ثبت، روی «اسکن» دوبار ضربه بزنید.</string>
+    <string name="a11y_low_light_toggle_flash">نور کم تشخیص داده شد. برای فعال‌کردن، روی «فلش» دوبار ضربه بزنید.
+    </string>
+    <string name="a11y_capture_failed">ثبت تصویر ناموفق بود.</string>
+    <string name="a11y_volume_shutter_hint">نکته: در حالت دسترس‌پذیری، برای ثبت از کلیدهای صدا استفاده کنید.</string>
+    <string name="a11y_capture_success">تصویر ثبت شد.
+    </string>    <!-- Accessibility: Recycler item description and announcements -->
+    <string name="page_n_of_m">صفحهٔ %1$d از %2$d</string>
+    <string name="pages_count_announcement">صفحات: %1$d</string>
+    <string name="export_started">خروجی شروع شد</string>
+    <string name="page_removed">صفحه حذف شد</string>
+    <string name="page_moved_to_position">به موقعیت %1$d منتقل شد</string>
+    <!-- RecyclerView custom accessibility actions (defined once above in Reorder A11y controls) -->
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">چرخش خودکار OCR (همچنین اعمال در خروجی)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">پس‌پردازش OCR (اصلاح خطاهای رایج)</string>
+    <string name="opt_layout_analysis">تحلیل چیدمان (ستون‌ها، جداول)
+    </string>    <!-- Options: Experimental directional mapping fallback -->    <!-- Developer / Debug options -->    <!-- Library / Collections (developer strings kept non-translatable for now) -->    <!-- PDF Import -->
+    <string name="error_unknown_file_type">نوع فایل ناشناخته است</string>
+    <string name="error_unsupported_file_type">این نوع فایل پشتیبانی نمی‌شود</string>
+    <string name="error_cannot_open_pdf">امکان باز کردن فایل PDF وجود ندارد</string>
+    <string name="error_pdf_empty">فایل PDF هیچ صفحه‌ای ندارد</string>
+    <string name="error_pdf_import_failed">وارد کردن فایل PDF ناموفق بود</string>
+    <string name="error_pdf_page_render_failed">نمایش صفحه امکان‌پذیر نیست</string>
+    <string name="pdf_select_page">انتخاب صفحه</string>
+    <string name="pdf_page_number">صفحه %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">انتخاب زبان‌های OCR</string>
+    <string name="ocr_max_languages_warning">حداکثر ۲ زبان مجاز است</string>
+    <string name="ocr_no_language_selected">لطفاً حداقل یک زبان انتخاب کنید</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">تغییرات حذف شوند؟</string>
+    <string name="msg_discard_changes">تغییرات ذخیره‌نشده‌ای داری. آیا می‌خواهی آن‌ها را حذف کنی؟</string>
+    <string name="btn_discard">حذف</string>
+
+    <string name="btn_reocr">اجرای مجدد OCR</string>
+    <string name="reocr_processing">در حال اجرای مجدد OCR…</string>
+    <string name="reocr_success">واژه به‌روزرسانی شد: %1$s</string>
+    <string name="reocr_failed">اجرای مجدد OCR ناموفق بود</string>
+    <string name="reocr_no_language">لطفاً ابتدا یک زبان انتخاب کن</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">۱۰۰٪</string>
+    <string name="zoom_200">۲۰۰٪</string>
+    <string name="zoom_300">۳۰۰٪</string>
+    <string name="zoom_400">۴۰۰٪</string>
+    <string name="zoom_fit">برازش</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">چیدمان</string>
+    <string name="label_text">متن</string>
+    <string name="label_document">سند</string>
+
+
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">اندازه صفحه</string>
+    <string name="dpi_settings_label">تنظیمات DPI</string>
+    <string name="page_format_fit">تناسب با تصویر (پیشنهادی)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+
+    <string name="restore_access">بازیابی دسترسی</string>
+    <string name="status">وضعیت</string>
+    <string name="ocr_text_editor_hint">ویرایش متن OCR</string>
+
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">تنظیمات پاک‌سازی اسکن‌های تکمیل‌شده</string>
+    <string name="cleanup_policy">سیاست پاک‌سازی</string>
+    <string name="cleanup_policy_none">هیچ‌کدام (همه را نگه‌دار)</string>
+    <string name="cleanup_policy_max_age">بر اساس سن</string>
+    <string name="cleanup_policy_max_count">بر اساس تعداد</string>
+    <string name="cleanup_policy_max_storage">بر اساس فضای ذخیره‌سازی</string>
+    <string name="cleanup_policy_combined">ترکیبی</string>
+    <string name="cleanup_max_age_days">حداکثر سن (روز)</string>
+    <string name="cleanup_max_count">حداکثر تعداد</string>
+    <string name="cleanup_max_storage_mb">حداکثر فضای ذخیره‌سازی (مگابایت)</string>
+    <string name="cleanup_settings_saved">تنظیمات پاک‌سازی ذخیره شد</string>
+    <string name="inbox_mode">حالت صندوق ورودی</string>
+    <string name="inbox_mode_enable">فعال‌سازی پوشه پیش‌فرض خروجی</string>
+    <string name="inbox_select_folder">انتخاب پوشه</string>
+    <string name="inbox_folder_set">پوشه صندوق ورودی: %1$s</string>
+    <string name="inbox_folder_none">پوشه‌ای انتخاب نشده</string>
+    <string name="inbox_saved">✓ در صندوق ورودی ذخیره شد</string>
+    <string name="inbox_permission_lost">دسترسی به پوشه صندوق ورودی از دست رفت. لطفاً پوشه جدیدی انتخاب کنید.</string>
+    <string name="inbox_no_folder_selected">لطفاً ابتدا پوشه صندوق ورودی را انتخاب کنید.</string>
+    <string name="inbox_clear">پاک کردن پوشه صندوق ورودی</string>
+    <string name="inbox_filename_format">قالب نام فایل</string>
+    <string name="inbox_auto_new_scan">شروع خودکار اسکن جدید پس از خروجی</string>
+    <string name="inbox_filename_date_scan">تاریخ + اسکن (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">تاریخ + زمان + اسکن (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">فقط تاریخ (2026-03-04)</string>
+    <string name="pdf_bw_mode_none">رنگی</string>
+    <!-- Translations added for missing strings -->
+    <string name="confirm_remove_page_title">حذف صفحه؟</string>
+    <string name="confirm_remove_page_message">آیا می‌خواهید این صفحه را از نوار فیلم حذف کنید؟</string>
+    <string name="crop_aspect_label">نسبت تصویر</string>
+    <string name="crop_aspect_auto">خودکار (توصیه‌شده)</string>
+    <string name="crop_aspect_original">حفظ اصل (بدون اصلاح نسبت)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">سفارشی…</string>
+    <string name="crop_aspect_custom_with_ratio">سفارشی (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">نسبت تصویر سفارشی</string>
+    <string name="crop_aspect_custom_width_hint">عرض</string>
+    <string name="crop_aspect_custom_height_hint">ارتفاع</string>
+    <string name="crop_aspect_custom_invalid">اعداد مثبت بین 1:1 تا 1:20 وارد کنید.</string>
+    <string name="crop_aspect_output_size_hint">خروجی: %1$d × %2$d پیکسل</string>
+    <string name="crop_hint_corner_off_image">گوشه خارج از تصویر — خروجی ممکن است حاشیه‌های سیاه داشته باشد</string>
+    <string name="crop_edge_dragged">لبه انتخاب شد. برای جابجایی لبه بکشید.</string>
+    <!-- Document cleanup -->
+    <string name="document_cleanup_title">پاک‌سازی سند</string>
+    <string name="document_cleanup_original">اصلی</string>
+    <string name="document_cleanup_natural">طبیعی</string>
+    <string name="document_cleanup_enhanced">بهبود‌یافته</string>
+    <string name="document_cleanup_clean_text">متن تمیز</string>
+    <string name="workflow_step_description">مرحله %1$d از %2$d: %3$s</string>
+    <string name="search_scans">جستجوی اسکن‌ها</string>
+</resources>

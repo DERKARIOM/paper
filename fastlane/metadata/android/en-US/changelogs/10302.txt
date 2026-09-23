@@ -1,0 +1,14 @@
+Version 1.3.1 – 2025-09-09
+
+Fixes
+- Reliable image previews on some Huawei/Honor devices (Android 10): the app now decodes captured photos from the file path first for internal previews (Review/Crop/Export) and uses FileProvider URIs only for sharing.
+
+Improvements
+- Added a small wait in the camera pipeline to ensure the saved file is finalized before rendering.
+- Centralized image decoding via a new ImageLoader with downsampling and EXIF rotation.
+- Hardened FileProvider configuration to app-specific external files only.
+- Cache cleanup now also covers the external cache directory.
+
+Notes
+- Base versionCode: 10301
+- ABI versionCodes: 103011 (armeabi-v7a), 103012 (arm64-v8a), 103013 (x86), 103014 (x86_64)

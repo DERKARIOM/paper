@@ -1,0 +1,466 @@
+<resources>
+    <string name="app_name">MakeACopy</string>
+
+    <string name="tip_text_mode_editing">टेक्स्ट मोड: लाइन ब्रेक और विराम चिह्न वर्तमान में स्पेस में बदले जाते हैं। यदि पहचाने गए शब्दों से कम शब्द दर्ज किए जाते हैं, तो शेष OCR शब्द अपरिवर्तित रहते हैं। परिवर्तन एक छोटे विराम के बाद लागू होते हैं।
+    </string>
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">कैमरा</string>
+    <string name="title_crop">क्रॉप</string>
+    <string name="title_ocr">OCR</string>
+    <string name="title_export">निर्यात</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">स्कैन</string>
+    <string name="btn_crop">क्रॉप</string>
+    <string name="btn_process">प्रोसेस</string>
+    <string name="btn_share">शेयर</string>
+    <string name="btn_share_text">टेक्स्ट साझा करें</string>
+    <string name="next">अगला</string>
+    <string name="back">पीछे</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">दस्तावेज़ स्कैन करने के लिए कैमरा अनुमति आवश्यक है</string>
+    <string name="confirm">पुष्टि करें</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">कैमरा तैयार है। दस्तावेज़ स्कैन करने के लिए बटन दबाएँ।
+    </string>
+    <string name="captured_image">कैप्चर किया गया चित्र</string>
+    <string name="image_to_crop">क्रॉप करने के लिए चित्र</string>
+    <string name="cropped_image">क्रॉप किया गया चित्र</string>
+    <string name="document_preview">दस्तावेज़ पूर्वावलोकन</string>
+    <string name="include_ocr_text">OCR को अलग TXT के रूप में निर्यात करें</string>
+    <string name="ocr_results_will_appear_here">OCR परिणाम यहाँ दिखाई देंगे</string>
+    <string name="ocr_no_text_detected">कोई टेक्स्ट नहीं मिला</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">क्रॉप करने के लिए ट्रैपेज़ॉइड कोनों को समायोजित करें, फिर क्रॉप बटन दबाएँ।
+    </string>
+    <string name="no_document_ready_process_ocr_first">कोई दस्तावेज़ तैयार नहीं। पहले OCR चलाएँ।</string>
+    <string name="document_ready_for_export">दस्तावेज़ निर्यात के लिए तैयार</string>
+    <string name="processing_image">चित्र प्रोसेस हो रहा है…</string>
+    <string name="no_image_processed_crop_an_image_first">कोई चित्र प्रोसेस नहीं हुआ। पहले एक चित्र क्रॉप करें।</string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR प्रोसेसिंग पूर्ण। निर्यात के लिए बटन दबाएँ।
+    </string>
+
+    <string name="ocr_found_rotation">पाया गया रोटेशन: %1$d°</string>
+    <string name="ocr_score">OCR स्कोर: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">पाया गया रोटेशन: %1$d° — OCR स्कोर: %2$d%%</string>
+
+    <string name="ocr_prep_modes_autorotate_note">OCR ऑटो-रोटेट: सक्षम होने पर, OCR पृष्ठ को 90° चरणों (0/90/180/270) में भी जाँचता है और सबसे अच्छा परिणाम चुनता है। पाया गया रोटेशन निर्यात के दौरान स्वचालित रूप से लागू किया जा सकता है यदि आपने मैन्युअल रूप से रोटेट नहीं किया। आप इसे \"पहचान मोड चुनें\" में टॉगल कर सकते हैं।
+    </string>
+
+    <string name="initializing_camera">कैमरा प्रारंभ हो रहा है…</string>
+    <string name="resetting_camera">कैमरा रीसेट हो रहा है…</string>
+    <string name="error_initializing_camera">कैमरा प्रारंभ करने में त्रुटि: %1$s</string>
+    <string name="error_camera_provider_null">कैमरा प्रारंभ करने में विफल – प्रोवाइडर null है</string>
+    <string name="error_camera_not_initialized">कैमरा प्रारंभ नहीं हुआ। कृपया पुनः प्रयास करें।</string>
+    <string name="error_image_capture_failed">चित्र कैप्चर विफल: %1$s</string>
+    <string name="error_displaying_image">चित्र प्रदर्शित करने में त्रुटि: %1$s</string>
+    <string name="error_resetting_camera">कैमरा रीसेट करने में त्रुटि: %1$s</string>
+    <string name="error_toggling_flashlight">फ्लैशलाइट टॉगल करने में त्रुटि: %1$s</string>
+    <string name="error_camera_preview_failed">कैमरा पूर्वावलोकन शुरू नहीं हो सका। कृपया पुनः प्रयास करें।
+    </string>
+
+    <string name="share_logs">लॉग शेयर करें</string>
+    <string name="share_logs_subject">MakeACopy डायग्नोस्टिक लॉग</string>
+    <string name="share_logs_chooser_title">लॉग शेयर करें…</string>
+    <string name="share_logs_error">लॉग तैयार नहीं हो सके: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">ग्रेस्केल</string>
+    <string name="export_as_jpeg">JPEG के रूप में निर्यात करें</string>
+    <string name="export_format_label">निर्यात प्रारूप</string>
+    <string name="export_as_pdf">PDF के रूप में निर्यात करें (डिफ़ॉल्ट)</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">फ्लैशलाइट टॉगल करें</string>
+    <string name="flashlight_on">फ्लैशलाइट चालू</string>
+    <string name="flashlight_off">फ्लैशलाइट बंद</string>
+    <string name="flashlight_not_available">इस डिवाइस पर फ्लैशलाइट उपलब्ध नहीं है</string>
+    <string name="low_light_detected">कम रोशनी का पता चला। फ्लैशलाइट चालू करें?</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">EV %1$s</string>
+    <string name="exposure_compensation_cd">एक्सपोज़र कम्पेंसेशन स्लाइडर</string>
+    <string name="exposure_compensation_option">एक्सपोज़र कम्पेंसेशन</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">मैन्युअल फ़ोकस स्लाइडर</string>
+    <string name="manual_focus_af_button_cd">ऑटोफ़ोकस पर स्विच करें</string>
+    <string name="autofocus_enabled">ऑटोफ़ोकस सक्षम किया गया</string>
+    <string name="manual_focus_locked">मैन्युअल फ़ोकस लॉक किया गया</string>
+    <string name="manual_focus_option">मैन्युअल फ़ोकस</string>
+    <string name="focus_quality_option">फ़ोकस गुणवत्ता संकेतक</string>
+    <string name="tap_to_focus_started">फ़ोकस कर रहा है…</string>
+    <string name="tap_to_focus_done">फ़ोकस समायोजित किया गया</string>
+    <string name="tap_to_focus_requested">फ़ोकस का अनुरोध किया गया</string>
+    <string name="tap_to_focus_not_locked">यहाँ फ़ोकस लॉक नहीं हो सका</string>
+    <string name="tap_to_focus_not_supported">यहाँ टैप फ़ोकस समर्थित नहीं है</string>
+    <string name="tap_to_focus_failed">यहाँ फ़ोकस नहीं हो सका</string>
+    <string name="focus_quality_low">फ़ोकस गुणवत्ता: कम</string>
+    <string name="focus_quality_good">फ़ोकस गुणवत्ता: अच्छी</string>
+    <string name="focus_quality_excellent">फ़ोकस गुणवत्ता: उत्कृष्ट</string>
+    <string name="camera_zoom_title">ज़ूम / लेंस</string>
+    <string name="camera_zoom_cd">ज़ूम या लेंस चुनें</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">इस डिवाइस पर ज़ूम उपलब्ध नहीं है</string>
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">रंगीन</string>
+    <string name="jpeg_mode_auto">ग्रेस्केल</string>
+    <string name="jpeg_mode_bw_text">श्वेत-श्याम</string>
+    <string name="jpeg_mode_bw_robust">श्वेत-श्याम (रोबस्ट) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">OCR रोबस्ट प्रीप्रोसेसिंग (JPEG)</string>
+
+    <string name="pdf_bw_mode_none">रंगीन</string>
+    <string name="pdf_bw_mode_robust">श्वेत-श्याम</string>
+    <string name="pdf_bw_mode_classic">श्वेत-श्याम (क्लासिक)</string>
+    <string name="pdf_bw_mode_ocr_robust">OCR रोबस्ट प्रीप्रोसेसिंग (PDF)</string>
+    <string name="jpeg_mode_gray_clean">साफ़ ग्रेस्केल (हाई-पास फ़िल्टर) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">साफ़ रंग (हाई-पास फ़िल्टर) (JPEG)</string>
+    <string name="pdf_bw_mode_grayscale_clean">ग्रेस्केल साफ़ (हाई-पास)</string>
+    <string name="pdf_bw_mode_color_clean">रंग साफ़ (हाई-पास)</string>
+    <string name="skip_ocr_export_only">OCR छोड़ें (केवल निर्यात)</string>
+    <string name="skip_cropping">क्रॉपिंग छोड़ें</string>
+    <string name="skip_edge_detection">किनारा पहचान छोड़ें</string>
+    <string name="preview_corner_detection">कोना पहचान पूर्वावलोकन</string>
+    <string name="btn_pick_image">लोड</string>
+    <string name="pick_image_cd">मौजूदा चित्र लोड करें</string>
+    <!-- Multipage Export -->
+    <string name="add_another_page">पृष्ठ जोड़ें</string>
+    <string name="clear_all_pages">सभी हटाएँ</string>
+    <string name="remove_this_page">यह पृष्ठ हटाएँ</string>
+    <string name="multipage_not_implemented">मल्टी-पेज निर्यात अभी लागू नहीं हुआ</string>
+
+    <!-- Reorder A11y controls -->
+    <string name="move_page_left">पृष्ठ बाएँ ले जाएँ</string>
+    <string name="move_page_right">पृष्ठ दाएँ ले जाएँ</string>
+
+    <!-- Back confirmation for clearing multipage session -->
+    <string name="confirm_clear_multipage_title">पृष्ठ हटाएँ?</string>
+    <string name="confirm_clear_multipage_message">कई पृष्ठ जोड़े गए हैं। क्या आप सभी पृष्ठ हटाकर वापस जाना चाहते हैं?
+    </string>
+    <string name="cancel">रद्द करें</string>
+
+    <!-- Clear-all confirmation -->
+    <string name="confirm_clear_pages_title">सभी पृष्ठ हटाएँ?</string>
+    <string name="confirm_clear_pages_message">क्या आप फ़िल्मस्ट्रिप से सभी पृष्ठ हटाना चाहते हैं?</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">पूर्ण स्कैन में से चुनें</string>
+    <string name="collection_completed_scans">पूर्ण स्कैन</string>
+    <string name="picker_empty">कोई पूर्ण स्कैन नहीं मिला</string>
+    <string name="done">अगला</string>
+    <string name="thumbnail">थंबनेल</string>
+    <string name="delete">हटाएँ</string>
+
+    <!-- Picker bulk actions -->
+    <string name="select_all">सभी चुनें</string>
+    <string name="deselect_all">सभी अचयनित करें</string>
+
+    <string name="added_pages_from_registry">रजिस्ट्री से %1$d पृष्ठ जोड़े गए</string>
+
+    <!-- Picker states -->
+    <string name="missing_file">फ़ाइल गायब है</string>
+
+    <!-- Inline OCR cues -->
+    <string name="ocr_processing_started">OCR चल रहा है…</string>
+    <string name="ocr_processing_finished">इस पृष्ठ के लिए OCR जोड़ा गया</string>
+    <string name="ocr_processing_failed">इनलाइन OCR विफल</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">रजिस्ट्री से हटाएँ</string>
+    <string name="remove_from_registry_message">इस प्रविष्टि और संबंधित फ़ाइलों को हटाएँ?</string>
+    <string name="remove">हटाएँ</string>
+    <string name="removed_from_registry_toast">प्रविष्टि हटाई गई</string>
+    <!-- PDF quality presets -->
+    <string name="pdf_quality_title">PDF गुणवत्ता / आकार</string>
+    <string name="dpi_settings_label">DPI सेटिंग्स</string>
+    <string name="pdf_preset_high">उच्च (300 dpi, q85)</string>
+    <string name="pdf_preset_standard">मानक (200 dpi, q72)</string>
+    <string name="pdf_preset_small">छोटा (150 dpi, q62)</string>
+    <string name="pdf_preset_very_small">बहुत छोटा (110 dpi, q52)</string>
+    <string name="pdf_text_layer_mode_title">PDF टेक्स्ट लेयर</string>
+    <string name="pdf_text_layer_mode_line_based">लाइन-आधारित (अनुशंसित)</string>
+    <string name="pdf_text_layer_mode_word_positioned">शब्द-स्थित (संगतता)</string>
+    <string name="export_options_title">निर्यात विकल्प</string>
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">पृष्ठ आकार</string>
+    <string name="page_format_fit">चित्र के अनुसार (अनुशंसित)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+    <string name="jpeg_enhancement_title">JPEG आउटपुट रंग</string>
+    <string name="btn_options">विकल्प</string>
+    <string name="btn_save">सहेजें</string>
+    <string name="btn_new">नया स्कैन</string>
+    <string name="btn_review">समीक्षा</string>
+    <string name="edit_word_title">शब्द संपादित करें</string>
+    <string name="cm_edit">संपादित करें…</string>
+    <string name="cm_merge_next">अगले के साथ मिलाएँ</string>
+    <string name="cm_split">विभाजित करें</string>
+    <string name="cm_delete">हटाएँ</string>
+    <string name="cm_case">केस</string>
+    <string name="cm_lang">भाषा…</string>
+    <string name="case_upper">अपरकेस</string>
+    <string name="case_lower">लोअरकेस</string>
+    <string name="case_title">टाइटल केस</string>
+    <string name="dialog_language_title">भाषा कोड सेट करें</string>
+
+    <!-- Rotation (post-crop) -->
+    <string name="rotate_left_cd">पृष्ठ को 90 डिग्री वामावर्त घुमाएँ</string>
+    <string name="rotate_right_cd">पृष्ठ को 90 डिग्री दक्षिणावर्त घुमाएँ</string>
+
+    <!-- OCR models management -->
+    <string name="ocr_models_manage">OCR मॉडल</string>
+    <string name="ocr_import_manual">.traineddata आयात करें…</string>
+    <string name="ocr_discover_packs">भाषा पैक खोजें</string>
+    <string name="ocr_no_packs_found">कोई भाषा पैक नहीं मिला</string>
+    <string name="ocr_choose_pack">भाषा पैक चुनें</string>
+    <string name="ocr_no_models_in_pack">इस पैक में कोई मॉडल नहीं मिला</string>
+    <string name="ocr_choose_model">आयात करने के लिए मॉडल चुनें</string>
+    <string name="ocr_import_success">मॉडल आयात किया गया</string>
+    <string name="ocr_import_failed">आयात विफल</string>
+
+    <!-- OCR models: delete local Best -->
+    <string name="ocr_delete_best_model">Best मॉडल हटाएँ</string>
+    <string name="ocr_nothing_to_delete">वर्तमान भाषा के लिए कोई Best मॉडल नहीं</string>
+    <string name="ocr_delete_confirm_title">Best मॉडल हटाएँ?</string>
+    <string name="ocr_delete_confirm_msg">%1$s के लिए आयातित Best मॉडल हटाएँ? अंतर्निहित Fast मॉडल उपलब्ध रहेगा।
+    </string>
+    <string name="ocr_delete_success">मॉडल हटाया गया</string>
+    <string name="ocr_delete_failed">हटाना विफल</string>
+
+    <!-- OCR models hint -->
+    <string name="ocr_models_hint">तेज़ पहचान के लिए कॉम्पैक्ट मॉडल शामिल हैं। अधिक सटीकता के लिए आप बड़े \"Best\" मॉडल इंस्टॉल कर सकते हैं। इंटरनेट कनेक्शन आवश्यक नहीं है।
+    </string>
+
+    <!-- OCR prep modes explanation -->
+    <string name="ocr_explain_prep_modes">पहचान मोड समझाएँ</string>
+    <string name="ocr_prep_modes_title">पहचान मोड: सरल व्याख्या</string>
+    <string name="ocr_prep_modes_message">OCR इंजन को चित्र देने के दो तरीके हैं:\n\n• मूल (कोई प्रीप्रोसेसिंग नहीं) — सबसे तेज़। फ़ोटो जैसी है वैसी भेजी जाती है। पहले से साफ़, उच्च-कंट्रास्ट स्कैन के लिए सर्वोत्तम। धुंधला या शोरयुक्त टेक्स्ट छूट सकता है।\n\n• OpenCV रोबस्ट — कठिन पृष्ठों पर अधिकतम सटीकता के लिए। तिरछापन ठीक करता है, छाया/रोशनी सामान्य करता है, किनारा-संरक्षित शोर कमी और स्मार्ट अपस्केलिंग लागू करता है। Tesseract को उच्च-गुणवत्ता ग्रेस्केल चित्र मिलता है। सर्वोत्तम सटीकता; धीमा।\n\nOCR पोस्ट-प्रोसेसिंग: सामान्य पहचान त्रुटियाँ (0↔O, 1↔l↔I, rn↔m) ठीक करता है और शब्दकोश से जाँचता है। डिफ़ॉल्ट रूप से सक्षम।
+    </string>
+
+    <!-- OCR prep modes selection -->
+    <string name="ocr_choose_prep_mode_menu">पहचान मोड…</string>
+    <string name="ocr_choose_prep_mode_title">पहचान मोड चुनें</string>
+    <string name="ocr_mode_original">मूल (कोई प्रीप्रोसेसिंग नहीं)</string>
+    <string name="ocr_mode_quick">OpenCV क्विक (तेज़)</string>
+    <string name="ocr_mode_robust">OpenCV रोबस्ट (उच्च गुणवत्ता)</string>
+    <string name="opt_paddle_best_ocr">सर्वोत्तम Paddle OCR गुणवत्ता (धीमा)</string>
+    <string name="ocr_prep_mode_set">पहचान मोड सेट: %1$s</string>
+
+    <!-- Labels -->
+    <string name="label_language">भाषा</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d W</string>
+    <string name="low_percent_format">कम %1$d%%</string>
+    <string name="low_placeholder">कम —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 W</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">बंद करें</string>
+    <string name="cd_zoom_chip_open_menu">ज़ूम मेनू खोलें</string>
+    <string name="cd_minimap">दस्तावेज़ अवलोकन, जाने के लिए टैप करें</string>
+    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">कृपया एक मान दर्ज करें</string>
+
+    <!-- Collections / Library -->
+    <string name="new_collection_title">नया संग्रह</string>
+    <string name="collection_name_hint">संग्रह का नाम</string>
+    <string name="create">बनाएँ</string>
+    <string name="collection_not_empty">संग्रह खाली नहीं है</string>
+    <string name="collection_items_count">%1$d आइटम</string>
+    <string name="deleted">हटाया गया</string>
+    <string name="open_collections">संग्रह</string>
+    <string name="index_existing_scans">मौजूदा स्कैन अनुक्रमित करें</string>
+    <string name="rename">नाम बदलें</string>
+    <string name="ok">ठीक है</string>
+    <string name="no_scans_yet">अभी तक कोई स्कैन नहीं</string>
+    <string name="rename_collection_title">संग्रह का नाम बदलें</string>
+    <string name="action_add_to_collection">संग्रह में जोड़ें…</string>
+    <string name="place_in_collection_title">संग्रह में जोड़ें</string>
+    <string name="create_new_collection">नया संग्रह बनाएँ…</string>
+    <string name="scan_added_to_collection">स्कैन \"%1$s\" में जोड़ा गया</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">लाइब्रेरी कार्य</string>
+    <string name="in_collections_prefix">में: %1$s</string>
+
+    <!-- Delete confirmation -->
+    <string name="delete_warning_irreversible">फ़ाइल डिवाइस से हटा दी जाएगी। यह क्रिया पूर्ववत नहीं की जा सकती।
+    </string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">निर्यात के लिए कोई दस्तावेज़ नहीं</string>
+    <string name="failed_to_export_document">दस्तावेज़ निर्यात विफल</string>
+    <string name="error_during_export_with_reason">निर्यात में त्रुटि: %1$s</string>
+    <string name="document_exported">दस्तावेज़ %1$s निर्यात किया गया</string>
+    <string name="document_multipage_exported">दस्तावेज़ (बहु-पृष्ठ) %1$s निर्यात किया गया</string>
+    <string name="no_target_selected">कोई लक्ष्य चयनित नहीं</string>
+    <string name="image_exported">चित्र %1$s निर्यात किया गया</string>
+    <string name="failed_to_export_image">चित्र निर्यात विफल</string>
+    <string name="error_during_jpeg_export_with_reason">JPEG निर्यात में त्रुटि: %1$s</string>
+    <string name="zip_exported">ZIP %1$s निर्यात किया गया</string>
+    <string name="failed_to_export_zip">ZIP निर्यात विफल</string>
+    <string name="error_during_zip_export_with_reason">ZIP निर्यात में त्रुटि: %1$s</string>
+    <string name="ocr_text_exported_as_txt">OCR टेक्स्ट TXT के रूप में निर्यात किया गया</string>
+    <string name="error_exporting_ocr_text_with_reason">OCR टेक्स्ट निर्यात में त्रुटि: %1$s</string>
+    <string name="no_document_to_share_export_first">शेयर करने के लिए कोई दस्तावेज़ नहीं। पहले निर्यात करें।
+    </string>
+    <string name="error_sharing_document_with_reason">दस्तावेज़ शेयर करने में त्रुटि: %1$s</string>
+    <string name="feature_scan_library_disabled">स्कैन लाइब्रेरी सुविधा अक्षम है</string>
+    <string name="navigation_failed">नेविगेशन विफल</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">स्कैन ID गायब है</string>
+    <string name="picker_failed">चयन विफल</string>
+    <string name="share_failed">शेयर विफल</string>
+    <string name="no_app_found_to_open_file">इस फ़ाइल को खोलने के लिए कोई ऐप नहीं मिला</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">इस संग्रह से हटाएँ?</string>
+    <string name="removed_from_collection">संग्रह से हटाया गया</string>
+    <string name="indexed_new_items">%1$d नए आइटम अनुक्रमित किए गए</string>
+    <string name="nothing_new_to_index">अनुक्रमित करने के लिए कुछ नया नहीं</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">दस्तावेज़ संरेखित</string>
+    <string name="a11y_hint_move_left">बाएँ ले जाएँ</string>
+    <string name="a11y_hint_move_right">दाएँ ले जाएँ</string>
+    <string name="a11y_hint_move_up">ऊपर ले जाएँ</string>
+    <string name="a11y_hint_move_down">नीचे ले जाएँ</string>
+    <string name="a11y_hint_move_closer">सतह के करीब</string>
+    <string name="a11y_hint_move_back">सतह से दूर</string>
+    <string name="a11y_hint_too_far">करीब आएँ। दस्तावेज़ बहुत दूर है।</string>
+    <string name="a11y_hint_tilt_left">बाएँ झुकाएँ</string>
+    <string name="a11y_hint_tilt_right">दाएँ झुकाएँ</string>
+    <string name="a11y_hint_tilt_forward">आगे झुकाएँ</string>
+    <string name="a11y_hint_tilt_back">पीछे झुकाएँ</string>
+    <string name="a11y_hold_still">स्थिर रखें</string>
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">दस्तावेज़ पहचाना गया – कैप्चर के लिए तैयार।</string>
+    <string name="a11y_no_document_detected">कोई दस्तावेज़ नहीं पहचाना गया।</string>
+    <string name="a11y_orientation_portrait_tip">यह पोर्ट्रेट जैसा दिखता है। लंबे पृष्ठों के लिए फ़ोन को पोर्ट्रेट में पकड़ना सबसे अच्छा रहता है।
+    </string>
+    <string name="a11y_orientation_landscape_tip">यह लैंडस्केप जैसा दिखता है। चौड़े पृष्ठों के लिए फ़ोन को लैंडस्केप में पकड़ने का प्रयास करें।
+    </string>
+    <string name="a11y_crop_summary_detected">कैप्चर किए गए चित्र का विश्लेषण: दस्तावेज़ पहचाना गया।</string>
+    <string name="a11y_crop_summary_no_doc">कैप्चर किए गए चित्र का विश्लेषण: कोई दस्तावेज़ नहीं पहचाना गया।</string>
+    <string name="accessibility_mode_label">सुलभता मोड</string>
+    <string name="a11y_camera_ready">कैमरा तैयार। कैप्चर के लिए स्कैन पर डबल टैप करें।</string>
+    <string name="a11y_low_light_toggle_flash">कम रोशनी का पता चला। सक्षम करने के लिए फ्लैश पर डबल टैप करें।</string>
+    <string name="a11y_capture_failed">कैप्चर विफल।</string>
+    <string name="a11y_volume_shutter_hint">सुझाव: सुलभता मोड में, कैप्चर के लिए वॉल्यूम कुंजियाँ दबाएँ।
+    </string>
+    <string name="a11y_capture_success">चित्र कैप्चर किया गया।</string>
+    <string name="page_n_of_m">पृष्ठ %1$d / %2$d</string>
+    <string name="pages_count_announcement">पृष्ठ: %1$d</string>
+    <string name="export_started">निर्यात शुरू हुआ</string>
+    <string name="page_removed">पृष्ठ हटाया गया</string>
+    <string name="page_moved_to_position">स्थिति %1$d पर ले जाया गया</string>
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">OCR ऑटो-रोटेट (निर्यात में भी लागू करें)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">OCR पोस्ट-प्रोसेसिंग (सामान्य त्रुटियाँ ठीक करें)</string>
+    <string name="opt_layout_analysis">लेआउट विश्लेषण (कॉलम, टेबल)</string>
+
+    <!-- PDF Import -->
+    <string name="error_unknown_file_type">अज्ञात फ़ाइल प्रकार</string>
+    <string name="error_unsupported_file_type">यह फ़ाइल प्रकार समर्थित नहीं है</string>
+    <string name="error_cannot_open_pdf">PDF नहीं खोला जा सका</string>
+    <string name="error_pdf_empty">PDF में कोई पृष्ठ नहीं है</string>
+    <string name="error_pdf_import_failed">PDF आयात विफल</string>
+    <string name="error_pdf_page_render_failed">पृष्ठ रेंडर नहीं हो सका</string>
+    <string name="pdf_select_page">पृष्ठ चुनें</string>
+    <string name="pdf_page_number">पृष्ठ %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">OCR भाषाएँ चुनें</string>
+    <string name="ocr_max_languages_warning">अधिकतम 2 भाषाएँ अनुमत हैं</string>
+    <string name="ocr_no_language_selected">कृपया कम से कम एक भाषा चुनें</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">परिवर्तन छोड़ें?</string>
+    <string name="msg_discard_changes">आपके पास सहेजे नहीं गए परिवर्तन हैं। क्या आप उन्हें छोड़ना चाहते हैं?</string>
+    <string name="btn_discard">छोड़ें</string>
+
+    <string name="btn_reocr">पुनः OCR</string>
+    <string name="reocr_processing">OCR पुनः चल रहा है…</string>
+    <string name="reocr_success">शब्द अपडेट किया गया: %1$s</string>
+    <string name="reocr_failed">पुनः OCR विफल</string>
+    <string name="reocr_no_language">कृपया पहले एक भाषा सेट करें</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">100%</string>
+    <string name="zoom_200">200%</string>
+    <string name="zoom_300">300%</string>
+    <string name="zoom_400">400%</string>
+    <string name="zoom_fit">फ़िट</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">लेआउट</string>
+    <string name="label_text">टेक्स्ट</string>
+    <string name="label_document">दस्तावेज़</string>
+    <string name="ocr_text_editor_hint">OCR टेक्स्ट संपादित करें</string>
+    <string name="restore_access">पहुँच पुनर्स्थापित करें</string>
+    <string name="status">स्थिति</string>
+
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">पूर्ण स्कैन सफ़ाई सेटिंग्स</string>
+    <string name="cleanup_policy">सफ़ाई नीति</string>
+    <string name="cleanup_policy_none">कोई नहीं (सभी रखें)</string>
+    <string name="cleanup_policy_max_age">आयु के अनुसार</string>
+    <string name="cleanup_policy_max_count">संख्या के अनुसार</string>
+    <string name="cleanup_policy_max_storage">संग्रहण के अनुसार</string>
+    <string name="cleanup_policy_combined">संयुक्त</string>
+    <string name="cleanup_max_age_days">अधिकतम आयु (दिन)</string>
+    <string name="cleanup_max_count">अधिकतम संख्या</string>
+    <string name="cleanup_max_storage_mb">अधिकतम संग्रहण (MB)</string>
+    <string name="cleanup_settings_saved">सफ़ाई सेटिंग्स सहेजी गईं</string>
+
+    <!-- Inbox Mode -->
+    <string name="inbox_mode">इनबॉक्स मोड</string>
+    <string name="inbox_mode_enable">डिफ़ॉल्ट निर्यात निर्देशिका सक्षम करें</string>
+    <string name="inbox_select_folder">फ़ोल्डर चुनें</string>
+    <string name="inbox_folder_set">इनबॉक्स फ़ोल्डर: %1$s</string>
+    <string name="inbox_folder_none">कोई फ़ोल्डर चयनित नहीं</string>
+    <string name="inbox_saved">✓ इनबॉक्स में सहेजा गया</string>
+    <string name="inbox_permission_lost">इनबॉक्स फ़ोल्डर की पहुँच खो गई। कृपया नया फ़ोल्डर चुनें।</string>
+    <string name="inbox_no_folder_selected">कृपया पहले एक इनबॉक्स फ़ोल्डर चुनें।</string>
+    <string name="inbox_clear">इनबॉक्स फ़ोल्डर साफ़ करें</string>
+    <string name="inbox_filename_format">फ़ाइल नाम प्रारूप</string>
+    <string name="inbox_auto_new_scan">निर्यात के बाद स्वचालित रूप से नया स्कैन शुरू करें</string>
+    <string name="inbox_filename_date_scan">दिनांक + स्कैन (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">दिनांक + समय + स्कैन (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">केवल दिनांक (2026-03-04)</string>
+    <!-- Translations added for missing strings -->
+    <string name="confirm_remove_page_title">पेज हटाएँ?</string>
+    <string name="confirm_remove_page_message">क्या आप इस पेज को फिल्मस्ट्रिप से हटाना चाहते हैं?</string>
+    <string name="crop_aspect_label">आस्पेक्ट रेशियो</string>
+    <string name="crop_aspect_auto">ऑटो (अनुशंसित)</string>
+    <string name="crop_aspect_original">मूल रखें (बिना सुधार)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">कस्टम…</string>
+    <string name="crop_aspect_custom_with_ratio">कस्टम (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">कस्टम आस्पेक्ट रेशियो</string>
+    <string name="crop_aspect_custom_width_hint">चौड़ाई</string>
+    <string name="crop_aspect_custom_height_hint">ऊँचाई</string>
+    <string name="crop_aspect_custom_invalid">1:1 से 1:20 के बीच धनात्मक संख्याएँ दर्ज करें.</string>
+    <string name="crop_aspect_output_size_hint">आउटपुट: %1$d × %2$d px</string>
+    <string name="crop_hint_corner_off_image">कोना छवि के बाहर — आउटपुट में काले बॉर्डर हो सकते हैं</string>
+    <string name="crop_edge_dragged">किनारा चयनित. किनारा हिलाने के लिए खींचें.</string>
+    <!-- Document cleanup -->
+    <string name="document_cleanup_title">दस्तावेज़ सफ़ाई</string>
+    <string name="document_cleanup_original">मूल</string>
+    <string name="document_cleanup_natural">प्राकृतिक</string>
+    <string name="document_cleanup_enhanced">उन्नत</string>
+    <string name="document_cleanup_clean_text">स्वच्छ पाठ</string>
+    <string name="workflow_step_description">चरण %1$d / %2$d: %3$s</string>
+    <string name="search_scans">स्कैन खोजें</string>
+</resources>

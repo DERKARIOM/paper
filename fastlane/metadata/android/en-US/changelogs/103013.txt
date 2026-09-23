@@ -1,0 +1,7 @@
+MakeACopy 1.3.1
+
+What’s new
+- New: “Skip OCR (export only)” toggle on the Camera screen. Export your cleaned scan without running OCR.
+
+Notes
+- Per‑ABI builds; identical release notes for all variants.

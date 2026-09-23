@@ -1,0 +1,12 @@
+# Assets are read byte-for-byte by the app and by the build (SHA-256 verified PaddleOCR
+# dictionaries, OCR dictionaries, ground-truth test data). They must never be converted to
+# CRLF on Windows checkouts (core.autocrlf=true), otherwise :app:verifyPaddleAssetSha256 fails
+# and the OCR dictionaries contain stray '\r' characters.
+app/src/**/assets/** -text
+langpack-latin-best/src/main/assets/** -text
+
+# Shell scripts are executed by bash (Linux, macOS, WSL, Git Bash): always LF.
+*.sh    text eol=lf
+gradlew text eol=lf
+# Windows batch files: always CRLF.
+*.bat   text eol=crlf

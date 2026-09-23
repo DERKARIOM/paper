@@ -1,0 +1,38 @@
+# PaddleOCR PP-OCRv5 mobile — third-party redistribution pins (Multi-Model)
+#
+# These SHA-256 hashes pin the byte-for-byte content of the *dictionary* files
+# that are redistributed in this repository under the `paddle` build flavor at
+#
+#   app/src/paddle/assets/paddleocr/v5/
+#
+# This file is the third-party / license-side mirror of the asset-internal
+# SHA256SUMS file shipped next to the assets themselves
+# (`app/src/paddle/assets/paddleocr/v5/SHA256SUMS`). They MUST stay identical
+# for the *_dict.txt entries; the asset-internal file is the one consumed by
+# the Gradle build (`verifyPaddleAssetSha256`) and at runtime by
+# `de.schliweb.makeacopy.utils.ocr.paddle.PaddleAssets`.
+#
+# Notes
+# - Recognition models are now multi-model (8 language-group recognizers +
+#   1 detection model). The previous single-rec layout (`rec.ort` /
+#   `rec_dict.txt` / fixed V=438) has been removed and is intentionally NOT
+#   pinned here anymore.
+# - `*.ort` files are intentionally NOT pinned: they are produced by a local
+#   reduced-ORT conversion (paddle2onnx → onnxruntime basic-opt) which is not
+#   bit-for-bit reproducible across host toolchains. The build verifies their
+#   presence and non-empty size only; the dict files are the cryptographic
+#   anchor of the redistributed payload.
+# - `*.onnx` files are intermediate spike/conversion artifacts and are NEVER
+#   shipped as release assets. The Gradle task `failOnPaddleOnnxAssets` and
+#   the runtime gate `PaddleAssets.rejectOnnxAssetsOrThrow` enforce this.
+#
+# Format: `<sha256>  <filename>` — same convention as `sha256sum -c`.
+
+2a215ea5877f01b1f8c8803783cda73707222c39a84d4a6cfee9ef502c48248e  arabic_PP-OCRv5_mobile_rec_dict.txt
+5fc393a91808ca21ba2e34596b40cbf51563fc2d76195d2d70c7053af496843f  cyrillic_PP-OCRv5_mobile_rec_dict.txt
+0971b9ee81af10e7e1c61a95c3ee3e6a3d467615c73a22a372a4abdf90ffae4d  devanagari_PP-OCRv5_mobile_rec_dict.txt
+7edf5b42aa0e974c8cb8dd31799230932303479e6914b641d3e21f6225d40506  en_PP-OCRv5_mobile_rec_dict.txt
+f4a227901daa0e4557aaf0a8f2747cff5a2072e38c783ebe57d473a8ad7820de  eslav_PP-OCRv5_mobile_rec_dict.txt
+b95923300a0656f8169feee90143cbfcdb62d82a37b54e6b12c224c3e584916f  latin_PP-OCRv5_mobile_rec_dict.txt
+e5f8ca61ba03d3a247d06b013119982fa6de2bd48a846018b67bca57ffc56de1  PP-OCRv5_mobile_rec_dict.txt
+ff39ea2785d67dcf5f821e7696ce528f3788fb80615a7bfff11415090b85172c  th_PP-OCRv5_mobile_rec_dict.txt

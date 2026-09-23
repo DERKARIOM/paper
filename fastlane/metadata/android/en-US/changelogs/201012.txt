@@ -1,0 +1,17 @@
+MakeACopy 2.1.1 (Release)
+
+- Language list now shows which Tesseract model is active per language: “Fast” (built-in) or “Best” (imported)
+- New option in OCR settings to delete an imported “Best” model for the currently selected language
+- After importing or deleting a model, the primary action switches to “Process” so you can quickly re-run OCR
+- New recognition mode selector with three options: Original (no preprocessing), OpenCV Quick (fast), OpenCV Robust (high quality); your choice is saved
+- New “Explain recognition modes” dialog that describes the differences in simple terms
+- Robust mode rebuilt for top accuracy on difficult pages (deskew, illumination/shadow normalization, edge‑preserving denoise, smart upscaling) and now feeds a high‑quality grayscale image to Tesseract to preserve fine details
+- Settings button is disabled while OCR is processing for fewer accidental taps
+- Dialog button contrast improved for Dark Mode
+- Minor stability and UI fixes
+- JPEG exporter cleaned up to consistently use OpenCVUtils across all modes, reducing duplicated image-processing code.
+- New export option for PDF/JPEG: "OCR robust preprocessing". Uses the same robust preprocessing as OCR; wired through the full export pipeline.
+
+Notes
+- “Best” models are detected via file presence/size in no_backup/tessdata; built-in assets are treated as “Fast”
+- No internet connection is required for OCR; models are stored on-device

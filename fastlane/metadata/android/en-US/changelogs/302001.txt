@@ -1,0 +1,9 @@
+MakeACopy 3.2.0 (Release)
+
+* New: Page size selection for PDF export (Fit to image, A4, US Letter, Legal)
+* Default changed to "Fit to image" — PDF pages now match the scanned document
+* No image data is lost during export regardless of page size choice
+* OCR text layer adapts automatically to any page format
+* Optimized: Document detection model converted to ORT format for faster loading
+* Optimized: Reduced ONNX Runtime binary — only required operators included
+* Fully offline, no cloud or tracking

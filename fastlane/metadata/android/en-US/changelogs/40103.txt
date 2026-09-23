@@ -1,0 +1,3 @@
+MakeACopy 4.1.3
+* Release metadata now distinguishes the F-Droid standard build from the Paddle OCR build more clearly.
+* The Paddle build keeps the plain 4.1.3 version name to match F-Droid metadata requirements.

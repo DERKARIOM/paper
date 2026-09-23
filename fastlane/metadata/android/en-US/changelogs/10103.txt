@@ -1,0 +1,2 @@
+- Dev: Build scripts accept ABIS via environment variable; Gradle ABI splits can also use -PABIS.
+- Change: OpenCV build reverted to single-thread (no Ninja) for more deterministic CI runs.

@@ -1,0 +1,8 @@
+MakeACopy 3.2.1
+* Improved shadow removal for scanned documents (broader illumination correction)
+* Enhanced local contrast (CLAHE) for sharper, more readable text
+* Switched to Gaussian-weighted adaptive thresholding for better document binarization
+* Improved binarization quality for low-resolution images (e.g. from autoscan)
+* PDF Classic B/W mode now includes shadow removal and contrast enhancement
+* Faster image capture by removing unnecessary post-focus delay
+* Fully offline, no cloud or tracking

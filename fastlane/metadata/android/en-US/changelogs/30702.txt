@@ -1,0 +1,4 @@
+MakeACopy 3.7.2
+* Improved automatic aspect ratio of perspective-corrected scans: tilted A4 letters, long receipts and packaging (e.g. Tetra Pak) come out far less squashed
+* Uses a projective aspect-ratio estimation (Zhang & He, 2006) with graceful fallback to the previous heuristic for near-fronto-parallel captures
+* Fully offline, no cloud or tracking

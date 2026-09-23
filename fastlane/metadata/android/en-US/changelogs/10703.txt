@@ -1,0 +1,10 @@
+Version 1.7.3 (Release)
+
+New
+- Added OCR languages: Portuguese (por), Dutch (nld), Polish (pol), Czech (ces), Slovak (slk), Hungarian (hun), Romanian (ron), Danish (dan), Norwegian (nor), and Swedish (swe).
+- Automatic locale mapping for these languages (system language → correct Tesseract code).
+- Updated OCR character whitelists to match each new language for better accuracy.
+
+Improvements
+- Added UI localization scaffolding for the new languages (strings resources), with translations where available.
+- Documentation and website updated to list all newly supported OCR languages.

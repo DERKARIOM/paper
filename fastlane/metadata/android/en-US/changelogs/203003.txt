@@ -1,0 +1,26 @@
+MakeACopy 2.3.0 (Release Candidate)
+
+- Experimental Unified Framing core (default UX unchanged):
+  - New FramingEngine with shared data model (FramingResult, GuidanceHint) computing alignment quality, translation, scale, and tilt from detected corners.
+  - Minimal, safe integration in the camera preview; optional debug logging via feature flag.
+- Optional Accessibility Guidance in Accessibility Mode:
+  - Spoken, rate‑limited and hysteresis‑based hints: “Move left/right/up/down”, “Move closer/back”, “Tilt left/right/forward/back”, and “Document aligned”.
+  - Fully guarded by a feature flag and only active in Accessibility Mode to avoid chatter.
+- Stability & safety:
+  - Accessibility announcements are now dispatched on the main (UI) thread, preventing background‑thread violations on newer Android versions.
+  - Added a stable fallback rectangle model to make distance/scale guidance more consistent.
+- Scan Library improvements:
+  - Home shows only finished documents (PDF/JPEG/ZIP). Single‑page entries from the registry (CompletedScanEntry) are hidden from Home and live exclusively in the protected "Completed Scans" collection.
+  - New default collection "Completed Scans" is reserved: cannot be renamed or deleted and only accepts single‑page entries. Finished documents cannot be added to it (UI and repository guarded).
+  - Collection picker filters out the default "Completed Scans" when assigning finished documents.
+  - Index existing scans button now appears only inside the "Completed Scans" collection; hidden on Home and other collections.
+  - Detail view quality improved for CompletedScanEntry items by preferring the original source over low‑res thumbnails.
+  - Prevented duplicate collections with the reserved name; attempts will reuse the real default collection, and renaming to the reserved name is blocked.
+- Documentation:
+  - Updated Accessibility Mode guides (EN/DE) with example hints and frequency notes.
+- Tests:
+  - Extensive JVM unit tests for the guidance controller (rate‑limit, hysteresis, OK‑repeat) and basic FramingEngine behavior.
+
+Notes
+- The new accessibility guidance is experimental and behind feature flags. Default user experience remains unchanged unless Accessibility Mode is enabled.
+- This is a Release Candidate build; feedback on camera stability and preview behavior is especially welcome.

@@ -1,0 +1,9 @@
+MakeACopy 2.1.0 (Release)
+
+- Rotate in cropping screen and updated workflow: you can now rotate directly on the cropping screen.
+- Improved OCR for mis-rotated images: the app now tries additional 90° steps (0°, 90°, 180°, 270°) and automatically selects the best result based on mean confidence (with text length as a tiebreaker).
+- New early-exit threshold: if the first pass already reaches a mean confidence of >= 55, the extra rotation attempts are skipped to deliver faster results.
+- Correct bounding boxes: each rotation attempt maintains an appropriate transform so word boxes are mapped accurately in the UI and export.
+- Stability and performance: OCR runs on a single background worker per job, with proper cancellation checks and clean Tesseract shutdown to reduce resource usage.
+- Crop handles stay within the image: trapezoid selection corners are now hard-clamped to the visible image bounds (FIT_CENTER), preventing dragging outside the image.
+- Implemented chronological insertion for pages added from “Completed Scans.” When multiple items are picked, they are now sorted by their creation timestamp before being added to the current export session.

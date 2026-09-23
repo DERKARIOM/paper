@@ -1,0 +1,10 @@
+Version 1.3.0 – 2025-09-01
+
+New
+- Crop magnifier for precise handle placement.
+
+Improvements
+- Smaller B/W files via tuned binarization + optional downscale.
+
+Technical
+- NDK 28.0.13004108 with 16K page support (required by upcoming Android versions).

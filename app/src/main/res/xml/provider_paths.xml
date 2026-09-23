@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Allow sharing from app-specific external files directory -->
+    <external-files-path name="external_files" path="." />
+    <!-- Allow sharing from app-internal files directory (e.g., files/scans/...) -->
+    <files-path name="internal_files" path="." />
+    <!-- Allow sharing temporary files from app cache directory (e.g., logs) -->
+    <cache-path name="cache" path="." />
+</paths>

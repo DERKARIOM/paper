@@ -1,0 +1,817 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.spotless)
+    alias(libs.plugins.errorprone)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.license.report)
+    id 'jacoco'
+}
+
+def enableAbiSplits = (project.findProperty("enableAbiSplits") ?: "true").toBoolean()
+// AGP cannot build an Android App Bundle (AAB) while ABI splits are enabled:
+// `minifyXxxReleaseWithR8` then produces one shrunk-resources-*.ap_ per ABI and
+// `buildXxxReleasePreBundle` fails with "Multiple shrunk-resources files found"
+// (see https://issuetracker.google.com/402800800). When the user/CI requests any
+// bundle task in the same Gradle invocation, transparently disable ABI splits.
+if (enableAbiSplits) {
+    def requestedTasks = gradle.startParameter.taskNames
+    def bundleRequested = requestedTasks.any { it.toLowerCase().contains("bundle") }
+    if (bundleRequested) {
+        logger.lifecycle("Bundle task detected in task graph → forcing enableAbiSplits=false to avoid AGP issue 402800800.")
+        enableAbiSplits = false
+    }
+}
+def edition = (project.findProperty("edition") ?: "full")
+def isLight = edition == "light"
+def isPaddleAndroidTestInvocation = gradle.startParameter.taskNames.any {
+    it.toLowerCase(Locale.ROOT).contains("paddle") && it.toLowerCase(Locale.ROOT).contains("androidtest")
+}
+def signingStorePassword = project.findProperty("SIGNING_STORE_PASSWORD") ?: System.getenv("SIGNING_STORE_PASSWORD")
+def signingKeyAlias = project.findProperty("SIGNING_KEY_ALIAS") ?: System.getenv("SIGNING_KEY_ALIAS")
+def signingKeyPassword = project.findProperty("SIGNING_KEY_PASSWORD") ?: System.getenv("SIGNING_KEY_PASSWORD")
+def hasReleaseSigning = signingStorePassword && signingKeyAlias && signingKeyPassword
+
+// Native dependencies (OpenCV + ONNX Runtime):
+//  - "source"   (default, used by CI/F-Droid): libraries built from the git submodules by
+//               scripts/build_opencv_android.sh + scripts/build_onnxruntime_android.sh and staged
+//               into app/src/main/jniLibs/<abi>/ and app/libs/.
+//  - "prebuilt" (local development only): official binaries from Maven Central
+//               (org.opencv:opencv AAR -> only its .so files are used, the Java wrappers stay
+//               in-tree; com.microsoft.onnxruntime:onnxruntime-android AAR). Lets a developer
+//               build and run the app without a Linux/NDK native toolchain. Never use it for
+//               release/F-Droid builds (not reproducible, larger APK).
+def nativeDeps = (project.findProperty("nativeDeps") ?: "source").toString()
+if (!(nativeDeps in ["source", "prebuilt"])) {
+    throw new GradleException("Unknown -PnativeDeps=${nativeDeps} (expected 'source' or 'prebuilt')")
+}
+def usePrebuiltNatives = nativeDeps == "prebuilt"
+if (usePrebuiltNatives) {
+    logger.lifecycle("nativeDeps=prebuilt → using OpenCV/ONNX Runtime binaries from Maven Central (dev build, not reproducible)")
+}
+
+android {
+    namespace = 'de.schliweb.makeacopy'
+    compileSdk = 36
+
+    ndkVersion = '28.0.13004108'
+
+    defaultConfig {
+        applicationId "de.schliweb.makeacopy"
+        minSdk = 29
+        targetSdk = 36
+        versionCode 40600
+        versionName "4.6.0"
+
+        // Use default AndroidX test runner
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Add a note about OpenCV being built from source
+        buildConfigField "String", "OPENCV_VERSION", "\"4.13.0\""
+        // Feature flags
+        buildConfigField "boolean", "FEATURE_SCAN_LIBRARY", "true"
+        buildConfigField "boolean", "FEATURE_REVIEW_OCR", "true"
+        buildConfigField "boolean", "FEATURE_FRAMING_LOGGING", "false"
+        buildConfigField "boolean", "FEATURE_A11Y_GUIDANCE", "true"
+        buildConfigField "boolean", "FEATURE_LAYOUT_ANALYSIS", "false"
+        buildConfigField "boolean", "FEATURE_INBOX_MODE", "true"
+        buildConfigField "boolean", "FEATURE_CROP_EDGE_DRAG", "true"
+        buildConfigField "boolean", "FEATURE_CROP_PAN_ZOOM", "true"
+        buildConfigField "boolean", "FEATURE_DOCQUAD_CORNERS", "true"
+        buildConfigField "boolean", "FEATURE_BEST_OF_CROP_CORNERS", "true"
+        buildConfigField "boolean", "FEATURE_PADDLE_OCR", "false"
+        buildConfigField "boolean", "FEATURE_FOCUS_QUALITY_INDICATOR", "true"
+        buildConfigField "boolean", "IS_LIGHT", isLight ? "true" : "false"
+
+        if (isLight) {
+            applicationIdSuffix ".light"
+            versionNameSuffix "-light"
+        }
+    }
+
+    dependenciesInfo {
+        // Disables the inclusion of dependency metadata in the APK,
+        // required for F-Droid to comply with its focus on privacy and transparency.
+        // Dependency metadata is unnecessary and could expose additional information.
+        includeInApk = false
+        // Disables the inclusion of dependency metadata in Android App Bundles as well.
+        includeInBundle = false
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+            // New API (replaces deprecated doNotStrip):
+            // keep the symbols → AGP will not run its strip step,
+            // preserving our staged, deterministic lib exactly.
+            keepDebugSymbols += ["lib/**/libopencv_java4.so"]
+            if (usePrebuiltNatives) {
+                // libc++_shared.so may ship in both prebuilt AARs.
+                pickFirsts += ["lib/**/libc++_shared.so"]
+            }
+        }
+        dex {
+            useLegacyPackaging = false
+        }
+    }
+
+    signingConfigs {
+        release {
+            if (hasReleaseSigning) {
+                storeFile file('keystore.jks')
+                storePassword signingStorePassword
+                keyAlias signingKeyAlias
+                keyPassword signingKeyPassword
+            }
+        }
+    }
+
+    flavorDimensions += "ocr"
+    productFlavors {
+        standard {
+            dimension "ocr"
+            // F-Droid-Default, ohne Paddle-Assets
+            proguardFiles 'proguard-tesseract.pro'
+            versionNameSuffix "-standard"
+        }
+        paddle {
+            dimension "ocr"
+            // Hinweis: ndk.abiFilters wird hier nicht gesetzt, weil das mit dem
+            // globalen splits.abi-Block kollidiert. Die Beschränkung auf
+            // arm64-v8a für den paddle-Flavor erfolgt stattdessen in
+            // androidComponents.beforeVariants weiter unten.
+            buildConfigField "boolean", "FEATURE_PADDLE_OCR", "true"
+            //versionNameSuffix "-paddle"
+        }
+    }
+
+    buildTypes {
+        debug {
+            enableUnitTestCoverage = true
+        }
+        release {
+            minifyEnabled = true
+            shrinkResources = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // Only use signing config when available (GitHub Actions)
+            // F-Droid will sign with their own keys
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.release
+            }
+        }
+    }
+
+    splits {
+        abi {
+            enable = enableAbiSplits
+            reset()
+            def abisEnv = System.getenv("ABIS")
+            def abisProp = (project.findProperty("ABIS") ?: project.findProperty("abis"))
+            def abisList = ((abisEnv ?: abisProp) ?: "arm64-v8a armeabi-v7a x86_64 x86")
+                    .trim()
+                    .split(/[,\s]+/) as List<String>
+            println "Gradle ABI splits: ${abisList}"
+            abisList.each { include it }
+
+            universalApk = false
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
+
+    // Test assets (PDFs, JPEGs, ground-truth TXTs) live under
+    // app/src/androidTest/assets/instrumented_test_data/ and are merged into the
+    // debug APK only via the debug sourceSet below. They are never part of the
+    // release APK (verified by `verifyNoTestDataInApk`).
+
+    sourceSets {
+        main {
+            assets.srcDirs = [
+                    'src/main/assets',
+                    layout.buildDirectory.dir("generated/assets/licenses").get().asFile
+            ]
+            jniLibs.srcDirs = usePrebuiltNatives
+                    ? [layout.buildDirectory.dir("generated/prebuiltJniLibs/opencv").get().asFile]
+                    : ['src/main/jniLibs']
+        }
+        standard {
+            assets.srcDirs += [isLight ? 'src/light/assets' : 'src/full/assets']
+        }
+        // Flavor-Asset-Verzeichnisse explizit deklarieren, damit AGP sie zusätzlich
+        // zu den oben überschriebenen main-Asset-Pfaden mergt.
+        paddle {
+            assets.srcDirs += [layout.buildDirectory.dir("generated/assets/paddle_edition"), 'src/paddle/assets']
+        }
+        // Add test assets to the debug APK so target-context based asset loading works
+        // (e.g. ApplicationProvider.getApplicationContext().getAssets()). The release build
+        // is verified separately to ensure no test data leaks into production.
+        standardDebug {
+            assets.srcDirs += [
+                    layout.buildDirectory.dir("generated/assets/test_assets").get().asFile,
+                    'src/androidTest/assets'
+            ]
+        }
+        if (isPaddleAndroidTestInvocation) {
+            // Paddle instrumentation tests must stay Tesseract-free. The shared
+            // androidTest source set contains Tesseract-only tests and is therefore
+            // excluded only for explicit paddle AndroidTest invocations.
+            androidTest {
+                java.srcDirs = []
+                assets.srcDirs = []
+            }
+            androidTestPaddle {
+                java.srcDirs = ['src/androidTestPaddle/java']
+                assets.srcDirs = ['src/androidTestPaddle/assets', 'src/androidTest/assets']
+            }
+        }
+    }
+}
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraintlayout
+    implementation libs.lifecycle.livedata.ktx
+    implementation libs.lifecycle.viewmodel.ktx
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
+    implementation libs.activity
+
+
+    // JSON serialization for registry
+    implementation libs.gson
+
+    // Lombok dependency
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+
+    // CameraX dependencies
+    implementation libs.camerax.core
+    implementation libs.camerax.camera2
+    implementation libs.camerax.lifecycle
+    implementation libs.camerax.view
+
+    // Tesseract OCR dependency (standard flavor only; paddle flavor must stay Tesseract-free)
+    standardImplementation libs.tesseract
+
+    // Onnx-Runtime dependency
+    if (usePrebuiltNatives) {
+        implementation libs.onnxruntime.android.prebuilt
+    }
+    else if(!isLight) {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+    }
+    else {
+        implementation fileTree(dir: 'libs', include: ['*.aar'])
+    }
+
+    // PdfBox-Android dependency
+    implementation libs.pdfbox.android
+    implementation libs.exifinterface
+    implementation libs.documentfile
+
+    // Room (for scan index)
+    implementation libs.room.runtime
+    annotationProcessor libs.room.compiler
+
+    // Hilt (Dependency Injection)
+    implementation libs.hilt.android
+    annotationProcessor libs.hilt.compiler
+    androidTestImplementation libs.hilt.android.testing
+    androidTestAnnotationProcessor libs.hilt.compiler
+
+    testImplementation libs.junit
+    // AndroidX Test stack (aligned)
+    androidTestImplementation libs.espresso.core
+
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.runner)
+
+    androidTestImplementation(libs.ext.junit) {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+        exclude group: 'org.hamcrest', module: 'hamcrest-library'
+    }
+    // Keep excludes on other deps to avoid legacy Hamcrest
+    androidTestImplementation(libs.test.rules) {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+        exclude group: 'org.hamcrest', module: 'hamcrest-library'
+    }
+    // fragment-testing must be in the target (debug) APK to provide EmptyFragmentActivity
+    debugImplementation(libs.fragment.testing) {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+        exclude group: 'org.hamcrest', module: 'hamcrest-library'
+    }
+    // Align Hamcrest to a single modern version to avoid duplicate classes
+    androidTestImplementation libs.hamcrest
+    androidTestImplementation libs.awaitility
+
+    // Error Prone
+    errorprone libs.errorprone.core
+    annotationProcessor libs.errorprone.core
+    testAnnotationProcessor libs.errorprone.core
+    androidTestAnnotationProcessor libs.errorprone.core
+    // Espresso Accessibility Test Framework for automated accessibility checks
+    androidTestImplementation (libs.accessibility.test.framework) {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+        exclude group: 'org.hamcrest', module: 'hamcrest-library'
+    }
+}
+// Guardrail for androidTest classpath: enforce modern Hamcrest and exclude legacy variants
+configurations.matching { it.name.toLowerCase().contains('androidtest') }.all { cfg ->
+    cfg.resolutionStrategy.force 'org.hamcrest:hamcrest:3.0'
+    cfg.exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    cfg.exclude group: 'org.hamcrest', module: 'hamcrest-library'
+}
+
+// -PnativeDeps=prebuilt: extract only the native libraries (jni/<abi>/*.so) from the official
+// OpenCV AAR. Its Java classes are NOT used: the app ships its own org.opencv wrappers
+// (app/src/main/java/org/opencv), generated from the same OpenCV 4.13.0 sources.
+configurations {
+    opencvPrebuiltAar {
+        canBeConsumed = false
+        canBeResolved = true
+        transitive = false
+    }
+}
+dependencies {
+    opencvPrebuiltAar "org.opencv:opencv:${libs.versions.opencvPrebuilt.get()}@aar"
+}
+def extractPrebuiltOpenCvNatives = tasks.register("extractPrebuiltOpenCvNatives", Sync) {
+    description = "Extracts jni/<abi>/*.so from the org.opencv:opencv AAR (nativeDeps=prebuilt only)"
+    // Resolved lazily (at execution time) through the configuration's elements provider.
+    from(configurations.opencvPrebuiltAar.elements.map { files -> files.collect { zipTree(it.asFile) } }) {
+        include "jni/**/*.so"
+        eachFile { it.path = it.path.replaceFirst("^jni/", "") }
+        includeEmptyDirs = false
+    }
+    into(layout.buildDirectory.dir("generated/prebuiltJniLibs/opencv"))
+}
+
+tasks.register("copyNotices", Sync) {
+    from("$rootDir/NOTICE", "$rootDir/LICENSE")
+    into(layout.buildDirectory.dir("generated/assets/licenses"))
+}
+
+tasks.named("preBuild").configure {
+    dependsOn("copyNotices")
+    if (usePrebuiltNatives) {
+        dependsOn(extractPrebuiltOpenCvNatives)
+    }
+}
+
+tasks.register("copyPaddleEditionAssets", Sync) {
+    description = "Copies edition assets for the paddle flavor without Tesseract traineddata or OCR dictionaries"
+    from(isLight ? 'src/light/assets' : 'src/full/assets') {
+        exclude 'tessdata/**'
+        exclude 'dictionaries/**'
+    }
+    into(layout.buildDirectory.dir("generated/assets/paddle_edition"))
+}
+
+// Copy Best model from langpack-latin-best to generated assets directory for instrumented tests
+tasks.register("copyBestModelsForTest", Copy) {
+    description = "Copies the Best Tesseract models from langpack-latin-best for OCR comparison tests"
+    from("$rootDir/langpack-latin-best/src/main/assets/tessdata")
+    into(layout.buildDirectory.dir("generated/assets/test_assets/tessdata_best"))
+}
+
+
+// Delete test_jpegs and bestmodels from generated assets after instrumented tests
+tasks.register("deleteTestAssetsAfterTest", Delete) {
+    description = "Deletes test assets from generated assets after tests"
+    delete(layout.buildDirectory.dir("generated/assets/test_assets"))
+}
+
+// Wire copy tasks to run before connected Android tests and delete tasks to run after
+// Also ensure mergeDebugAssets depends on copy tasks to avoid implicit dependency errors
+tasks.configureEach { task ->
+    if (task.name.startsWith("connectedDebugAndroidTest") || task.name.startsWith("connectedAndroidTest")) {
+        task.dependsOn("copyBestModelsForTest")
+        task.finalizedBy("deleteTestAssetsAfterTest")
+    }
+    // Ensure Tesseract Best models are available when assembling/merging assets for
+    // the debug variant (and consequently for the androidTest variant which depends
+    // on the debug assets). Test PDFs/JPEGs live directly under
+    // app/src/androidTest/assets/instrumented_test_data/ and are picked up via the
+    // debug.assets.srcDirs += 'src/androidTest/assets' wiring in the android {} block.
+    // Match flavor-aware merge tasks: mergeDebugAssets, mergePaddleDebugAssets,
+    // mergeStandardDebugAssets, and the corresponding *AndroidTestAssets variants.
+    // The previous hook only matched the non-flavor names and therefore never fired
+    // for the `paddle`/`standard` flavors, so tessdata_best/ was missing in the APK.
+    if (task.name ==~ /merge(Standard)?Debug(AndroidTest)?Assets/) {
+        task.dependsOn("copyBestModelsForTest")
+    }
+}
+
+// Verifies that the PaddleOCR V5 multi-model assets shipped in the `paddle` flavor
+// match the pinned SHA256 hashes from the asset-side SHA256SUMS (which is the source
+// of truth for the multi-model architecture, see
+// docs/paddleocr_v5_integration_concept.md §0/§A).
+//
+// Only *_dict.txt entries are pinned (basic-opt *.ort artifacts are not byte-reproducible
+// across toolchains; their integrity is checked by existence + non-zero size and by the
+// reduced ORT runtime ops config). The `standard` flavor is unaffected.
+tasks.register("verifyPaddleAssetSha256") {
+    description = "Verifies SHA256 of PaddleOCR V5 dict assets against src/paddle/assets/paddleocr/v5/SHA256SUMS and checks that all *.ort/*_dict.txt files exist"
+    group = "verification"
+    def assetsDir = file("$projectDir/src/paddle/assets/paddleocr/v5")
+    def sumsFile = new File(assetsDir, "SHA256SUMS")
+    inputs.dir(assetsDir)
+    doLast {
+        if (!sumsFile.exists()) {
+            throw new GradleException("Missing SHA256SUMS file: ${sumsFile.absolutePath}")
+        }
+        def expected = [:]
+        sumsFile.eachLine { line ->
+            def trimmed = line.trim()
+            if (trimmed.isEmpty() || trimmed.startsWith("#")) return
+            def parts = trimmed.split(/\s+/, 2)
+            if (parts.length == 2) {
+                expected[parts[1].trim()] = parts[0].trim().toLowerCase()
+            }
+        }
+        // All recognition model keys + dict file names (must exist and be non-empty).
+        def recKeys = [
+            "PP-OCRv5_mobile_rec",
+            "en_PP-OCRv5_mobile_rec",
+            "latin_PP-OCRv5_mobile_rec",
+            "eslav_PP-OCRv5_mobile_rec",
+            "cyrillic_PP-OCRv5_mobile_rec",
+            "th_PP-OCRv5_mobile_rec",
+            "arabic_PP-OCRv5_mobile_rec",
+            "devanagari_PP-OCRv5_mobile_rec",
+	    "el_PP-OCRv5_mobile_rec",
+        ]
+        def ortNames = ["det.ort"] + recKeys.collect { it + ".ort" }
+        def dictNames = recKeys.collect { it + "_dict.txt" }
+
+        // 1) *.ort: existence + non-zero size only.
+        ortNames.each { name ->
+            def f = new File(assetsDir, name)
+            if (!f.exists()) {
+                throw new GradleException("Missing Paddle ORT asset: ${f.absolutePath}")
+            }
+            if (f.length() <= 0) {
+                throw new GradleException("Empty Paddle ORT asset: ${f.absolutePath}")
+            }
+        }
+
+        // 2) *_dict.txt: pinned SHA-256 against asset-side SHA256SUMS.
+        def md = java.security.MessageDigest.getInstance("SHA-256")
+        dictNames.each { name ->
+            def f = new File(assetsDir, name)
+            if (!f.exists()) {
+                throw new GradleException("Missing Paddle dict asset: ${f.absolutePath}")
+            }
+            def exp = expected[name]
+            if (exp == null) {
+                throw new GradleException("No expected SHA256 for ${name} in ${sumsFile.absolutePath}")
+            }
+            md.reset()
+            f.withInputStream { is ->
+                def buf = new byte[8192]
+                int n
+                while ((n = is.read(buf)) > 0) md.update(buf, 0, n)
+            }
+            def actual = md.digest().collect { String.format("%02x", it & 0xff) }.join("")
+            if (!actual.equalsIgnoreCase(exp)) {
+                throw new GradleException(
+                    "Paddle dict SHA256 mismatch for ${f.absolutePath}\n" +
+                    "  expected: ${exp}\n" +
+                    "  actual:   ${actual}")
+            }
+            logger.lifecycle("✓ Paddle dict ${name}: SHA256 verified")
+        }
+        logger.lifecycle("✓ Paddle V5 multi-model assets verified (${ortNames.size()} *.ort + ${dictNames.size()} *_dict.txt)")
+    }
+}
+
+// Build-time gate: fail the paddle-flavor build if any *.onnx file is shipped under
+// src/paddle/assets/paddleocr/v5/. Intentionally early (build) instead of late
+// (PaddleAssets.rejectOnnxAssetsOrThrow at runtime). The `standard` flavor is unaffected.
+tasks.register("failOnPaddleOnnxAssets") {
+    description = "Fails the paddle-flavor build if any *.onnx asset is present under src/paddle/assets/paddleocr/v5/"
+    group = "verification"
+    def assetsDir = file("$projectDir/src/paddle/assets/paddleocr/v5")
+    inputs.dir(assetsDir)
+    doLast {
+        if (!assetsDir.exists()) {
+            return
+        }
+        def offenders = []
+        assetsDir.eachFileRecurse { f ->
+            if (f.isFile() && f.name.toLowerCase().endsWith(".onnx")) {
+                offenders << f.absolutePath
+            }
+        }
+        if (!offenders.isEmpty()) {
+            throw new GradleException(
+                "PaddleOCR V5 assets must be ORT-only; found forbidden *.onnx file(s):\n" +
+                "  - " + offenders.join("\n  - ") + "\n" +
+                "Remove them or rebuild via scripts/convert_paddleocr_v5_to_ort_basic_all.py.")
+        }
+        logger.lifecycle("✓ No *.onnx assets present under ${assetsDir.absolutePath}")
+    }
+}
+
+tasks.register("verifyNoTesseractModelsInPaddleApk") {
+    description = "Checks that paddle APKs do not contain bundled Tesseract traineddata or OCR dictionary assets"
+    group = "verification"
+    doLast {
+        def apkDir = layout.buildDirectory.dir("outputs/apk/paddle").get().asFile
+        if (!apkDir.exists()) {
+            logger.lifecycle("verifyNoTesseractModelsInPaddleApk: ${apkDir.absolutePath} does not exist (no paddle APKs assembled)")
+            return
+        }
+        def checked = 0
+        apkDir.eachFileRecurse { f ->
+            if (f.name.endsWith(".apk") && !f.name.contains("androidTest")) {
+                checked++
+                def offenders = []
+                def zip = new java.util.zip.ZipFile(f)
+                try {
+                    zip.entries().each { entry ->
+                        if (entry.name ==~ /assets\/tessdata\/.*\.traineddata/
+                                || entry.name ==~ /assets\/dictionaries\/.*/) {
+                            offenders << entry.name
+                        }
+                    }
+                } finally {
+                    zip.close()
+                }
+                if (!offenders.isEmpty()) {
+                    throw new GradleException(
+                        "Tesseract traineddata/OCR dictionary assets found in ${f.name}:\n" +
+                        "  - " + offenders.join("\n  - "))
+                }
+                logger.lifecycle("✓ ${f.name}: no Tesseract traineddata or OCR dictionary assets found")
+            }
+        }
+        if (checked == 0) {
+            logger.lifecycle("verifyNoTesseractModelsInPaddleApk: no paddle APKs found under ${apkDir.absolutePath} (nothing to check)")
+        } else {
+            logger.lifecycle("verifyNoTesseractModelsInPaddleApk: ${checked} paddle APK(s) verified clean")
+        }
+    }
+}
+
+// Hook the verify + onnx-gate tasks into the paddle-flavor asset merge so they run as
+// part of assemblePaddleDebug / assemblePaddleRelease without touching the standard flavor.
+tasks.whenTaskAdded { task ->
+    if (task.name == "mergePaddleDebugAssets" || task.name == "mergePaddleReleaseAssets") {
+        task.dependsOn("copyPaddleEditionAssets", "failOnPaddleOnnxAssets", "verifyPaddleAssetSha256")
+    }
+}
+
+tasks.configureEach { task ->
+    if (task.name.toLowerCase(Locale.ROOT).contains("paddle")
+            && task.name.toLowerCase(Locale.ROOT).contains("lint")) {
+        task.dependsOn("copyPaddleEditionAssets")
+    }
+}
+
+// Verify that no test data leaks into production APKs
+tasks.register("verifyNoTestDataInApk") {
+    description = "Checks that release and debug APKs do not contain test data"
+    group = "verification"
+    doLast {
+        def forbidden = ["instrumented_test_data", "layout_test_data", "test_pdfs",
+                         "ground_truth", "layout_ground_truth"]
+        // APK output layout: app/build/outputs/apk/<flavor>/release/*.apk
+        // (e.g. paddle/release, standard/release). Walk the whole apk dir and
+        // pick up all release APKs across all flavors.
+        def apkDir = layout.buildDirectory.dir("outputs/apk").get().asFile
+        if (!apkDir.exists()) {
+            logger.lifecycle("verifyNoTestDataInApk: ${apkDir.absolutePath} does not exist (no release APKs assembled)")
+            return
+        }
+        def checked = 0
+        apkDir.eachFileRecurse { f ->
+            if (f.name.endsWith(".apk")
+                    && !f.name.contains("androidTest")
+                    && !f.name.contains("debug")
+                    && f.absolutePath.contains(File.separator + "release" + File.separator)) {
+                checked++
+                def zip = new java.util.zip.ZipFile(f)
+                try {
+                    zip.entries().each { entry ->
+                        forbidden.each { pattern ->
+                            if (entry.name.contains(pattern)) {
+                                throw new GradleException(
+                                    "Test data found in ${f.name}: ${entry.name}")
+                            }
+                        }
+                    }
+                } finally {
+                    zip.close()
+                }
+                logger.lifecycle("✓ ${f.name}: no test data found")
+            }
+        }
+        if (checked == 0) {
+            logger.lifecycle("verifyNoTestDataInApk: no release APKs found under ${apkDir.absolutePath} (nothing to check)")
+        } else {
+            logger.lifecycle("verifyNoTestDataInApk: ${checked} release APK(s) verified clean")
+        }
+    }
+}
+
+// Pulls JSON eval reports written by PaddleVsTesseractEvalTest from the connected
+// device's externalFilesDir("eval") into app/build/eval-reports/. Used by
+// step 10c of the PaddleOCR-V5 integration plan (see
+// docs/paddleocr_v5_integration_concept.md §13.3 and docs/eval/README.md).
+//
+// Skips with a clear error message if no device is connected.
+tasks.register("pullEvalReports") {
+    description = "Pulls PaddleOCR eval JSON reports from device externalFilesDir('eval') into app/build/eval-reports/"
+    group = "verification"
+    doLast {
+        def appId = "de.schliweb.makeacopy"
+        def remoteDir = "/sdcard/Android/data/${appId}/files/eval"
+        def localDir = layout.buildDirectory.dir("eval-reports").get().asFile
+        localDir.mkdirs()
+
+        // adb binary: prefer ANDROID_HOME/platform-tools, fall back to PATH.
+        def adbCandidates = []
+        def sdkRoot = System.getenv("ANDROID_HOME") ?: System.getenv("ANDROID_SDK_ROOT")
+        if (sdkRoot) adbCandidates << "${sdkRoot}/platform-tools/adb"
+        adbCandidates << "adb"
+        def adb = adbCandidates.find { p -> p == "adb" || new File(p).canExecute() } ?: "adb"
+
+        // Check that at least one device is connected.
+        def devOut = new ByteArrayOutputStream()
+        def devErr = new ByteArrayOutputStream()
+        def devResult = project.exec {
+            commandLine adb, "devices"
+            standardOutput = devOut
+            errorOutput = devErr
+            ignoreExitValue = true
+        }
+        if (devResult.exitValue != 0) {
+            throw new GradleException("Failed to run '${adb} devices': ${devErr.toString()}")
+        }
+        def deviceLines = devOut.toString().readLines()
+            .drop(1) // skip "List of devices attached"
+            .findAll { it.trim() && it.contains("\tdevice") }
+        if (deviceLines.isEmpty()) {
+            throw new GradleException(
+                "No Android device/emulator connected (adb devices is empty). " +
+                "Start an emulator (e.g. arm64-v8a) or attach a device, then re-run :app:pullEvalReports.")
+        }
+        logger.lifecycle("pullEvalReports: found ${deviceLines.size()} device(s) — pulling from ${remoteDir}")
+
+        // List remote eval files.
+        def lsOut = new ByteArrayOutputStream()
+        def lsErr = new ByteArrayOutputStream()
+        def lsResult = project.exec {
+            commandLine adb, "shell", "ls", remoteDir
+            standardOutput = lsOut
+            errorOutput = lsErr
+            ignoreExitValue = true
+        }
+        if (lsResult.exitValue != 0) {
+            throw new GradleException(
+                "Could not list ${remoteDir} on device. " +
+                "Did you run :app:connectedPaddleDebugAndroidTest first?\n" +
+                "adb stderr: ${lsErr.toString().trim()}")
+        }
+        def files = lsOut.toString().readLines().findAll { it.trim().endsWith(".json") }
+        if (files.isEmpty()) {
+            throw new GradleException(
+                "No JSON eval reports found under ${remoteDir}. " +
+                "Run :app:connectedPaddleDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.schliweb.makeacopy.utils.ocr.PaddleVsTesseractEvalTest first.")
+        }
+
+        files.each { name ->
+            def remote = "${remoteDir}/${name.trim()}"
+            def localFile = new File(localDir, name.trim())
+            def pullResult = project.exec {
+                commandLine adb, "pull", remote, localFile.absolutePath
+                ignoreExitValue = true
+            }
+            if (pullResult.exitValue != 0) {
+                throw new GradleException("adb pull failed for ${remote}")
+            }
+            logger.lifecycle("✓ pulled ${remote} → ${localFile.absolutePath}")
+        }
+        logger.lifecycle("pullEvalReports: ${files.size()} report(s) in ${localDir.absolutePath}")
+    }
+}
+
+androidComponents {
+    // paddle-Flavor: KEIN ABI-Gate mehr.
+    // Die reduced ORT Runtime (libonnxruntime.so) liegt für alle vier ABIs
+    // (arm64-v8a, armeabi-v7a, x86, x86_64) unter src/main/jniLibs/, F-Droid liefert
+    // pro ABI ein eigenes APK aus. Sprachunterstützung wird zur Laufzeit durch
+    // PaddleLanguageRouter geregelt; nicht routbare Sprachen fallen still auf
+    // Tesseract zurück. Damit bleibt die ABI-Auswahl rein der existierenden
+    // enableAbiSplits-Mechanik überlassen (gilt jetzt einheitlich für standard und paddle).
+
+    // Assign per-ABI versionCode: baseVersionCode * 10 + abiCode
+    onVariants(selector().all()) { variant ->
+        def baseCode = (project.android.defaultConfig.versionCode ?: 1)
+        def abiCodes = [
+                "armeabi-v7a": 1,
+                "arm64-v8a" : 2,
+                "x86"       : 3,
+                "x86_64"    : 4
+        ]
+        variant.outputs.each { output ->
+            def abiFilter = output.filters.find { it.filterType == com.android.build.api.variant.FilterConfiguration.FilterType.ABI }
+            if (abiFilter != null) {
+                def abi = abiFilter.identifier
+                def code = abiCodes.get(abi, 0)
+                output.versionCode.set(baseCode * 10 + code)
+            } else {
+                // For non-ABI outputs (e.g., no splits) keep deterministic ordering
+                output.versionCode.set(baseCode * 10)
+            }
+        }
+    }
+}
+
+
+// Ensure Java compiler shows deprecation and unchecked warnings in builds
+// This helps us review all deprecated APIs in use during the build
+// and aligns with the task to verify deprecation warnings.
+tasks.withType(JavaCompile).configureEach {
+    options.deprecation = true
+    options.compilerArgs += [
+            '-Xlint:deprecation',
+            '-Xlint:unchecked'
+    ]
+    options.errorprone {
+        enabled = true
+        disableWarningsInGeneratedCode = true
+        allErrorsAsWarnings = true
+        excludedPaths = ".*/org/opencv/.*|.*/data_binding_base_class_source_out/.*"
+    }
+}
+// Exclude CJK CMap files from light edition after asset merge (saves ~3 MB, not needed without CJK OCR support)
+if (isLight) {
+    tasks.whenTaskAdded { task ->
+        if (task.name.matches("merge(Debug|Release)Assets")) {
+            task.doLast {
+                def cmapDir = new File(task.outputDir.get().asFile, "com/tom_roush/fontbox/resources/cmap")
+                if (cmapDir.exists()) {
+                    def deleted = cmapDir.deleteDir()
+                    println "Deleted CJK CMap assets from light edition: ${deleted}"
+                }
+            }
+        }
+    }
+}
+
+spotless {
+    java {
+        target("src/main/java/de/schliweb/**/*.java")
+        licenseHeaderFile(rootProject.file("HEADER"))
+        googleJavaFormat("1.17.0")
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
+// JaCoCo coverage report for the default 'standard' flavor (debug build type).
+// Note: AGP generates per-flavor unit-test tasks once a flavor dimension is declared,
+// so the historical 'testDebugUnitTest' task no longer exists. We wire JaCoCo to
+// 'testStandardDebugUnitTest' (matches the F-Droid default flavor).
+tasks.register("jacocoTestReport", JacocoReport) {
+    dependsOn "testStandardDebugUnitTest"
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+    def mainSrc = "$projectDir/src/main/java"
+    sourceDirectories.setFrom(mainSrc)
+    classDirectories.setFrom(
+            fileTree("$buildDir/intermediates/javac/standardDebug") {
+                exclude("**/R.class", "**/R\$*.class", "**/BuildConfig.class")
+            }
+    )
+    executionData.setFrom(fileTree(buildDir) {
+        include(
+                "jacoco/testStandardDebugUnitTest.exec",
+                "outputs/unit_test_code_coverage/standardDebugUnitTest/testStandardDebugUnitTest.exec"
+        )
+    })
+}
+
+// Disable ArtProfile / baseline-prof generation for deterministic builds.
+// This only affects build artefacts (no functional change for users).
+tasks.whenTaskAdded { task ->
+    if (task.name.toLowerCase().contains("artprofile")) {
+        task.enabled = false
+    }
+}

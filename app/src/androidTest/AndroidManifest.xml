@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Allow tests to run on emulators without strict camera hardware requirement -->
+    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
+
+    <application tools:node="merge">
+        <!-- Test-only DocumentsProvider that mimics Nextcloud's behavior of stripping
+             file extensions on createDocument. Used by FileUtilsEnsureExtensionInstrumentedTest. -->
+        <!--
+            Note: exported=true is required so the test APK's provider is reachable from
+            the app-under-test process (instrumentation tests run inside the app process,
+            which has a different UID than the test APK). This authority is test-only and
+            never shipped in release builds.
+        -->
+        <provider
+            android:name="de.schliweb.makeacopy.utils.infra.StripExtensionDocumentsProvider"
+            android:authorities="de.schliweb.makeacopy.test.stripext.documents"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            tools:ignore="ExportedContentProvider" />
+    </application>
+</manifest>

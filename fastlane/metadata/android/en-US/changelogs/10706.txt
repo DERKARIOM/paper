@@ -1,0 +1,9 @@
+MakeACopy 1.7.6 (Release)
+
+- Fix for Xiaomi/Redmi torch darkening: On some Xiaomi/Redmi/POCO devices (e.g., Redmi Note 12 on Android 15 / HyperOS), enabling the torch made the preview/photo darker due to firmware clamping exposure. We now detect these devices and apply a positive exposure compensation automatically while the torch is on, and restore it when the torch is off or after re-binding.
+- Sony Xperia Android 15 camera compatibility: Enforce TextureView (COMPATIBLE) preview and conservative 4:3 preview resolution for Sony devices on Android 15+ (incl. Xperia 1 VI / 5 IV) to resolve black preview screens.
+- Preview watchdog timing: Increased from 1.5s to 3.0s to allow Sony lens shutters to open before re-binding the preview.
+- Error messages: Camera initialization/preview-failure toasts now use LENGTH_LONG to avoid truncation on some devices.
+- Fix OCRFragment showing outdated results on new scans by resetting OCRViewModel on new image detection.
+
+New: Added option to skip perspective correction and go straight to OCR (useful for flatbed scans or already-corrected images).

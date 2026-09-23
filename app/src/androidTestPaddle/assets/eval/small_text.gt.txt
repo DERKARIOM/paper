@@ -1,0 +1,13 @@
+MakeACopy Benchmark Document
+This page is a synthetic test document used to evaluate the high-pass grayscale filter introduced in feature request #74. It contains a mix of headings, body text, and fine print so that character
+and word error rates can be compared across preprocessing pipelines.
+Section 1 - Body Text
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+in culpa qui officia deserunt mollit anim id est laborum.
+Section 2 - More Body Text
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+in culpa qui officia deserunt mollit anim id est laborum.
+Fine print: The quick brown fox jumps over the lazy dog. 1234567890 !?.,:;-_/()[]{} Il1|oO0 rn m cl d.
+Footer: MakeACopy - offline document scanner - FR #74 sample.

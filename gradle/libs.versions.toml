@@ -1,0 +1,108 @@
+[versions]
+
+agp = "8.12.0"
+hamcrest = "3.0"
+junit = "4.13.2"
+# AndroidX Test ext:junit version (aligned with AndroidX Test 1.5.x line)
+junitVersion = "1.1.5"
+# Espresso core version (use direct version to avoid repository issues)
+espressoCore = "3.5.1"
+appcompat = "1.7.1"
+material = "1.14.0"
+constraintlayout = "2.2.1"
+lifecycleLivedataKtx = "2.10.0"
+lifecycleViewmodelKtx = "2.10.0"
+navigationFragment = "2.9.8"
+navigationUi = "2.9.8"
+# Added for MakeACopy
+camerax = "1.6.1"
+roomRuntime = "2.8.4"
+tesseract = "4.9.0"
+lombok = "1.18.46"
+pdfbox = "2.0.27.0"
+activity = "1.13.0"
+exifinterface = "1.4.2"
+documentfile = "1.1.0"
+gson="2.14.0"
+# Android test libs (aligned set)
+androidxTestRules = "1.5.0"
+androidxTestCore = "1.5.0"
+androidxTestRunner = "1.5.2"
+fragmentTesting = "1.8.9"
+awaitility = "4.3.0"
+
+accessibilityTestFramework = "4.1.1"
+spotless = "7.2.1"
+errorprone = "4.1.0"
+errorproneCore = "2.31.0"
+hilt = "2.56.2"
+licenseReport = "2.9"
+# Prebuilt native deps – ONLY used with -PnativeDeps=prebuilt (local dev builds, see docs/LOCAL_BUILD.md).
+# Must match the versions built from source (external/opencv 4.13.0, external/onnxruntime 1.24.1).
+opencvPrebuilt = "4.13.0"
+onnxruntimePrebuilt = "1.24.1"
+
+[libraries]
+accessibility-test-framework = { module = "com.google.android.apps.common.testing.accessibility.framework:accessibility-test-framework", version.ref = "accessibilityTestFramework" }
+hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+gson = { group = "com.google.code.gson",  name = "gson", version.ref = "gson" }
+
+# CameraX dependencies
+camerax-core = { group = "androidx.camera", name = "camera-core", version.ref = "camerax" }
+camerax-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camerax" }
+camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax" }
+camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax" }
+
+# Tesseract OCR dependency
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+# See: https://github.com/adaptech-cz/Tesseract4Android/issues/86
+# tesseract = { group = "cz.adaptech.tesseract4android", name = "tesseract4android-openmp", version.ref = "tesseract" }
+tesseract = { group = "cz.adaptech.tesseract4android", name = "tesseract4android", version.ref = "tesseract" }
+
+# Lombok dependency
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+
+# PdfBox-Android dependency
+pdfbox-android = { group = "com.tom-roush", name = "pdfbox-android", version.ref = "pdfbox" }
+
+# ExifInterface
+exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
+documentfile = { group = "androidx.documentfile", name = "documentfile", version.ref = "documentfile" }
+
+# Android test libraries
+test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
+androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidxTestCore" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
+fragment-testing = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragmentTesting" }
+awaitility = { group = "org.awaitility", name = "awaitility", version.ref = "awaitility" }
+
+# Error Prone
+errorprone-core = { group = "com.google.errorprone", name = "error_prone_core", version.ref = "errorproneCore" }
+
+# Hilt
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+
+# Prebuilt native deps (dev only, -PnativeDeps=prebuilt)
+onnxruntime-android-prebuilt = { group = "com.microsoft.onnxruntime", name = "onnxruntime-android", version.ref = "onnxruntimePrebuilt" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+errorprone = { id = "net.ltgt.errorprone", version.ref = "errorprone" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+license-report = { id = "com.github.jk1.dependency-license-report", version.ref = "licenseReport" }
+

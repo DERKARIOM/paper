@@ -1,0 +1,15 @@
+* Uses a fixed build timestamp via SOURCE_DATE_EPOCH to improve build reproducibility
+* Switches to single-threaded compilation (make -j1) to reduce non-determinism
+* Avoids absolute path dependencies using compiler flags like -fdebug-prefix-map and -ffile-prefix-map
+* Strips debug symbols and build IDs (llvm-strip) to eliminate binary noise
+* Enforces clean builds per ABI by removing old CMake cache and output directories
+* Excludes unused OpenCV modules for smaller and faster .so output
+* Automatically detects the latest installed NDK and CMake (fallback via ANDROID_SDK_ROOT and which)
+* Issues warnings for non-recommended NDK versions to guide consistent builds
+* Adds Gradle Kotlin workaround: sets kotlinOptions.jvmTarget = 17 in build.gradle when needed
+* Prepares for multi-architecture output (e.g., x86, x86_64, riscv64) with clean separation per ABI
+* Improved logging and error handling (e.g., trap, tail of log on failure, log path output)
+* Silences verbose OpenCV build output by replacing the status() function in OpenCVUtils.cmake
+* Uses neutral build and source directories under /tmp to prevent hardcoded paths in binaries
+
+Goal: Achieve smaller, consistent and reproducible native builds – a solid step toward leaner APKs and F-Droid compliance.

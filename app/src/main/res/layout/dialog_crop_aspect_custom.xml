@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="20dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        <EditText
+                android:id="@+id/crop_aspect_custom_w"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/crop_aspect_custom_width_hint"
+                android:inputType="numberDecimal"
+                android:autofillHints="ratioWidth"
+                android:maxLength="8"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/crop_aspect_ratio_separator"
+                android:textSize="20sp"/>
+
+        <EditText
+                android:id="@+id/crop_aspect_custom_h"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/crop_aspect_custom_height_hint"
+                android:inputType="numberDecimal"
+                android:autofillHints="ratioHeight"
+                android:maxLength="8"/>
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/crop_aspect_custom_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="?attr/colorError"
+            android:visibility="gone"
+            android:text="@string/crop_aspect_custom_invalid"/>
+
+</LinearLayout>

@@ -1,0 +1,479 @@
+<resources>
+    <string name="app_name">MakeACopy</string>
+
+    <!-- OCR Review: Text mode editor tooltip documenting current behavior -->
+    <string name="tip_text_mode_editing">وضع النص: يتم حاليًا تحويل فواصل الأسطر وعلامات الترقيم إلى مسافات. إذا أُدخلت
+        كلمات أقل مما تم التعرّف عليه، فستبقى كلمات OCR المتبقية دون تغيير. تُطبَّق التغييرات بعد توقف قصير.
+    </string>
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">الكاميرا</string>
+    <string name="title_crop">اقتصاص</string>
+    <string name="title_ocr">التعرّف الضوئي على الحروف</string>
+    <string name="title_export">تصدير</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">مسح</string>
+    <string name="btn_crop">اقتصاص</string>
+    <string name="btn_process">معالجة</string>
+    <string name="btn_share">مشاركة</string>
+    <string name="btn_share_text">مشاركة النص</string>
+    <string name="next">التالي</string>
+    <string name="back">رجوع</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">مطلوب إذن الكاميرا لمسح المستندات</string>
+    <string name="confirm">تأكيد</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">الكاميرا جاهزة. اضغط على الزر لمسح مستند.</string>
+    <string name="captured_image">الصورة الملتقطة</string>
+    <string name="image_to_crop">صورة للاقتصاص</string>
+    <string name="cropped_image">الصورة المقصوصة</string>
+    <string name="document_preview">معاينة المستند</string>
+    <string name="include_ocr_text">تصدير OCR كملف TXT منفصل</string>
+    <string name="ocr_results_will_appear_here">ستظهر نتائج OCR هنا</string>
+    <string name="ocr_no_text_detected">لم يتم اكتشاف أي نص</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">اضبط زوايا شبه
+        المنحرف لتحديد منطقة الاقتصاص، ثم اضغط على زر «اقتصاص».
+    </string>
+    <string name="no_document_ready_process_ocr_first">لا يوجد مستند جاهز. قم بتشغيل OCR أولًا.</string>
+    <string name="document_ready_for_export">المستند جاهز للتصدير</string>
+    <string name="processing_image">جارٍ معالجة الصورة…</string>
+    <string name="no_image_processed_crop_an_image_first">لم تتم معالجة أي صورة. قم باقتصاص صورة أولًا.</string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">اكتملت معالجة OCR. اضغط على الزر للمتابعة
+        إلى التصدير.
+    </string>
+    <string name="ocr_found_rotation">تم العثور على دوران: %1$d°</string>
+    <string name="ocr_score">درجة OCR: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">تم العثور على دوران: %1$d° — درجة OCR: %2$d%%</string>
+
+    <!-- Extra explanation appended in “Explain recognition modes” dialog -->
+    <string name="ocr_prep_modes_autorotate_note">التدوير التلقائي لـ OCR: عند التفعيل، يحاول OCR الصفحة بزوايا 90°
+        (0/90/180/270) ويختار أفضل نتيجة. يمكن تطبيق التدوير الذي تم العثور عليه تلقائيًا أثناء التصدير إذا لم تقم
+        بالتدوير يدويًا. يمكنك تبديل هذا الخيار في «اختيار وضع التعرّف».
+    </string>
+
+    <string name="initializing_camera">جارٍ تهيئة الكاميرا…</string>
+    <string name="resetting_camera">جارٍ إعادة ضبط الكاميرا…</string>
+    <string name="error_initializing_camera">خطأ أثناء تهيئة الكاميرا: %1$s</string>
+    <string name="error_camera_provider_null">فشل تهيئة الكاميرا – المزوّد فارغ</string>
+    <string name="error_camera_not_initialized">الكاميرا غير مهيأة. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_image_capture_failed">فشل التقاط الصورة: %1$s</string>
+    <string name="error_displaying_image">خطأ في عرض الصورة: %1$s</string>
+    <string name="error_resetting_camera">خطأ في إعادة ضبط الكاميرا: %1$s</string>
+    <string name="error_toggling_flashlight">خطأ في تبديل الفلاش: %1$s</string>
+    <string name="error_camera_preview_failed">فشل بدء معاينة الكاميرا. يرجى المحاولة مرة أخرى.</string>
+
+    <!-- Logging / Share logs -->
+    <string name="share_logs">مشاركة السجلات</string>
+    <string name="share_logs_subject">سجلات تشخيص MakeACopy</string>
+    <string name="share_logs_chooser_title">مشاركة السجلات عبر…</string>
+    <string name="share_logs_error">تعذر تجهيز السجلات: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">تدرج الرمادي</string>
+    <string name="export_as_jpeg">تصدير كـ JPEG</string>
+    <string name="export_format_label">تنسيق التصدير</string>
+    <string name="export_as_pdf">تصدير كـ PDF (افتراضي)</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">تبديل الفلاش</string>
+    <string name="flashlight_on">الفلاش قيد التشغيل</string>
+    <string name="flashlight_off">الفلاش متوقف</string>
+    <string name="flashlight_not_available">الفلاش غير متوفر على هذا الجهاز</string>
+    <string name="low_light_detected">تم اكتشاف إضاءة منخفضة. تشغيل الفلاش؟</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">تعويض التعريض %1$s</string>
+    <string name="exposure_compensation_cd">شريط تمرير تعويض التعريض</string>
+    <string name="exposure_compensation_option">تعويض التعريض</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">شريط تمرير التركيز اليدوي</string>
+    <string name="manual_focus_af_button_cd">التبديل إلى التركيز التلقائي</string>
+    <string name="autofocus_enabled">تم تفعيل التركيز التلقائي</string>
+    <string name="manual_focus_locked">تم تثبيت التركيز اليدوي</string>
+    <string name="manual_focus_option">التركيز اليدوي</string>
+    <string name="focus_quality_option">مؤشر جودة التركيز</string>
+    <string name="tap_to_focus_started">جارٍ التركيز…</string>
+    <string name="tap_to_focus_done">تم ضبط التركيز</string>
+    <string name="tap_to_focus_requested">تم طلب التركيز</string>
+    <string name="tap_to_focus_not_locked">تعذر تثبيت التركيز هنا</string>
+    <string name="tap_to_focus_not_supported">التركيز باللمس غير مدعوم هنا</string>
+    <string name="tap_to_focus_failed">تعذر التركيز هنا</string>
+    <string name="focus_quality_low">جودة التركيز: منخفضة</string>
+    <string name="focus_quality_good">جودة التركيز: جيدة</string>
+    <string name="focus_quality_excellent">جودة التركيز: ممتازة</string>
+    <string name="camera_zoom_title">التكبير / العدسة</string>
+    <string name="camera_zoom_cd">اختر التكبير أو العدسة</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">التكبير غير متاح على هذا الجهاز</string>
+
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">ملون</string>
+    <string name="jpeg_mode_auto">تدرج الرمادي</string>
+    <string name="jpeg_mode_bw_text">أبيض وأسود</string>
+    <string name="jpeg_mode_bw_robust">أبيض &amp; أسود (محسّن) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">معالجة OCR محسّنة (JPEG)</string>
+    <string name="pdf_bw_mode_robust">أبيض وأسود</string>
+    <string name="pdf_bw_mode_classic">أ&amp;س (كلاسيكي)</string>
+    <string name="pdf_bw_mode_ocr_robust">معالجة OCR محسّنة (PDF)</string>
+    <string name="jpeg_mode_gray_clean">تدرج رمادي نظيف (مرشح تمرير عالي) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">ألوان نظيفة (مرشح تمرير عالي) (JPEG)</string>
+    <string name="pdf_bw_mode_grayscale_clean">تدرج رمادي مُنقّى (تمرير عالي)</string>
+    <string name="pdf_bw_mode_color_clean">ألوان مُنقّاة (تمرير عالي)</string>
+    <string name="skip_ocr_export_only">تخطي OCR (تصدير فقط)</string>
+    <string name="preview_corner_detection">معاينة اكتشاف الزوايا</string>
+    <string name="skip_cropping">تخطي الاقتصاص</string>
+    <string name="skip_edge_detection">تخطي اكتشاف الحواف</string>
+    <string name="btn_pick_image">تحميل</string>
+    <string name="pick_image_cd">تحميل صورة موجودة</string>
+    <!-- Multipage Export (v1 increment) -->
+    <string name="add_another_page">إضافة صفحة</string>
+    <string name="clear_all_pages">مسح الكل</string>
+    <string name="remove_this_page">إزالة هذه الصفحة</string>
+    <string name="multipage_not_implemented">تصدير متعدد الصفحات غير مُنفّذ بعد</string>
+
+    <!-- Reorder A11y controls -->
+    <string name="move_page_left">تحريك الصفحة لليسار</string>
+    <string name="move_page_right">تحريك الصفحة لليمين</string>
+
+    <!-- Back confirmation for clearing multipage session -->
+    <string name="confirm_clear_multipage_title">حذف الصفحات؟</string>
+    <string name="confirm_clear_multipage_message">تمت إضافة عدة صفحات. هل تريد حذف جميع الصفحات والرجوع؟</string>
+    <string name="cancel">إلغاء</string>
+
+    <!-- Clear-all confirmation for trash icon in multipage -->
+    <string name="confirm_clear_pages_title">مسح جميع الصفحات؟</string>
+    <string name="confirm_clear_pages_message">هل تريد إزالة جميع الصفحات من الشريط؟</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">اختر من عمليات المسح المكتملة</string>
+    <string name="picker_empty">لم يتم العثور على عمليات مسح مكتملة</string>
+    <!-- Library default collection -->
+    <string name="collection_completed_scans">عمليات المسح المكتملة</string>
+    <string name="done">التالي</string>
+    <string name="thumbnail">صورة مصغرة</string>
+    <string name="delete">حذف</string>
+
+    <!-- Picker bulk actions -->
+    <string name="select_all">تحديد الكل</string>
+    <string name="deselect_all">إلغاء تحديد الكل</string>
+
+    <string name="added_pages_from_registry">تمت إضافة %1$d صفحة من السجل</string>
+
+    <!-- Add page options dialog -->    <!-- Picker states -->
+    <string name="missing_file">ملف مفقود</string>
+
+    <!-- Inline OCR cues -->
+    <string name="ocr_processing_started">جارٍ تشغيل OCR…</string>
+    <string name="ocr_processing_finished">تمت إضافة OCR لهذه الصفحة</string>
+    <string name="ocr_processing_failed">فشل OCR المضمن</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">إزالة من السجل</string>
+    <string name="remove_from_registry_message">حذف هذا الإدخال وملفاته المرتبطة؟</string>
+    <string name="remove">إزالة</string>
+    <string name="removed_from_registry_toast">تمت إزالة الإدخال</string>
+    <!-- PDF quality presets (Phase 1) -->
+    <string name="pdf_quality_title">جودة / حجم PDF</string>
+    <string name="pdf_preset_high">عالية (300 dpi، q85)</string>
+    <string name="pdf_preset_standard">قياسية (200 dpi، q72)</string>
+    <string name="pdf_preset_small">صغيرة (150 dpi، q62)</string>
+    <string name="pdf_preset_very_small">صغيرة جدًا (110 dpi، q52)</string>
+    <string name="pdf_text_layer_mode_title">طبقة نص PDF</string>
+    <string name="pdf_text_layer_mode_line_based">مستندة إلى الأسطر (موصى بها)</string>
+    <string name="pdf_text_layer_mode_word_positioned">موضوعة حسب الكلمات (للتوافق)</string>
+    <string name="export_options_title">خيارات التصدير</string>
+    <string name="jpeg_enhancement_title">لون إخراج JPEG</string>
+    <string name="btn_options">خيارات</string>
+    <string name="btn_save">حفظ</string>
+    <string name="btn_new">مسح جديد</string>
+    <string name="btn_review">مراجعة</string>
+    <string name="edit_word_title">تحرير كلمة</string>
+    <string name="cm_edit">تحرير…</string>
+    <string name="cm_merge_next">دمج مع التالي</string>
+    <string name="cm_split">تقسيم</string>
+    <string name="cm_delete">حذف</string>
+    <string name="cm_case">حالة الأحرف</string>
+    <string name="cm_lang">اللغة…</string>
+    <string name="case_upper">أحرف كبيرة</string>
+    <string name="case_lower">أحرف صغيرة</string>
+    <string name="case_title">أحرف عنوان</string>
+    <string name="dialog_language_title">تعيين رمز اللغة</string>
+    <!-- Rotation (post-crop) -->
+    <string name="rotate_left_cd">تدوير الصفحة 90 درجة عكس اتجاه عقارب الساعة</string>
+    <string name="rotate_right_cd">تدوير الصفحة 90 درجة باتجاه عقارب الساعة</string>
+
+    <!-- OCR models management (prototype) -->
+    <string name="ocr_models_manage">نماذج OCR</string>
+    <string name="ocr_import_manual">استيراد ‎.traineddata…</string>
+    <string name="ocr_discover_packs">استكشاف حزم اللغات</string>
+    <string name="ocr_no_packs_found">لم يتم العثور على حزم لغات</string>
+    <string name="ocr_choose_pack">اختر حزمة لغة</string>
+    <string name="ocr_no_models_in_pack">لم يتم العثور على نماذج في هذه الحزمة</string>
+    <string name="ocr_choose_model">اختر نموذجًا للاستيراد</string>
+    <string name="ocr_import_success">تم استيراد النموذج</string>
+    <string name="ocr_import_failed">فشل الاستيراد</string>
+
+    <!-- OCR models: delete local Best -->
+    <string name="ocr_delete_best_model">حذف نموذج Best</string>
+    <string name="ocr_nothing_to_delete">لا يوجد نموذج Best لحذفه للغة الحالية</string>
+    <string name="ocr_delete_confirm_title">حذف نموذج Best؟</string>
+    <string name="ocr_delete_confirm_msg">هل تريد حذف نموذج Best المُستورد لـ %1$s؟ سيبقى نموذج Fast المدمج متاحًا.
+    </string>
+    <string name="ocr_delete_success">تم حذف النموذج</string>
+    <string name="ocr_delete_failed">فشل الحذف</string>
+
+    <!-- OCR models hint -->
+    <string name="ocr_models_hint">للتعرّف الأسرع، يتم تضمين نماذج مدمجة. ولدقة أعلى، يمكنك تثبيت نماذج أكبر من نوع
+        \"Best\". لا يلزم اتصال بالإنترنت.
+    </string>
+
+    <!-- OCR prep modes explanation -->
+    <string name="ocr_explain_prep_modes">شرح أوضاع التعرّف</string>
+    <string name="ocr_prep_modes_title">أوضاع التعرّف: شرح مبسط</string>
+    <string name="ocr_prep_modes_message">هناك طريقتان لإدخال الصور إلى محرّك التعرّف الضوئي على النص (OCR):\n\n•
+        الأصلي (بدون معالجة مسبقة) — الأسرع. يتم إرسال الصورة كما هي. مناسب للصور النظيفة وعالية التباين. قد يفوّت
+        النصوص الباهتة أو المشوَّشة.\n\n•
+        OpenCV المتقدّم — مُعاد تصميمه لتحقيق أعلى دقّة مع الصفحات الصعبة. يقوم بتصحيح الميل، وتوحيد الظلال والإضاءة،
+        وتطبيق تقليل ضوضاء يحافظ على الحواف، مع تكبير ذكي. والأهم أنه يزوّد Tesseract بصورة عالية الجودة بتدرّج رمادي
+        (وليس أبيض وأسود صارم) للحفاظ على التفاصيل الدقيقة مثل حلقات حرف “o” والأرقام الصغيرة. يوفّر أفضل دقّة مع
+        الصفحات الصعبة، لكنه أبطأ ويستهلك ذاكرة أكبر.\n\nالمعالجة اللاحقة لـ OCR: تصحّح أخطاء التعرّف الشائعة مثل
+        الالتباس (0↔O، 1↔l↔I، rn↔m)، وتتحقّق من الكلمات غير المؤكّدة باستخدام قاموس. مفعّلة افتراضيًا؛ عطّلها عند معالجة
+        الأكواد التقنية أو الأرقام التسلسلية.
+    </string>
+
+
+    <!-- OCR prep modes selection -->
+    <string name="ocr_choose_prep_mode_menu">وضع التعرّف…</string>
+    <string name="ocr_choose_prep_mode_title">اختر وضع التعرّف</string>
+    <string name="ocr_mode_original">الأصلية (بدون معالجة مسبقة)</string>
+    <string name="ocr_mode_quick">OpenCV Quick (سريع)</string>
+    <string name="ocr_mode_robust">OpenCV Robust (جودة عالية)</string>
+    <string name="opt_paddle_best_ocr">أفضل جودة Paddle OCR (أبطأ)</string>
+    <string name="ocr_prep_mode_set">تم تعيين وضع التعرّف إلى %1$s</string>
+
+    <!-- Labels -->
+    <string name="label_language">اللغة</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d ك</string>
+    <string name="low_percent_format">منخفض %1$d%%</string>
+    <string name="low_placeholder">منخفض —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 ك</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">إغلاق</string>
+    <string name="cd_zoom_chip_open_menu">فتح قائمة التكبير</string>
+    <string name="cd_minimap">نظرة عامة على المستند، اضغط للانتقال
+    </string>    <!-- A11y content descriptions for menu items -->    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">يرجى إدخال قيمة</string>
+
+    <!-- Collections / Library (feature-flagged) -->
+    <string name="new_collection_title">مجموعة جديدة</string>
+    <string name="collection_name_hint">اسم المجموعة</string>
+    <string name="create">إنشاء</string>
+    <string name="collection_not_empty">المجموعة ليست فارغة</string>
+    <string name="collection_items_count">%1$d عنصر/عناصر</string>
+    <string name="deleted">تم الحذف</string>
+    <string name="open_collections">المجموعات</string>
+    <string name="index_existing_scans">فهرسة عمليات المسح الموجودة</string>
+    <string name="rename">إعادة تسمية</string>
+    <string name="ok">موافق</string>
+    <string name="no_scans_yet">لا توجد عمليات مسح بعد</string>
+    <string name="rename_collection_title">إعادة تسمية المجموعة</string>
+    <string name="action_add_to_collection">إضافة إلى مجموعة…</string>
+    <string name="place_in_collection_title">إضافة إلى مجموعة</string>
+    <string name="create_new_collection">إنشاء مجموعة جديدة…</string>
+    <string name="scan_added_to_collection">تمت إضافة المسح إلى \"%1$s\"</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">إجراءات المكتبة</string>    <!-- Library list: collections membership -->
+    <string name="in_collections_prefix">ضمن: %1$s</string>
+    <!-- Delete confirmation (ScanDetails) -->
+    <string name="delete_warning_irreversible">سيتم حذف الملف من الجهاز. لا يمكن التراجع عن هذا الإجراء.</string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">لا يوجد مستند للتصدير</string>
+    <string name="failed_to_export_document">فشل تصدير المستند</string>
+    <string name="error_during_export_with_reason">خطأ أثناء التصدير: %1$s</string>
+    <string name="document_exported">تم تصدير المستند %1$s</string>
+    <string name="document_multipage_exported">تم تصدير المستند (متعدد الصفحات) %1$s</string>
+    <string name="no_target_selected">لم يتم تحديد وجهة</string>
+    <string name="image_exported">تم تصدير الصورة %1$s</string>
+    <string name="failed_to_export_image">فشل تصدير الصورة</string>
+    <string name="error_during_jpeg_export_with_reason">خطأ أثناء تصدير JPEG: %1$s</string>
+    <string name="zip_exported">تم تصدير ملف ZIP %1$s</string>
+    <string name="failed_to_export_zip">فشل تصدير ZIP</string>
+    <string name="error_during_zip_export_with_reason">خطأ أثناء تصدير ZIP: %1$s</string>
+    <string name="ocr_text_exported_as_txt">تم تصدير نص OCR كملف TXT</string>
+    <string name="error_exporting_ocr_text_with_reason">خطأ أثناء تصدير نص OCR: %1$s</string>
+    <string name="no_document_to_share_export_first">لا يوجد مستند للمشاركة. صدّر مستندًا أولًا.</string>
+    <string name="error_sharing_document_with_reason">خطأ أثناء مشاركة المستند: %1$s</string>
+    <string name="feature_scan_library_disabled">ميزة مكتبة المسح معطلة</string>
+    <string name="navigation_failed">فشلت عملية التنقل</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">معرّف المسح مفقود</string>
+    <string name="picker_failed">فشل المُنتقي</string>
+    <string name="share_failed">فشلت المشاركة</string>
+    <string name="no_app_found_to_open_file">لم يتم العثور على تطبيق لفتح الملف</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">إزالة من هذه المجموعة؟</string>
+    <string name="removed_from_collection">تمت الإزالة من المجموعة</string>
+    <string name="indexed_new_items">تمت فهرسة %1$d عنصر/عناصر جديدة</string>
+    <string name="nothing_new_to_index">لا يوجد شيء جديد للفهرسة</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">تمت محاذاة المستند</string>
+    <string name="a11y_hint_move_left">تحرّك لليسار</string>
+    <string name="a11y_hint_move_right">تحرّك لليمين</string>
+    <string name="a11y_hint_move_up">تحرّك للأعلى</string>
+    <string name="a11y_hint_move_down">تحرّك للأسفل</string>
+    <string name="a11y_hint_move_closer">اقترب من السطح</string>
+    <string name="a11y_hint_move_back">ابتعد عن السطح</string>
+    <string name="a11y_hint_too_far">اقترب أكثر. المستند بعيد جدًا.</string>
+    <string name="a11y_hint_tilt_left">أمل إلى اليسار</string>
+    <string name="a11y_hint_tilt_right">أمل إلى اليمين</string>
+    <string name="a11y_hint_tilt_forward">أمل إلى الأمام</string>
+    <string name="a11y_hint_tilt_back">أمل إلى الخلف</string>
+    <string name="a11y_hold_still">ابقَ ثابتًا</string>
+
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">تم اكتشاف المستند – جاهز للالتقاط.</string>
+    <string name="a11y_no_document_detected">لم يتم اكتشاف أي مستند.</string>
+    <string name="a11y_orientation_portrait_tip">يبدو أن هذا بوضع عمودي. عادةً ما يناسب حمل الهاتف عموديًا الصفحات
+        الطويلة.
+    </string>
+    <string name="a11y_orientation_landscape_tip">يبدو أن هذا بوضع أفقي. جرّب حمل الهاتف أفقيًا للصفحات العريضة.
+    </string>
+    <string name="a11y_crop_summary_detected">تحليل الصورة الملتقطة: تم اكتشاف مستند.</string>
+    <string name="accessibility_mode_label">وضع إمكانية الوصول</string>
+    <string name="a11y_camera_ready">الكاميرا جاهزة. انقر نقرتين على «مسح» للالتقاط.</string>
+    <string name="a11y_crop_summary_no_doc">تحليل الصورة الملتقطة: لم يتم اكتشاف أي مستند.</string>
+    <string name="a11y_low_light_toggle_flash">تم اكتشاف إضاءة منخفضة. انقر نقرتين على «الفلاش» للتفعيل.</string>
+    <string name="a11y_capture_failed">فشل الالتقاط.</string>
+    <string name="a11y_volume_shutter_hint">نصيحة: في وضع إمكانية الوصول، اضغط على أزرار الصوت للالتقاط.</string>
+    <string name="a11y_capture_success">تم التقاط الصورة.
+    </string>    <!-- Accessibility: Recycler item description and announcements -->
+    <string name="page_n_of_m">الصفحة %1$d من %2$d</string>
+    <string name="pages_count_announcement">الصفحات: %1$d</string>
+    <string name="export_started">بدأ التصدير</string>
+    <string name="page_removed">تمت إزالة الصفحة</string>
+    <string name="page_moved_to_position">تم النقل إلى الموضع %1$d</string>
+    <!-- RecyclerView custom accessibility actions (defined once above in Reorder A11y controls) -->
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">الدوران التلقائي لـ OCR (وتطبيقه أيضًا عند التصدير)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">معالجة OCR اللاحقة (تصحيح الأخطاء الشائعة)</string>
+    <string name="opt_layout_analysis">تحليل التخطيط (الأعمدة، الجداول)
+    </string>    <!-- Options: Experimental directional mapping fallback -->    <!-- Developer / Debug options -->    <!-- Library / Collections (developer strings kept non-translatable for now) -->    <!-- PDF Import -->
+    <string name="error_unknown_file_type">نوع الملف غير معروف</string>
+    <string name="error_unsupported_file_type">نوع هذا الملف غير مدعوم</string>
+    <string name="error_cannot_open_pdf">تعذّر فتح ملف PDF</string>
+    <string name="error_pdf_empty">ملف PDF لا يحتوي على أي صفحات</string>
+    <string name="error_pdf_import_failed">فشل استيراد ملف PDF</string>
+    <string name="error_pdf_page_render_failed">تعذّر عرض الصفحة</string>
+    <string name="pdf_select_page">اختر صفحة</string>
+    <string name="pdf_page_number">الصفحة %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">اختر لغات التعرّف الضوئي على الحروف</string>
+    <string name="ocr_max_languages_warning">يُسمح بحد أقصى لغتين</string>
+    <string name="ocr_no_language_selected">يرجى اختيار لغة واحدة على الأقل</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">تجاهل التغييرات؟</string>
+    <string name="msg_discard_changes">لديك تغييرات غير محفوظة. هل تريد تجاهلها؟</string>
+    <string name="btn_discard">تجاهل</string>
+
+    <string name="btn_reocr">إعادة التعرف الضوئي</string>
+    <string name="reocr_processing">جارٍ إعادة تشغيل التعرف الضوئي…</string>
+    <string name="reocr_success">تم تحديث الكلمة: %1$s</string>
+    <string name="reocr_failed">فشل إعادة التعرف الضوئي</string>
+    <string name="reocr_no_language">يرجى تحديد لغة أولاً</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">٪100</string>
+    <string name="zoom_200">٪200</string>
+    <string name="zoom_300">٪300</string>
+    <string name="zoom_400">٪400</string>
+    <string name="zoom_fit">ملاءمة</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">التخطيط</string>
+    <string name="label_text">نص</string>
+    <string name="label_document">مستند</string>
+
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">حجم الصفحة</string>
+    <string name="dpi_settings_label">إعدادات DPI</string>
+    <string name="page_format_fit">مطابقة الصورة (موصى به)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+
+    <string name="restore_access">استعادة الوصول</string>
+    <string name="status">الحالة</string>
+    <string name="ocr_text_editor_hint">تحرير نص OCR</string>
+
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">إعدادات تنظيف عمليات المسح المكتملة</string>
+    <string name="cleanup_policy">سياسة التنظيف</string>
+    <string name="cleanup_policy_none">بدون (الاحتفاظ بالجميع)</string>
+    <string name="cleanup_policy_max_age">حسب العمر</string>
+    <string name="cleanup_policy_max_count">حسب العدد</string>
+    <string name="cleanup_policy_max_storage">حسب مساحة التخزين</string>
+    <string name="cleanup_policy_combined">مجتمعة</string>
+    <string name="cleanup_max_age_days">الحد الأقصى للعمر (بالأيام)</string>
+    <string name="cleanup_max_count">الحد الأقصى للعدد</string>
+    <string name="cleanup_max_storage_mb">الحد الأقصى للتخزين (ميغابايت)</string>
+    <string name="cleanup_settings_saved">تم حفظ إعدادات التنظيف</string>
+    <string name="inbox_mode">وضع صندوق الوارد</string>
+    <string name="inbox_mode_enable">تفعيل مجلد التصدير الافتراضي</string>
+    <string name="inbox_select_folder">اختيار مجلد</string>
+    <string name="inbox_folder_set">مجلد الوارد: %1$s</string>
+    <string name="inbox_folder_none">لم يتم اختيار مجلد</string>
+    <string name="inbox_saved">✓ تم الحفظ في صندوق الوارد</string>
+    <string name="inbox_permission_lost">فُقد الوصول إلى مجلد الوارد. يرجى اختيار مجلد جديد.</string>
+    <string name="inbox_no_folder_selected">يرجى اختيار مجلد الوارد أولاً.</string>
+    <string name="inbox_clear">مسح مجلد الوارد</string>
+    <string name="inbox_filename_format">تنسيق اسم الملف</string>
+    <string name="inbox_auto_new_scan">بدء مسح جديد تلقائيًا بعد التصدير</string>
+    <string name="inbox_filename_date_scan">تاريخ + مسح (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">تاريخ + وقت + مسح (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">تاريخ فقط (2026-03-04)</string>
+    <string name="pdf_bw_mode_none">ملون</string>
+    <!-- Translations added for missing strings -->
+    <string name="confirm_remove_page_title">إزالة الصفحة؟</string>
+    <string name="confirm_remove_page_message">هل تريد إزالة هذه الصفحة من شريط الأفلام؟</string>
+    <string name="crop_aspect_label">نسبة العرض إلى الارتفاع</string>
+    <string name="crop_aspect_auto">تلقائي (موصى به)</string>
+    <string name="crop_aspect_original">الإبقاء على الأصل (بدون تصحيح النسبة)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">مخصص…</string>
+    <string name="crop_aspect_custom_with_ratio">مخصص (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">نسبة عرض مخصصة</string>
+    <string name="crop_aspect_custom_width_hint">العرض</string>
+    <string name="crop_aspect_custom_height_hint">الارتفاع</string>
+    <string name="crop_aspect_custom_invalid">يرجى إدخال أرقام موجبة بين 1:1 و1:20.</string>
+    <string name="crop_aspect_output_size_hint">الإخراج: %1$d × %2$d بكسل</string>
+    <string name="crop_hint_corner_off_image">الزاوية خارج الصورة — قد يحتوي الإخراج المعدّل على حدود سوداء</string>
+    <string name="crop_edge_dragged">تم تحديد الحافة. اسحب لتحريك الحافة.</string>
+    <!-- Document cleanup -->
+    <string name="document_cleanup_title">تنظيف المستند</string>
+    <string name="document_cleanup_original">أصلي</string>
+    <string name="document_cleanup_natural">طبيعي</string>
+    <string name="document_cleanup_enhanced">محسّن</string>
+    <string name="document_cleanup_clean_text">نص نظيف</string>
+    <string name="workflow_step_description">الخطوة %1$d من %2$d: %3$s</string>
+    <string name="search_scans">البحث في المستندات الممسوحة</string>
+</resources>

@@ -1,0 +1,1 @@
+Privacy-focused document scanner with OCR and PDF export

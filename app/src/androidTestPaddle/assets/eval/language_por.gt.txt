@@ -1,0 +1,4 @@
+Português
+Exemplo de idioma
+Luís argüia à Júlia que brações, fé, chá e pôquer são úteis.
+Exemplo de reconhecimento de texto.

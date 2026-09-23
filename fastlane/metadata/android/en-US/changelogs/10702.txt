@@ -1,0 +1,12 @@
+MakeACopy 1.7.2 (Release Candidate)
+
+- New: Low-light document detection pipeline (denoise, gamma, CLAHE, gentle sharpening).
+- New: Automatic ONNX output handling (supports heatmap or 8-coordinate formats via parsePrediction).
+- Improved: Corner accuracy with sub-pixel peak refinement and dynamic peak thresholding.
+- Improved: Edge detection in dark scenes by fusing Canny with adaptive low-light edges.
+- Improved: ONNX input preprocessing via 256×256 letterbox (no aspect distortion).
+- Improved: Robust point ordering around centroid and safer fallback rectangle (~10% margin).
+- Fixed: Resource leak in contour detection (edgesCopy) and lambda “effectively final” issue.
+- Fixed: Potential in-place denoising edge cases by using a temporary Mat.
+- Technical: Enabled opencv_photo module for FastNLMeans; replaced Mat::release method reference with a compatible loop.
+- Technical: Reproducible OpenCV build settings retained and compatible with changes.

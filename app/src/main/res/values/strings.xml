@@ -1,0 +1,504 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">MakeACopy</string>
+
+    <!-- OCR Review: Text mode editor tooltip documenting current behavior -->
+    <string name="tip_text_mode_editing">Text mode: Line breaks and punctuation are currently normalized to spaces. If
+        fewer words are entered than were recognized, the remaining OCR words stay unchanged. Changes are applied after
+        a short pause.
+    </string>
+
+    <!-- New menu items for document scanner -->
+    <string name="title_camera">Camera</string>
+    <string name="title_crop">Crop</string>
+    <string name="title_ocr">OCR</string>
+    <string name="title_export">Export</string>
+    <!-- Accessibility description for the workflow stepper, e.g. "Step 2 of 4: Crop" -->
+    <string name="workflow_step_description">Step %1$d of %2$d: %3$s</string>
+
+    <!-- Button labels -->
+    <string name="btn_scan">Scan</string>
+    <string name="btn_crop">Crop</string>
+    <string name="btn_process">Process</string>
+    <string name="btn_share">Share</string>
+    <string name="btn_share_text">Share text</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+
+    <!-- Messages -->
+    <string name="msg_camera_permission_required">Camera permission is required to scan documents</string>
+    <string name="confirm">Confirm</string>
+    <string name="camera_ready_tap_the_button_to_scan_a_document">Camera ready. Tap the button to scan a document.
+    </string>
+    <string name="captured_image">Captured image</string>
+    <string name="image_to_crop">Image to crop</string>
+    <string name="cropped_image">Cropped image</string>
+    <string name="document_preview">Document preview</string>
+    <string name="include_ocr_text">Export OCR as separate TXT</string>
+    <string name="ocr_results_will_appear_here">OCR results will appear here</string>
+    <string name="ocr_no_text_detected">No text detected</string>
+    <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Adjust the trapezoid
+        corners to select the area to crop, then tap the Crop button.
+    </string>
+    <string name="no_document_ready_process_ocr_first">No document ready. Process OCR first.</string>
+    <string name="document_ready_for_export">Document ready for export</string>
+    <string name="processing_image">Processing image…</string>
+    <string name="no_image_processed_crop_an_image_first">No image processed. Crop an image first.</string>
+    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR processing complete. Tap the button
+        to proceed to export.
+    </string>
+    <string name="ocr_found_rotation">Found rotation: %1$d°</string>
+    <string name="ocr_score">OCR score: %1$d%%</string>
+    <string name="ocr_found_rotation_with_score">Found rotation: %1$d° — OCR score: %2$d%%</string>
+
+    <!-- Extra explanation appended in “Explain recognition modes” dialog -->
+    <string name="ocr_prep_modes_autorotate_note">OCR Auto‑Rotate: When enabled, OCR also tries the page at 90° steps
+        (0/90/180/270) and picks the best result. The found rotation can be applied automatically during export if you
+        didn’t rotate manually. You can toggle this in “Choose recognition mode”.
+    </string>
+
+    <string name="initializing_camera">Initializing camera…</string>
+    <string name="resetting_camera">Resetting camera…</string>
+    <string name="error_initializing_camera">Error initializing camera: %1$s</string>
+    <string name="error_camera_provider_null">Failed to initialize camera – provider is null</string>
+    <string name="error_camera_not_initialized">Camera not initialized. Please try again.</string>
+    <string name="error_image_capture_failed">Image capture failed: %1$s</string>
+    <string name="error_displaying_image">Error displaying image: %1$s</string>
+    <string name="error_resetting_camera">Error resetting camera: %1$s</string>
+    <string name="error_toggling_flashlight">Error toggling flashlight: %1$s</string>
+    <string name="error_camera_preview_failed">Camera preview failed to start. Please try again.</string>
+
+    <!-- Logging / Share logs -->
+    <string name="share_logs">Share logs</string>
+    <string name="share_logs_subject">MakeACopy diagnostic logs</string>
+    <string name="share_logs_chooser_title">Share logs via…</string>
+    <string name="share_logs_error">Could not prepare logs: %1$s</string>
+
+    <!-- Export options -->
+    <string name="convert_to_grayscale">Grayscale</string>
+    <string name="export_as_jpeg">Export as JPEG</string>
+    <string name="export_format_label">Export format</string>
+    <string name="export_format_pdf" translatable="false">PDF</string>
+    <string name="export_format_jpeg" translatable="false">JPEG</string>
+    <string name="export_as_pdf">Export as PDF (default)</string>
+    <string name="document_cleanup_title">Document cleanup</string>
+    <string name="document_cleanup_original">Original</string>
+    <string name="document_cleanup_natural">Natural</string>
+    <string name="document_cleanup_enhanced">Enhanced</string>
+    <string name="document_cleanup_clean_text">Clean Text</string>
+
+    <!-- Flashlight options -->
+    <string name="toggle_flashlight">Toggle flashlight</string>
+    <string name="flashlight_on">Flashlight on</string>
+    <string name="flashlight_off">Flashlight off</string>
+    <string name="flashlight_not_available">Flashlight not available on this device</string>
+    <string name="low_light_detected">Low light detected. Turn on flashlight?</string>
+
+    <!-- Exposure compensation -->
+    <string name="exposure_compensation_label">EV %1$s</string>
+    <string name="exposure_compensation_cd">Exposure compensation slider</string>
+    <string name="exposure_compensation_option">Exposure compensation</string>
+    <string name="manual_focus_auto">AF</string>
+    <string name="manual_focus_label">MF %1$d%%</string>
+    <string name="manual_focus_cd">Manual focus slider</string>
+    <string name="manual_focus_af_button_cd">Switch to autofocus</string>
+    <string name="autofocus_enabled">Autofocus enabled</string>
+    <string name="manual_focus_locked">Manual focus locked</string>
+    <string name="manual_focus_option">Manual focus</string>
+    <string name="focus_quality_option">Focus quality indicator</string>
+    <string name="tap_to_focus_started">Focusing…</string>
+    <string name="tap_to_focus_done">Focus adjusted</string>
+    <string name="tap_to_focus_requested">Focus requested</string>
+    <string name="tap_to_focus_not_locked">Focus could not lock here</string>
+    <string name="tap_to_focus_not_supported">Tap focus is not supported here</string>
+    <string name="tap_to_focus_failed">Could not focus here</string>
+    <string name="focus_quality_low">Focus quality: low</string>
+    <string name="focus_quality_good">Focus quality: good</string>
+    <string name="focus_quality_excellent">Focus quality: excellent</string>
+    <string name="camera_zoom_title">Zoom / lens</string>
+    <string name="camera_zoom_cd">Choose zoom or lens</string>
+    <string name="camera_zoom_ratio">%1$s×</string>
+    <string name="camera_zoom_not_available">Zoom is not available on this device</string>
+    <!-- JPEG mode labels -->
+    <string name="jpeg_mode_none">Color</string>
+    <string name="jpeg_mode_auto">Grayscale</string>
+    <string name="jpeg_mode_bw_text">Black &amp; White</string>
+    <string name="jpeg_mode_bw_robust">Black &amp; White (robust) (JPEG)</string>
+    <string name="jpeg_mode_ocr_robust">OCR robust preprocessing (JPEG)</string>
+    <string name="jpeg_mode_gray_clean">Grayscale clean (high-pass) (JPEG)</string>
+    <string name="jpeg_mode_color_clean">Color clean (high-pass) (JPEG)</string>
+    <string name="pdf_bw_mode_none">Color</string>
+    <string name="pdf_bw_mode_robust">Black &amp; White</string>
+    <string name="pdf_bw_mode_classic">B&amp;W (classic)</string>
+    <string name="pdf_bw_mode_ocr_robust">OCR robust preprocessing (PDF)</string>
+    <string name="pdf_bw_mode_grayscale_clean">Grayscale clean (high-pass)</string>
+    <string name="pdf_bw_mode_color_clean">Color clean (high-pass)</string>
+    <string name="output_color_title" translatable="false">Output color</string>
+    <string name="skip_ocr_export_only">Skip OCR (export only)</string>
+    <string name="preview_corner_detection">Preview corner detection</string>
+    <string name="skip_cropping">Skip cropping</string>
+    <string name="skip_edge_detection">Skip edge detection</string>
+    <string name="btn_pick_image">Load</string>
+    <string name="pick_image_cd">Load existing image</string>
+    <!-- Multipage Export (v1 increment) -->
+    <string name="add_another_page">Add page</string>
+    <string name="clear_all_pages">Clear all</string>
+    <string name="remove_this_page">Remove this page</string>
+    <string name="multipage_not_implemented">Multi-page export not implemented yet</string>
+
+    <!-- Reorder A11y controls -->
+    <string name="move_page_left">Move page left</string>
+    <string name="move_page_right">Move page right</string>
+
+    <!-- Back confirmation for clearing multipage session -->
+    <string name="confirm_clear_multipage_title">Delete pages?</string>
+    <string name="confirm_clear_multipage_message">Multiple pages are added. Do you want to delete all pages and go
+        back?
+    </string>
+    <string name="cancel">Cancel</string>
+
+
+    <!-- Clear-all confirmation for trash icon in multipage -->
+    <string name="confirm_clear_pages_title">Clear all pages?</string>
+    <string name="confirm_clear_pages_message">Do you want to remove all pages from the filmstrip?</string>
+
+    <!-- Confirmation for removing a single page from the filmstrip -->
+    <string name="confirm_remove_page_title">Remove page?</string>
+    <string name="confirm_remove_page_message">Do you want to remove this page from the filmstrip?</string>
+
+    <!-- Registry Picker -->
+    <string name="picker_title_completed_scans">Choose from completed scans</string>
+    <string name="picker_empty">No completed scans found</string>
+    <!-- Library default collection -->
+    <string name="collection_completed_scans">Completed Scans</string>
+    <string name="done">Next</string>
+    <string name="thumbnail">Thumbnail</string>
+    <string name="delete">Delete</string>
+
+    <!-- Picker bulk actions -->
+    <string name="select_all">Select all</string>
+    <string name="deselect_all">Deselect all</string>
+
+    <string name="added_pages_from_registry">Added %1$d page(s) from registry</string>
+
+    <!-- Add page options dialog -->    <!-- Picker states -->
+    <string name="missing_file">Missing file</string>
+
+    <!-- Inline OCR cues -->
+    <string name="ocr_processing_started">Running OCR…</string>
+    <string name="ocr_processing_finished">OCR added for this page</string>
+    <string name="ocr_processing_failed">Inline OCR failed</string>
+
+    <!-- Registry Picker: context action -->
+    <string name="remove_from_registry_title">Remove from registry</string>
+    <string name="remove_from_registry_message">Delete this entry and its associated files?</string>
+    <string name="remove">Remove</string>
+    <string name="removed_from_registry_toast">Entry removed</string>
+    <!-- PDF quality presets (Phase 1) -->
+    <string name="pdf_quality_title">PDF quality / size</string>
+    <string name="dpi_settings_label">DPI settings</string>
+    <string name="pdf_preset_high">High (300 dpi, q85)</string>
+    <string name="pdf_preset_standard">Standard (200 dpi, q72)</string>
+    <string name="pdf_preset_small">Small (150 dpi, q62)</string>
+    <string name="pdf_preset_very_small">Very small (110 dpi, q52)</string>
+    <string name="pdf_text_layer_mode_title">PDF text layer</string>
+    <string name="pdf_text_layer_mode_line_based">Line-based (recommended)</string>
+    <string name="pdf_text_layer_mode_word_positioned">Word-positioned (compatibility)</string>
+    <string name="export_options_title">Export options</string>
+    <!-- Page format selection (PDF export) -->
+    <string name="page_format_label">Page size</string>
+    <string name="page_format_fit">Fit to image (recommended)</string>
+    <string name="page_format_a4">A4</string>
+    <string name="page_format_letter">US Letter</string>
+    <string name="page_format_legal">Legal</string>
+    <string name="jpeg_enhancement_title">JPEG output color</string>
+    <string name="btn_options">Options</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_new">New scan</string>
+    <string name="btn_review">Review</string>
+    <string name="edit_word_title">Edit word</string>
+    <string name="cm_edit">Edit…</string>
+    <string name="cm_merge_next">Merge with next</string>
+    <string name="cm_split">Split</string>
+    <string name="cm_delete">Delete</string>
+    <string name="cm_case">Case</string>
+    <string name="cm_lang">Language…</string>
+    <string name="case_upper">UPPERCASE</string>
+    <string name="case_lower">lowercase</string>
+    <string name="case_title">Title Case</string>
+    <string name="dialog_language_title">Set language code</string>
+
+    <!-- Rotation (post-crop) -->
+    <string name="rotate_left_cd">Rotate page 90 degrees counter-clockwise</string>
+    <string name="rotate_right_cd">Rotate page 90 degrees clockwise</string>
+
+    <!-- OCR models management (prototype) -->
+    <string name="ocr_models_manage">OCR models</string>
+    <string name="ocr_import_manual">Import .traineddata…</string>
+    <string name="ocr_discover_packs">Discover language packs</string>
+    <string name="ocr_no_packs_found">No language packs found</string>
+    <string name="ocr_choose_pack">Choose language pack</string>
+    <string name="ocr_no_models_in_pack">No models found in this pack</string>
+    <string name="ocr_choose_model">Choose model to import</string>
+    <string name="ocr_import_success">Model imported</string>
+    <string name="ocr_import_failed">Import failed</string>
+
+    <!-- OCR models: delete local Best -->
+    <string name="ocr_delete_best_model">Delete Best model</string>
+    <string name="ocr_nothing_to_delete">No Best model to delete for the current language</string>
+    <string name="ocr_delete_confirm_title">Delete Best model?</string>
+    <string name="ocr_delete_confirm_msg">Delete the imported Best model for %1$s? The built-in Fast model will remain
+        available.
+    </string>
+    <string name="ocr_delete_success">Model deleted</string>
+    <string name="ocr_delete_failed">Delete failed</string>
+
+    <!-- OCR models hint -->
+    <string name="ocr_models_hint">For faster recognition, compact models are included. For higher accuracy, you can
+        install larger \"Best\" models. No internet connection is required.
+    </string>
+
+    <!-- OCR prep modes explanation -->
+    <string name="ocr_explain_prep_modes">Explain recognition modes</string>
+    <string name="ocr_prep_modes_title">Recognition modes: simple explanation</string>
+    <string name="ocr_prep_modes_message">There are two ways to feed images into the OCR engine:\n\n• Original (no
+        preprocessing) — fastest. We send the photo as-is. Best for already clean, high-contrast scans. May miss faint
+        or noisy text.\n\n• OpenCV Robust — rebuilt for maximum accuracy on difficult pages. It deskews, normalizes
+        shadows/illumination, applies edge‑preserving denoise and smart upscaling. Importantly, it feeds Tesseract a
+        high‑quality grayscale image (not hard black/white) to preserve fine details like loops in “o” and small
+        digits. Best accuracy on tough pages; slower and uses more memory. Recommended default for most photos.\n\nOCR
+        Post-Processing: Corrects typical recognition errors like confusions (0↔O, 1↔l↔I, rn↔m) and checks uncertain
+        words against a dictionary. Enabled by default; disable for technical codes or serial numbers.
+    </string>
+
+    <!-- OCR prep modes selection -->
+    <string name="ocr_choose_prep_mode_menu">Recognition mode…</string>
+    <string name="ocr_choose_prep_mode_title">Choose recognition mode</string>
+    <string name="ocr_mode_original">Original (no preprocessing)</string>
+    <string name="ocr_mode_quick">OpenCV Quick (fast)</string>
+    <string name="ocr_mode_robust">OpenCV Robust (high quality)</string>
+    <string name="ocr_mode_paddle" tools:ignore="MissingTranslation">PaddleOCR (experimental, no preprocessing)</string>
+    <string name="opt_paddle_best_ocr">Best Paddle OCR quality (slower)</string>
+    <string name="ocr_prep_mode_set">Recognition mode set to %1$s</string>
+
+    <!-- Labels -->
+    <string name="label_language">Language</string>
+
+    <!-- OCR Review: Status chips formatting -->
+    <string name="words_count_suffix_format">%1$d W</string>
+    <string name="low_percent_format">Low %1$d%%</string>
+    <string name="low_placeholder">Low —</string>
+    <!-- Initial placeholders for status chips -->
+    <string name="words_count_initial">0 W</string>
+    <string name="lang_placeholder">—</string>
+
+    <!-- Accessibility content descriptions -->
+    <string name="cd_close">Close</string>
+    <string name="cd_zoom_chip_open_menu">Open zoom menu</string>
+    <string name="cd_minimap">Dokument-Übersicht, tippen zum Springen</string>
+    <!-- A11y content descriptions for menu items -->
+    <!-- Inline edit bottom sheet validation -->
+    <string name="error_empty_input">Please enter a value</string>
+
+    <!-- Collections / Library (feature-flagged) -->
+    <string name="new_collection_title">New collection</string>
+    <string name="collection_name_hint">Collection name</string>
+    <string name="create">Create</string>
+    <string name="collection_not_empty">Collection is not empty</string>
+    <string name="collection_items_count">%1$d item(s)</string>
+    <string name="deleted">Deleted</string>
+    <string name="open_collections">Collections</string>
+    <string name="index_existing_scans">Index existing scans</string>
+    <string name="rename">Rename</string>
+    <string name="ok">OK</string>
+    <string name="no_scans_yet">No scans yet</string>
+    <string name="rename_collection_title">Rename collection</string>
+    <string name="action_add_to_collection">Add to collection…</string>
+    <string name="place_in_collection_title">Add to collection</string>
+    <string name="create_new_collection">Create new collection…</string>
+    <string name="scan_added_to_collection">Scan added to "%1$s"</string>
+
+    <!-- Export: Library actions dialog -->
+    <string name="library_actions">Library actions</string>    <!-- Library list: collections membership -->
+    <string name="in_collections_prefix">In: %1$s</string>
+    <!-- Delete confirmation (ScanDetails) -->
+    <string name="delete_warning_irreversible">The file will be deleted from the device. This action cannot be undone.
+    </string>
+
+    <!-- ExportFragment toasts -->
+    <string name="no_document_to_export">No document to export</string>
+    <string name="failed_to_export_document">Failed to export document</string>
+    <string name="error_during_export_with_reason">Error during export: %1$s</string>
+    <string name="document_exported">Document %1$s exported</string>
+    <string name="document_multipage_exported">Document (multi-page) %1$s exported</string>
+    <string name="no_target_selected">No target selected</string>
+    <string name="image_exported">Image %1$s exported</string>
+    <string name="failed_to_export_image">Failed to export image</string>
+    <string name="error_during_jpeg_export_with_reason">Error during JPEG export: %1$s</string>
+    <string name="zip_exported">ZIP %1$s exported</string>
+    <string name="failed_to_export_zip">Failed to export ZIP</string>
+    <string name="error_during_zip_export_with_reason">Error during ZIP export: %1$s</string>
+    <string name="ocr_text_exported_as_txt">OCR text exported as TXT</string>
+    <string name="error_exporting_ocr_text_with_reason">Error exporting OCR text: %1$s</string>
+    <string name="no_document_to_share_export_first">No document available to share. Export a document first.</string>
+    <string name="error_sharing_document_with_reason">Error sharing document: %1$s</string>
+    <string name="feature_scan_library_disabled">Scan library feature is disabled</string>
+    <string name="navigation_failed">Navigation failed</string>
+
+    <!-- ScanDetailsFragment toasts -->
+    <string name="missing_scan_id">Missing scan id</string>
+    <string name="picker_failed">Picker failed</string>
+    <string name="share_failed">Share failed</string>
+    <string name="no_app_found_to_open_file">No app found to open this file</string>
+
+    <!-- ScansLibraryFragment toasts/dialogs -->
+    <string name="remove_from_collection_question">Remove from this collection?</string>
+    <string name="removed_from_collection">Removed from collection</string>
+    <string name="indexed_new_items">Indexed %1$d new item(s)</string>
+    <string name="nothing_new_to_index">Nothing new to index</string>
+
+    <!-- Accessibility guidance phrases -->
+    <string name="a11y_hint_ok">Document aligned</string>
+    <string name="a11y_hint_move_left">Move left</string>
+    <string name="a11y_hint_move_right">Move right</string>
+    <string name="a11y_hint_move_up">Move up</string>
+    <string name="a11y_hint_move_down">Move down</string>
+    <string name="a11y_hint_move_closer">Closer to the surface</string>
+    <string name="a11y_hint_move_back">Further from the surface</string>
+    <string name="a11y_hint_too_far">Move closer. Document is too far away.</string>
+    <string name="a11y_hint_tilt_left">Tilt left</string>
+    <string name="a11y_hint_tilt_right">Tilt right</string>
+    <string name="a11y_hint_tilt_forward">Tilt forward</string>
+    <string name="a11y_hint_tilt_back">Tilt back</string>
+    <string name="a11y_hold_still">Hold still</string>
+
+    <!-- Accessibility Mode -->
+    <string name="a11y_doc_ready">Document detected – ready to capture.</string>
+    <string name="a11y_no_document_detected">No document detected.</string>
+    <string name="a11y_orientation_portrait_tip">This looks like portrait. Holding the phone in portrait usually fits
+        best for tall pages.
+    </string>
+    <string name="a11y_orientation_landscape_tip">This looks like landscape. Try holding the phone in landscape for wide
+        pages.
+    </string>
+    <string name="a11y_crop_summary_detected">Captured image analysis: document detected.</string>
+    <string name="a11y_crop_summary_no_doc">Captured image analysis: no document detected.</string>
+    <string name="accessibility_mode_label">Accessibility Mode</string>
+    <string name="a11y_camera_ready">Camera ready. Double tap Scan to capture.</string>
+    <string name="a11y_low_light_toggle_flash">Low light detected. Double tap Flash to enable.</string>
+    <string name="a11y_capture_failed">Capture failed.</string>
+    <string name="a11y_volume_shutter_hint">Tip: In Accessibility Mode, press the volume keys to capture.</string>
+    <string name="a11y_capture_success">Image captured.</string>
+    <!-- Accessibility: Recycler item description and announcements -->
+    <string name="page_n_of_m">Page %1$d of %2$d</string>
+    <string name="pages_count_announcement">Pages: %1$d</string>
+    <string name="export_started">Export started</string>
+    <string name="page_removed">Page removed</string>
+    <string name="page_moved_to_position">Moved to position %1$d</string>
+    <!-- RecyclerView custom accessibility actions (defined once above in Reorder A11y controls) -->
+
+    <!-- Options: OCR auto-rotate toggle -->
+    <string name="opt_ocr_auto_rotate_apply_export">OCR auto-rotate (also apply to export)</string>
+    <!-- Options: OCR post-processing toggle -->
+    <string name="opt_ocr_post_processing">OCR post-processing (correct common errors)</string>
+    <!-- Options: Layout analysis for complex documents -->
+    <string name="opt_layout_analysis">Layout analysis (columns, tables)
+    </string>
+    <!-- Options: PaddleOCR strings live in src/paddle/res/values/strings.xml (paddle flavor only). -->
+    <!-- Options: Experimental directional mapping fallback -->    <!-- Developer / Debug options -->    <!-- Library / Collections (developer strings kept non-translatable for now) -->    <!-- PDF Import -->
+    <string name="error_unknown_file_type">Unknown file type</string>
+    <string name="error_unsupported_file_type">This file type is not supported</string>
+    <string name="error_cannot_open_pdf">Could not open PDF</string>
+    <string name="error_pdf_empty">The PDF contains no pages</string>
+    <string name="error_pdf_import_failed">PDF import failed</string>
+    <string name="error_pdf_page_render_failed">Could not render page</string>
+    <string name="pdf_select_page">Select page</string>
+    <string name="pdf_page_number">Page %1$d</string>
+
+    <!-- Multi-language OCR selection -->
+    <string name="select_ocr_languages">Select OCR Languages</string>
+    <string name="ocr_max_languages_warning">Maximum 2 languages allowed</string>
+    <string name="ocr_no_language_selected">Please select at least one language</string>
+    <!-- OCR Review: Discard changes dialog -->
+    <string name="title_discard_changes">Discard changes?</string>
+    <string name="msg_discard_changes">You have unsaved changes. Do you want to discard them?</string>
+    <string name="btn_discard">Discard</string>
+
+    <string name="btn_reocr">Re-OCR</string>
+    <string name="reocr_processing">Re-running OCR…</string>
+    <string name="reocr_success">Word updated: %1$s</string>
+    <string name="reocr_failed">Re-OCR failed</string>
+    <string name="reocr_no_language">Please set a language first</string>
+
+    <!-- Zoom popover -->
+    <string name="zoom_100">100%</string>
+    <string name="zoom_200">200%</string>
+    <string name="zoom_300">300%</string>
+    <string name="zoom_400">400%</string>
+    <string name="zoom_fit">Fit</string>
+
+    <!-- Segmented control labels -->
+    <string name="label_layout">Layout</string>
+    <string name="label_text">Text</string>
+    <string name="label_document">Document</string>
+    <string name="ocr_text_editor_hint">Edit OCR text</string>
+    <string name="restore_access">Restore access</string>
+    <string name="status">Status</string>
+    <!-- Scan cleanup settings -->
+    <string name="scan_cleanup_settings">Completed Scan cleanup settings</string>
+    <string name="cleanup_policy">Cleanup policy</string>
+    <string name="cleanup_policy_none">None (keep all)</string>
+    <string name="cleanup_policy_max_age">By age</string>
+    <string name="cleanup_policy_max_count">By count</string>
+    <string name="cleanup_policy_max_storage">By storage</string>
+    <string name="cleanup_policy_combined">Combined</string>
+    <string name="cleanup_max_age_days">Max age (days)</string>
+    <string name="cleanup_max_count">Max count</string>
+    <string name="cleanup_max_storage_mb">Max storage (MB)</string>
+    <string name="cleanup_settings_saved">Cleanup settings saved</string>
+
+    <!-- Inbox Mode -->
+    <string name="inbox_mode">Inbox Mode</string>
+    <string name="inbox_mode_enable">Enable default export directory</string>
+    <string name="inbox_select_folder">Select folder</string>
+    <string name="inbox_folder_set">Inbox folder: %1$s</string>
+    <string name="inbox_folder_none">No folder selected</string>
+    <string name="inbox_saved">✓ Saved to Inbox</string>
+    <string name="inbox_permission_lost">Inbox folder access lost. Please select a new folder.</string>
+    <string name="inbox_no_folder_selected">Please select an Inbox folder first.</string>
+    <string name="inbox_clear">Clear Inbox folder</string>
+    <string name="inbox_filename_format">Filename format</string>
+    <string name="inbox_auto_new_scan">Start new scan automatically after export</string>
+    <string name="inbox_filename_date_scan">Date + Scan (2026-03-04_scan)</string>
+    <string name="inbox_filename_date_time_scan">Date + Time + Scan (2026-03-04_143022_scan)</string>
+    <string name="inbox_filename_date_only">Date only (2026-03-04)</string>
+    <!-- Crop: Aspect ratio selector (v3.8.0) -->
+    <string name="crop_aspect_label">Aspect ratio</string>
+    <string name="crop_aspect_auto">Auto (recommended)</string>
+    <string name="crop_aspect_original">Keep original (no aspect correction)</string>
+    <string name="crop_aspect_a3">A3</string>
+    <string name="crop_aspect_a4">A4</string>
+    <string name="crop_aspect_a5">A5</string>
+    <string name="crop_aspect_letter">US Letter</string>
+    <string name="crop_aspect_legal">Legal</string>
+    <string name="crop_aspect_custom">Custom…</string>
+    <string name="crop_aspect_custom_with_ratio">Custom (%1$s : %2$s)</string>
+    <string name="crop_aspect_custom_dialog_title">Custom aspect ratio</string>
+    <string name="crop_aspect_custom_width_hint">Width</string>
+    <string name="crop_aspect_custom_height_hint">Height</string>
+    <!-- Universal separator displayed between width and height in the custom aspect ratio dialog (e.g. "16 : 9"); not translatable. -->
+    <string name="crop_aspect_ratio_separator" translatable="false">:</string>
+    <string name="crop_aspect_custom_invalid">Please enter positive numbers within 1:1 to 1:20.</string>
+    <string name="crop_aspect_output_size_hint" tools:ignore="UnusedResources">Output: %1$d × %2$d px</string>
+    <!-- Crop: Edge dragging & off-screen corners (see docs/edge_drag_pan_zoom_concept.md) -->
+    <string name="crop_hint_corner_off_image">Corner outside image — warped output may contain black borders</string>
+    <string name="crop_edge_dragged">Edge selected. Drag to move the edge.</string>
+    <!-- FR #72: Re-Edit shape from export preview -->
+    <string name="btn_edit_crop" tools:ignore="MissingTranslation">Adjust crop</string>
+    <string name="edit_crop_original_unavailable" tools:ignore="MissingTranslation">Original image no longer available — cannot re-edit crop.</string>
+    <!-- FR #72 companion: Snap-to-Right-Angle -->
+    <string name="crop_snap_engaged" tools:ignore="MissingTranslation">Edge snapped to right angle</string>
+    <string name="crop_snap_toggle_cd" tools:ignore="MissingTranslation">Toggle right-angle snap</string>
+    <string name="crop_snap_toggle_on" tools:ignore="MissingTranslation">Right-angle snap on</string>
+    <string name="crop_snap_toggle_off" tools:ignore="MissingTranslation">Right-angle snap off</string>
+    <string name="search_scans">Search scans</string>
+</resources>

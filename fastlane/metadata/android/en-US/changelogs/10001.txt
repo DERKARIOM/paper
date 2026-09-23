@@ -1,0 +1,3 @@
+• Fixed dark mode display issue for OCR results  
+• Updated store description for better clarity  
+• Minor UI improvements and stability fixes

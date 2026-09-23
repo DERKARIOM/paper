@@ -1,0 +1,3 @@
+MakeACopy 3.7.0
+* New: Hindi language support (OCR, dictionary, UI, PDF export)
+* Fully offline, no cloud or tracking
