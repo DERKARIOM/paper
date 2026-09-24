@@ -35,3 +35,8 @@ __pycache__/
 
 # Local build logs (scripts/local/*.bat)
 /build-logs/
+
+# Native build outputs (built from source, never committed – F-Droid policy)
+/app/libs/
+/native-libs.zip
+/native-libs.sha256
