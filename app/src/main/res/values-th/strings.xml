@@ -9,13 +9,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">กล้อง</string>
     <string name="title_crop">ครอบตัด</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">ส่งออก</string>
 
     <!-- Button labels -->
     <string name="btn_scan">สแกน</string>
     <string name="btn_crop">ครอบตัด</string>
-    <string name="btn_process">ประมวลผล</string>
     <string name="btn_share">แชร์</string>
     <string name="btn_share_text">แชร์ข้อความ</string>
     <string name="next">ถัดไป</string>
@@ -35,13 +33,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">
         ปรับมุมสี่เหลี่ยมคางหมูเพื่อเลือกพื้นที่ที่ต้องการครอบตัด แล้วแตะปุ่มครอบตัด
     </string>
-    <string name="no_document_ready_process_ocr_first">ยังไม่มีเอกสารพร้อม ประมวลผล OCR ก่อน</string>
     <string name="document_ready_for_export">เอกสารพร้อมสำหรับการส่งออก</string>
     <string name="processing_image">กำลังประมวลผลรูปภาพ…</string>
     <string name="no_image_processed_crop_an_image_first">ยังไม่มีรูปประมวลผล ครอบตัดรูปก่อน</string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR เสร็จสิ้น
-        แตะปุ่มเพื่อไปยังการส่งออก
-    </string>
 
     <string name="ocr_found_rotation">ตรวจพบการหมุน: %1$d°</string>
     <string name="ocr_score">คะแนน OCR: %1$d%%</string>
@@ -122,7 +116,6 @@
     <string name="jpeg_mode_color_clean">สีแบบปรับให้สะอาด (ฟิลเตอร์ความถี่สูง) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">โทนสีเทาแบบปรับให้สะอาด (ฟิลเตอร์ผ่านความถี่สูง)</string>
     <string name="pdf_bw_mode_color_clean">สีแบบปรับให้สะอาด (ฟิลเตอร์ผ่านความถี่สูง)</string>
-    <string name="skip_ocr_export_only">ข้าม OCR (ส่งออกเท่านั้น)</string>
     <string name="skip_cropping">ข้ามการครอบตัด</string>
     <string name="skip_edge_detection">ข้ามการตรวจจับขอบ</string>
     <string name="preview_corner_detection">แสดงตัวอย่างการตรวจจับมุม</string>
@@ -167,9 +160,6 @@
     <string name="missing_file">ไฟล์หายไป</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">กำลังทำ OCR…</string>
-    <string name="ocr_processing_finished">เพิ่ม OCR สำหรับหน้านี้แล้ว</string>
-    <string name="ocr_processing_failed">OCR ล้มเหลว</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">ลบออกจาก registry</string>
@@ -482,4 +472,16 @@
     <string name="document_cleanup_clean_text">ข้อความสะอาด</string>
     <string name="workflow_step_description">ขั้นตอนที่ %1$d จาก %2$d: %3$s</string>
     <string name="search_scans">ค้นหาเอกสารสแกน</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">ดึงข้อความ</string>
+    <string name="extract_text_running">กำลังดึงข้อความ…</string>
+    <string name="extract_text_done">ดึงข้อความแล้ว</string>
+    <string name="extract_text_failed">ดึงข้อความไม่สำเร็จ แตะ ลองอีกครั้ง</string>
+    <string name="extract_text_progress_pages">หน้า %1$d จาก %2$d</string>
+    <string name="extract_text_page_header">— หน้า %1$d —</string>
+    <string name="extract_text_pages_failed">ไม่สามารถดึงข้อความจาก %1$d หน้า แตะ ลองอีกครั้ง</string>
+    <string name="btn_retry">ลองอีกครั้ง</string>
+    <string name="btn_finish">เสร็จสิ้น</string>
+    <string name="btn_copy_text">คัดลอกข้อความ</string>
+    <string name="text_copied">คัดลอกข้อความแล้ว</string>
 </resources>

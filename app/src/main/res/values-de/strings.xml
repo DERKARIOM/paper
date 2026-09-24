@@ -9,13 +9,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Kamera</string>
     <string name="title_crop">Zuschneiden</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Exportieren</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Scannen</string>
     <string name="btn_crop">Zuschneiden</string>
-    <string name="btn_process">Verarbeiten</string>
     <string name="btn_share">Teilen</string>
     <string name="btn_share_text">Text teilen</string>
     <string name="next">Weiter</string>
@@ -37,13 +35,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Passe die
         Trapezecken an, um den zuzuschneidenden Bereich auszuwählen, und tippe dann auf Zuschneiden.
     </string>
-    <string name="no_document_ready_process_ocr_first">Kein Dokument bereit. Führe zuerst OCR aus.</string>
     <string name="document_ready_for_export">Dokument zum Export bereit</string>
     <string name="processing_image">Bild wird verarbeitet…</string>
     <string name="no_image_processed_crop_an_image_first">Kein Bild verarbeitet. Schneide zuerst ein Bild zu.</string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR-Verarbeitung abgeschlossen. Tippe auf
-        die Schaltfläche, um mit dem Export fortzufahren.
-    </string>
 
     <string name="ocr_found_rotation">Gefundene Rotation: %1$d°</string>
     <string name="ocr_score">OCR-Score: %1$d%%</string>
@@ -127,7 +121,6 @@
     <string name="pdf_bw_mode_color_clean">Farbe „clean“ (High-Pass)</string>
     <string name="output_color_title">Ausgabefarbe</string>
 
-    <string name="skip_ocr_export_only">OCR überspringen (nur Export)</string>
     <string name="skip_cropping">Zuschneiden überspringen</string>
     <string name="skip_edge_detection">Kantenerkennung überspringen</string>
     <string name="preview_corner_detection">Vorschau Eckenerkennung</string>
@@ -177,9 +170,6 @@
     <string name="missing_file">Datei fehlt</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">OCR wird ausgeführt…</string>
-    <string name="ocr_processing_finished">OCR für diese Seite hinzugefügt</string>
-    <string name="ocr_processing_failed">Inline-OCR fehlgeschlagen</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Aus Registry entfernen</string>
@@ -510,4 +500,16 @@
     <string name="document_cleanup_clean_text">Reiner Text</string>
     <string name="workflow_step_description">Schritt %1$d von %2$d: %3$s</string>
     <string name="search_scans">Scans durchsuchen</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Text extrahieren</string>
+    <string name="extract_text_running">Text wird extrahiert…</string>
+    <string name="extract_text_done">Text extrahiert</string>
+    <string name="extract_text_failed">Textextraktion fehlgeschlagen. Tippe auf „Erneut versuchen“.</string>
+    <string name="extract_text_progress_pages">Seite %1$d von %2$d</string>
+    <string name="extract_text_page_header">— Seite %1$d —</string>
+    <string name="extract_text_pages_failed">Text von %1$d Seite(n) konnte nicht extrahiert werden. Tippe auf „Erneut versuchen“.</string>
+    <string name="btn_retry">Erneut versuchen</string>
+    <string name="btn_finish">Fertig</string>
+    <string name="btn_copy_text">Text kopieren</string>
+    <string name="text_copied">Text kopiert</string>
 </resources>

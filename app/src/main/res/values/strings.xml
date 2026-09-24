@@ -10,15 +10,13 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Camera</string>
     <string name="title_crop">Crop</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Export</string>
-    <!-- Accessibility description for the workflow stepper, e.g. "Step 2 of 4: Crop" -->
+    <!-- Accessibility description for the workflow stepper, e.g. "Step 2 of 3: Crop" -->
     <string name="workflow_step_description">Step %1$d of %2$d: %3$s</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Scan</string>
     <string name="btn_crop">Crop</string>
-    <string name="btn_process">Process</string>
     <string name="btn_share">Share</string>
     <string name="btn_share_text">Share text</string>
     <string name="next">Next</string>
@@ -39,13 +37,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Adjust the trapezoid
         corners to select the area to crop, then tap the Crop button.
     </string>
-    <string name="no_document_ready_process_ocr_first">No document ready. Process OCR first.</string>
     <string name="document_ready_for_export">Document ready for export</string>
     <string name="processing_image">Processing image…</string>
     <string name="no_image_processed_crop_an_image_first">No image processed. Crop an image first.</string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR processing complete. Tap the button
-        to proceed to export.
-    </string>
     <string name="ocr_found_rotation">Found rotation: %1$d°</string>
     <string name="ocr_score">OCR score: %1$d%%</string>
     <string name="ocr_found_rotation_with_score">Found rotation: %1$d° — OCR score: %2$d%%</string>
@@ -133,7 +127,6 @@
     <string name="pdf_bw_mode_grayscale_clean">Grayscale clean (high-pass)</string>
     <string name="pdf_bw_mode_color_clean">Color clean (high-pass)</string>
     <string name="output_color_title" translatable="false">Output color</string>
-    <string name="skip_ocr_export_only">Skip OCR (export only)</string>
     <string name="preview_corner_detection">Preview corner detection</string>
     <string name="skip_cropping">Skip cropping</string>
     <string name="skip_edge_detection">Skip edge detection</string>
@@ -184,9 +177,6 @@
     <string name="missing_file">Missing file</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">Running OCR…</string>
-    <string name="ocr_processing_finished">OCR added for this page</string>
-    <string name="ocr_processing_failed">Inline OCR failed</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Remove from registry</string>
@@ -501,4 +491,16 @@
     <string name="crop_snap_toggle_on" tools:ignore="MissingTranslation">Right-angle snap on</string>
     <string name="crop_snap_toggle_off" tools:ignore="MissingTranslation">Right-angle snap off</string>
     <string name="search_scans">Search scans</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Extract text</string>
+    <string name="extract_text_running">Extracting text…</string>
+    <string name="extract_text_done">Text extracted</string>
+    <string name="extract_text_failed">Text extraction failed. Tap Retry to try again.</string>
+    <string name="extract_text_progress_pages">Page %1$d of %2$d</string>
+    <string name="extract_text_page_header">— Page %1$d —</string>
+    <string name="extract_text_pages_failed">Text could not be extracted from %1$d page(s). Tap Retry to try again.</string>
+    <string name="btn_retry">Retry</string>
+    <string name="btn_finish">Done</string>
+    <string name="btn_copy_text">Copy text</string>
+    <string name="text_copied">Text copied</string>
 </resources>

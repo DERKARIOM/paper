@@ -10,13 +10,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">دوربین</string>
     <string name="title_crop">برش</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">خروجی</string>
 
     <!-- Button labels -->
     <string name="btn_scan">اسکن</string>
     <string name="btn_crop">برش</string>
-    <string name="btn_process">پردازش</string>
     <string name="btn_share">اشتراک‌گذاری</string>
     <string name="btn_share_text">اشتراک‌گذاری متن</string>
     <string name="next">بعدی</string>
@@ -37,13 +35,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">گوشه‌های ذوزنقه را
         تنظیم کنید تا ناحیهٔ برش انتخاب شود، سپس دکمهٔ «برش» را بزنید.
     </string>
-    <string name="no_document_ready_process_ocr_first">هیچ سندی آماده نیست. ابتدا OCR را پردازش کنید.</string>
     <string name="document_ready_for_export">سند برای خروجی‌گرفتن آماده است</string>
     <string name="processing_image">در حال پردازش تصویر…</string>
     <string name="no_image_processed_crop_an_image_first">هیچ تصویری پردازش نشده است. ابتدا یک تصویر را برش دهید.
-    </string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">پردازش OCR کامل شد. برای رفتن به خروجی،
-        دکمه را بزنید.
     </string>
     <string name="ocr_found_rotation">چرخش پیدا شد: %1$d°</string>
     <string name="ocr_score">امتیاز OCR: %1$d%%</string>
@@ -123,7 +117,6 @@
     <string name="jpeg_mode_color_clean">رنگ تمیز (فیلتر گذر بالا) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">خاکستریِ تمیز (فیلتر بالاگذر)</string>
     <string name="pdf_bw_mode_color_clean">رنگیِ تمیز (فیلتر بالاگذر)</string>
-    <string name="skip_ocr_export_only">رد کردن OCR (فقط خروجی)</string>
     <string name="preview_corner_detection">پیش‌نمایش تشخیص گوشه‌ها</string>
     <string name="skip_cropping">رد کردن برش</string>
     <string name="skip_edge_detection">رد شدن از تشخیص لبه</string>
@@ -169,9 +162,6 @@
     <string name="missing_file">فایل موجود نیست</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">در حال اجرای OCR…</string>
-    <string name="ocr_processing_finished">OCR برای این صفحه اضافه شد</string>
-    <string name="ocr_processing_failed">OCR درون‌خطی ناموفق بود</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">حذف از رجیستری</string>
@@ -483,4 +473,16 @@
     <string name="document_cleanup_clean_text">متن تمیز</string>
     <string name="workflow_step_description">مرحله %1$d از %2$d: %3$s</string>
     <string name="search_scans">جستجوی اسکن‌ها</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">استخراج متن</string>
+    <string name="extract_text_running">در حال استخراج متن…</string>
+    <string name="extract_text_done">متن استخراج شد</string>
+    <string name="extract_text_failed">استخراج متن ناموفق بود. روی «تلاش دوباره» بزنید.</string>
+    <string name="extract_text_progress_pages">صفحه %1$d از %2$d</string>
+    <string name="extract_text_page_header">— صفحه %1$d —</string>
+    <string name="extract_text_pages_failed">استخراج متن از %1$d صفحه ممکن نشد. روی «تلاش دوباره» بزنید.</string>
+    <string name="btn_retry">تلاش دوباره</string>
+    <string name="btn_finish">انجام شد</string>
+    <string name="btn_copy_text">کپی متن</string>
+    <string name="text_copied">متن کپی شد</string>
 </resources>

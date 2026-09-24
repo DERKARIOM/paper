@@ -9,13 +9,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Câmera</string>
     <string name="title_crop">Cortar</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Exportar</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Digitalizar</string>
     <string name="btn_crop">Cortar</string>
-    <string name="btn_process">Processar</string>
     <string name="btn_share">Compartilhar</string>
     <string name="btn_share_text">Compartilhar texto</string>
     <string name="next">Avançar</string>
@@ -38,13 +36,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Ajuste os cantos do
         trapézio para selecionar a área a cortar e toque no botão Cortar.
     </string>
-    <string name="no_document_ready_process_ocr_first">Nenhum documento pronto. Execute o OCR primeiro.</string>
     <string name="document_ready_for_export">Documento pronto para exportação</string>
     <string name="processing_image">Processando imagem…</string>
     <string name="no_image_processed_crop_an_image_first">Nenhuma imagem processada. Recorte uma imagem primeiro.
-    </string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">Processamento de OCR concluído. Toque no
-        botão para prosseguir para a exportação.
     </string>
 
     <string name="ocr_found_rotation">Rotação detectada: %1$d°</string>
@@ -128,7 +122,6 @@
     <string name="jpeg_mode_color_clean">Cores limpas (filtro passa-alta) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">Escala de cinza limpa (passa-alta)</string>
     <string name="pdf_bw_mode_color_clean">Cor limpa (passa-alta)</string>
-    <string name="skip_ocr_export_only">Pular OCR (apenas exportar)</string>
     <string name="skip_cropping">Pular corte</string>
     <string name="skip_edge_detection">Ignorar detecção de bordas</string>
     <string name="preview_corner_detection">Pré-visualização da deteção de cantos</string>
@@ -173,9 +166,6 @@
     <string name="missing_file">Arquivo ausente</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">Executando OCR…</string>
-    <string name="ocr_processing_finished">OCR adicionado para esta página</string>
-    <string name="ocr_processing_failed">Falha no OCR em linha</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Remover do registro</string>
@@ -490,4 +480,16 @@
     <string name="document_cleanup_clean_text">Texto limpo</string>
     <string name="workflow_step_description">Etapa %1$d de %2$d: %3$s</string>
     <string name="search_scans">Pesquisar digitalizações</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Extrair texto</string>
+    <string name="extract_text_running">Extraindo texto…</string>
+    <string name="extract_text_done">Texto extraído</string>
+    <string name="extract_text_failed">Falha ao extrair o texto. Toque em Tentar novamente.</string>
+    <string name="extract_text_progress_pages">Página %1$d de %2$d</string>
+    <string name="extract_text_page_header">— Página %1$d —</string>
+    <string name="extract_text_pages_failed">Não foi possível extrair o texto de %1$d página(s). Toque em Tentar novamente.</string>
+    <string name="btn_retry">Tentar novamente</string>
+    <string name="btn_finish">Concluído</string>
+    <string name="btn_copy_text">Copiar texto</string>
+    <string name="text_copied">Texto copiado</string>
 </resources>

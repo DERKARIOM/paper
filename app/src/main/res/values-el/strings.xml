@@ -7,13 +7,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Κάμερα</string>
     <string name="title_crop">Περικοπή</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Εξαγωγή</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Σάρωση</string>
     <string name="btn_crop">Περικοπή</string>
-    <string name="btn_process">Επεξεργασία</string>
     <string name="btn_share">Κοινοποίηση</string>
     <string name="btn_share_text">Κοινοποίηση κειμένου</string>
     <string name="next">Επόμενο</string>
@@ -31,11 +29,9 @@
     <string name="ocr_results_will_appear_here">Τα αποτελέσματα OCR θα εμφανιστούν εδώ</string>
     <string name="ocr_no_text_detected">Δεν εντοπίστηκε κείμενο</string>
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Προσαρμόστε τις γωνίες του τραπεζίου για να επιλέξετε την περιοχή περικοπής και μετά πατήστε το κουμπί Περικοπή.</string>
-    <string name="no_document_ready_process_ocr_first">Δεν υπάρχει έτοιμο έγγραφο. Εκτελέστε πρώτα OCR.</string>
     <string name="document_ready_for_export">Το έγγραφο είναι έτοιμο για εξαγωγή</string>
     <string name="processing_image">Επεξεργασία εικόνας…</string>
     <string name="no_image_processed_crop_an_image_first">Δεν έχει γίνει επεξεργασία εικόνας. Περικόψτε πρώτα μια εικόνα.</string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">Η επεξεργασία OCR ολοκληρώθηκε. Πατήστε το κουμπί για να συνεχίσετε στην εξαγωγή.</string>
     <string name="ocr_found_rotation">Βρέθηκε περιστροφή: %1$d°</string>
     <string name="ocr_score">Βαθμολογία OCR: %1$d%%</string>
     <string name="ocr_found_rotation_with_score">Βρέθηκε περιστροφή: %1$d° — βαθμολογία OCR: %2$d%%</string>
@@ -118,7 +114,6 @@
     <string name="pdf_bw_mode_grayscale_clean">Καθαρή κλίμακα του γκρι (high-pass)</string>
     <string name="pdf_bw_mode_color_clean">Καθαρό χρώμα (high-pass)</string>
     <string name="output_color_title" translatable="false">Χρώμα εξόδου</string>
-    <string name="skip_ocr_export_only">Παράλειψη OCR (μόνο εξαγωγή)</string>
     <string name="preview_corner_detection">Προεπισκόπηση ανίχνευσης γωνιών</string>
     <string name="skip_cropping">Παράλειψη περικοπής</string>
     <string name="skip_edge_detection">Παράλειψη ανίχνευσης ακμών</string>
@@ -167,9 +162,6 @@
     <string name="missing_file">Λείπει αρχείο</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">Εκτέλεση OCR…</string>
-    <string name="ocr_processing_finished">Προστέθηκε OCR για αυτήν τη σελίδα</string>
-    <string name="ocr_processing_failed">Το ενσωματωμένο OCR απέτυχε</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Αφαίρεση από το μητρώο</string>
@@ -467,4 +459,16 @@
     <string name="crop_snap_toggle_off" tools:ignore="MissingTranslation">Η προσκόλληση σε ορθή γωνία είναι ανενεργή</string>
     <string name="workflow_step_description">Βήμα %1$d από %2$d: %3$s</string>
     <string name="search_scans">Αναζήτηση σαρώσεων</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Εξαγωγή κειμένου</string>
+    <string name="extract_text_running">Εξαγωγή κειμένου…</string>
+    <string name="extract_text_done">Το κείμενο εξήχθη</string>
+    <string name="extract_text_failed">Η εξαγωγή κειμένου απέτυχε. Πατήστε Επανάληψη.</string>
+    <string name="extract_text_progress_pages">Σελίδα %1$d από %2$d</string>
+    <string name="extract_text_page_header">— Σελίδα %1$d —</string>
+    <string name="extract_text_pages_failed">Δεν ήταν δυνατή η εξαγωγή κειμένου από %1$d σελίδα(ες). Πατήστε Επανάληψη.</string>
+    <string name="btn_retry">Επανάληψη</string>
+    <string name="btn_finish">Τέλος</string>
+    <string name="btn_copy_text">Αντιγραφή κειμένου</string>
+    <string name="text_copied">Το κείμενο αντιγράφηκε</string>
 </resources>

@@ -454,8 +454,6 @@ public class CameraFragment extends Fragment implements SensorEventListener {
                   CameraOptionsDialogFragment.REQUEST_KEY,
                   getViewLifecycleOwner(),
                   (requestKey, bundle) -> {
-                    boolean skip =
-                        bundle.getBoolean(CameraOptionsDialogFragment.BUNDLE_SKIP_OCR, false);
                     boolean analysisPref =
                         bundle.getBoolean(
                             CameraOptionsDialogFragment.BUNDLE_ANALYSIS_ENABLED, true);
@@ -473,8 +471,6 @@ public class CameraFragment extends Fragment implements SensorEventListener {
                           ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE);
                       prefs
                           .edit()
-                          .putBoolean("skip_ocr", skip)
-                          .putBoolean("include_ocr", !skip)
                           .putBoolean("analysis_enabled", analysisPref)
                           // Accessibility is already persisted by the dialog; keep a mirror for
                           // local reads if needed
@@ -589,23 +585,9 @@ public class CameraFragment extends Fragment implements SensorEventListener {
         v -> {
           if (!isAdded()) return;
           cropViewModel.setImageCropped(false);
-          boolean skipOcr = false;
-          boolean skipCropping = false;
-          Context ctx2 = getContext();
-          if (ctx2 != null) {
-            android.content.SharedPreferences prefs =
-                ctx2.getSharedPreferences("export_options", Context.MODE_PRIVATE);
-            skipOcr = prefs.getBoolean("skip_ocr", false);
-            skipCropping = prefs.getBoolean("skip_cropping", false);
-          }
-          int dest =
-              skipCropping
-                  ? (skipOcr ? R.id.navigation_export : R.id.navigation_ocr)
-                  : R.id.navigation_crop;
-          if (skipCropping && !skipOcr) {
-            OCRViewModel ocrVm = new ViewModelProvider(requireActivity()).get(OCRViewModel.class);
-            ocrVm.resetForNewImage();
-          }
+          // A new image never carries over the text extracted from a previous one.
+          new ViewModelProvider(requireActivity()).get(OCRViewModel.class).resetForNewImage();
+          int dest = nextScanStepDestination();
           try {
             Navigation.findNavController(requireView()).navigate(dest, null, scanFlowNavOptions());
           } catch (IllegalArgumentException | IllegalStateException ignored) {
@@ -1932,20 +1914,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
               cropViewModel.setImageCropped(false);
               cropViewModel.setImageBitmap(null);
 
-              boolean skipOcr = false;
-              boolean skipCropping = false;
-              Context ctx = getContext();
-              if (ctx != null) {
-                android.content.SharedPreferences prefs =
-                    ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE);
-                skipOcr = prefs.getBoolean("skip_ocr", false);
-                skipCropping = prefs.getBoolean("skip_cropping", false);
-              }
-
-              int dest =
-                  skipCropping
-                      ? (skipOcr ? R.id.navigation_export : R.id.navigation_ocr)
-                      : R.id.navigation_crop;
+              int dest = nextScanStepDestination();
               try {
                 Navigation.findNavController(requireView())
                     .navigate(dest, null, scanFlowNavOptions());
@@ -1987,6 +1956,22 @@ public class CameraFragment extends Fragment implements SensorEventListener {
     if (isAccessibilityModeEnabled()) {
       announce(R.string.a11y_capture_failed);
     }
+  }
+
+  /**
+   * Next step of the scan workflow after a capture or import: Crop, or directly the final document
+   * screen when the user disabled cropping. Text extraction (OCR) is not a workflow step anymore; it
+   * is an optional action on the final document screen.
+   */
+  private int nextScanStepDestination() {
+    boolean skipCropping = false;
+    Context ctx = getContext();
+    if (ctx != null) {
+      skipCropping =
+          ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE)
+              .getBoolean(CameraOptionsDialogFragment.BUNDLE_SKIP_CROPPING, false);
+    }
+    return skipCropping ? R.id.navigation_export : R.id.navigation_crop;
   }
 
   private NavOptions scanFlowNavOptions() {
@@ -3974,19 +3959,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
 
       // Navigate to next step depending on preference
       if (isAdded()) {
-        boolean skipOcr = false;
-        boolean skipCropping = false;
-        Context ctx = getContext();
-        if (ctx != null) {
-          android.content.SharedPreferences prefs =
-              ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE);
-          skipOcr = prefs.getBoolean("skip_ocr", false);
-          skipCropping = prefs.getBoolean("skip_cropping", false);
-        }
-        int dest =
-            skipCropping
-                ? (skipOcr ? R.id.navigation_export : R.id.navigation_ocr)
-                : R.id.navigation_crop;
+        int dest = nextScanStepDestination();
         try {
           Navigation.findNavController(requireView()).navigate(dest);
         } catch (IllegalArgumentException | IllegalStateException ignored) {
@@ -4074,20 +4047,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
     ocrVm.resetForNewImage();
 
     // Navigation based on settings
-    boolean skipOcr = false;
-    boolean skipCropping = false;
-    Context ctx = getContext();
-    if (ctx != null) {
-      android.content.SharedPreferences prefs =
-          ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE);
-      skipOcr = prefs.getBoolean("skip_ocr", false);
-      skipCropping = prefs.getBoolean("skip_cropping", false);
-    }
-
-    int dest =
-        skipCropping
-            ? (skipOcr ? R.id.navigation_export : R.id.navigation_ocr)
-            : R.id.navigation_crop;
+    int dest = nextScanStepDestination();
 
     try {
       Navigation.findNavController(requireView()).navigate(dest);

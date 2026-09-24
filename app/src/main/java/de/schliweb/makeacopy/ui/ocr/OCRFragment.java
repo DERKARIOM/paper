@@ -29,7 +29,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -61,7 +60,18 @@ import javax.inject.Provider;
  * This fragment manages UI and orchestration; the actual OCR work is done on a dedicated
  * single-thread executor with a fresh TessBaseAPI instance per job to ensure thread-safety.
  *
- * <p>Flow: Crop -> (optional) User Rotation -> OCR -> Export
+ * <p>Text extraction is optional: this screen is opened on demand from the final document screen
+ * ("Extract text") and always returns to it. It is not a step of the scan workflow and nothing is
+ * recognized unless the user asks for it.
+ *
+ * <ul>
+ *   <li>Single page: the full foreground pipeline below runs on the current document image
+ *       (language, recognition options, review/edit).
+ *   <li>Several pages: every page is processed by the background OCR job ({@link
+ *       DocumentTextExtraction}) and the text of the whole document is shown.
+ * </ul>
+ *
+ * The result is kept per page so the PDF text layer, the TXT export and the library use it.
  */
 @AndroidEntryPoint
 public class OCRFragment extends Fragment {
@@ -103,6 +113,26 @@ public class OCRFragment extends Fragment {
   // SAF launcher for manual traineddata import
   private ActivityResultLauncher<Intent> openTraineddataLauncher;
 
+  private de.schliweb.makeacopy.ui.export.session.ExportSessionViewModel exportSessionViewModel;
+
+  // Single page (foreground pipeline) vs. several pages (background jobs per page)
+  private boolean documentMode;
+  private DocumentTextExtraction documentExtraction;
+  private boolean documentRunning;
+  private int documentProcessed;
+  private int documentTotal;
+  private int documentFailed;
+  private String documentText; // null until a document extraction finished
+
+  // UI state not covered by OCRViewModel
+  private boolean lastRunFailed;
+  private boolean rerunPending; // language/model changed since the last result
+
+  private final android.os.Handler mainHandler =
+      new android.os.Handler(android.os.Looper.getMainLooper());
+  // Writes the single-page result next to the persisted page (never on the main thread)
+  private final ExecutorService persistExecutor = Executors.newSingleThreadExecutor();
+
   public static final String BUNDLE_OCR_AUTO_ROTATE_APPLY_EXPORT = "ocr_auto_rotate_apply_export";
   public static final String BUNDLE_OCR_POST_PROCESSING = "ocr_post_processing";
   public static final String BUNDLE_PADDLE_BEST_OCR = "paddle_best_ocr";
@@ -134,21 +164,30 @@ public class OCRFragment extends Fragment {
       // Best-effort; failure is non-critical
     }
 
-    // On first entry, if we have an image and no OCR results yet, remember this image
-    // Do NOT reset if we already have OCR results (e.g., returning from Review screen)
-    try {
+    // One page: extract the current document image. Several pages: the whole document.
+    exportSessionViewModel =
+        new ViewModelProvider(requireActivity())
+            .get(de.schliweb.makeacopy.ui.export.session.ExportSessionViewModel.class);
+    List<de.schliweb.makeacopy.ui.export.session.CompletedScan> sessionPages =
+        exportSessionViewModel.getPages().getValue();
+    documentMode = sessionPages != null && sessionPages.size() > 1;
+    if (documentMode) {
+      documentRunning = false;
+      binding.ocrProgress.setIndeterminate(false);
+      documentExtraction =
+          new DocumentTextExtraction(
+              requireContext(),
+              exportSessionViewModel,
+              () -> ocrHelperProvider.get(),
+              getString(R.string.extract_text_page_header));
+    } else {
+      // Never show or reuse a result computed for another image (previous page, re-crop).
       Bitmap cur = cropViewModel.getImageBitmap().getValue();
-      if (cur != null) {
-        lastObservedBitmap = cur;
-        // Only reset if no OCR has been performed yet for this image
-        OCRViewModel.OcrUiState currentState = ocrViewModel.getState().getValue();
-        boolean hasOcrResults = currentState != null && currentState.imageProcessed();
-        if (!hasOcrResults) {
-          ocrViewModel.resetForNewImage();
-        }
+      lastObservedBitmap = cur;
+      if (cur != null && !ocrViewModel.isFor(cur)) {
+        ocrViewModel.resetForNewImage();
+        lastRunFailed = false;
       }
-    } catch (Throwable ignore) {
-      // Best-effort; failure is non-critical
     }
 
     // Language helper (no initTesseract() here!)
@@ -176,64 +215,22 @@ public class OCRFragment extends Fragment {
               }
             });
 
-    // State observer
+    // State observer (single page)
     ocrViewModel
         .getState()
         .observe(
             getViewLifecycleOwner(),
             state -> {
-              boolean canProceed = state.imageProcessed() && !state.processing();
+              if (documentMode) return;
               // Haptic confirmation when OCR processing finishes
               if (wasOcrProcessing && !state.processing() && state.imageProcessed()) {
                 HapticsUtils.vibrateOneShot(getContext(), 30L);
               }
               wasOcrProcessing = state.processing();
-              binding.buttonProcess.setEnabled(canProceed);
-              binding.buttonProcess.setText(R.string.next);
-
-              binding.textOcr.setText(
-                  state.processing()
-                      ? getString(R.string.processing_image)
-                      : (state.imageProcessed()
-                          ? getString(
-                              R.string.ocr_processing_complete_tap_the_button_to_proceed_to_export)
-                          : getString(R.string.no_image_processed_crop_an_image_first)));
-
-              // Use effective text (reviewed if available, otherwise original OCR)
-              String effectiveText = state.getEffectiveText();
-              binding.ocrResultText.setText(
-                  (effectiveText == null || effectiveText.isEmpty())
-                      ? getString(R.string.ocr_results_will_appear_here)
-                      : effectiveText);
-
-              // Enable review button only when OCR finished and we have words (and feature enabled)
-              if (!FeatureFlags.isOcrReviewEnabled()) {
-                // When feature is disabled, hide the review button completely
-                binding.buttonOcrReview.setVisibility(View.GONE);
-              } else {
-                boolean hasWords = state.words() != null && !state.words().isEmpty();
-                boolean enableReview = state.imageProcessed() && !state.processing() && hasWords;
-                binding.buttonOcrReview.setEnabled(enableReview);
-                binding.buttonOcrReview.setAlpha(enableReview ? 1f : 0.4f);
-                binding.buttonOcrReview.setVisibility(View.VISIBLE);
-              }
-
-              // Enable share button only when OCR finished and there is text to share
-              boolean hasText = effectiveText != null && !effectiveText.trim().isEmpty();
-              boolean enableShare = state.imageProcessed() && !state.processing() && hasText;
-              binding.buttonOcrShare.setEnabled(enableShare);
-              binding.buttonOcrShare.setAlpha(enableShare ? 1f : 0.4f);
-
-              // Disable settings (OCR options) button while processing is running
-              boolean processing = state.processing();
-              binding.buttonOcrOptions.setEnabled(!processing);
-              binding.buttonOcrOptions.setAlpha(processing ? 0.4f : 1f);
-
-              // Proceed to Export
-              binding.buttonProcess.setOnClickListener(v -> navigateToExport());
+              render();
             });
 
-    // Error events
+    // Error events (single page): keep the screen usable and offer to retry
     ocrViewModel
         .getErrorEvents()
         .observe(
@@ -241,21 +238,21 @@ public class OCRFragment extends Fragment {
             ev -> {
               if (ev == null) return;
               String msg = ev.getContentIfNotHandled();
-              if (msg != null)
-                UIUtils.showToast(requireContext(), "OCR failed: " + msg, Toast.LENGTH_LONG);
+              if (msg == null || documentMode) return;
+              Log.w(TAG, "Text extraction failed: " + msg);
+              lastRunFailed = true;
+              render();
             });
 
-    // When image changes in Crop VM, reset OCR state if it's a different image than last time
+    // When the image changes (e.g. re-crop), the previous result is obsolete
     cropViewModel
         .getImageBitmap()
         .observe(
             getViewLifecycleOwner(),
             bitmap -> {
-              if (bitmap != null) {
-                if (bitmap != lastObservedBitmap) {
-                  lastObservedBitmap = bitmap;
-                  ocrViewModel.resetForNewImage();
-                }
+              if (!documentMode && bitmap != null && bitmap != lastObservedBitmap) {
+                lastObservedBitmap = bitmap;
+                ocrViewModel.resetForNewImage();
               }
             });
 
@@ -280,76 +277,27 @@ public class OCRFragment extends Fragment {
           return insets;
         });
 
-    // Back navigates to Crop reliably: try to pop back stack, otherwise navigate explicitly
-    binding.buttonBack.setOnClickListener(
-        v -> {
-          try {
-            // Prevent immediate auto-forward from Crop by resetting cropped state and restoring
-            // original
-            try {
-              cropViewModel.setImageCropped(false);
-              cropViewModel.setUserRotationDegrees(0);
-
-              Bitmap orig = cropViewModel.getOriginalImageBitmap().getValue();
-              if (orig != null) cropViewModel.setImageBitmap(orig);
-            } catch (Throwable ignoreSet) {
-              // Best-effort; failure is non-critical
-            }
-            androidx.navigation.NavController nav = Navigation.findNavController(requireView());
-            boolean popped = nav.popBackStack();
-            if (!popped) {
-              nav.navigate(R.id.navigation_crop);
-            }
-          } catch (Throwable ignore) {
-            try {
-              Navigation.findNavController(requireView()).navigate(R.id.navigation_crop);
-            } catch (Throwable ignored2) {
-              // Best-effort; failure is non-critical
-            }
-          }
-        });
-
-    // Also handle system back (gesture/hardware) the same way
-    OnBackPressedCallback backCallback =
-        new OnBackPressedCallback(true) {
-          @Override
-          public void handleOnBackPressed() {
-            try {
-              // Prevent immediate auto-forward from Crop by resetting cropped state and restoring
-              // original
-              try {
-                cropViewModel.setImageCropped(false);
-                cropViewModel.setUserRotationDegrees(0);
-
-                Bitmap orig = cropViewModel.getOriginalImageBitmap().getValue();
-                if (orig != null) cropViewModel.setImageBitmap(orig);
-              } catch (Throwable ignoreSet) {
-                // Best-effort; failure is non-critical
-              }
-              androidx.navigation.NavController nav = Navigation.findNavController(requireView());
-              boolean popped = nav.popBackStack();
-              if (!popped) {
-                nav.navigate(R.id.navigation_crop);
-              }
-            } catch (Throwable ignore) {
-              try {
-                Navigation.findNavController(requireView()).navigate(R.id.navigation_crop);
-              } catch (Throwable ignored2) {
-                // Best-effort; failure is non-critical
-              }
-            }
-          }
-        };
+    // Back (button and system gesture) returns to the document; leaving cancels a running
+    // extraction (see onDestroyView) and keeps the document untouched.
+    binding.buttonBack.setOnClickListener(v -> returnToDocument());
     requireActivity()
         .getOnBackPressedDispatcher()
-        .addCallback(getViewLifecycleOwner(), backCallback);
+        .addCallback(
+            getViewLifecycleOwner(),
+            new OnBackPressedCallback(true) {
+              @Override
+              public void handleOnBackPressed() {
+                returnToDocument();
+              }
+            });
 
     // OCR options (settings) icon above the button bar
     binding.buttonOcrOptions.setOnClickListener(v -> showOcrOptionsDialog());
-    // Share recognized text directly with other apps
+    // Copy / share the recognized text
+    binding.buttonOcrCopy.setOnClickListener(v -> copyText());
     binding.buttonOcrShare.setOnClickListener(v -> shareOcrText());
-    // OCR Review icon (optional, feature-flagged)
-    if (!FeatureFlags.isOcrReviewEnabled()) {
+    // Review/edit the recognized words (single page, feature-flagged)
+    if (documentMode || !FeatureFlags.isOcrReviewEnabled()) {
       binding.buttonOcrReview.setVisibility(View.GONE);
     } else {
       binding.buttonOcrReview.setVisibility(View.VISIBLE);
@@ -367,8 +315,9 @@ public class OCRFragment extends Fragment {
           });
     }
 
-    // Language selection
+    // Language selection (also starts the extraction the user asked for)
     setupLanguageSpinner();
+    render();
 
     return root;
   }
@@ -439,12 +388,16 @@ public class OCRFragment extends Fragment {
     String langSpec = buildLangSpec();
     ocrViewModel.setLanguage(langSpec);
 
-    // Initial auto-run logic (only if not already processed)
-    Bitmap bitmap = cropViewModel.getImageBitmap().getValue();
-    de.schliweb.makeacopy.ui.ocr.OCRViewModel.OcrUiState st0 = ocrViewModel.getState().getValue();
-    boolean alreadyProcessed0 = (st0 != null && st0.imageProcessed());
-    if (bitmap != null && !alreadyProcessed0) {
-      performOCR();
+    // The user opened this screen with "Extract text": start unless a result is already there.
+    if (documentMode) {
+      if (!documentRunning && documentText == null) startDocumentExtraction(false);
+    } else {
+      Bitmap bitmap = cropViewModel.getImageBitmap().getValue();
+      OCRViewModel.OcrUiState st0 = ocrViewModel.getState().getValue();
+      boolean alreadyProcessed0 = (st0 != null && (st0.imageProcessed() || st0.processing()));
+      if (bitmap != null && !alreadyProcessed0 && !lastRunFailed) {
+        performOCR();
+      }
     }
 
     // Set click listener to show language selection dialog
@@ -606,23 +559,17 @@ public class OCRFragment extends Fragment {
       // Best-effort; failure is non-critical
     }
 
-    de.schliweb.makeacopy.ui.ocr.OCRViewModel.OcrUiState st = ocrViewModel.getState().getValue();
-    boolean processed = (st != null && st.imageProcessed());
-    boolean changed = !Objects.equals(prevLang, newLangSpec);
-    if (processed && changed) {
-      binding.buttonProcess.setText(R.string.btn_process);
-      binding.buttonProcess.setOnClickListener(v -> performOCR());
-    } else if (processed) {
-      binding.buttonProcess.setText(R.string.next);
-      binding.buttonProcess.setOnClickListener(v -> navigateToExport());
+    // A result obtained with another language is kept but a new run is offered.
+    if (!Objects.equals(prevLang, newLangSpec)) {
+      rerunPending = true;
     }
+    render();
   }
 
-  /** Shares the current OCR text (reviewed text if available) with other apps via ACTION_SEND. */
+  /** Shares the extracted text (reviewed text if available) with other apps via ACTION_SEND. */
   private void shareOcrText() {
     try {
-      OCRViewModel.OcrUiState state = ocrViewModel.getState().getValue();
-      String text = state != null ? state.getEffectiveText() : null;
+      String text = currentText();
       if (text == null || text.trim().isEmpty()) {
         UIUtils.showToast(
             requireContext(), getString(R.string.ocr_results_will_appear_here), Toast.LENGTH_SHORT);
@@ -637,14 +584,226 @@ public class OCRFragment extends Fragment {
     }
   }
 
-  /** Navigates to Export without retaining intermediate scan workflow fragments. */
-  private void navigateToExport() {
-    NavOptions navOptions =
-        new NavOptions.Builder()
-            .setLaunchSingleTop(true)
-            .setPopUpTo(R.id.navigation_camera, false)
-            .build();
-    Navigation.findNavController(requireView()).navigate(R.id.navigation_export, null, navOptions);
+  /** Returns to the final document screen this screen was opened from. */
+  private void returnToDocument() {
+    try {
+      androidx.navigation.NavController nav = Navigation.findNavController(requireView());
+      if (!nav.popBackStack(R.id.navigation_export, false)) {
+        nav.navigate(R.id.navigation_export);
+      }
+    } catch (IllegalArgumentException | IllegalStateException e) {
+      Log.w(TAG, "returnToDocument failed", e);
+    }
+  }
+
+  /** Text currently shown: the whole document in document mode, else the (reviewed) page text. */
+  private String currentText() {
+    if (documentMode) return documentText;
+    OCRViewModel.OcrUiState state = ocrViewModel.getState().getValue();
+    return state != null ? state.getEffectiveText() : null;
+  }
+
+  /** Copies the extracted text to the clipboard. */
+  private void copyText() {
+    String text = currentText();
+    if (text == null || text.trim().isEmpty()) return;
+    try {
+      android.content.ClipboardManager cm =
+          (android.content.ClipboardManager)
+              requireContext().getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+      if (cm == null) return;
+      cm.setPrimaryClip(
+          android.content.ClipData.newPlainText(getString(R.string.title_extract_text), text));
+      // Android 13+ shows its own clipboard confirmation.
+      if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.TIRAMISU) {
+        UIUtils.showToast(requireContext(), getString(R.string.text_copied), Toast.LENGTH_SHORT);
+      }
+    } catch (Throwable t) {
+      Log.w(TAG, "copyText failed", t);
+    }
+  }
+
+  /** Starts (or restarts) the extraction for the current mode. */
+  private void runExtraction() {
+    if (documentMode) {
+      // Retrying after "no text detected" re-processes every page; after failures only the
+      // pages without a result are processed again.
+      boolean noTextFound = documentText != null && documentText.trim().isEmpty();
+      startDocumentExtraction(rerunPending || noTextFound);
+    } else {
+      performOCR();
+    }
+  }
+
+  /**
+   * Extracts the text of every page of the document with the background OCR job.
+   *
+   * @param force also re-process pages that already have a text (language/model changed)
+   */
+  private void startDocumentExtraction(boolean force) {
+    if (documentExtraction == null || documentExtraction.isRunning()) return;
+    rerunPending = false;
+    documentRunning = true;
+    documentProcessed = 0;
+    documentTotal = 0;
+    documentFailed = 0;
+    documentText = null;
+    render();
+    documentExtraction.start(
+        ocrViewModel.getLanguage().getValue(),
+        force,
+        new DocumentTextExtraction.Listener() {
+          @Override
+          public void onProgress(int processed, int total) {
+            documentProcessed = processed;
+            documentTotal = total;
+            render();
+          }
+
+          @Override
+          public void onFinished(String text, int failedPages) {
+            documentRunning = false;
+            documentText = text;
+            documentFailed = failedPages;
+            HapticsUtils.vibrateOneShot(getContext(), 30L);
+            render();
+          }
+        });
+  }
+
+  /**
+   * Renders status, progress, result and the enabled actions. The primary button is "Done" when a
+   * text is available, otherwise "Retry" (failure, no text, or language/model changed).
+   */
+  private void render() {
+    if (binding == null) return;
+    boolean processing;
+    boolean hasResult; // an extraction finished (with or without text)
+    boolean failed;
+    String text = currentText();
+    boolean hasText = text != null && !text.trim().isEmpty();
+    String status;
+    if (documentMode) {
+      processing = documentRunning;
+      hasResult = !documentRunning && documentText != null;
+      failed = hasResult && documentFailed > 0;
+      if (processing) {
+        status =
+            documentTotal > 0
+                ? getString(R.string.extract_text_running)
+                    + "\n"
+                    + getString(
+                        R.string.extract_text_progress_pages,
+                        Math.min(documentProcessed + 1, documentTotal),
+                        documentTotal)
+                : getString(R.string.extract_text_running);
+        binding.ocrProgress.setMax(Math.max(1, documentTotal));
+        binding.ocrProgress.setProgressCompat(documentProcessed, true);
+      } else if (failed) {
+        status = getString(R.string.extract_text_pages_failed, documentFailed);
+      } else if (hasResult) {
+        status = getString(hasText ? R.string.extract_text_done : R.string.ocr_no_text_detected);
+      } else {
+        status = getString(R.string.extract_text_failed);
+      }
+    } else {
+      OCRViewModel.OcrUiState state = ocrViewModel.getState().getValue();
+      processing = state != null && state.processing();
+      hasResult = state != null && state.imageProcessed() && !processing;
+      failed = !processing && lastRunFailed;
+      boolean hasImage = cropViewModel.getImageBitmap().getValue() != null;
+      if (processing) {
+        status = getString(R.string.extract_text_running);
+      } else if (failed) {
+        status = getString(R.string.extract_text_failed);
+      } else if (hasResult) {
+        status = getString(hasText ? R.string.extract_text_done : R.string.ocr_no_text_detected);
+      } else if (!hasImage) {
+        status = getString(R.string.no_image_processed_crop_an_image_first);
+      } else {
+        status = getString(R.string.extract_text_running);
+      }
+      boolean hasWords = state != null && state.words() != null && !state.words().isEmpty();
+      boolean enableReview = hasResult && hasWords;
+      binding.buttonOcrReview.setEnabled(enableReview);
+      binding.buttonOcrReview.setAlpha(enableReview ? 1f : 0.4f);
+    }
+
+    binding.textOcr.setText(status);
+    binding.ocrProgress.setVisibility(processing ? View.VISIBLE : View.INVISIBLE);
+    binding.ocrResultText.setText(hasText && !processing ? text : "");
+    // The placeholder only makes sense before a result exists (the status says "no text"/failure).
+    binding.ocrResultText.setHint(
+        processing || !(hasResult || failed) ? getString(R.string.ocr_results_will_appear_here) : "");
+
+    boolean enableTextActions = !processing && hasText;
+    binding.buttonOcrCopy.setEnabled(enableTextActions);
+    binding.buttonOcrCopy.setAlpha(enableTextActions ? 1f : 0.4f);
+    binding.buttonOcrShare.setEnabled(enableTextActions);
+    binding.buttonOcrShare.setAlpha(enableTextActions ? 1f : 0.4f);
+    binding.buttonOcrOptions.setEnabled(!processing);
+    binding.buttonOcrOptions.setAlpha(processing ? 0.4f : 1f);
+    binding.languageSpinner.setEnabled(!processing);
+
+    boolean done = hasResult && hasText && !failed && !rerunPending;
+    binding.buttonProcess.setEnabled(!processing);
+    binding.buttonProcess.setText(done ? R.string.btn_finish : R.string.btn_retry);
+    binding.buttonProcess.setOnClickListener(
+        v -> {
+          if (done) {
+            returnToDocument();
+          } else {
+            runExtraction();
+          }
+        });
+  }
+
+  /**
+   * Stores a single-page result with the page of the export session so that it survives leaving
+   * this screen and is used by the multi-page PDF, the TXT export, the page badge and the library.
+   *
+   * @param extraRotation rotation found by OCR auto-rotate; word boxes only match the stored page
+   *     image when it is 0, otherwise only the text is stored
+   */
+  private void persistResultToPage(
+      String text, List<RecognizedWord> words, int extraRotation) {
+    List<de.schliweb.makeacopy.ui.export.session.CompletedScan> pages =
+        exportSessionViewModel != null ? exportSessionViewModel.getPages().getValue() : null;
+    if (pages == null || pages.size() != 1 || pages.get(0) == null) return;
+    if (text == null || text.trim().isEmpty()) return; // nothing worth keeping with the page
+    final String pageId = pages.get(0).id();
+    final List<RecognizedWord> boxes =
+        (extraRotation % 360 == 0 && words != null) ? new ArrayList<>(words) : null;
+    final android.content.Context app = requireContext().getApplicationContext();
+    final de.schliweb.makeacopy.ui.export.session.ExportSessionViewModel session =
+        exportSessionViewModel;
+    try {
+      persistExecutor.execute(
+          () -> {
+            try {
+              de.schliweb.makeacopy.ui.export.session.CompletedScan saved = null;
+              // The final screen persists the page asynchronously; wait briefly if needed.
+              for (int attempt = 0; attempt < 10 && saved == null; attempt++) {
+                saved =
+                    de.schliweb.makeacopy.utils.export.PageOcrStore.save(
+                        app, pageId, text, boxes);
+                if (saved == null) Thread.sleep(300);
+              }
+              if (saved != null) {
+                mainHandler.post(
+                    () -> SessionOcrUpdater.applyOcrResultToSession(app, session, pageId));
+              } else {
+                Log.w(TAG, "Page " + pageId + " not persisted; text kept in memory only");
+              }
+            } catch (InterruptedException ie) {
+              Thread.currentThread().interrupt();
+            } catch (Exception e) {
+              Log.w(TAG, "Storing the extracted text failed", e);
+            }
+          });
+    } catch (java.util.concurrent.RejectedExecutionException e) {
+      Log.w(TAG, "persistResultToPage after destroy", e);
+    }
   }
 
   /** Builds the language specification string from selected languages (e.g., "deu+eng"). */
@@ -841,19 +1000,12 @@ public class OCRFragment extends Fragment {
   }
 
   /**
-   * After models are added or removed, allow the user to restart OCR easily. This switches the
-   * primary action to "Process" and wires it to performOCR().
+   * After models or options changed, offer to run the extraction again (primary action becomes
+   * "Retry").
    */
   private void prepareReprocessAfterModelChange() {
-    try {
-      Bitmap bmp = cropViewModel != null ? cropViewModel.getImageBitmap().getValue() : null;
-      boolean hasImage = bmp != null;
-      binding.buttonProcess.setText(R.string.btn_process);
-      binding.buttonProcess.setEnabled(hasImage);
-      binding.buttonProcess.setOnClickListener(v -> performOCR());
-    } catch (Throwable ignore) {
-      // Best-effort; failure is non-critical
-    }
+    rerunPending = true;
+    render();
   }
 
   /**
@@ -1357,6 +1509,9 @@ public class OCRFragment extends Fragment {
     }
 
     ocrViewModel.startProcessing();
+    ocrViewModel.bindSource(imageBitmap);
+    lastRunFailed = false;
+    rerunPending = false;
     ocrCancelled.set(false);
 
     try {
@@ -1871,6 +2026,7 @@ public class OCRFragment extends Fragment {
                       () -> {
                         ocrViewModel.setWords(words);
                         ocrViewModel.finishSuccess(finalText, words, durMs, meanConfFinal, finalTx);
+                        persistResultToPage(finalText, words, bestRotFinal);
                         // If Auto‑Rotate is enabled, show the found rotation to the user
                         try {
                           android.content.SharedPreferences p =
@@ -2004,6 +2160,17 @@ public class OCRFragment extends Fragment {
     // Signal cancel; do NOT forcibly interrupt the running job (avoid tearing down Tesseract
     // mid-call)
     ocrCancelled.set(true);
+    if (documentExtraction != null) {
+      // Pages already processed keep their text; the others are cancelled.
+      documentExtraction.release();
+      documentExtraction = null;
+      documentRunning = false;
+    }
+    // Leaving during a single-page run: drop the unfinished state (nothing half-done remains).
+    OCRViewModel.OcrUiState st = ocrViewModel != null ? ocrViewModel.getState().getValue() : null;
+    if (!documentMode && st != null && st.processing()) {
+      ocrViewModel.resetForNewImage();
+    }
 
     binding = null;
   }
@@ -2013,6 +2180,7 @@ public class OCRFragment extends Fragment {
     super.onDestroy();
     // Fragment is going away for good: now it's safe to shut down the executor
     ocrExecutor.shutdown();
+    persistExecutor.shutdown(); // lets a pending result write finish
   }
 
   /**

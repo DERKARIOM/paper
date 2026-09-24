@@ -34,7 +34,6 @@ import de.schliweb.makeacopy.utils.ui.DialogUtils;
 public class CameraOptionsDialogFragment extends DialogFragment {
 
   public static final String REQUEST_KEY = "camera_options";
-  public static final String BUNDLE_SKIP_OCR = "skip_ocr";
   public static final String BUNDLE_ANALYSIS_ENABLED = "analysis_enabled";
   public static final String BUNDLE_SKIP_CROPPING = "skip_cropping";
   public static final String BUNDLE_SKIP_EDGE_DETECTION = "skip_edge_detection";
@@ -276,7 +275,6 @@ public class CameraOptionsDialogFragment extends DialogFragment {
     Context ctx = requireContext();
     View view = getLayoutInflater().inflate(R.layout.dialog_camera_options, null);
 
-    CheckBox cbSkip = view.findViewById(R.id.dialog_checkbox_skip_ocr);
     CheckBox cbSkipCropping = view.findViewById(R.id.dialog_checkbox_skip_cropping);
     CheckBox cbSkipEdgeDetection = view.findViewById(R.id.dialog_checkbox_skip_edge_detection);
     CheckBox cbAnalysis = view.findViewById(R.id.dialog_checkbox_analysis_enabled);
@@ -287,7 +285,6 @@ public class CameraOptionsDialogFragment extends DialogFragment {
     // Auto‑Capture/Auto‑Torch options removed to keep it simple
 
     SharedPreferences prefs = ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE);
-    boolean skipOcr = prefs.getBoolean(BUNDLE_SKIP_OCR, false);
     boolean skipPerspective = prefs.getBoolean(BUNDLE_SKIP_CROPPING, false);
     boolean skipEdgeDetection = prefs.getBoolean(BUNDLE_SKIP_EDGE_DETECTION, false);
     boolean analysisEnabled = prefs.getBoolean(BUNDLE_ANALYSIS_ENABLED, false);
@@ -295,7 +292,6 @@ public class CameraOptionsDialogFragment extends DialogFragment {
     boolean exposureEnabled = prefs.getBoolean(BUNDLE_EXPOSURE_COMPENSATION, false);
     boolean manualFocusEnabled = prefs.getBoolean(BUNDLE_MANUAL_FOCUS, false);
     boolean focusQualityEnabled = prefs.getBoolean(BUNDLE_FOCUS_QUALITY_INDICATOR, false);
-    cbSkip.setChecked(skipOcr);
     if (cbSkipCropping != null) cbSkipCropping.setChecked(skipPerspective);
     if (cbSkipEdgeDetection != null) cbSkipEdgeDetection.setChecked(skipEdgeDetection);
     if (cbAnalysis != null) cbAnalysis.setChecked(analysisEnabled);
@@ -322,7 +318,6 @@ public class CameraOptionsDialogFragment extends DialogFragment {
         getString(R.string.btn_options),
         view,
         () -> {
-          boolean skip = cbSkip.isChecked();
           boolean skipCropping = cbSkipCropping != null && cbSkipCropping.isChecked();
           boolean skipEdge = cbSkipEdgeDetection != null && cbSkipEdgeDetection.isChecked();
           boolean analysis = cbAnalysis != null && cbAnalysis.isChecked();
@@ -335,8 +330,6 @@ public class CameraOptionsDialogFragment extends DialogFragment {
           // Persist and keep legacy/new flags in sync
           prefs
               .edit()
-              .putBoolean(BUNDLE_SKIP_OCR, skip)
-              .putBoolean("include_ocr", !skip) // TODO
               .putBoolean(BUNDLE_SKIP_CROPPING, skipCropping)
               .putBoolean(BUNDLE_SKIP_EDGE_DETECTION, skipEdge)
               .putBoolean(BUNDLE_ANALYSIS_ENABLED, analysis)
@@ -347,7 +340,6 @@ public class CameraOptionsDialogFragment extends DialogFragment {
               .apply();
 
           Bundle result = new Bundle();
-          result.putBoolean(BUNDLE_SKIP_OCR, skip);
           result.putBoolean(BUNDLE_SKIP_CROPPING, skipCropping);
           result.putBoolean(BUNDLE_SKIP_EDGE_DETECTION, skipEdge);
           result.putBoolean(BUNDLE_ANALYSIS_ENABLED, analysis);

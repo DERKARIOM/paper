@@ -9,13 +9,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Kamera</string>
     <string name="title_crop">Beskär</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Exportera</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Skanna</string>
     <string name="btn_crop">Beskär</string>
-    <string name="btn_process">Bearbeta</string>
     <string name="btn_share">Dela</string>
     <string name="btn_share_text">Dela text</string>
     <string name="next">Nästa</string>
@@ -37,13 +35,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Justera
         trapetskanten för att välja området att beskära och tryck sedan på Beskär.
     </string>
-    <string name="no_document_ready_process_ocr_first">Inget dokument redo. Kör OCR först.</string>
     <string name="document_ready_for_export">Dokument redo för export</string>
     <string name="processing_image">Bearbetar bild…</string>
     <string name="no_image_processed_crop_an_image_first">Ingen bild bearbetad. Beskär en bild först.</string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR-bearbetning klar. Tryck på knappen
-        för att fortsätta till export.
-    </string>
 
     <string name="ocr_found_rotation">Upptäckt rotation: %1$d°</string>
     <string name="ocr_score">OCR-poäng: %1$d%%</string>
@@ -124,7 +118,6 @@
     <string name="jpeg_mode_color_clean">Rensade färger (högpassfilter) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">Gråskala – rensad (högpassfilter)</string>
     <string name="pdf_bw_mode_color_clean">Färg – rensad (högpassfilter)</string>
-    <string name="skip_ocr_export_only">Hoppa över OCR (endast export)</string>
     <string name="skip_cropping">Hoppa över beskärning</string>
     <string name="skip_edge_detection">Hoppa över kantdetektering</string>
     <string name="preview_corner_detection">Förhandsvisning av hörndetektering</string>
@@ -170,9 +163,6 @@
     <string name="missing_file">Saknad fil</string>
 
     <!-- Inline OCR -->
-    <string name="ocr_processing_started">Kör OCR…</string>
-    <string name="ocr_processing_finished">OCR tillagd för denna sida</string>
-    <string name="ocr_processing_failed">Inbäddad OCR misslyckades</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Ta bort från register</string>
@@ -484,4 +474,16 @@
     <string name="document_cleanup_clean_text">Ren text</string>
     <string name="workflow_step_description">Steg %1$d av %2$d: %3$s</string>
     <string name="search_scans">Sök skanningar</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Extrahera text</string>
+    <string name="extract_text_running">Extraherar text…</string>
+    <string name="extract_text_done">Text extraherad</string>
+    <string name="extract_text_failed">Textextraheringen misslyckades. Tryck på Försök igen.</string>
+    <string name="extract_text_progress_pages">Sida %1$d av %2$d</string>
+    <string name="extract_text_page_header">— Sida %1$d —</string>
+    <string name="extract_text_pages_failed">Text kunde inte extraheras från %1$d sida/sidor. Tryck på Försök igen.</string>
+    <string name="btn_retry">Försök igen</string>
+    <string name="btn_finish">Klar</string>
+    <string name="btn_copy_text">Kopiera text</string>
+    <string name="text_copied">Text kopierad</string>
 </resources>

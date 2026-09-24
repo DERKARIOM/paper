@@ -10,13 +10,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Appareil photo</string>
     <string name="title_crop">Recadrer</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Exporter</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Scanner</string>
     <string name="btn_crop">Recadrer</string>
-    <string name="btn_process">Traiter</string>
     <string name="btn_share">Partager</string>
     <string name="btn_share_text">Partager le texte</string>
     <string name="next">Suivant</string>
@@ -39,13 +37,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Ajustez les coins du
         trapèze pour sélectionner la zone à recadrer, puis touchez le bouton Recadrer.
     </string>
-    <string name="no_document_ready_process_ocr_first">Aucun document prêt. Effectuez d’abord l’OCR.</string>
     <string name="document_ready_for_export">Document prêt pour l’exportation</string>
     <string name="processing_image">Traitement de l’image…</string>
     <string name="no_image_processed_crop_an_image_first">Aucune image traitée. Recadrez d’abord une image.</string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">Traitement OCR terminé. Touchez le bouton
-        pour passer à l’exportation.
-    </string>
 
     <string name="ocr_found_rotation">Rotation détectée : %1$d°</string>
     <string name="ocr_score">Score OCR : %1$d%%</string>
@@ -126,7 +120,6 @@
     <string name="jpeg_mode_color_clean">Couleurs nettoyées (filtre passe-haut) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">Niveaux de gris nettoyés (passe-haut)</string>
     <string name="pdf_bw_mode_color_clean">Couleurs nettoyées (passe-haut)</string>
-    <string name="skip_ocr_export_only">Ignorer l’OCR (export seulement)</string>
     <string name="skip_cropping">Ignorer le recadrage</string>
     <string name="skip_edge_detection">Ignorer la détection des bords</string>
     <string name="preview_corner_detection">Aperçu de la détection des coins</string>
@@ -172,9 +165,6 @@
     <string name="missing_file">Fichier manquant</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">Exécution de l’OCR…</string>
-    <string name="ocr_processing_finished">OCR ajouté pour cette page</string>
-    <string name="ocr_processing_failed">Échec de l’OCR intégré</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Supprimer du registre</string>
@@ -490,4 +480,16 @@
     <string name="document_cleanup_clean_text">Texte net</string>
     <string name="workflow_step_description">Étape %1$d sur %2$d : %3$s</string>
     <string name="search_scans">Rechercher des numérisations</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Extraire le texte</string>
+    <string name="extract_text_running">Extraction du texte…</string>
+    <string name="extract_text_done">Texte extrait</string>
+    <string name="extract_text_failed">L’extraction du texte a échoué. Touchez Réessayer.</string>
+    <string name="extract_text_progress_pages">Page %1$d sur %2$d</string>
+    <string name="extract_text_page_header">— Page %1$d —</string>
+    <string name="extract_text_pages_failed">Le texte de %1$d page(s) n’a pas pu être extrait. Touchez Réessayer.</string>
+    <string name="btn_retry">Réessayer</string>
+    <string name="btn_finish">Terminé</string>
+    <string name="btn_copy_text">Copier le texte</string>
+    <string name="text_copied">Texte copié</string>
 </resources>

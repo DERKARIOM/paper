@@ -9,13 +9,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Cameră</string>
     <string name="title_crop">Decupare</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Exportare</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Scanare</string>
     <string name="btn_crop">Decupare</string>
-    <string name="btn_process">Procesare</string>
     <string name="btn_share">Partajare</string>
     <string name="btn_share_text">Partajează textul</string>
     <string name="next">Următor</string>
@@ -37,13 +35,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Ajustează colțurile
         trapezului pentru a selecta zona de decupat, apoi apasă butonul Decupare.
     </string>
-    <string name="no_document_ready_process_ocr_first">Niciun document pregătit. Procesează mai întâi OCR.</string>
     <string name="document_ready_for_export">Document pregătit pentru export</string>
     <string name="processing_image">Procesare imagine…</string>
     <string name="no_image_processed_crop_an_image_first">Nicio imagine procesată. Decupează o imagine mai întâi.
-    </string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">Procesarea OCR este completă. Atinge
-        butonul pentru a continua la export.
     </string>
 
     <string name="ocr_found_rotation">Rotație detectată: %1$d°</string>
@@ -126,7 +120,6 @@
     <string name="jpeg_mode_color_clean">Culori curățate (filtru trece-sus) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">Tonuri de gri – curățate (trece-sus)</string>
     <string name="pdf_bw_mode_color_clean">Culoare – curățată (trece-sus)</string>
-    <string name="skip_ocr_export_only">Omite OCR (doar export)</string>
     <string name="skip_cropping">Omite decuparea</string>
     <string name="skip_edge_detection">Omite detectarea marginilor</string>
     <string name="preview_corner_detection">Previzualizare detecție colțuri</string>
@@ -173,9 +166,6 @@
     <string name="missing_file">Fișier lipsă</string>
 
     <!-- Inline OCR -->
-    <string name="ocr_processing_started">Se rulează OCR…</string>
-    <string name="ocr_processing_finished">OCR adăugat pentru această pagină</string>
-    <string name="ocr_processing_failed">OCR integrat a eșuat</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Elimină din registru</string>
@@ -495,4 +485,16 @@
     <string name="document_cleanup_clean_text">Text curat</string>
     <string name="workflow_step_description">Pasul %1$d din %2$d: %3$s</string>
     <string name="search_scans">Căutare scanări</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Extrage textul</string>
+    <string name="extract_text_running">Se extrage textul…</string>
+    <string name="extract_text_done">Text extras</string>
+    <string name="extract_text_failed">Extragerea textului a eșuat. Atingeți Reîncercați.</string>
+    <string name="extract_text_progress_pages">Pagina %1$d din %2$d</string>
+    <string name="extract_text_page_header">— Pagina %1$d —</string>
+    <string name="extract_text_pages_failed">Textul nu a putut fi extras din %1$d pagină/pagini. Atingeți Reîncercați.</string>
+    <string name="btn_retry">Reîncercați</string>
+    <string name="btn_finish">Gata</string>
+    <string name="btn_copy_text">Copiază textul</string>
+    <string name="text_copied">Text copiat</string>
 </resources>

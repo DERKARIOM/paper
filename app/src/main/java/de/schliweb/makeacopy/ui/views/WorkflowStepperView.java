@@ -21,18 +21,19 @@ import de.schliweb.makeacopy.R;
 
 /**
  * Lightweight Material 3 workflow stepper showing the position inside the scan pipeline (Camera →
- * Crop → OCR → Export) as a row of dots. The active step uses {@code ?attr/colorPrimary}, inactive
+ * Crop → Export) as a row of dots. Text extraction (OCR) is an optional action of the final step,
+ * not a step of its own. The active step uses {@code ?attr/colorPrimary}, inactive
  * steps use {@code ?attr/colorOutlineVariant}, so dynamic color and dark mode are handled
  * automatically.
  *
  * <p>The view is purely informational: it is not clickable and exposes a localized content
- * description such as "Step 2 of 4: Crop" for TalkBack.
+ * description such as "Step 2 of 3: Crop" for TalkBack.
  */
 public class WorkflowStepperView extends LinearLayout {
 
-  private static final int STEP_COUNT = 4;
+  private static final int STEP_COUNT = 3;
   private static final int[] STEP_LABELS = {
-    R.string.title_camera, R.string.title_crop, R.string.title_ocr, R.string.title_export
+    R.string.title_camera, R.string.title_crop, R.string.title_export
   };
 
   private int currentStep = 1;
@@ -78,7 +79,7 @@ public class WorkflowStepperView extends LinearLayout {
   /**
    * Sets the current workflow step.
    *
-   * @param step 1-based step index (1=Camera, 2=Crop, 3=OCR, 4=Export); values are clamped
+   * @param step 1-based step index (1=Camera, 2=Crop, 3=Export); values are clamped
    */
   public void setCurrentStep(int step) {
     currentStep = Math.max(1, Math.min(STEP_COUNT, step));

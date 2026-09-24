@@ -258,34 +258,13 @@ public class ExportPagesAdapter extends RecyclerView.Adapter<ExportPagesAdapter.
       }
     }
 
-    // OCR badge: show [OCR] if ocrTextPath present & file exists; otherwise [⚠]
-    String badge = null;
-    int badgeBg = 0x33000000; // default semi-transparent
-    String ocrPath = s.ocrTextPath();
-    boolean hasOcr = false;
-    if (ocrPath != null) {
-      try {
-        java.io.File f = new java.io.File(ocrPath);
-        hasOcr = f.exists() && f.isFile();
-      } catch (Throwable ignore) {
-        // Best-effort; failure is non-critical
-      }
-    }
-    if (hasOcr) {
-      badge = "[OCR]";
-      badgeBg = 0x8032CD32; // semi green
-    } else {
-      badge = "[⚠]";
-      badgeBg = 0x80FFA500; // semi orange
-    }
-    h.badge.setText(badge);
-    h.badge.setBackgroundColor(badgeBg);
-    // Inline OCR action: if missing OCR, clicking the badge requests OCR for this page
-    if (!hasOcr && callbacks != null) {
-      h.badge.setOnClickListener(v -> callbacks.onOcrRequested(h.getBindingAdapterPosition()));
-    } else {
-      h.badge.setOnClickListener(null);
-    }
+    // Text badge: text extraction (OCR) is optional, so only pages that have an extracted text
+    // are marked; pages without one show nothing (no "missing" warning).
+    boolean hasOcr = de.schliweb.makeacopy.utils.export.PageOcrStore.hasOcr(s);
+    h.badge.setText("[OCR]");
+    h.badge.setBackgroundColor(0x8032CD32); // semi green
+    h.badge.setOnClickListener(null);
+    h.badge.setVisibility(hasOcr ? View.VISIBLE : View.GONE);
 
     h.buttonRemove.setOnClickListener(
         v -> {
@@ -439,13 +418,6 @@ public class ExportPagesAdapter extends RecyclerView.Adapter<ExportPagesAdapter.
      * @param toPosition The new position of the item after reordering.
      */
     void onReorder(int fromPosition, int toPosition);
-
-    /**
-     * Requests running OCR for a specific page (inline OCR action).
-     *
-     * @param position Index of the page in the adapter.
-     */
-    void onOcrRequested(int position);
   }
 
   /**

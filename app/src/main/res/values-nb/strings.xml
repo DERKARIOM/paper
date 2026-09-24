@@ -9,13 +9,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Kamera</string>
     <string name="title_crop">Beskjær</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Eksporter</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Skann</string>
     <string name="btn_crop">Beskjær</string>
-    <string name="btn_process">Behandle</string>
     <string name="btn_share">Del</string>
     <string name="btn_share_text">Del tekst</string>
     <string name="next">Neste</string>
@@ -37,13 +35,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Juster hjørnene på
         trapeset for å velge området som skal beskjæres, og trykk deretter på Beskjær-knappen.
     </string>
-    <string name="no_document_ready_process_ocr_first">Ingen dokumenter klare. Kjør OCR først.</string>
     <string name="document_ready_for_export">Dokument klart for eksport</string>
     <string name="processing_image">Behandler bilde…</string>
     <string name="no_image_processed_crop_an_image_first">Ingen bilder behandlet. Beskjær et bilde først.</string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR-behandling fullført. Trykk på knappen
-        for å fortsette til eksport.
-    </string>
 
     <string name="ocr_found_rotation">Funnet rotasjon: %1$d°</string>
     <string name="ocr_score">OCR-score: %1$d%%</string>
@@ -125,7 +119,6 @@
     <string name="jpeg_mode_color_clean">Rensede farger (høypassfilter) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">Gråtoner – renset (høypass)</string>
     <string name="pdf_bw_mode_color_clean">Farger – renset (høypass)</string>
-    <string name="skip_ocr_export_only">Hopp over OCR (kun eksport)</string>
     <string name="skip_cropping">Hopp over beskjæring</string>
     <string name="skip_edge_detection">Hopp over kantdeteksjon</string>
     <string name="preview_corner_detection">Forhåndsvisning av hjørnedeteksjon</string>
@@ -169,9 +162,6 @@
     <string name="missing_file">Manglende fil</string>
 
     <!-- Inline OCR -->
-    <string name="ocr_processing_started">Kjører OCR…</string>
-    <string name="ocr_processing_finished">OCR lagt til for denne siden</string>
-    <string name="ocr_processing_failed">Innebygd OCR mislyktes</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Fjern fra register</string>
@@ -484,4 +474,16 @@
     <string name="document_cleanup_clean_text">Ren tekst</string>
     <string name="workflow_step_description">Trinn %1$d av %2$d: %3$s</string>
     <string name="search_scans">Søk i skanninger</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Hent ut tekst</string>
+    <string name="extract_text_running">Henter ut tekst…</string>
+    <string name="extract_text_done">Tekst hentet ut</string>
+    <string name="extract_text_failed">Kunne ikke hente ut teksten. Trykk på Prøv igjen.</string>
+    <string name="extract_text_progress_pages">Side %1$d av %2$d</string>
+    <string name="extract_text_page_header">— Side %1$d —</string>
+    <string name="extract_text_pages_failed">Teksten kunne ikke hentes ut fra %1$d side(r). Trykk på Prøv igjen.</string>
+    <string name="btn_retry">Prøv igjen</string>
+    <string name="btn_finish">Ferdig</string>
+    <string name="btn_copy_text">Kopier tekst</string>
+    <string name="text_copied">Tekst kopiert</string>
 </resources>

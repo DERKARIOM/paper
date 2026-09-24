@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Workflow stepper: Camera → Crop → OCR → Export (step 1) -->
+    <!-- Workflow stepper: Camera → Crop → Export (step 1) -->
     <de.schliweb.makeacopy.ui.views.WorkflowStepperView
             android:id="@+id/workflow_stepper"
             android:layout_width="wrap_content"

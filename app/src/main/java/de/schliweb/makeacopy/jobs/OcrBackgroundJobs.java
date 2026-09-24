@@ -27,10 +27,6 @@ import de.schliweb.makeacopy.utils.ocr.OcrModelManager;
 import de.schliweb.makeacopy.utils.ocr.OcrPageSegmentationMode;
 import de.schliweb.makeacopy.utils.ocr.RecognizedWord;
 import de.schliweb.makeacopy.utils.ocr.UnevenLightingPolicy;
-import de.schliweb.makeacopy.utils.ocr.WordsJson;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -65,6 +61,7 @@ public final class OcrBackgroundJobs {
   private static final String PREF_KEY_OCR_MODE = "ocr_prep_mode"; // 0=Original,1=Quick,2=Robust
   private static final String BUNDLE_OCR_AUTO_ROTATE_APPLY_EXPORT = "ocr_auto_rotate_apply_export";
   private static final String BUNDLE_LAYOUT_ANALYSIS = "layout_analysis";
+  private static final String PREF_KEY_PADDLE_BEST_OCR = "paddle_best_ocr";
 
   private static final ExecutorService EXEC = Executors.newSingleThreadExecutor();
   private static final Set<String> running = Collections.synchronizedSet(new HashSet<>());
@@ -174,6 +171,16 @@ public final class OcrBackgroundJobs {
               Log.w(TAG, "Failed to detect/set Best model settings", t);
             }
 
+            // PaddleOCR high-quality detection option (paddle flavor), mirrors OCRFragment.
+            try {
+              helper.setPaddleHighQualityDetectionEnabled(
+                  de.schliweb.makeacopy.BuildConfig.FEATURE_PADDLE_OCR
+                      && app.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                          .getBoolean(PREF_KEY_PADDLE_BEST_OCR, false));
+            } catch (Throwable ignore) {
+              // Best-effort; failure is non-critical
+            }
+
             if (!helper.initTesseract()) throw new RuntimeException("Tesseract init failed");
 
             // Read user preferences for auto-rotate / layout analysis (mirrors OCRFragment).
@@ -201,6 +208,12 @@ public final class OcrBackgroundJobs {
                 storedMode = OCRHelper.OCR_MODE_ROBUST;
               }
               prepMode = storedMode;
+              // The paddle flavor always recognizes with PaddleOCR on the original image
+              // (OCRFragment.getSelectedOcrMode() returns PADDLE there): never feed it the
+              // Tesseract-oriented binarized preprocessing.
+              if (de.schliweb.makeacopy.BuildConfig.FEATURE_PADDLE_OCR) {
+                prepMode = OCRHelper.OCR_MODE_PADDLE;
+              }
               allowOcrAutoRotate = sp.getBoolean(BUNDLE_OCR_AUTO_ROTATE_APPLY_EXPORT, false);
               useLayoutAnalysis =
                   FeatureFlags.isLayoutAnalysisEnabled()
@@ -352,50 +365,11 @@ public final class OcrBackgroundJobs {
             String text = (bestResult != null && bestResult.text != null) ? bestResult.text : "";
             List<RecognizedWord> words = (bestResult != null) ? bestResult.words : null;
 
-            File dir = new File(app.getFilesDir(), "scans/" + s.id());
-            if (!dir.exists()) {
-              //noinspection ResultOfMethodCallIgnored
-              dir.mkdirs();
-            }
-
-            // Write plain text as fallback
-            File txt = new File(dir, "text.txt");
-            try (FileOutputStream fos = new FileOutputStream(txt)) {
-              fos.write(text.getBytes(StandardCharsets.UTF_8));
-              fos.flush();
-            }
-            // Write words.json
-            File wordsFile = new File(dir, "words.json");
-            try (FileOutputStream wos = new FileOutputStream(wordsFile)) {
-              String json = WordsJson.toWordsJson(words);
-              wos.write(json.getBytes(StandardCharsets.UTF_8));
-              wos.flush();
-            }
-
-            // Update registry to prefer words_json
-            CompletedScan updated =
-                new CompletedScan(
-                    s.id(),
-                    s.filePath(),
-                    s.rotationDeg(),
-                    wordsFile.getAbsolutePath(),
-                    "words_json",
-                    s.thumbPath(),
-                    s.createdAt(),
-                    s.widthPx(),
-                    s.heightPx(),
-                    s.inMemoryBitmap(),
-                    s.schemaVersion(),
-                    s.orientationMode());
-            try {
-              reg.remove(s.id());
-            } catch (Throwable ignore) {
-              // Best-effort; failure is non-critical
-            }
-            try {
-              reg.insert(updated);
-            } catch (Throwable e) {
-              Log.w(TAG, "Failed to insert updated OCR entry", e);
+            // Persist text.txt + words.json and point the registry entry to them.
+            if (de.schliweb.makeacopy.utils.export.PageOcrStore.save(
+                    app, s.id(), text, words != null ? words : new ArrayList<>())
+                == null) {
+              throw new RuntimeException("Entry vanished from registry: " + pageId);
             }
             success = true;
           } catch (Throwable t) {

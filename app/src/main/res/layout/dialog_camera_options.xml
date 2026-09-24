@@ -13,12 +13,6 @@
         android:paddingBottom="12dp">
 
         <CheckBox
-            android:id="@+id/dialog_checkbox_skip_ocr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/skip_ocr_export_only" />
-
-        <CheckBox
             android:id="@+id/dialog_checkbox_skip_cropping"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

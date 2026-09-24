@@ -46,10 +46,6 @@ public final class ExportPrefsHelper {
     getPrefs(context).edit().putBoolean("export_as_jpeg", exportAsJpeg).apply();
   }
 
-  public static boolean isSkipOcr(Context context) {
-    return getPrefs(context).getBoolean("skip_ocr", false);
-  }
-
   public static String getPdfBwMode(Context context) {
     return getPrefs(context).getString("pdf_bw_mode", null);
   }

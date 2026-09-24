@@ -1076,17 +1076,15 @@ public class CropFragment extends Fragment {
         }
         return;
       }
-      android.content.SharedPreferences prefs =
-          requireContext()
-              .getSharedPreferences("export_options", android.content.Context.MODE_PRIVATE);
-      boolean skipOcr = prefs.getBoolean("skip_ocr", false);
-      int dest = skipOcr ? R.id.navigation_export : R.id.navigation_ocr;
-      NavOptions.Builder navOptionsBuilder = new NavOptions.Builder().setLaunchSingleTop(true);
-      if (skipOcr) {
-        navOptionsBuilder.setPopUpTo(R.id.navigation_camera, false);
-      }
-      NavOptions navOptions = navOptionsBuilder.build();
-      Navigation.findNavController(requireView()).navigate(dest, null, navOptions);
+      // Next step is always the final document screen. Text extraction (OCR) is an optional
+      // action offered there; it never blocks the scan workflow.
+      NavOptions navOptions =
+          new NavOptions.Builder()
+              .setLaunchSingleTop(true)
+              .setPopUpTo(R.id.navigation_camera, false)
+              .build();
+      Navigation.findNavController(requireView())
+          .navigate(R.id.navigation_export, null, navOptions);
     } catch (Throwable ignored) {
       // Best-effort; failure is non-critical
     }

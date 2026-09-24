@@ -18,16 +18,18 @@
         tools:layout="@layout/fragment_crop" />
 
     <fragment
-        android:id="@+id/navigation_ocr"
-        android:name="de.schliweb.makeacopy.ui.ocr.OCRFragment"
-        android:label="@string/title_ocr"
-        tools:layout="@layout/fragment_ocr" />
-
-    <fragment
         android:id="@+id/navigation_export"
         android:name="de.schliweb.makeacopy.ui.export.ExportFragment"
         android:label="@string/title_export"
         tools:layout="@layout/fragment_export" />
+
+    <!-- Optional text extraction (OCR). Not part of the scan workflow: it is opened on demand
+         from the final document screen ("Extract text") and always returns to it. -->
+    <fragment
+        android:id="@+id/navigation_text_extraction"
+        android:name="de.schliweb.makeacopy.ui.ocr.OCRFragment"
+        android:label="@string/title_extract_text"
+        tools:layout="@layout/fragment_ocr" />
 
     <fragment
         android:id="@+id/navigation_completed_scans_picker"

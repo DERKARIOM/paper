@@ -7,13 +7,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">कैमरा</string>
     <string name="title_crop">क्रॉप</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">निर्यात</string>
 
     <!-- Button labels -->
     <string name="btn_scan">स्कैन</string>
     <string name="btn_crop">क्रॉप</string>
-    <string name="btn_process">प्रोसेस</string>
     <string name="btn_share">शेयर</string>
     <string name="btn_share_text">टेक्स्ट साझा करें</string>
     <string name="next">अगला</string>
@@ -33,12 +31,9 @@
     <string name="ocr_no_text_detected">कोई टेक्स्ट नहीं मिला</string>
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">क्रॉप करने के लिए ट्रैपेज़ॉइड कोनों को समायोजित करें, फिर क्रॉप बटन दबाएँ।
     </string>
-    <string name="no_document_ready_process_ocr_first">कोई दस्तावेज़ तैयार नहीं। पहले OCR चलाएँ।</string>
     <string name="document_ready_for_export">दस्तावेज़ निर्यात के लिए तैयार</string>
     <string name="processing_image">चित्र प्रोसेस हो रहा है…</string>
     <string name="no_image_processed_crop_an_image_first">कोई चित्र प्रोसेस नहीं हुआ। पहले एक चित्र क्रॉप करें।</string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR प्रोसेसिंग पूर्ण। निर्यात के लिए बटन दबाएँ।
-    </string>
 
     <string name="ocr_found_rotation">पाया गया रोटेशन: %1$d°</string>
     <string name="ocr_score">OCR स्कोर: %1$d%%</string>
@@ -117,7 +112,6 @@
     <string name="jpeg_mode_color_clean">साफ़ रंग (हाई-पास फ़िल्टर) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">ग्रेस्केल साफ़ (हाई-पास)</string>
     <string name="pdf_bw_mode_color_clean">रंग साफ़ (हाई-पास)</string>
-    <string name="skip_ocr_export_only">OCR छोड़ें (केवल निर्यात)</string>
     <string name="skip_cropping">क्रॉपिंग छोड़ें</string>
     <string name="skip_edge_detection">किनारा पहचान छोड़ें</string>
     <string name="preview_corner_detection">कोना पहचान पूर्वावलोकन</string>
@@ -161,9 +155,6 @@
     <string name="missing_file">फ़ाइल गायब है</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">OCR चल रहा है…</string>
-    <string name="ocr_processing_finished">इस पृष्ठ के लिए OCR जोड़ा गया</string>
-    <string name="ocr_processing_failed">इनलाइन OCR विफल</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">रजिस्ट्री से हटाएँ</string>
@@ -463,4 +454,16 @@
     <string name="document_cleanup_clean_text">स्वच्छ पाठ</string>
     <string name="workflow_step_description">चरण %1$d / %2$d: %3$s</string>
     <string name="search_scans">स्कैन खोजें</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">टेक्स्ट निकालें</string>
+    <string name="extract_text_running">टेक्स्ट निकाला जा रहा है…</string>
+    <string name="extract_text_done">टेक्स्ट निकाला गया</string>
+    <string name="extract_text_failed">टेक्स्ट निकालना विफल रहा। फिर से कोशिश करें पर टैप करें।</string>
+    <string name="extract_text_progress_pages">पृष्ठ %1$d / %2$d</string>
+    <string name="extract_text_page_header">— पृष्ठ %1$d —</string>
+    <string name="extract_text_pages_failed">%1$d पृष्ठ से टेक्स्ट नहीं निकाला जा सका। फिर से कोशिश करें पर टैप करें।</string>
+    <string name="btn_retry">फिर से कोशिश करें</string>
+    <string name="btn_finish">हो गया</string>
+    <string name="btn_copy_text">टेक्स्ट कॉपी करें</string>
+    <string name="text_copied">टेक्स्ट कॉपी किया गया</string>
 </resources>

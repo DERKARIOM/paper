@@ -80,6 +80,7 @@ public final class ExportUiBindings {
               setEnabledTemporarily(binding.buttonOptions, isExporting);
               setEnabledTemporarily(binding.buttonAddPage, isExporting);
               setEnabledTemporarily(binding.buttonClearPages, isExporting);
+              setEnabledTemporarily(binding.buttonExtractText, isExporting);
               // Special handling for Share icon: only force-disable during export; do not restore
               // here
               if (isExporting) {
@@ -91,6 +92,7 @@ public final class ExportUiBindings {
                 // Ensure Export button respects document readiness after restoring
                 Boolean ready = vm.isDocumentReady().getValue();
                 binding.buttonExport.setEnabled(Boolean.TRUE.equals(ready));
+                binding.buttonExtractText.setEnabled(Boolean.TRUE.equals(ready));
                 // Do not change Share here; it will be enabled explicitly on successful export
               }
             });

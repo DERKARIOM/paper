@@ -11,11 +11,9 @@ package de.schliweb.makeacopy.utils.ocr;
 
 import android.content.Context;
 import android.util.Log;
-import de.schliweb.makeacopy.R;
 import de.schliweb.makeacopy.data.CompletedScansRegistry;
 import de.schliweb.makeacopy.ui.export.session.CompletedScan;
 import de.schliweb.makeacopy.ui.export.session.ExportSessionViewModel;
-import de.schliweb.makeacopy.utils.ui.UIUtils;
 import java.util.List;
 
 /**
@@ -32,7 +30,7 @@ public final class SessionOcrUpdater {
 
   /**
    * Applies the OCR result to the given export session by updating the corresponding page entry
-   * with the processed data and notifying the user.
+   * with the processed data. Silent: callers report progress/results themselves.
    *
    * @param context the context required for accessing resources and application state, must not be
    *     null
@@ -78,14 +76,6 @@ public final class SessionOcrUpdater {
           sessionVM.updateAt(i, updated);
           break;
         }
-      }
-      try {
-        UIUtils.showToast(
-            context,
-            context.getString(R.string.ocr_processing_finished),
-            android.widget.Toast.LENGTH_SHORT);
-      } catch (Throwable ignored) {
-        // Best-effort; failure is non-critical
       }
     } catch (Throwable t) {
       Log.w(TAG, "Failed to update session after OCR job", t);

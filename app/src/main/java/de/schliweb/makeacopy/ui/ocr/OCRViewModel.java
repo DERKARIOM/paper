@@ -285,18 +285,31 @@ public class OCRViewModel extends ViewModel {
           new OcrUiState(
               false, false, "eng", "", new ArrayList<>(), null, null, null, null, null, false));
   private final MutableLiveData<Event<String>> mErrorEvents = new MutableLiveData<>();
-  private final MutableLiveData<Event<Void>> mNavigateToExport = new MutableLiveData<>();
 
   public LiveData<OcrUiState> getState() {
     return mState;
   }
 
-  public LiveData<Event<String>> getErrorEvents() {
-    return mErrorEvents;
+  /**
+   * Image the current OCR state belongs to. Text extraction is optional and runs after the page was
+   * created, so consumers must not reuse a result computed for another image (previous page,
+   * image re-cropped since).
+   */
+  private java.lang.ref.WeakReference<android.graphics.Bitmap> mSource =
+      new java.lang.ref.WeakReference<>(null);
+
+  /** Records the image that the OCR run being started processes. */
+  public void bindSource(android.graphics.Bitmap source) {
+    mSource = new java.lang.ref.WeakReference<>(source);
   }
 
-  public LiveData<Event<Void>> getNavigateToExport() {
-    return mNavigateToExport;
+  /** True when the current OCR state was computed for exactly this image. */
+  public boolean isFor(android.graphics.Bitmap image) {
+    return image != null && mSource.get() == image;
+  }
+
+  public LiveData<Event<String>> getErrorEvents() {
+    return mErrorEvents;
   }
 
   /** Resets the UI-State for a new image. Also clears any review edits. */
@@ -306,6 +319,7 @@ public class OCRViewModel extends ViewModel {
     mState.setValue(
         new OcrUiState(
             false, false, s.language, "", new ArrayList<>(), null, null, null, null, null, false));
+    mSource = new java.lang.ref.WeakReference<>(null);
     Log.d(TAG, "resetForNewImage");
   }
 
@@ -389,10 +403,6 @@ public class OCRViewModel extends ViewModel {
     mState.setValue(s.withProcessing(false).withImageProcessed(false).withText(""));
     mErrorEvents.setValue(new Event<>(msg));
     Log.d(TAG, "finishError: " + msg);
-  }
-
-  public void requestNavigateToExport() {
-    mNavigateToExport.setValue(new Event<>(null));
   }
 
   /** Sets the transform (for example A4) */

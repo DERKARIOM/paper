@@ -9,13 +9,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">الكاميرا</string>
     <string name="title_crop">اقتصاص</string>
-    <string name="title_ocr">التعرّف الضوئي على الحروف</string>
     <string name="title_export">تصدير</string>
 
     <!-- Button labels -->
     <string name="btn_scan">مسح</string>
     <string name="btn_crop">اقتصاص</string>
-    <string name="btn_process">معالجة</string>
     <string name="btn_share">مشاركة</string>
     <string name="btn_share_text">مشاركة النص</string>
     <string name="next">التالي</string>
@@ -35,13 +33,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">اضبط زوايا شبه
         المنحرف لتحديد منطقة الاقتصاص، ثم اضغط على زر «اقتصاص».
     </string>
-    <string name="no_document_ready_process_ocr_first">لا يوجد مستند جاهز. قم بتشغيل OCR أولًا.</string>
     <string name="document_ready_for_export">المستند جاهز للتصدير</string>
     <string name="processing_image">جارٍ معالجة الصورة…</string>
     <string name="no_image_processed_crop_an_image_first">لم تتم معالجة أي صورة. قم باقتصاص صورة أولًا.</string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">اكتملت معالجة OCR. اضغط على الزر للمتابعة
-        إلى التصدير.
-    </string>
     <string name="ocr_found_rotation">تم العثور على دوران: %1$d°</string>
     <string name="ocr_score">درجة OCR: %1$d%%</string>
     <string name="ocr_found_rotation_with_score">تم العثور على دوران: %1$d° — درجة OCR: %2$d%%</string>
@@ -121,7 +115,6 @@
     <string name="jpeg_mode_color_clean">ألوان نظيفة (مرشح تمرير عالي) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">تدرج رمادي مُنقّى (تمرير عالي)</string>
     <string name="pdf_bw_mode_color_clean">ألوان مُنقّاة (تمرير عالي)</string>
-    <string name="skip_ocr_export_only">تخطي OCR (تصدير فقط)</string>
     <string name="preview_corner_detection">معاينة اكتشاف الزوايا</string>
     <string name="skip_cropping">تخطي الاقتصاص</string>
     <string name="skip_edge_detection">تخطي اكتشاف الحواف</string>
@@ -165,9 +158,6 @@
     <string name="missing_file">ملف مفقود</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">جارٍ تشغيل OCR…</string>
-    <string name="ocr_processing_finished">تمت إضافة OCR لهذه الصفحة</string>
-    <string name="ocr_processing_failed">فشل OCR المضمن</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">إزالة من السجل</string>
@@ -476,4 +466,16 @@
     <string name="document_cleanup_clean_text">نص نظيف</string>
     <string name="workflow_step_description">الخطوة %1$d من %2$d: %3$s</string>
     <string name="search_scans">البحث في المستندات الممسوحة</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">استخراج النص</string>
+    <string name="extract_text_running">جارٍ استخراج النص…</string>
+    <string name="extract_text_done">تم استخراج النص</string>
+    <string name="extract_text_failed">فشل استخراج النص. اضغط على إعادة المحاولة.</string>
+    <string name="extract_text_progress_pages">الصفحة %1$d من %2$d</string>
+    <string name="extract_text_page_header">— الصفحة %1$d —</string>
+    <string name="extract_text_pages_failed">تعذّر استخراج النص من %1$d صفحة. اضغط على إعادة المحاولة.</string>
+    <string name="btn_retry">إعادة المحاولة</string>
+    <string name="btn_finish">تم</string>
+    <string name="btn_copy_text">نسخ النص</string>
+    <string name="text_copied">تم نسخ النص</string>
 </resources>

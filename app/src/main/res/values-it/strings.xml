@@ -9,13 +9,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Fotocamera</string>
     <string name="title_crop">Ritaglia</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Esporta</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Scansiona</string>
     <string name="btn_crop">Ritaglia</string>
-    <string name="btn_process">Elabora</string>
     <string name="btn_share">Condividi</string>
     <string name="btn_share_text">Condividi testo</string>
     <string name="next">Avanti</string>
@@ -39,13 +37,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Regola gli angoli
         del trapezio per selezionare l’area da ritagliare, quindi tocca il pulsante Ritaglia.
     </string>
-    <string name="no_document_ready_process_ocr_first">Nessun documento pronto. Esegui prima l’OCR.</string>
     <string name="document_ready_for_export">Documento pronto per l’esportazione</string>
     <string name="processing_image">Elaborazione dell’immagine…</string>
     <string name="no_image_processed_crop_an_image_first">Nessuna immagine elaborata. Ritaglia prima un’immagine.
-    </string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">Elaborazione OCR completata. Tocca il
-        pulsante per procedere all’esportazione.
     </string>
 
     <string name="ocr_found_rotation">Rotazione rilevata: %1$d°</string>
@@ -128,7 +122,6 @@
     <string name="jpeg_mode_color_clean">Colori puliti (filtro passa-alto) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">Scala di grigi pulita (passa-alto)</string>
     <string name="pdf_bw_mode_color_clean">Colori puliti (passa-alto)</string>
-    <string name="skip_ocr_export_only">Salta OCR (solo esportazione)</string>
     <string name="skip_cropping">Salta il ritaglio</string>
     <string name="skip_edge_detection">Salta rilevamento bordi</string>
     <string name="preview_corner_detection">Anteprima del rilevamento degli angoli</string>
@@ -174,9 +167,6 @@
     <string name="missing_file">File mancante</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">Esecuzione OCR…</string>
-    <string name="ocr_processing_finished">OCR aggiunto per questa pagina</string>
-    <string name="ocr_processing_failed">OCR in linea non riuscito</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Rimuovi dal registro</string>
@@ -493,4 +483,16 @@
     <string name="document_cleanup_clean_text">Testo pulito</string>
     <string name="workflow_step_description">Passaggio %1$d di %2$d: %3$s</string>
     <string name="search_scans">Cerca scansioni</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Estrai testo</string>
+    <string name="extract_text_running">Estrazione del testo…</string>
+    <string name="extract_text_done">Testo estratto</string>
+    <string name="extract_text_failed">Estrazione del testo non riuscita. Tocca Riprova.</string>
+    <string name="extract_text_progress_pages">Pagina %1$d di %2$d</string>
+    <string name="extract_text_page_header">— Pagina %1$d —</string>
+    <string name="extract_text_pages_failed">Impossibile estrarre il testo da %1$d pagina/e. Tocca Riprova.</string>
+    <string name="btn_retry">Riprova</string>
+    <string name="btn_finish">Fine</string>
+    <string name="btn_copy_text">Copia testo</string>
+    <string name="text_copied">Testo copiato</string>
 </resources>

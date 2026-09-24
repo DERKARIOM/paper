@@ -10,13 +10,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Kamera</string>
     <string name="title_crop">Kırp</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Dışa Aktar</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Tara</string>
     <string name="btn_crop">Kırp</string>
-    <string name="btn_process">İşle</string>
     <string name="btn_share">Paylaş</string>
     <string name="btn_share_text">Metni paylaş</string>
     <string name="next">İleri</string>
@@ -38,13 +36,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Kırpılacak alanı
         seçmek için yamuk köşelerini ayarlayın, ardından Kırp düğmesine dokunun.
     </string>
-    <string name="no_document_ready_process_ocr_first">Belge hazır değil. Önce OCR işlemini yapın.</string>
     <string name="document_ready_for_export">Belge dışa aktarıma hazır</string>
     <string name="processing_image">Görüntü işleniyor…</string>
     <string name="no_image_processed_crop_an_image_first">İşlenmiş görüntü yok. Önce bir görüntü kırpın.</string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR işlemi tamamlandı. Dışa aktarıma
-        geçmek için düğmeye dokunun.
-    </string>
 
     <string name="ocr_found_rotation">Bulunan döndürme: %1$d°</string>
     <string name="ocr_score">OCR puanı: %1$d%%</string>
@@ -124,7 +118,6 @@
     <string name="jpeg_mode_color_clean">Temizlenmiş renkler (yüksek geçiren filtre) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">Gri tonlama – temizlenmiş (yüksek geçiren filtre)</string>
     <string name="pdf_bw_mode_color_clean">Renk – temizlenmiş (yüksek geçiren filtre)</string>
-    <string name="skip_ocr_export_only">OCR\'yi atla (yalnızca dışa aktar)</string>
     <string name="skip_cropping">Kırpmayı atla</string>
     <string name="skip_edge_detection">Kenar algılamayı atla</string>
     <string name="preview_corner_detection">Köşe algılama önizlemesi</string>
@@ -170,9 +163,6 @@
     <string name="missing_file">Dosya eksik</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">OCR çalıştırılıyor…</string>
-    <string name="ocr_processing_finished">Bu sayfa için OCR eklendi</string>
-    <string name="ocr_processing_failed">Satır içi OCR başarısız oldu</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Kayıt defterinden kaldır</string>
@@ -485,4 +475,16 @@
     <string name="document_cleanup_clean_text">Temiz metin</string>
     <string name="workflow_step_description">Adım %1$d / %2$d: %3$s</string>
     <string name="search_scans">Taramalarda ara</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Metni çıkar</string>
+    <string name="extract_text_running">Metin çıkarılıyor…</string>
+    <string name="extract_text_done">Metin çıkarıldı</string>
+    <string name="extract_text_failed">Metin çıkarılamadı. Tekrar dene’ye dokunun.</string>
+    <string name="extract_text_progress_pages">Sayfa %1$d / %2$d</string>
+    <string name="extract_text_page_header">— Sayfa %1$d —</string>
+    <string name="extract_text_pages_failed">%1$d sayfadan metin çıkarılamadı. Tekrar dene’ye dokunun.</string>
+    <string name="btn_retry">Tekrar dene</string>
+    <string name="btn_finish">Bitti</string>
+    <string name="btn_copy_text">Metni kopyala</string>
+    <string name="text_copied">Metin kopyalandı</string>
 </resources>

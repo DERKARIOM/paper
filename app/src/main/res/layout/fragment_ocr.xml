@@ -13,7 +13,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/ocr_processing_complete_tap_the_button_to_proceed_to_export"
+            android:text="@string/extract_text_running"
             android:textAlignment="center"
             android:textSize="18sp"
             android:minLines="2"
@@ -21,13 +21,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Workflow stepper: Camera → Crop → OCR → Export (step 3) -->
-    <de.schliweb.makeacopy.ui.views.WorkflowStepperView
-            android:id="@+id/workflow_stepper"
-            android:layout_width="wrap_content"
+    <!-- Extraction progress: indeterminate for one page, per page for a document (set in code
+         before it is shown). Text extraction is an optional action of the final document
+         screen, not a workflow step, hence no workflow stepper here. -->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/ocr_progress"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            app:currentStep="3"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            android:indeterminate="true"
             app:layout_constraintTop_toBottomOf="@id/text_ocr"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -47,7 +52,7 @@
             android:ellipsize="end"
             app:icon="@drawable/ic_arrow_drop_down"
             app:iconGravity="end"
-            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
+            app:layout_constraintTop_toBottomOf="@id/ocr_progress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -76,7 +81,8 @@
             android:layout_marginEnd="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
-            android:text="@string/ocr_results_will_appear_here"
+            android:hint="@string/ocr_results_will_appear_here"
+            android:scrollbars="vertical"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
             android:textIsSelectable="true"
@@ -129,6 +135,23 @@
                 android:minWidth="48dp"
                 android:minHeight="48dp"
                 app:tooltipText="@string/btn_review"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+        <ImageButton
+                android:id="@+id/button_ocr_copy"
+                android:enabled="false"
+                android:alpha="0.4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="16dp"
+                android:padding="8dp"
+                android:contentDescription="@string/btn_copy_text"
+                android:src="@drawable/ic_content_copy"
+                app:tint="?attr/colorControlNormal"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                app:tooltipText="@string/btn_copy_text"
                 android:background="?attr/selectableItemBackgroundBorderless"/>
 
         <ImageButton
@@ -186,7 +209,7 @@
                 android:layout_weight="1"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="@string/next"
+                android:text="@string/btn_finish"
                 android:maxLines="1"
                 android:ellipsize="end" />
     </LinearLayout>

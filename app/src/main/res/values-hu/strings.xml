@@ -9,13 +9,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Kamera</string>
     <string name="title_crop">Kivágás</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Exportálás</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Szkennelés</string>
     <string name="btn_crop">Kivágás</string>
-    <string name="btn_process">Feldolgozás</string>
     <string name="btn_share">Megosztás</string>
     <string name="btn_share_text">Szöveg megosztása</string>
     <string name="next">Tovább</string>
@@ -37,13 +35,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Állítsa be a trapéz
         sarkait a kivágandó terület kijelöléséhez, majd nyomja meg a Kivágás gombot.
     </string>
-    <string name="no_document_ready_process_ocr_first">Nincs dokumentum készen. Először futtassa az OCR-t.</string>
     <string name="document_ready_for_export">A dokumentum exportálásra kész</string>
     <string name="processing_image">Kép feldolgozása…</string>
     <string name="no_image_processed_crop_an_image_first">Nincs feldolgozott kép. Először vágjon ki egy képet.</string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">Az OCR feldolgozás befejeződött. Nyomja
-        meg a gombot az exportáláshoz.
-    </string>
 
     <string name="ocr_found_rotation">Talált elforgatás: %1$d°</string>
     <string name="ocr_score">OCR-pontszám: %1$d%%</string>
@@ -125,7 +119,6 @@
     <string name="jpeg_mode_color_clean">Tisztított színes (felüláteresztő szűrő) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">Szürkeárnyalatos – tisztított (high-pass)</string>
     <string name="pdf_bw_mode_color_clean">Színes – tisztított (high-pass)</string>
-    <string name="skip_ocr_export_only">OCR kihagyása (csak exportálás)</string>
     <string name="skip_cropping">Kivágás kihagyása</string>
     <string name="skip_edge_detection">Szélfelismerés kihagyása</string>
     <string name="preview_corner_detection">Sarokérzékelés előnézete</string>
@@ -169,9 +162,6 @@
     <string name="missing_file">Hiányzó fájl</string>
 
     <!-- Inline OCR -->
-    <string name="ocr_processing_started">OCR futtatása…</string>
-    <string name="ocr_processing_finished">OCR hozzáadva ehhez az oldalhoz</string>
-    <string name="ocr_processing_failed">Beágyazott OCR sikertelen</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Eltávolítás a listából</string>
@@ -487,4 +477,16 @@
     <string name="document_cleanup_clean_text">Tiszta szöveg</string>
     <string name="workflow_step_description">%1$d. lépés a(z) %2$d közül: %3$s</string>
     <string name="search_scans">Szkennelések keresése</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Szöveg kinyerése</string>
+    <string name="extract_text_running">Szöveg kinyerése…</string>
+    <string name="extract_text_done">Szöveg kinyerve</string>
+    <string name="extract_text_failed">A szöveg kinyerése sikertelen. Koppintson az Újra gombra.</string>
+    <string name="extract_text_progress_pages">%1$d. oldal / %2$d</string>
+    <string name="extract_text_page_header">— %1$d. oldal —</string>
+    <string name="extract_text_pages_failed">%1$d oldal szövegét nem sikerült kinyerni. Koppintson az Újra gombra.</string>
+    <string name="btn_retry">Újra</string>
+    <string name="btn_finish">Kész</string>
+    <string name="btn_copy_text">Szöveg másolása</string>
+    <string name="text_copied">Szöveg másolva</string>
 </resources>

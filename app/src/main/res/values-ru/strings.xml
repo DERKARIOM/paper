@@ -9,13 +9,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Камера</string>
     <string name="title_crop">Обрезка</string>
-    <string name="title_ocr">Распознавание</string>
     <string name="title_export">Экспорт</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Сканировать</string>
     <string name="btn_crop">Обрезать</string>
-    <string name="btn_process">Обработать</string>
     <string name="btn_share">Поделиться</string>
     <string name="btn_share_text">Поделиться текстом</string>
     <string name="next">Далее</string>
@@ -37,13 +35,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Отрегулируйте углы
         трапеции, чтобы выбрать область обрезки, затем нажмите «Обрезать».
     </string>
-    <string name="no_document_ready_process_ocr_first">Документ не готов. Сначала выполните OCR.</string>
     <string name="document_ready_for_export">Документ готов к экспорту</string>
     <string name="processing_image">Обработка изображения…</string>
     <string name="no_image_processed_crop_an_image_first">Изображение не обработано. Сначала обрежьте изображение.
-    </string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR завершён. Нажмите кнопку, чтобы
-        перейти к экспорту.
     </string>
 
     <string name="ocr_found_rotation">Обнаружен поворот: %1$d°</string>
@@ -127,7 +121,6 @@
     <string name="jpeg_mode_color_clean">Очищенные цвета (высокочастотный фильтр) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">Оттенки серого — очищенные (высокочастотный фильтр)</string>
     <string name="pdf_bw_mode_color_clean">Цвет — очищенный (высокочастотный фильтр)</string>
-    <string name="skip_ocr_export_only">Пропустить OCR (только экспорт)</string>
     <string name="skip_cropping">Пропустить обрезку</string>
     <string name="skip_edge_detection">Пропустить определение краёв</string>
     <string name="preview_corner_detection">Предпросмотр обнаружения углов</string>
@@ -173,9 +166,6 @@
     <string name="missing_file">Файл отсутствует</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">Выполняется OCR…</string>
-    <string name="ocr_processing_finished">Для этой страницы добавлен текст OCR</string>
-    <string name="ocr_processing_failed">Сбой встроенного OCR</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Удалить из реестра</string>
@@ -488,4 +478,16 @@
     <string name="document_cleanup_clean_text">Чистый текст</string>
     <string name="workflow_step_description">Шаг %1$d из %2$d: %3$s</string>
     <string name="search_scans">Поиск сканов</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Извлечь текст</string>
+    <string name="extract_text_running">Извлечение текста…</string>
+    <string name="extract_text_done">Текст извлечён</string>
+    <string name="extract_text_failed">Не удалось извлечь текст. Нажмите «Повторить».</string>
+    <string name="extract_text_progress_pages">Страница %1$d из %2$d</string>
+    <string name="extract_text_page_header">— Страница %1$d —</string>
+    <string name="extract_text_pages_failed">Не удалось извлечь текст со страниц: %1$d. Нажмите «Повторить».</string>
+    <string name="btn_retry">Повторить</string>
+    <string name="btn_finish">Готово</string>
+    <string name="btn_copy_text">Копировать текст</string>
+    <string name="text_copied">Текст скопирован</string>
 </resources>

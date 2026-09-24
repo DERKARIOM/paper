@@ -92,7 +92,6 @@ public class ExportFragment extends Fragment {
   }
 
   @Inject ScansRepository scansRepository;
-  @Inject javax.inject.Provider<OCRHelper> ocrHelperProvider;
   private static final String TAG = "ExportFragment";
   // Main thread handler for safe UI updates
   private final android.os.Handler mainHandler =
@@ -144,6 +143,8 @@ public class ExportFragment extends Fragment {
               intent.getBooleanExtra(
                   de.schliweb.makeacopy.jobs.OcrBackgroundJobs.EXTRA_SUCCESS, false);
           if (id == null) return;
+          // Late results of a document text extraction that was left before it finished:
+          // attach them silently. Failures here are cancellations (the user left), not errors.
           if (success) {
             try {
               SessionOcrUpdater.applyOcrResultToSession(
@@ -151,9 +152,6 @@ public class ExportFragment extends Fragment {
             } catch (Exception e) {
               Log.w(TAG, "Failed to update session after OCR job", e);
             }
-          } else {
-            UIUtils.showToast(
-                requireContext(), getString(R.string.ocr_processing_failed), Toast.LENGTH_SHORT);
           }
         }
       };
@@ -241,72 +239,34 @@ public class ExportFragment extends Fragment {
   }
 
   /**
-   * Updates the OCR badge overlay shown on top of the document preview, mirroring the per-page OCR
-   * indicator used in the filmstrip ({@link
-   * de.schliweb.makeacopy.ui.export.session.ExportPagesAdapter}).
-   *
-   * <p>Behavior:
-   *
-   * <ul>
-   *   <li>Hidden when the preview is not visible or no active page can be determined.
-   *   <li>Shows {@code [OCR]} on a green background when the active page has an existing OCR text
-   *       file on disk.
-   *   <li>Shows {@code [⚠]} on an orange background when OCR is missing; tapping the badge then
-   *       enqueues a background OCR run for the active page via {@link #runInlineOcrForPage(int)}.
-   * </ul>
+   * Updates the text badge shown on top of the document preview, mirroring the per-page badge of
+   * the filmstrip ({@link de.schliweb.makeacopy.ui.export.session.ExportPagesAdapter}): {@code
+   * [OCR]} when the active page has an extracted text, hidden otherwise. Text extraction is
+   * optional, so a page without text is not flagged.
    */
   private void updatePreviewOcrBadge() {
     if (binding == null || binding.previewOcrBadge == null) return;
     android.widget.TextView badge = binding.previewOcrBadge;
+    boolean show = false;
     try {
-      // Hide while no preview image is shown.
-      if (binding.documentPreview == null
-          || binding.documentPreview.getVisibility() != View.VISIBLE) {
-        badge.setVisibility(View.GONE);
-        badge.setOnClickListener(null);
-        return;
-      }
-      int idx = findActivePageIndex();
-      List<de.schliweb.makeacopy.ui.export.session.CompletedScan> pages =
-          (exportSessionViewModel != null) ? exportSessionViewModel.getPages().getValue() : null;
-      // Single-page hot workflow without session entry: no badge to show.
-      if (idx < 0 || pages == null || idx >= pages.size()) {
-        badge.setVisibility(View.GONE);
-        badge.setOnClickListener(null);
-        return;
-      }
-      de.schliweb.makeacopy.ui.export.session.CompletedScan s = pages.get(idx);
-      if (s == null) {
-        badge.setVisibility(View.GONE);
-        badge.setOnClickListener(null);
-        return;
-      }
-      String ocrPath = s.ocrTextPath();
-      boolean hasOcr = false;
-      if (ocrPath != null) {
-        try {
-          File f = new File(ocrPath);
-          hasOcr = f.exists() && f.isFile();
-        } catch (Throwable ignore) {
-          // Best-effort; failure is non-critical
+      if (binding.documentPreview != null
+          && binding.documentPreview.getVisibility() == View.VISIBLE) {
+        int idx = findActivePageIndex();
+        List<de.schliweb.makeacopy.ui.export.session.CompletedScan> pages =
+            (exportSessionViewModel != null) ? exportSessionViewModel.getPages().getValue() : null;
+        if (pages != null && idx >= 0 && idx < pages.size()) {
+          show = de.schliweb.makeacopy.utils.export.PageOcrStore.hasOcr(pages.get(idx));
         }
       }
-      if (hasOcr) {
-        badge.setText("[OCR]");
-        badge.setBackgroundColor(0x8032CD32); // semi green
-        badge.setOnClickListener(null);
-      } else {
-        badge.setText("[\u26A0]");
-        badge.setBackgroundColor(0x80FFA500); // semi orange
-        final int pos = idx;
-        badge.setOnClickListener(v -> runInlineOcrForPage(pos));
-      }
-      badge.setVisibility(View.VISIBLE);
     } catch (Throwable ignore) {
       // Best-effort; failure is non-critical
-      badge.setVisibility(View.GONE);
-      badge.setOnClickListener(null);
     }
+    badge.setOnClickListener(null);
+    if (show) {
+      badge.setText("[OCR]");
+      badge.setBackgroundColor(0x8032CD32); // semi green
+    }
+    badge.setVisibility(show ? View.VISIBLE : View.GONE);
   }
 
   /**
@@ -480,7 +440,7 @@ public class ExportFragment extends Fragment {
     // Observe exporting state and progress to update progress bar (delegated)
     ExportUiBindings.bindExportProgress(binding, getViewLifecycleOwner(), exportViewModel);
 
-    // Back button: navigate to OCR (if not skipping OCR) or Crop (if skipping OCR)
+    // "New" button: same as system Back (leave the document, start a new scan)
     View backBtn = root.findViewById(R.id.button_back);
     if (backBtn != null) {
       backBtn.setOnClickListener(
@@ -494,7 +454,7 @@ public class ExportFragment extends Fragment {
     ocrViewModel = new ViewModelProvider(requireActivity()).get(OCRViewModel.class);
     cameraViewModel = new ViewModelProvider(requireActivity()).get(CameraViewModel.class);
 
-    // Ensure we have a bitmap if arriving here directly (skipping Crop/OCR)
+    // Ensure we have a bitmap if arriving here directly (cropping disabled)
     if (cropViewModel.getImageBitmap().getValue() == null) {
       Context ctxInit = getContext();
       if (ctxInit != null) {
@@ -540,7 +500,7 @@ public class ExportFragment extends Fragment {
             // Mark Re-Edit entry so CropFragment can:
             //   - reload the original from disk (the in-memory original was nulled here),
             //   - pre-populate the trapezoid with lastAcceptedCornersOriginal,
-            //   - on confirm/back, pop directly back to Export instead of advancing to OCR.
+            //   - on confirm/back, pop directly back to Export.
             cropViewModel.setCameFromExport(true);
             cropViewModel.setImageCropped(false);
             // FR #72 multi-page: remember which session page is being re-edited so the
@@ -657,11 +617,6 @@ public class ExportFragment extends Fragment {
                   A11yUtils.announce(
                       rootV, getString(R.string.page_moved_to_position, toPosition + 1));
                 }
-              }
-
-              @Override
-              public void onOcrRequested(int position) {
-                runInlineOcrForPage(position);
               }
             });
     androidx.recyclerview.widget.LinearLayoutManager lm =
@@ -1258,6 +1213,17 @@ public class ExportFragment extends Fragment {
               .navigate(R.id.navigation_camera, null, navOptions);
         });
     binding.buttonShareSmall.setOnClickListener(v -> shareDocument());
+    // Optional text extraction (OCR): opened on demand, returns here. Nothing is recognized
+    // unless the user taps it, and the document can be saved/shared without it.
+    binding.buttonExtractText.setOnClickListener(
+        v -> {
+          if (!Boolean.TRUE.equals(exportViewModel.isDocumentReady().getValue())) return;
+          try {
+            Navigation.findNavController(v).navigate(R.id.navigation_text_extraction);
+          } catch (IllegalArgumentException | IllegalStateException e) {
+            Log.w(TAG, "Navigation to text extraction failed", e);
+          }
+        });
 
     ViewCompat.setOnApplyWindowInsetsListener(
         root,
@@ -1273,11 +1239,12 @@ public class ExportFragment extends Fragment {
             getViewLifecycleOwner(),
             ready -> {
               binding.buttonExport.setEnabled(ready);
+              binding.buttonExtractText.setEnabled(Boolean.TRUE.equals(ready));
               setShareButtonsEnabled(false); // erst nach Export aktiv
               binding.textExport.setText(
                   ready
                       ? R.string.document_ready_for_export
-                      : R.string.no_document_ready_process_ocr_first);
+                      : R.string.no_image_processed_crop_an_image_first);
             });
 
     exportViewModel
@@ -1746,7 +1713,9 @@ public class ExportFragment extends Fragment {
                         int pageCountForIndex = isMulti ? ((pages == null) ? 0 : pages.size()) : 1;
                         indexScanLibraryAsync(displayName, pageCountForIndex, finalUri);
                         // End: index
-                        if (includeOcr) {
+                        // TXT companion file only when text was actually extracted: text
+                        // extraction is optional and never blocks the document export.
+                        if (includeOcr && hasExtractedText()) {
                           if (inboxExportInProgress) {
                             // Inbox Mode: export TXT directly to inbox without file picker
                             exportTxtToInbox();
@@ -1983,7 +1952,9 @@ public class ExportFragment extends Fragment {
                         // locator)
                         indexScanLibraryAsync(displayName, 1, exportUriFinal);
                         // End: index
-                        if (includeOcr) {
+                        // TXT companion file only when text was actually extracted: text
+                        // extraction is optional and never blocks the document export.
+                        if (includeOcr && hasExtractedText()) {
                           if (inboxExportInProgress) {
                             // Inbox Mode: export TXT directly to inbox without file picker
                             exportTxtToInbox();
@@ -2165,7 +2136,8 @@ public class ExportFragment extends Fragment {
                         // service locator)
                         indexScanLibraryAsync(displayName, totalPages, exportUri);
                         // End: index
-                        if (Boolean.TRUE.equals(exportViewModel.isIncludeOcr().getValue())) {
+                        if (Boolean.TRUE.equals(exportViewModel.isIncludeOcr().getValue())
+                            && hasExtractedText()) {
                           // Defer showing the assignment snackbar until TXT has been saved
                           deferAssignUntilTxt = true;
                           launchTxtFileCreation();
@@ -2286,12 +2258,12 @@ public class ExportFragment extends Fragment {
     if (s == null || s.id() == null || s.inMemoryBitmap() == null) return;
     final android.content.Context appContext = requireContext().getApplicationContext();
     final String id = s.id();
-    // Respect user preference: Skip OCR (export only)
-    boolean skipOcrPref = ExportPrefsHelper.isSkipOcr(requireContext());
-    // Capture current in-memory OCR text/words at call time unless Skip OCR is enabled
-    final String ocrTextAtCall = skipOcrPref ? null : getOcrTextFromState();
+    // Text extraction is optional and usually happens later (the result is then attached to the
+    // page by the text extraction screen). Only capture a result computed for this very image.
+    final boolean ocrForThisPage = ocrViewModel != null && ocrViewModel.isFor(s.inMemoryBitmap());
+    final String ocrTextAtCall = ocrForThisPage ? getOcrTextFromState() : null;
     final java.util.List<RecognizedWord> ocrWordsAtCall =
-        skipOcrPref ? null : getOcrWordsFromState();
+        ocrForThisPage ? getOcrWordsFromState() : null;
     new Thread(
             () -> {
               try {
@@ -2358,26 +2330,6 @@ public class ExportFragment extends Fragment {
    * <p>Includes robust error handling to catch and log exceptions, displaying appropriate user
    * feedback when sharing fails.
    */
-  private void runInlineOcrForPage(int position) {
-    List<de.schliweb.makeacopy.ui.export.session.CompletedScan> cur =
-        exportSessionViewModel.getPages().getValue();
-    if (cur == null || position < 0 || position >= cur.size()) return;
-    de.schliweb.makeacopy.ui.export.session.CompletedScan s = cur.get(position);
-    if (s == null) return;
-    // Enqueue background OCR job for this page id. UI will be updated when the job broadcasts
-    // completion.
-    UIUtils.showToast(
-        requireContext(), getString(R.string.ocr_processing_started), Toast.LENGTH_SHORT);
-    de.schliweb.makeacopy.ui.ocr.OCRViewModel.OcrUiState st = ocrViewModel.getState().getValue();
-    String lang = (st != null && st.language() != null) ? st.language() : null;
-    // If user hasn't visited the OCR screen, fall back to a sensible system-based default
-    if (lang == null || lang.trim().isEmpty()) {
-      lang = OCRUtils.resolveEffectiveLanguage(lang);
-    }
-    de.schliweb.makeacopy.jobs.OcrBackgroundJobs.enqueueReprocess(
-        requireContext().getApplicationContext(), s.id(), lang, () -> ocrHelperProvider.get());
-  }
-
   /**
    * Enables or disables the share buttons within the UI.
    *
@@ -2501,8 +2453,33 @@ public class ExportFragment extends Fragment {
    *     state is unavailable.
    */
   private String getOcrTextFromState() {
+    if (!isOcrStateForCurrentImage()) return null;
     OCRViewModel.OcrUiState s = ocrViewModel.getState().getValue();
     return (s != null) ? s.getEffectiveText() : null;
+  }
+
+  /**
+   * True when the in-memory OCR result belongs to the current (cropped) image. Text extraction is
+   * optional and runs after the page was created, so a result of a previous page or of the image
+   * before a re-crop must never be used.
+   */
+  private boolean isOcrStateForCurrentImage() {
+    return ocrViewModel != null
+        && cropViewModel != null
+        && ocrViewModel.isFor(cropViewModel.getImageBitmap().getValue());
+  }
+
+  /** True when some text was extracted for the document (current image or any page). */
+  private boolean hasExtractedText() {
+    String t = getOcrTextFromState();
+    if (t != null && !t.trim().isEmpty()) return true;
+    List<de.schliweb.makeacopy.ui.export.session.CompletedScan> pages =
+        exportSessionViewModel != null ? exportSessionViewModel.getPages().getValue() : null;
+    if (pages == null) return false;
+    for (de.schliweb.makeacopy.ui.export.session.CompletedScan p : pages) {
+      if (de.schliweb.makeacopy.utils.export.PageOcrStore.hasOcr(p)) return true;
+    }
+    return false;
   }
 
   /**
@@ -2515,6 +2492,7 @@ public class ExportFragment extends Fragment {
    *     null if the state is unavailable.
    */
   private List<RecognizedWord> getOcrWordsFromState() {
+    if (!isOcrStateForCurrentImage()) return null;
     OCRViewModel.OcrUiState s = ocrViewModel.getState().getValue();
     return (s != null) ? s.getEffectiveWords() : null;
   }

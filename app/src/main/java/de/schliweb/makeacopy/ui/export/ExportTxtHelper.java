@@ -16,11 +16,9 @@ import android.util.Log;
 import android.widget.Toast;
 import de.schliweb.makeacopy.R;
 import de.schliweb.makeacopy.utils.ui.UIUtils;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.List;
 import lombok.experimental.UtilityClass;
 
@@ -34,11 +32,6 @@ import lombok.experimental.UtilityClass;
 final class ExportTxtHelper {
 
   private static final String TAG = "ExportTxtHelper";
-
-  static String readAllUtf8(File file) throws IOException {
-    byte[] buf = Files.readAllBytes(file.toPath());
-    return new String(buf, StandardCharsets.UTF_8);
-  }
 
   /**
    * Exports OCR text to a TXT file at the given URI. For multi-page sessions, concatenates per-page
@@ -80,38 +73,7 @@ final class ExportTxtHelper {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < pages.size(); i++) {
       de.schliweb.makeacopy.ui.export.session.CompletedScan s = pages.get(i);
-      String pageText = null;
-      String p = (s != null) ? s.ocrTextPath() : null;
-      String fmt = (s != null) ? s.ocrFormat() : null;
-      boolean isPlain = (fmt == null) || "plain".equalsIgnoreCase(fmt);
-      if (p != null) {
-        if (isPlain) {
-          File f = new File(p);
-          if (f.exists() && f.isFile()) {
-            try {
-              pageText = readAllUtf8(f);
-            } catch (IOException e) {
-              Log.w(TAG, "Failed reading plain OCR text for page: " + p, e);
-            }
-          }
-        } else {
-          File f = new File(p);
-          File dir = f.getParentFile();
-          if (dir != null) {
-            File txtFile = new File(dir, "text.txt");
-            if (txtFile.exists() && txtFile.isFile()) {
-              try {
-                pageText = readAllUtf8(txtFile);
-              } catch (IOException e) {
-                Log.w(
-                    TAG,
-                    "Failed reading fallback text.txt for page: " + txtFile.getAbsolutePath(),
-                    e);
-              }
-            }
-          }
-        }
-      }
+      String pageText = de.schliweb.makeacopy.utils.export.PageOcrStore.readText(s);
       if ((pageText == null || pageText.isEmpty())
           && s != null
           && s.inMemoryBitmap() != null

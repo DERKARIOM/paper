@@ -10,13 +10,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Fotoaparát</string>
     <string name="title_crop">Oříznout</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Exportovat</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Skenovat</string>
     <string name="btn_crop">Oříznout</string>
-    <string name="btn_process">Zpracovat</string>
     <string name="btn_share">Sdílet</string>
     <string name="btn_share_text">Sdílet text</string>
     <string name="next">Další</string>
@@ -38,13 +36,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Upravte rohy
         lichoběžníku pro výběr oblasti k oříznutí a poté klepněte na tlačítko Oříznout.
     </string>
-    <string name="no_document_ready_process_ocr_first">Žádný dokument není připraven. Nejprve spusťte OCR.</string>
     <string name="document_ready_for_export">Dokument je připraven k exportu</string>
     <string name="processing_image">Zpracovávám obrázek…</string>
     <string name="no_image_processed_crop_an_image_first">Žádný obrázek nebyl zpracován. Nejprve ořízněte obrázek.
-    </string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">Zpracování OCR dokončeno. Klepněte na
-        tlačítko pro pokračování k exportu.
     </string>
 
     <string name="ocr_found_rotation">Nalezena rotace: %1$d°</string>
@@ -125,7 +119,6 @@
     <string name="jpeg_mode_color_clean">Vyčištěné barvy (horní propust) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">Odstíny šedi – vyčištěné (high-pass)</string>
     <string name="pdf_bw_mode_color_clean">Barvy – vyčištěné (high-pass)</string>
-    <string name="skip_ocr_export_only">Přeskočit OCR (pouze export)</string>
     <string name="skip_cropping">Přeskočit oříznutí</string>
     <string name="skip_edge_detection">Přeskočit detekci okrajů</string>
     <string name="preview_corner_detection">Náhled detekce rohů</string>
@@ -170,9 +163,6 @@
     <string name="missing_file">Chybějící soubor</string>
 
     <!-- Inline OCR -->
-    <string name="ocr_processing_started">Probíhá OCR…</string>
-    <string name="ocr_processing_finished">OCR přidáno pro tuto stránku</string>
-    <string name="ocr_processing_failed">OCR selhalo</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Odebrat z registru</string>
@@ -487,4 +477,16 @@
     <string name="document_cleanup_clean_text">Čistý text</string>
     <string name="workflow_step_description">Krok %1$d z %2$d: %3$s</string>
     <string name="search_scans">Hledat skeny</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Extrahovat text</string>
+    <string name="extract_text_running">Extrahování textu…</string>
+    <string name="extract_text_done">Text extrahován</string>
+    <string name="extract_text_failed">Extrakce textu se nezdařila. Klepněte na Zkusit znovu.</string>
+    <string name="extract_text_progress_pages">Strana %1$d z %2$d</string>
+    <string name="extract_text_page_header">— Strana %1$d —</string>
+    <string name="extract_text_pages_failed">Text se nepodařilo extrahovat ze stran: %1$d. Klepněte na Zkusit znovu.</string>
+    <string name="btn_retry">Zkusit znovu</string>
+    <string name="btn_finish">Hotovo</string>
+    <string name="btn_copy_text">Kopírovat text</string>
+    <string name="text_copied">Text zkopírován</string>
 </resources>

@@ -9,13 +9,11 @@
     <!-- New menu items for document scanner -->
     <string name="title_camera">Camera</string>
     <string name="title_crop">Bijsnijden</string>
-    <string name="title_ocr">OCR</string>
     <string name="title_export">Exporteren</string>
 
     <!-- Button labels -->
     <string name="btn_scan">Scannen</string>
     <string name="btn_crop">Bijsnijden</string>
-    <string name="btn_process">Verwerken</string>
     <string name="btn_share">Delen</string>
     <string name="btn_share_text">Tekst delen</string>
     <string name="next">Verder</string>
@@ -37,13 +35,9 @@
     <string name="adjust_the_trapezoid_corners_to_select_the_area_to_crop_then_tap_the_crop_button">Pas de hoeken van
         het trapezium aan om het gebied te selecteren en tik daarna op Bijsnijden.
     </string>
-    <string name="no_document_ready_process_ocr_first">Geen document gereed. Voer eerst OCR uit.</string>
     <string name="document_ready_for_export">Document klaar om te exporteren</string>
     <string name="processing_image">Afbeelding verwerken…</string>
     <string name="no_image_processed_crop_an_image_first">Geen afbeelding verwerkt. Snijd eerst een afbeelding bij.
-    </string>
-    <string name="ocr_processing_complete_tap_the_button_to_proceed_to_export">OCR voltooid. Tik op de knop om door te
-        gaan naar exporteren.
     </string>
 
     <string name="ocr_found_rotation">Gevonden rotatie: %1$d°</string>
@@ -126,7 +120,6 @@
     <string name="jpeg_mode_color_clean">Opgeschoonde kleuren (hoogdoorlaatfilter) (JPEG)</string>
     <string name="pdf_bw_mode_grayscale_clean">Grijswaarden – opgeschoond (hoogdoorlaat)</string>
     <string name="pdf_bw_mode_color_clean">Kleur – opgeschoond (hoogdoorlaat)</string>
-    <string name="skip_ocr_export_only">OCR overslaan (alleen exporteren)</string>
     <string name="skip_cropping">Bijsnijden overslaan</string>
     <string name="skip_edge_detection">Randdetectie overslaan</string>
     <string name="preview_corner_detection">Voorbeeld van hoekdetectie</string>
@@ -172,9 +165,6 @@
     <string name="missing_file">Bestand ontbreekt</string>
 
     <!-- Inline OCR cues -->
-    <string name="ocr_processing_started">OCR uitvoeren…</string>
-    <string name="ocr_processing_finished">OCR toegevoegd voor deze pagina</string>
-    <string name="ocr_processing_failed">Inline OCR mislukt</string>
 
     <!-- Registry Picker: context action -->
     <string name="remove_from_registry_title">Uit register verwijderen</string>
@@ -490,4 +480,16 @@
     <string name="document_cleanup_clean_text">Schone tekst</string>
     <string name="workflow_step_description">Stap %1$d van %2$d: %3$s</string>
     <string name="search_scans">Scans zoeken</string>
+    <!-- Optional text extraction (OCR), offered on the final document screen -->
+    <string name="title_extract_text">Tekst extraheren</string>
+    <string name="extract_text_running">Tekst wordt geëxtraheerd…</string>
+    <string name="extract_text_done">Tekst geëxtraheerd</string>
+    <string name="extract_text_failed">Tekstextractie mislukt. Tik op Opnieuw proberen.</string>
+    <string name="extract_text_progress_pages">Pagina %1$d van %2$d</string>
+    <string name="extract_text_page_header">— Pagina %1$d —</string>
+    <string name="extract_text_pages_failed">Tekst van %1$d pagina(’s) kon niet worden geëxtraheerd. Tik op Opnieuw proberen.</string>
+    <string name="btn_retry">Opnieuw proberen</string>
+    <string name="btn_finish">Klaar</string>
+    <string name="btn_copy_text">Tekst kopiëren</string>
+    <string name="text_copied">Tekst gekopieerd</string>
 </resources>
