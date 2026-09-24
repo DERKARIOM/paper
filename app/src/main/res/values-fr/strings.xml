@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MakeACopy</string>
+    <string name="app_name">QwiPaper</string>
 
     <string name="tip_text_mode_editing">Mode texte : les retours à la ligne et la ponctuation sont actuellement
         normalisés en espaces. Si vous saisissez moins de mots que ceux reconnus, les mots OCR restants restent
@@ -70,7 +70,7 @@
     <string name="error_camera_preview_failed">L’aperçu de la caméra n’a pas pu démarrer. Veuillez réessayer.</string>
 
     <string name="share_logs">Partager les journaux</string>
-    <string name="share_logs_subject">Journaux de diagnostic MakeACopy</string>
+    <string name="share_logs_subject">Journaux de diagnostic QwiPaper</string>
     <string name="share_logs_chooser_title">Partager les journaux via…</string>
     <string name="share_logs_error">Impossible de préparer les journaux : %1$s</string>
 

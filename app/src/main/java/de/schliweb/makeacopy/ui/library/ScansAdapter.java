@@ -59,23 +59,33 @@ public class ScansAdapter extends RecyclerView.Adapter<ScansAdapter.VH> {
   // Map of scanId -> OCR search result for the currently active query
   private final Map<String, ScanSearchResult> ocrMatches = new LinkedHashMap<>();
 
-  // Simple in-memory LRU cache for small thumbnails
+  // Simple in-memory LRU cache for small thumbnails. Access-ordered LinkedHashMap mutates on get(),
+  // so every access (UI thread and loader threads) must hold the map's lock.
+  // Evicted bitmaps are NOT recycled: an evicted thumbnail may still be displayed by a bound
+  // ViewHolder, and recycling it would crash with "Canvas: trying to use a recycled bitmap".
+  // Thumbnails are small; the GC reclaims them once no ImageView references them.
   private final Map<String, Bitmap> thumbCache =
       new LinkedHashMap<>(32, 0.75f, true) {
         @Override
         protected boolean removeEldestEntry(Map.Entry<String, Bitmap> eldest) {
-          if (size() > 48) {
-            Bitmap b = eldest.getValue();
-            if (b != null && !b.isRecycled()) b.recycle();
-            return true;
-          }
-          return false;
+          return size() > 48;
         }
       };
-  private final ExecutorService loader = Executors.newFixedThreadPool(2);
+  // Bounded pool for thumbnail decoding and readability checks; shut down via shutdown() when the
+  // hosting view is destroyed (previously leaked two threads per library visit).
+  private final ExecutorService loader =
+      Executors.newFixedThreadPool(
+          2,
+          r -> {
+            Thread t = new Thread(r, "ScansAdapterLoader");
+            t.setDaemon(true);
+            return t;
+          });
 
-  // Track missing/unreadable primary export per scan id to guard clicks and annotate UI
-  private final Map<String, Boolean> unreadableMap = new LinkedHashMap<>();
+  // Track missing/unreadable primary export per scan id to guard clicks and annotate UI.
+  // Written from loader threads, read on the UI thread.
+  private final Map<String, Boolean> unreadableMap =
+      new java.util.concurrent.ConcurrentHashMap<>();
 
   public interface OnItemClickListener {
     void onItemClick(@NonNull ScanEntity item);
@@ -224,12 +234,15 @@ public class ScansAdapter extends RecyclerView.Adapter<ScansAdapter.VH> {
             ? e.coverPath
             : FileUtils.firstUriFromJson(e.exportPathsJson);
     if (key != null && !key.isEmpty()) {
-      Bitmap cached = thumbCache.get(key);
+      Bitmap cached;
+      synchronized (thumbCache) {
+        cached = thumbCache.get(key);
+      }
       if (cached != null && !cached.isRecycled()) {
         h.thumb.setImageBitmap(cached);
       } else {
         // async load
-        loader.submit(
+        submitSafely(
             () -> {
               Bitmap bmp = loadThumb(h.thumb, key);
               if (bmp != null) {
@@ -260,7 +273,7 @@ public class ScansAdapter extends RecyclerView.Adapter<ScansAdapter.VH> {
     // Async readability check of the primary export URI to annotate subtitle and guard clicks
     final String primary = FileUtils.firstUriFromJson(e.exportPathsJson);
     if (primary != null && !primary.isEmpty()) {
-      loader.submit(
+      submitSafely(
           () -> {
             boolean readable = FileUtils.isUriReadable(h.itemView.getContext(), primary);
             unreadableMap.put(e.id, !readable);
@@ -391,6 +404,27 @@ public class ScansAdapter extends RecyclerView.Adapter<ScansAdapter.VH> {
       subtitle = itemView.findViewById(R.id.textSubtitle);
       ocrMatch = itemView.findViewById(R.id.textOcrMatch);
       membership = itemView.findViewById(R.id.textMembership);
+    }
+  }
+
+  /** Submits background work unless the adapter has been shut down (view destroyed). */
+  private void submitSafely(Runnable task) {
+    if (loader.isShutdown()) return;
+    try {
+      loader.submit(task);
+    } catch (java.util.concurrent.RejectedExecutionException ignored) {
+      // Adapter shut down concurrently; nothing to do.
+    }
+  }
+
+  /**
+   * Stops background loading. Must be called when the hosting view is destroyed; the adapter must
+   * not be reused afterwards.
+   */
+  public void shutdown() {
+    loader.shutdownNow();
+    synchronized (thumbCache) {
+      thumbCache.clear();
     }
   }
 }

@@ -452,4 +452,12 @@ public class ScansLibraryFragment extends Fragment {
     list.setVisibility(show ? View.GONE : View.VISIBLE);
     emptyText.setVisibility(View.GONE);
   }
+
+  @Override
+  public void onDestroyView() {
+    // Keep the reference: async callbacks may still touch the adapter; onCreateView creates a new
+    // one when the view is recreated.
+    if (adapter != null) adapter.shutdown();
+    super.onDestroyView();
+  }
 }

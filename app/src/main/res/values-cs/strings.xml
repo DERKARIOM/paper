@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MakeACopy</string>
+    <string name="app_name">QwiPaper</string>
 
     <string name="tip_text_mode_editing">Textový režim: Zalomení řádků a interpunkce jsou aktuálně normalizovány na
         mezery. Pokud je zadáno méně slov, než kolik bylo rozpoznáno, zbývající slova OCR zůstanou beze změny. Změny se
@@ -69,7 +69,7 @@
     <string name="error_camera_preview_failed">Náhled fotoaparátu se nepodařilo spustit. Zkuste to znovu.</string>
 
     <string name="share_logs">Sdílet protokoly</string>
-    <string name="share_logs_subject">Diagnostické protokoly MakeACopy</string>
+    <string name="share_logs_subject">Diagnostické protokoly QwiPaper</string>
     <string name="share_logs_chooser_title">Sdílet protokoly přes…</string>
     <string name="share_logs_error">Protokoly se nepodařilo připravit: %1$s</string>
 

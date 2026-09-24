@@ -56,7 +56,9 @@ android {
     ndkVersion = '28.0.13004108'
 
     defaultConfig {
-        applicationId "de.schliweb.makeacopy"
+        // QwiPaper application id (distinct from upstream MakeACopy so both can be installed).
+        // The Java namespace stays de.schliweb.makeacopy until the package refactor.
+        applicationId "com.qwiper.paper"
         minSdk = 29
         targetSdk = 36
         versionCode 40600
@@ -636,7 +638,7 @@ tasks.register("pullEvalReports") {
     description = "Pulls PaddleOCR eval JSON reports from device externalFilesDir('eval') into app/build/eval-reports/"
     group = "verification"
     doLast {
-        def appId = "de.schliweb.makeacopy"
+        def appId = project.android.defaultConfig.applicationId
         def remoteDir = "/sdcard/Android/data/${appId}/files/eval"
         def localDir = layout.buildDirectory.dir("eval-reports").get().asFile
         localDir.mkdirs()

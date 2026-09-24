@@ -38,7 +38,15 @@ import lombok.experimental.UtilityClass;
 public final class ImageLoader {
   private static final String TAG = "ImageLoader";
 
-  private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
+  // Bounded (was an unbounded cached pool): full-size decodes are memory-heavy, never run many at once.
+  private static final ExecutorService EXECUTOR =
+      Executors.newFixedThreadPool(
+          2,
+          r -> {
+            Thread t = new Thread(r, "ImageLoader");
+            t.setDaemon(true);
+            return t;
+          });
   private static final Handler MAIN = new Handler(Looper.getMainLooper());
 
   public interface Callback {
@@ -84,7 +92,12 @@ public final class ImageLoader {
               if (orientation != 0) {
                 Matrix m = new Matrix();
                 m.postRotate(orientation);
-                bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), m, true);
+                Bitmap rotated =
+                    Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), m, true);
+                // Free the unrotated copy right away: at 4096 px it is up to ~64 MB and would
+                // otherwise double the peak memory until the next GC.
+                if (rotated != bmp) bmp.recycle();
+                bmp = rotated;
               }
             } catch (Exception ex) {
               Log.w(TAG, "EXIF rotation (file) failed: " + ex.getMessage());
@@ -131,7 +144,12 @@ public final class ImageLoader {
               if (degrees != 0) {
                 Matrix m = new Matrix();
                 m.postRotate(degrees);
-                bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), m, true);
+                Bitmap rotated =
+                    Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), m, true);
+                // Free the unrotated copy right away: at 4096 px it is up to ~64 MB and would
+                // otherwise double the peak memory until the next GC.
+                if (rotated != bmp) bmp.recycle();
+                bmp = rotated;
               }
             }
           } catch (Exception ex) {

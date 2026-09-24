@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">MakeACopy</string>
+    <string name="app_name">QwiPaper</string>
 
     <!-- OCR Review: Text mode editor tooltip documenting current behavior -->
     <string name="tip_text_mode_editing">Text mode: Line breaks and punctuation are currently normalized to spaces. If
@@ -69,7 +69,7 @@
 
     <!-- Logging / Share logs -->
     <string name="share_logs">Share logs</string>
-    <string name="share_logs_subject">MakeACopy diagnostic logs</string>
+    <string name="share_logs_subject">QwiPaper diagnostic logs</string>
     <string name="share_logs_chooser_title">Share logs via…</string>
     <string name="share_logs_error">Could not prepare logs: %1$s</string>
 

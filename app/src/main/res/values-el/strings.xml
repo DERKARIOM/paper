@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">MakeACopy</string>
+    <string name="app_name">QwiPaper</string>
 
     <!-- OCR Review: Text mode editor tooltip documenting current behavior -->
     <string name="tip_text_mode_editing">Λειτουργία κειμένου: Οι αλλαγές γραμμής και τα σημεία στίξης κανονικοποιούνται προς το παρόν σε κενά. Αν εισαχθούν λιγότερες λέξεις από όσες αναγνωρίστηκαν, οι υπόλοιπες λέξεις OCR παραμένουν αμετάβλητες. Οι αλλαγές εφαρμόζονται μετά από μια σύντομη παύση.</string>
@@ -56,7 +56,7 @@
 
     <!-- Logging / Share logs -->
     <string name="share_logs">Κοινοποίηση αρχείων καταγραφής</string>
-    <string name="share_logs_subject">Διαγνωστικά αρχεία καταγραφής MakeACopy</string>
+    <string name="share_logs_subject">Διαγνωστικά αρχεία καταγραφής QwiPaper</string>
     <string name="share_logs_chooser_title">Κοινοποίηση αρχείων καταγραφής μέσω…</string>
     <string name="share_logs_error">Δεν ήταν δυνατή η προετοιμασία των αρχείων καταγραφής: %1$s</string>
 

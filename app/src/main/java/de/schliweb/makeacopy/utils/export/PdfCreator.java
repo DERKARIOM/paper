@@ -304,8 +304,8 @@ public class PdfCreator {
         } catch (Throwable ignore) {
           // Best-effort; failure is non-critical
         }
-        document.getDocumentInformation().setCreator("MakeACopy");
-        document.getDocumentInformation().setProducer("MakeACopy");
+        document.getDocumentInformation().setCreator("QwiPaper");
+        document.getDocumentInformation().setProducer("QwiPaper");
 
         PDRectangle pageSize =
             pageFormat.toPageRectangle(prepared.getWidth(), prepared.getHeight());
@@ -1251,8 +1251,8 @@ public class PdfCreator {
       } catch (Throwable ignore) {
         // Best-effort; failure is non-critical
       }
-      document.getDocumentInformation().setCreator("MakeACopy");
-      document.getDocumentInformation().setProducer("MakeACopy");
+      document.getDocumentInformation().setCreator("QwiPaper");
+      document.getDocumentInformation().setProducer("QwiPaper");
 
       // Load fonts once (file-based; subset-embedded)
       List<PDFont> fonts = loadFontsWithFallbacks(document, context);

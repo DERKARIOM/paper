@@ -62,8 +62,9 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
 
+                <!-- content:// only: file:// URIs cannot be read without storage permission
+                     and are blocked for app-to-app sharing since Android 7. -->
                 <data android:scheme="content"/>
-                <data android:scheme="file"/>
                 <data android:mimeType="image/*"/>
                 <data android:mimeType="application/pdf"/>
             </intent-filter>

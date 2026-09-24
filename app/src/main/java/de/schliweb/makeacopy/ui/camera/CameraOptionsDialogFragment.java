@@ -170,7 +170,7 @@ public class CameraOptionsDialogFragment extends DialogFragment {
       boolean analysisPref =
           ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE)
               .getBoolean(BUNDLE_ANALYSIS_ENABLED, false);
-      sb.append("MakeACopy logs\n");
+      sb.append("QwiPaper logs\n");
       sb.append("App: ").append(versionName).append(" (code ").append(versionCode).append(")\n");
       sb.append("SDK: ")
           .append(android.os.Build.VERSION.SDK_INT)

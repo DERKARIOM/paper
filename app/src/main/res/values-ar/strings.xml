@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MakeACopy</string>
+    <string name="app_name">QwiPaper</string>
 
     <!-- OCR Review: Text mode editor tooltip documenting current behavior -->
     <string name="tip_text_mode_editing">وضع النص: يتم حاليًا تحويل فواصل الأسطر وعلامات الترقيم إلى مسافات. إذا أُدخلت
@@ -65,7 +65,7 @@
 
     <!-- Logging / Share logs -->
     <string name="share_logs">مشاركة السجلات</string>
-    <string name="share_logs_subject">سجلات تشخيص MakeACopy</string>
+    <string name="share_logs_subject">سجلات تشخيص QwiPaper</string>
     <string name="share_logs_chooser_title">مشاركة السجلات عبر…</string>
     <string name="share_logs_error">تعذر تجهيز السجلات: %1$s</string>
 

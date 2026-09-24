@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MakeACopy</string>
+    <string name="app_name">QwiPaper</string>
 
     <string name="tip_text_mode_editing">Tekstmodus: Linjeskift og tegnsetting normaliseres for øyeblikket til
         mellomrom. Hvis færre ord legges inn enn det som ble gjenkjent, forblir de resterende OCR-ordene uendret.
@@ -67,7 +67,7 @@
     <string name="error_camera_preview_failed">Kameraforhåndsvisning kunne ikke starte. Prøv igjen.</string>
 
     <string name="share_logs">Del logger</string>
-    <string name="share_logs_subject">MakeACopy diagnoselogger</string>
+    <string name="share_logs_subject">QwiPaper diagnoselogger</string>
     <string name="share_logs_chooser_title">Del logger via …</string>
     <string name="share_logs_error">Kunne ikke forberede logger: %1$s</string>
 

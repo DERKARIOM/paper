@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MakeACopy</string>
+    <string name="app_name">QwiPaper</string>
 
     <string name="tip_text_mode_editing">文字模式：目前换行符和标点符号会被规范化为空格。如果输入的词比识别出的少，剩余的
         OCR 词将保持不变。更改会在短暂的停顿后生效。
@@ -61,7 +61,7 @@
     <string name="error_camera_preview_failed">无法启动相机预览。请重试。</string>
 
     <string name="share_logs">共享日志</string>
-    <string name="share_logs_subject">MakeACopy 诊断日志</string>
+    <string name="share_logs_subject">QwiPaper 诊断日志</string>
     <string name="share_logs_chooser_title">通过以下方式共享日志…</string>
     <string name="share_logs_error">无法准备日志：%1$s</string>
 

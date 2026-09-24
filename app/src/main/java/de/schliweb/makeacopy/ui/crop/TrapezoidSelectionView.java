@@ -381,7 +381,10 @@ public class TrapezoidSelectionView extends View {
   private int lastBitmapHeight = -1;
 
   // ==== Async corner detection state ====
-  private final ExecutorService cornerExec =
+  // Shared by all instances: a per-instance executor was never shut down and leaked one thread per
+  // crop screen. Work is serialized on one low-priority daemon thread and cancelled via cornerTask /
+  // requestedInitSeq, so sharing is safe (only one crop view is visible at a time).
+  private static final ExecutorService cornerExec =
       Executors.newSingleThreadExecutor(
           r -> {
             Thread t = new Thread(r, "CornerDetect");

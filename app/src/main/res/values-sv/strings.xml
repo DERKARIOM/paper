@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MakeACopy</string>
+    <string name="app_name">QwiPaper</string>
 
     <string name="tip_text_mode_editing">Textläge: Radbrytningar och skiljetecken normaliseras för närvarande till
         mellanslag. Om färre ord anges än vad som har identifierats förblir de återstående OCR-orden oförändrade.
@@ -67,7 +67,7 @@
     <string name="error_camera_preview_failed">Kameraförhandsvisning kunde inte startas. Försök igen.</string>
 
     <string name="share_logs">Dela loggar</string>
-    <string name="share_logs_subject">MakeACopy diagnostikloggar</string>
+    <string name="share_logs_subject">QwiPaper diagnostikloggar</string>
     <string name="share_logs_chooser_title">Dela loggar via…</string>
     <string name="share_logs_error">Kunde inte förbereda loggar: %1$s</string>
 
