@@ -22,7 +22,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">ต้องการสิทธิ์กล้องเพื่อสแกนเอกสาร</string>
     <string name="confirm">ยืนยัน</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">กล้องพร้อมแล้ว แตะปุ่มเพื่อสแกนเอกสาร</string>
     <string name="captured_image">รูปที่ถ่าย</string>
     <string name="image_to_crop">รูปภาพสำหรับครอบตัด</string>
     <string name="cropped_image">รูปที่ครอบตัดแล้ว</string>
@@ -484,4 +483,11 @@
     <string name="btn_finish">เสร็จสิ้น</string>
     <string name="btn_copy_text">คัดลอกข้อความ</string>
     <string name="text_copied">คัดลอกข้อความแล้ว</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">วางเอกสารในกรอบ</string>
+    <string name="scan_hint_document_detected">ตรวจพบเอกสาร</string>
+    <string name="scan_hint_move_closer">ขยับเข้าใกล้เอกสาร</string>
+    <string name="scan_hint_center_document">จัดเอกสารให้อยู่กลางกรอบ</string>
+    <string name="scan_label_gallery">แกลเลอรี</string>
+    <string name="scan_label_documents">เอกสาร</string>
 </resources>

@@ -22,9 +22,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">Permisiunea camerei este necesară pentru a scana documente</string>
     <string name="confirm">Confirmare</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Camera este pregătită. Atinge butonul pentru a scana
-        un document.
-    </string>
     <string name="captured_image">Imagine capturată</string>
     <string name="image_to_crop">Imagine de decupat</string>
     <string name="cropped_image">Imagine decupată</string>
@@ -497,4 +494,11 @@
     <string name="btn_finish">Gata</string>
     <string name="btn_copy_text">Copiază textul</string>
     <string name="text_copied">Text copiat</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Plasați documentul în cadru</string>
+    <string name="scan_hint_document_detected">Document detectat</string>
+    <string name="scan_hint_move_closer">Apropiați-vă de document</string>
+    <string name="scan_hint_center_document">Centrați documentul în cadru</string>
+    <string name="scan_label_gallery">Galerie</string>
+    <string name="scan_label_documents">Documente</string>
 </resources>

@@ -22,9 +22,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">Kamerazugriff ist erforderlich, um Dokumente zu scannen</string>
     <string name="confirm">Bestätigen</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Kamera bereit. Tippe auf die Schaltfläche, um ein
-        Dokument zu scannen.
-    </string>
     <string name="captured_image">Aufgenommenes Bild</string>
     <string name="image_to_crop">Bild zum Zuschneiden</string>
     <string name="cropped_image">Zugeschnittenes Bild</string>
@@ -512,4 +509,11 @@
     <string name="btn_finish">Fertig</string>
     <string name="btn_copy_text">Text kopieren</string>
     <string name="text_copied">Text kopiert</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Dokument im Rahmen platzieren</string>
+    <string name="scan_hint_document_detected">Dokument erkannt</string>
+    <string name="scan_hint_move_closer">Näher an das Dokument heran</string>
+    <string name="scan_hint_center_document">Dokument im Rahmen zentrieren</string>
+    <string name="scan_label_gallery">Galerie</string>
+    <string name="scan_label_documents">Dokumente</string>
 </resources>

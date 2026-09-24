@@ -22,7 +22,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">مطلوب إذن الكاميرا لمسح المستندات</string>
     <string name="confirm">تأكيد</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">الكاميرا جاهزة. اضغط على الزر لمسح مستند.</string>
     <string name="captured_image">الصورة الملتقطة</string>
     <string name="image_to_crop">صورة للاقتصاص</string>
     <string name="cropped_image">الصورة المقصوصة</string>
@@ -478,4 +477,11 @@
     <string name="btn_finish">تم</string>
     <string name="btn_copy_text">نسخ النص</string>
     <string name="text_copied">تم نسخ النص</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">ضع المستند داخل الإطار</string>
+    <string name="scan_hint_document_detected">تم اكتشاف المستند</string>
+    <string name="scan_hint_move_closer">اقترب من المستند</string>
+    <string name="scan_hint_center_document">ضع المستند في منتصف الإطار</string>
+    <string name="scan_label_gallery">المعرض</string>
+    <string name="scan_label_documents">المستندات</string>
 </resources>

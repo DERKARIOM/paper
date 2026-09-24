@@ -24,9 +24,6 @@
         fotoaparátu
     </string>
     <string name="confirm">Potvrdiť</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Fotoaparát je pripravený. Klepnite na tlačidlo pre
-        skenovanie dokumentu.
-    </string>
     <string name="captured_image">Zachytený obrázok</string>
     <string name="image_to_crop">Obrázok na orezanie</string>
     <string name="cropped_image">Orezaný obrázok</string>
@@ -494,4 +491,11 @@
     <string name="btn_finish">Hotovo</string>
     <string name="btn_copy_text">Kopírovať text</string>
     <string name="text_copied">Text skopírovaný</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Umiestnite dokument do rámčeka</string>
+    <string name="scan_hint_document_detected">Dokument rozpoznaný</string>
+    <string name="scan_hint_move_closer">Priblížte sa k dokumentu</string>
+    <string name="scan_hint_center_document">Vycentrujte dokument v rámčeku</string>
+    <string name="scan_label_gallery">Galéria</string>
+    <string name="scan_label_documents">Dokumenty</string>
 </resources>

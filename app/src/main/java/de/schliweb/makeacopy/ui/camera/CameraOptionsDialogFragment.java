@@ -168,7 +168,7 @@ public class CameraOptionsDialogFragment extends DialogFragment {
               : "unknown";
       boolean analysisPref =
           ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE)
-              .getBoolean(BUNDLE_ANALYSIS_ENABLED, false);
+              .getBoolean(BUNDLE_ANALYSIS_ENABLED, true);
       sb.append("Paper logs\n");
       sb.append("App: ").append(versionName).append(" (code ").append(versionCode).append(")\n");
       sb.append("SDK: ")
@@ -287,7 +287,7 @@ public class CameraOptionsDialogFragment extends DialogFragment {
     SharedPreferences prefs = ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE);
     boolean skipPerspective = prefs.getBoolean(BUNDLE_SKIP_CROPPING, false);
     boolean skipEdgeDetection = prefs.getBoolean(BUNDLE_SKIP_EDGE_DETECTION, false);
-    boolean analysisEnabled = prefs.getBoolean(BUNDLE_ANALYSIS_ENABLED, false);
+    boolean analysisEnabled = prefs.getBoolean(BUNDLE_ANALYSIS_ENABLED, true);
     boolean accessibilityMode = prefs.getBoolean(BUNDLE_ACCESSIBILITY_MODE, false);
     boolean exposureEnabled = prefs.getBoolean(BUNDLE_EXPOSURE_COMPENSATION, false);
     boolean manualFocusEnabled = prefs.getBoolean(BUNDLE_MANUAL_FOCUS, false);

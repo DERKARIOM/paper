@@ -25,8 +25,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">Camera permission is required to scan documents</string>
     <string name="confirm">Confirm</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Camera ready. Tap the button to scan a document.
-    </string>
     <string name="captured_image">Captured image</string>
     <string name="image_to_crop">Image to crop</string>
     <string name="cropped_image">Cropped image</string>
@@ -503,4 +501,11 @@
     <string name="btn_finish">Done</string>
     <string name="btn_copy_text">Copy text</string>
     <string name="text_copied">Text copied</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Place the document in the frame</string>
+    <string name="scan_hint_document_detected">Document detected</string>
+    <string name="scan_hint_move_closer">Move closer to the document</string>
+    <string name="scan_hint_center_document">Center the document in the frame</string>
+    <string name="scan_label_gallery">Gallery</string>
+    <string name="scan_label_documents">Documents</string>
 </resources>

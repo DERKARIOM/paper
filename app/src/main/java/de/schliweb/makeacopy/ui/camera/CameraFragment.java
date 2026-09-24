@@ -28,7 +28,6 @@ import android.os.*;
 import android.util.Log;
 import android.view.*;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -386,6 +385,10 @@ public class CameraFragment extends Fragment implements SensorEventListener {
           return insets;
         });
 
+    // New scan screen: the live document detection drives the framing guide, so it is on by
+    // default (once; the user can still turn it off in the camera options).
+    migrateLiveDetectionDefault();
+
     // Init UI visibility
     showCameraMode();
 
@@ -397,8 +400,8 @@ public class CameraFragment extends Fragment implements SensorEventListener {
     // DocQuad runner is now injected via Hilt (docQuadOrtRunner field).
     // No proactive loading needed — the singleton is created eagerly by the DI container.
 
-    final TextView textView = binding.textCamera;
-    cameraViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+    // The scan screen shows its own framing hint (see showIdleHint / updateFramingGuidance);
+    // the view model's placeholder text is not displayed.
 
     // Scan
     binding.buttonScan.setOnClickListener(
@@ -545,6 +548,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
     // Library entry from Camera screen (feature-gated)
     if (FeatureFlags.isScanLibraryEnable()) {
       binding.buttonOpenLibraryCam.setVisibility(View.VISIBLE);
+      binding.labelOpenLibrary.setVisibility(View.VISIBLE);
       binding.buttonOpenLibraryCam.setOnClickListener(
           v -> {
             try {
@@ -554,7 +558,9 @@ public class CameraFragment extends Fragment implements SensorEventListener {
             }
           });
     } else {
-      binding.buttonOpenLibraryCam.setVisibility(View.GONE);
+      // Keep the slot (INVISIBLE) so the capture button stays centered.
+      binding.buttonOpenLibraryCam.setVisibility(View.INVISIBLE);
+      binding.labelOpenLibrary.setVisibility(View.INVISIBLE);
     }
 
     // Set up retake and confirm button listeners
@@ -599,11 +605,15 @@ public class CameraFragment extends Fragment implements SensorEventListener {
     ViewCompat.setOnApplyWindowInsetsListener(
         root,
         (v, insets) -> {
-          int topInset = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top;
-          ViewGroup.MarginLayoutParams textParams =
-              (ViewGroup.MarginLayoutParams) binding.textCamera.getLayoutParams();
-          textParams.topMargin = (int) (8 * getResources().getDisplayMetrics().density) + topInset;
-          binding.textCamera.setLayoutParams(textParams);
+          // Edge-to-edge scan screen: keep the floating top bar below the status bar / cutout.
+          int topInset =
+              insets.getInsets(
+                      WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout())
+                  .top;
+          ViewGroup.MarginLayoutParams barParams =
+              (ViewGroup.MarginLayoutParams) binding.cameraTopBar.getLayoutParams();
+          barParams.topMargin = (int) (4 * getResources().getDisplayMetrics().density) + topInset;
+          binding.cameraTopBar.setLayoutParams(barParams);
           return insets;
         });
 
@@ -645,6 +655,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
   @Override
   public void onResume() {
     super.onResume();
+    applyDarkSystemBars(true);
     Log.i(TAG, "onResume: registering listeners (lightSensor=" + hasLightSensor + ")");
     if (hasLightSensor && sensorManager != null && lightSensor != null) {
       sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -655,6 +666,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
   @Override
   public void onPause() {
     super.onPause();
+    applyDarkSystemBars(false);
     Log.i(TAG, "onPause: unregistering listeners");
     if (sensorManager != null) sensorManager.unregisterListener(this);
     if (orientationListener != null) orientationListener.disable();
@@ -698,14 +710,14 @@ public class CameraFragment extends Fragment implements SensorEventListener {
             if (cameraProvider == null) {
               UIUtils.showToast(
                   requireContext(), R.string.error_camera_provider_null, Toast.LENGTH_SHORT);
-              binding.textCamera.setText(R.string.camera_ready_tap_the_button_to_scan_a_document);
+              showIdleHint();
               Log.w(TAG, "initializeCamera: cameraProvider is null");
               return;
             }
             bindWithTier(BindTier.PERF);
             if (camera == null) {
               Log.e(TAG, "initializeCamera: camera is null after bindWithTier, cannot proceed");
-              binding.textCamera.setText(R.string.camera_ready_tap_the_button_to_scan_a_document);
+              showIdleHint();
               if (!reinitScheduled) {
                 reinitScheduled = true;
                 new Handler(Looper.getMainLooper())
@@ -728,7 +740,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
             isFlashlightOn = false;
             binding.buttonFlash.setImageResource(R.drawable.ic_flash_off);
             applySelectedZoomRatio();
-            binding.textCamera.setText(R.string.camera_ready_tap_the_button_to_scan_a_document);
+            showIdleHint();
             logCameraCapabilities();
             logLensDiagnostics();
             setupExposureCompensation();
@@ -748,7 +760,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
         requireContext(),
         getString(R.string.error_initializing_camera, e.getMessage()),
         Toast.LENGTH_LONG);
-    binding.textCamera.setText(R.string.camera_ready_tap_the_button_to_scan_a_document);
+    showIdleHint();
     if (!reinitScheduled) {
       reinitScheduled = true;
       new Handler(Looper.getMainLooper())
@@ -1678,6 +1690,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
               (Observer<? super PreviewView.StreamState>)
                   state -> {
                     Log.d(TAG, "Preview stream state: " + state + " (tier=" + lastTier + ")");
+                    if (state == PreviewView.StreamState.STREAMING) updateGuideContentAspect();
                     // Accessibility: announce camera ready once when streaming starts
                     if (state == PreviewView.StreamState.STREAMING
                         && isAccessibilityModeEnabled()) {
@@ -1944,17 +1957,155 @@ public class CameraFragment extends Fragment implements SensorEventListener {
         requireContext(),
         getString(R.string.error_image_capture_failed, exception.getMessage()),
         Toast.LENGTH_SHORT);
-    binding.textCamera.setText(R.string.camera_ready_tap_the_button_to_scan_a_document);
+    showIdleHint();
     setProcessing(false);
     // Re-enable live analysis after capture error
     boolean analysisPref =
         requireContext()
             .getSharedPreferences("export_options", Context.MODE_PRIVATE)
-            .getBoolean("analysis_enabled", false);
+            .getBoolean("analysis_enabled", true);
     setLiveAnalysisEnabled(analysisPref);
     // Accessibility: speak failure
     if (isAccessibilityModeEnabled()) {
       announce(R.string.a11y_capture_failed);
+    }
+  }
+
+  // ---------------------------------------------------------------------------------------
+  // Scan screen guidance (framing guide + hint)
+  // ---------------------------------------------------------------------------------------
+
+  private static final String PREF_SCAN_UI_V2 = "scan_ui_v2_defaults";
+  /** Consecutive identical evaluations required before the hint changes (anti-flicker). */
+  private static final int GUIDANCE_STABLE_FRAMES = 2;
+
+  @Nullable private ScanGuideOverlay.Placement shownPlacement;
+  @Nullable private ScanGuideOverlay.Placement candidatePlacement;
+  private int candidatePlacementCount;
+  @Nullable private Boolean savedLightStatusBars;
+  @Nullable private Boolean savedLightNavigationBars;
+
+  /** Enables the live document detection once for existing installs (new scan screen). */
+  private void migrateLiveDetectionDefault() {
+    Context ctx = getContext();
+    if (ctx == null) return;
+    android.content.SharedPreferences prefs =
+        ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE);
+    if (!prefs.getBoolean(PREF_SCAN_UI_V2, false)) {
+      prefs.edit().putBoolean("analysis_enabled", true).putBoolean(PREF_SCAN_UI_V2, true).apply();
+    }
+  }
+
+  /** Neutral hint shown when the camera is ready and nothing is detected (yet). */
+  private void showIdleHint() {
+    shownPlacement = null;
+    candidatePlacement = null;
+    candidatePlacementCount = 0;
+    applyPlacement(ScanGuideOverlay.Placement.NONE);
+  }
+
+  /**
+   * Updates the framing guide color and the hint from the detected document outline (view
+   * coordinates, or {@code null} when nothing is detected / detection is off). Changes are
+   * debounced so the message does not flicker with detection noise.
+   */
+  private void updateFramingGuidance(@Nullable android.graphics.PointF[] corners) {
+    if (binding == null) return;
+    // Capture in progress: keep the "processing" message.
+    if (!binding.buttonScan.isEnabled()) return;
+    ScanGuideOverlay.Placement p = binding.scanGuide.evaluate(corners);
+    if (p == candidatePlacement) {
+      candidatePlacementCount++;
+    } else {
+      candidatePlacement = p;
+      candidatePlacementCount = 1;
+    }
+    boolean stable =
+        candidatePlacementCount >= GUIDANCE_STABLE_FRAMES
+            || p == ScanGuideOverlay.Placement.NONE; // hiding is already debounced upstream
+    if (!stable || p == shownPlacement) return;
+    shownPlacement = p;
+    applyPlacement(p);
+  }
+
+  private void applyPlacement(@NonNull ScanGuideOverlay.Placement p) {
+    if (binding == null) return;
+    int text;
+    int icon = R.drawable.ic_scan_frame;
+    switch (p) {
+      case GOOD:
+        text = R.string.scan_hint_document_detected;
+        icon = R.drawable.ic_scan_check;
+        break;
+      case TOO_SMALL:
+        text = R.string.scan_hint_move_closer;
+        break;
+      case OUTSIDE:
+        text = R.string.scan_hint_center_document;
+        break;
+      case NONE:
+      default:
+        text = R.string.scan_hint_place_document;
+        break;
+    }
+    binding.scanGuide.setState(
+        p == ScanGuideOverlay.Placement.GOOD
+            ? ScanGuideOverlay.State.READY
+            : ScanGuideOverlay.State.IDLE);
+    binding.textCamera.setText(text);
+    binding.textCamera.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, 0, 0, 0);
+    // Light fade so the change is noticed without being distracting.
+    binding.textCamera.animate().cancel();
+    binding.textCamera.setAlpha(0.35f);
+    binding.textCamera.animate().alpha(1f).setDuration(180).start();
+  }
+
+  /**
+   * Places the framing guide inside the camera image actually displayed by the preview
+   * (FIT_CENTER of the preview crop), so it never covers the black bars around it.
+   */
+  private void updateGuideContentAspect() {
+    if (binding == null || preview == null) return;
+    try {
+      ResolutionInfo ri = preview.getResolutionInfo();
+      if (ri == null) return;
+      android.graphics.Rect crop = ri.getCropRect();
+      int w = crop.width();
+      int h = crop.height();
+      int rot = ((ri.getRotationDegrees() % 360) + 360) % 360;
+      if (rot == 90 || rot == 270) {
+        int t = w;
+        w = h;
+        h = t;
+      }
+      if (w > 0 && h > 0) binding.scanGuide.setContentAspect(w / (float) h);
+    } catch (Throwable t) {
+      Log.d(TAG, "updateGuideContentAspect failed", t);
+    }
+  }
+
+  /**
+   * The scan screen is always dark (camera): use light status/navigation bar icons while it is
+   * shown and restore the theme's appearance when leaving it.
+   */
+  private void applyDarkSystemBars(boolean enter) {
+    android.app.Activity activity = getActivity();
+    if (activity == null || activity.getWindow() == null) return;
+    androidx.core.view.WindowInsetsControllerCompat c =
+        androidx.core.view.WindowCompat.getInsetsController(
+            activity.getWindow(), activity.getWindow().getDecorView());
+    if (enter) {
+      if (savedLightStatusBars == null) {
+        savedLightStatusBars = c.isAppearanceLightStatusBars();
+        savedLightNavigationBars = c.isAppearanceLightNavigationBars();
+      }
+      c.setAppearanceLightStatusBars(false);
+      c.setAppearanceLightNavigationBars(false);
+    } else if (savedLightStatusBars != null) {
+      c.setAppearanceLightStatusBars(savedLightStatusBars);
+      c.setAppearanceLightNavigationBars(Boolean.TRUE.equals(savedLightNavigationBars));
+      savedLightStatusBars = null;
+      savedLightNavigationBars = null;
     }
   }
 
@@ -2020,12 +2171,12 @@ public class CameraFragment extends Fragment implements SensorEventListener {
     if (ctx != null) {
       android.content.SharedPreferences prefs =
           ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE);
-      analysisPref = prefs.getBoolean("analysis_enabled", false); // Default OFF
+      analysisPref = prefs.getBoolean("analysis_enabled", true); // Default ON (scan guide)
     }
 
     // Important: always use the helper (overlay + analyzer + pref sync)
     setLiveAnalysisEnabled(analysisPref);
-    binding.textCamera.setText(R.string.camera_ready_tap_the_button_to_scan_a_document);
+    showIdleHint();
 
     // Reset rotations for a new scan/page
     if (cropViewModel != null) {
@@ -2365,7 +2516,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
     if (ctx != null) {
       android.content.SharedPreferences prefs =
           ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE);
-      analysisPref = prefs.getBoolean("analysis_enabled", false);
+      analysisPref = prefs.getBoolean("analysis_enabled", true);
     }
     String secPatch = Build.VERSION.SECURITY_PATCH;
     Log.i(
@@ -3097,8 +3248,11 @@ public class CameraFragment extends Fragment implements SensorEventListener {
 
         de.schliweb.makeacopy.ml.corners.DetectionResult r =
             liveDetector.detect(bmp, requireContext());
+        // A FALLBACK result is the default rectangle used when nothing was found: it must not be
+        // shown (nor reported) as a detected document.
         if (r != null
             && r.success
+            && r.source != de.schliweb.makeacopy.ml.corners.Source.FALLBACK
             && r.cornersOriginalTLTRBRBL != null
             && r.cornersOriginalTLTRBRBL.length == 4) {
           detectedPts = new org.opencv.core.Point[4];
@@ -3317,6 +3471,8 @@ public class CameraFragment extends Fragment implements SensorEventListener {
               // Visual analysis off → do not draw corners
               binding.cornerOverlay.setCorners(null);
             }
+            // Framing guide + hint follow the outline actually shown to the user.
+            updateFramingGuidance(analysisEnabled ? binding.cornerOverlay.getCorners() : null);
 
             // Dev overlay: modelRect + metrics when logging flag is active
             if (FeatureFlags.isFramingLoggingEnabled() && frUi != null && fbRectUi != null) {

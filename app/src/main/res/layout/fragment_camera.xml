@@ -1,112 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Scan screen: dark, edge-to-edge camera with floating controls and a fixed framing guide.
+     The preview keeps the full 4:3 sensor image (FIT_CENTER) so the captured photo is exactly
+     what the user sees; controls float over the preview or sit in the dark areas around it. -->
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/camera_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/scan_background">
 
-    <!-- Header / Info -->
-    <TextView
-            android:id="@+id/text_camera"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/camera_ready_tap_the_button_to_scan_a_document"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:accessibilityHeading="true"
-            android:accessibilityLiveRegion="polite"
+    <!-- Top bar: options · workflow position · zoom + flash (top margin = status bar inset) -->
+    <FrameLayout
+            android:id="@+id/camera_top_bar"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Workflow stepper: Camera → Crop → Export (step 1) -->
-    <de.schliweb.makeacopy.ui.views.WorkflowStepperView
-            android:id="@+id/workflow_stepper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            app:currentStep="1"
-            app:layout_constraintTop_toBottomOf="@id/text_camera"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        <ImageButton
+                android:id="@+id/button_camera_options"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/bg_scan_control"
+                android:contentDescription="@string/btn_options"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_tune"
+                app:tint="@color/scan_on_dark"
+                app:tooltipText="@string/btn_options" />
 
-    <!-- Barrier for buttons -->
-    <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/buttons_top_barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="top"
-            app:barrierAllowsGoneWidgets="false"
-            app:constraint_referenced_ids="scan_button_container,button_container" />
+        <!-- Workflow stepper: Camera → Crop → Export (step 1) -->
+        <de.schliweb.makeacopy.ui.views.WorkflowStepperView
+                android:id="@+id/workflow_stepper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:currentStep="1" />
 
-    <!-- Skip OCR -->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-    <!-- Camera preview -->
+            <!-- Zoom / lens -->
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_camera_zoom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_scan_chip"
+                    android:contentDescription="@string/camera_zoom_cd"
+                    android:minWidth="56dp"
+                    android:minHeight="44dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:text="@string/camera_zoom_ratio"
+                    android:textAllCaps="false"
+                    android:textColor="@color/scan_on_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:tooltipText="@string/camera_zoom_cd" />
+
+            <!-- Flash (hidden when the camera has no flash unit) -->
+            <ImageButton
+                    android:id="@+id/button_flash"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_scan_control"
+                    android:contentDescription="@string/toggle_flashlight"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_flash_off"
+                    app:tint="@color/scan_on_dark"
+                    app:tooltipText="@string/toggle_flashlight" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Camera preview (full width, FIT_CENTER) -->
     <androidx.camera.view.PreviewView
             android:id="@+id/view_finder"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="16dp"
             android:focusable="false"
             android:clickable="false"
             android:importantForAccessibility="no"
-            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
-            app:layout_constraintBottom_toTopOf="@id/focus_control"
+            app:layout_constraintTop_toBottomOf="@id/camera_top_bar"
+            app:layout_constraintBottom_toTopOf="@id/scan_button_container"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Corner preview overlay -->
+    <!-- Fixed framing guide: A4 frame centered in the visible camera image -->
+    <de.schliweb.makeacopy.ui.camera.ScanGuideOverlay
+            android:id="@+id/scan_guide"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/view_finder"
+            app:layout_constraintBottom_toBottomOf="@id/view_finder"
+            app:layout_constraintStart_toStartOf="@id/view_finder"
+            app:layout_constraintEnd_toEndOf="@id/view_finder" />
+
+    <!-- Detected document outline (live corner detection) -->
     <de.schliweb.makeacopy.ui.camera.CameraCornersOverlay
             android:id="@+id/corner_overlay"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="16dp"
             android:clickable="false"
             android:focusable="false"
-            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
-            app:layout_constraintBottom_toTopOf="@id/focus_control"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/view_finder"
+            app:layout_constraintBottom_toBottomOf="@id/view_finder"
+            app:layout_constraintStart_toStartOf="@id/view_finder"
+            app:layout_constraintEnd_toEndOf="@id/view_finder" />
 
     <!-- Tap-to-focus indicator overlay -->
     <de.schliweb.makeacopy.ui.camera.FocusRingView
             android:id="@+id/focus_ring"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="16dp"
             android:clickable="false"
             android:focusable="false"
             android:importantForAccessibility="no"
-            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
-            app:layout_constraintBottom_toTopOf="@id/focus_control"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/view_finder"
+            app:layout_constraintBottom_toBottomOf="@id/view_finder"
+            app:layout_constraintStart_toStartOf="@id/view_finder"
+            app:layout_constraintEnd_toEndOf="@id/view_finder" />
 
-    <!-- Image preview -->
+    <!-- Captured image preview (legacy review mode) -->
     <ImageView
             android:id="@+id/captured_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="16dp"
             android:scaleType="fitCenter"
             android:contentDescription="@string/captured_image"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/workflow_stepper"
-            app:layout_constraintBottom_toTopOf="@id/focus_control"
+            app:layout_constraintTop_toTopOf="@id/view_finder"
+            app:layout_constraintBottom_toBottomOf="@id/view_finder"
+            app:layout_constraintStart_toStartOf="@id/view_finder"
+            app:layout_constraintEnd_toEndOf="@id/view_finder"/>
+
+    <!-- Live focus-quality (sharpness) indicator: feature-flagged, hidden by default -->
+    <de.schliweb.makeacopy.ui.camera.FocusQualityIndicatorView
+            android:id="@+id/focus_quality_indicator"
+            android:layout_width="72dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            android:contentDescription="@string/focus_quality_low"
+            app:layout_constraintTop_toTopOf="@id/view_finder"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- Framing hint: short message in a translucent pill, just above the controls.
+         Changes to "Document detected" when the live detection sees a well framed page. -->
+    <TextView
+            android:id="@+id/text_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_scan_hint"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:maxLines="2"
+            android:minHeight="40dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:text="@string/scan_hint_place_document"
+            android:textColor="@color/scan_on_dark"
+            android:textSize="15sp"
+            android:accessibilityHeading="true"
+            android:accessibilityLiveRegion="polite"
+            app:drawableStartCompat="@drawable/ic_scan_frame"
+            app:layout_constraintWidth_max="360dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="@id/view_finder"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Manual focus control -->
+    <!-- Manual focus control (optional feature, hidden by default) -->
     <LinearLayout
             android:id="@+id/focus_control"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:background="@color/scan_hint_bg"
             android:paddingStart="16dp"
             android:paddingEnd="8dp"
             android:visibility="gone"
@@ -119,6 +206,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/manual_focus_auto"
+                android:textColor="@color/scan_on_dark"
                 android:textSize="12sp"
                 android:minWidth="56dp"
                 android:gravity="center"/>
@@ -131,6 +219,7 @@
                 android:minWidth="48dp"
                 android:checkable="true"
                 android:text="@string/manual_focus_auto"
+                android:textColor="@color/scan_on_dark"
                 android:textSize="12sp"
                 android:contentDescription="@string/manual_focus_af_button_cd"/>
 
@@ -148,17 +237,18 @@
 
     </LinearLayout>
 
-    <!-- Exposure compensation control -->
+    <!-- Exposure compensation control (optional feature, hidden by default) -->
     <LinearLayout
             android:id="@+id/exposure_control"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:background="@color/scan_hint_bg"
             android:paddingStart="16dp"
             android:paddingEnd="8dp"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/camera_actions_row"
+            app:layout_constraintBottom_toBottomOf="@id/view_finder"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -167,6 +257,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/exposure_compensation_cd"
+                android:textColor="@color/scan_on_dark"
                 android:textSize="12sp"
                 android:minWidth="56dp"
                 android:gravity="center"/>
@@ -184,155 +275,102 @@
 
     </LinearLayout>
 
-    <!-- Actions row: settings icon above the button bar (analog zu OCRFragment) -->
-    <LinearLayout
-            android:id="@+id/camera_actions_row"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/scan_button_container">
-
-        <ImageButton
-                android:id="@+id/button_camera_options"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginEnd="16dp"
-                android:padding="8dp"
-                android:contentDescription="@string/btn_options"
-                android:src="@drawable/ic_tune"
-                app:tint="?attr/colorControlNormal"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                app:tooltipText="@string/btn_options"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
-
-                <!-- Library entry icon (feature-flagged) -->
-        <ImageButton
-                android:id="@+id/button_open_library_cam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginEnd="16dp"
-                android:padding="8dp"
-                android:contentDescription="@string/open_collections"
-                android:src="@drawable/ic_library"
-                android:visibility="gone"
-                app:tint="?attr/colorControlNormal"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                app:tooltipText="@string/open_collections"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
-
-    </LinearLayout>
-
-    <!-- Zoom/Lens button: rechtsbündig analog zum Aspect-Ratio-Button im CropFragment. -->
-    <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_camera_zoom"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginEnd="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/camera_zoom_cd"
-            android:minWidth="48dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:drawablePadding="4dp"
-            android:text="@string/camera_zoom_ratio"
-            android:textColor="?attr/colorControlNormal"
-            android:textStyle="bold"
-            app:drawableStartCompat="@drawable/ic_zoom_24"
-            app:drawableTint="?attr/colorControlNormal"
-            app:tooltipText="@string/camera_zoom_cd"
-            app:layout_constraintTop_toTopOf="@id/camera_actions_row"
-            app:layout_constraintBottom_toBottomOf="@id/camera_actions_row"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Live focus-quality (sharpness) indicator: 5 segments, feature-flagged, hidden by default.
-         Placed start-aligned in the actions row band, mirroring the zoom button on the end side. -->
-    <de.schliweb.makeacopy.ui.camera.FocusQualityIndicatorView
-            android:id="@+id/focus_quality_indicator"
-            android:layout_width="72dp"
-            android:layout_height="14dp"
-            android:layout_marginStart="16dp"
-            android:visibility="gone"
-            android:contentDescription="@string/focus_quality_low"
-            app:layout_constraintTop_toTopOf="@id/camera_actions_row"
-            app:layout_constraintBottom_toBottomOf="@id/camera_actions_row"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-    <!-- Scan buttons -->
+    <!-- Bottom controls: gallery · capture (primary) · documents -->
     <LinearLayout
             android:id="@+id/scan_button_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginBottom="8dp"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:background="?attr/colorSurfaceContainer"
-            android:elevation="8dp"
-            android:padding="12dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="24dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Flash -->
+        <!-- Gallery: import an existing image or PDF -->
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+            <ImageButton
+                    android:id="@+id/button_pick_image"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_scan_control"
+                    android:contentDescription="@string/pick_image_cd"
+                    android:padding="14dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_image"
+                    app:tint="@color/scan_on_dark"
+                    app:tooltipText="@string/pick_image_cd" />
+
+            <TextView
+                    android:id="@+id/label_pick_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:importantForAccessibility="no"
+                    android:text="@string/scan_label_gallery"
+                    android:textColor="@color/scan_on_dark_secondary"
+                    android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Capture: the primary action -->
         <ImageButton
-                android:id="@+id/button_flash"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="16dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/toggle_flashlight"
-                android:src="@drawable/ic_flash_off"/>
-
-        <!-- Pick Image (Left) -->
-        <Button
-                android:id="@+id/button_pick_image"
-                style="@style/Widget.MakeACopy.Button.Tonal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="@string/btn_pick_image"
-                android:contentDescription="@string/pick_image_cd"
-                android:maxLines="1"
-                android:ellipsize="end" />
-
-        <Space
-                android:layout_width="16dp"
-                android:layout_height="0dp" />
-
-        <!-- Scan (Right) -->
-        <Button
                 android:id="@+id/button_scan"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:background="@drawable/bg_scan_shutter"
+                android:contentDescription="@string/btn_scan"
+                app:tooltipText="@string/btn_scan" />
+
+        <!-- Documents: scans library (feature-flagged; hidden together with its label) -->
+        <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="@string/btn_scan"
-                android:maxLines="1"
-                android:ellipsize="end" />
+                android:gravity="center"
+                android:orientation="vertical">
+
+            <ImageButton
+                    android:id="@+id/button_open_library_cam"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_scan_control"
+                    android:contentDescription="@string/open_collections"
+                    android:padding="14dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_library"
+                    android:visibility="invisible"
+                    app:tint="@color/scan_on_dark"
+                    app:tooltipText="@string/open_collections" />
+
+            <TextView
+                    android:id="@+id/label_open_library"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:importantForAccessibility="no"
+                    android:text="@string/scan_label_documents"
+                    android:textColor="@color/scan_on_dark_secondary"
+                    android:textSize="12sp"
+                    android:visibility="invisible" />
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Review buttons -->
+    <!-- Review buttons (legacy review mode, hidden in the normal scan flow) -->
     <LinearLayout
             android:id="@+id/button_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:background="?attr/colorSurfaceContainer"
-            android:elevation="8dp"
             android:padding="12dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"

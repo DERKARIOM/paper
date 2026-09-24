@@ -22,9 +22,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">A dokumentumok szkenneléséhez kameraengedély szükséges</string>
     <string name="confirm">Megerősítés</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">A kamera készen áll. Nyomja meg a gombot a dokumentum
-        szkenneléséhez.
-    </string>
     <string name="captured_image">Rögzített kép</string>
     <string name="image_to_crop">Kép kivágáshoz</string>
     <string name="cropped_image">Kivágott kép</string>
@@ -489,4 +486,11 @@
     <string name="btn_finish">Kész</string>
     <string name="btn_copy_text">Szöveg másolása</string>
     <string name="text_copied">Szöveg másolva</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Helyezze a dokumentumot a keretbe</string>
+    <string name="scan_hint_document_detected">Dokumentum észlelve</string>
+    <string name="scan_hint_move_closer">Menjen közelebb a dokumentumhoz</string>
+    <string name="scan_hint_center_document">Igazítsa a dokumentumot a keret közepére</string>
+    <string name="scan_label_gallery">Galéria</string>
+    <string name="scan_label_documents">Dokumentumok</string>
 </resources>

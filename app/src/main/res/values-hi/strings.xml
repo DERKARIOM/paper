@@ -20,8 +20,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">दस्तावेज़ स्कैन करने के लिए कैमरा अनुमति आवश्यक है</string>
     <string name="confirm">पुष्टि करें</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">कैमरा तैयार है। दस्तावेज़ स्कैन करने के लिए बटन दबाएँ।
-    </string>
     <string name="captured_image">कैप्चर किया गया चित्र</string>
     <string name="image_to_crop">क्रॉप करने के लिए चित्र</string>
     <string name="cropped_image">क्रॉप किया गया चित्र</string>
@@ -466,4 +464,11 @@
     <string name="btn_finish">हो गया</string>
     <string name="btn_copy_text">टेक्स्ट कॉपी करें</string>
     <string name="text_copied">टेक्स्ट कॉपी किया गया</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">दस्तावेज़ को फ़्रेम में रखें</string>
+    <string name="scan_hint_document_detected">दस्तावेज़ मिला</string>
+    <string name="scan_hint_move_closer">दस्तावेज़ के पास जाएँ</string>
+    <string name="scan_hint_center_document">दस्तावेज़ को फ़्रेम के बीच में रखें</string>
+    <string name="scan_label_gallery">गैलरी</string>
+    <string name="scan_label_documents">दस्तावेज़</string>
 </resources>

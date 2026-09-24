@@ -24,8 +24,6 @@
     <string name="msg_camera_permission_required">Belge taramak için kamera izni gereklidir
     </string>
     <string name="confirm">Onayla</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Kamera hazır. Belge taramak için düğmeye dokunun.
-    </string>
     <string name="captured_image">Çekilen görüntü</string>
     <string name="image_to_crop">Kırpılacak görüntü</string>
     <string name="cropped_image">Kırpılmış görüntü</string>
@@ -487,4 +485,11 @@
     <string name="btn_finish">Bitti</string>
     <string name="btn_copy_text">Metni kopyala</string>
     <string name="text_copied">Metin kopyalandı</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Belgeyi çerçevenin içine yerleştirin</string>
+    <string name="scan_hint_document_detected">Belge algılandı</string>
+    <string name="scan_hint_move_closer">Belgeye yaklaşın</string>
+    <string name="scan_hint_center_document">Belgeyi çerçevede ortalayın</string>
+    <string name="scan_label_gallery">Galeri</string>
+    <string name="scan_label_documents">Belgeler</string>
 </resources>

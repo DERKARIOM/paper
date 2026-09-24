@@ -22,9 +22,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">Cameratoestemming is vereist om documenten te scannen</string>
     <string name="confirm">Bevestigen</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Camera klaar. Tik op de knop om een document te
-        scannen.
-    </string>
     <string name="captured_image">Vastgelegde afbeelding</string>
     <string name="image_to_crop">Afbeelding om bij te snijden</string>
     <string name="cropped_image">Bijsneden afbeelding</string>
@@ -492,4 +489,11 @@
     <string name="btn_finish">Klaar</string>
     <string name="btn_copy_text">Tekst kopiëren</string>
     <string name="text_copied">Tekst gekopieerd</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Plaats het document in het kader</string>
+    <string name="scan_hint_document_detected">Document gedetecteerd</string>
+    <string name="scan_hint_move_closer">Kom dichter bij het document</string>
+    <string name="scan_hint_center_document">Centreer het document in het kader</string>
+    <string name="scan_label_gallery">Galerij</string>
+    <string name="scan_label_documents">Documenten</string>
 </resources>

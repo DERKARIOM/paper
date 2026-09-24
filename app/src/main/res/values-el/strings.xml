@@ -20,7 +20,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">Απαιτείται άδεια κάμερας για τη σάρωση εγγράφων</string>
     <string name="confirm">Επιβεβαίωση</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Η κάμερα είναι έτοιμη. Πατήστε το κουμπί για σάρωση εγγράφου.</string>
     <string name="captured_image">Ληφθείσα εικόνα</string>
     <string name="image_to_crop">Εικόνα για περικοπή</string>
     <string name="cropped_image">Περικομμένη εικόνα</string>
@@ -471,4 +470,11 @@
     <string name="btn_finish">Τέλος</string>
     <string name="btn_copy_text">Αντιγραφή κειμένου</string>
     <string name="text_copied">Το κείμενο αντιγράφηκε</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Τοποθετήστε το έγγραφο στο πλαίσιο</string>
+    <string name="scan_hint_document_detected">Εντοπίστηκε έγγραφο</string>
+    <string name="scan_hint_move_closer">Πλησιάστε το έγγραφο</string>
+    <string name="scan_hint_center_document">Κεντράρετε το έγγραφο στο πλαίσιο</string>
+    <string name="scan_label_gallery">Συλλογή</string>
+    <string name="scan_label_documents">Έγγραφα</string>
 </resources>

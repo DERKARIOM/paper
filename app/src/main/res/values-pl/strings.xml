@@ -22,9 +22,6 @@
     <!-- Komunikaty -->
     <string name="msg_camera_permission_required">Uprawnienie do aparatu jest wymagane, aby skanować dokumenty</string>
     <string name="confirm">Potwierdź</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Aparat gotowy. Naciśnij przycisk, aby zeskanować
-        dokument.
-    </string>
     <string name="captured_image">Zarejestrowany obraz</string>
     <string name="image_to_crop">Obraz do przycięcia</string>
     <string name="cropped_image">Przycięty obraz</string>
@@ -490,4 +487,11 @@
     <string name="btn_finish">Gotowe</string>
     <string name="btn_copy_text">Kopiuj tekst</string>
     <string name="text_copied">Skopiowano tekst</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Umieść dokument w ramce</string>
+    <string name="scan_hint_document_detected">Wykryto dokument</string>
+    <string name="scan_hint_move_closer">Zbliż się do dokumentu</string>
+    <string name="scan_hint_center_document">Wyśrodkuj dokument w ramce</string>
+    <string name="scan_label_gallery">Galeria</string>
+    <string name="scan_label_documents">Dokumenty</string>
 </resources>

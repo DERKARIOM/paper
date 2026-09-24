@@ -22,9 +22,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">Kameratillatelse er nødvendig for å skanne dokumenter</string>
     <string name="confirm">Bekreft</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Kameraet er klart. Trykk på knappen for å skanne et
-        dokument.
-    </string>
     <string name="captured_image">Tatt bilde</string>
     <string name="image_to_crop">Bilde å beskjære</string>
     <string name="cropped_image">Beskåret bilde</string>
@@ -486,4 +483,11 @@
     <string name="btn_finish">Ferdig</string>
     <string name="btn_copy_text">Kopier tekst</string>
     <string name="text_copied">Tekst kopiert</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Plasser dokumentet i rammen</string>
+    <string name="scan_hint_document_detected">Dokument oppdaget</string>
+    <string name="scan_hint_move_closer">Gå nærmere dokumentet</string>
+    <string name="scan_hint_center_document">Sentrer dokumentet i rammen</string>
+    <string name="scan_label_gallery">Galleri</string>
+    <string name="scan_label_documents">Dokumenter</string>
 </resources>

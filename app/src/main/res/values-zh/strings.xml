@@ -21,7 +21,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">需要相机权限才能扫描文档</string>
     <string name="confirm">确认</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">相机已就绪。点按按钮以扫描文档。</string>
     <string name="captured_image">已拍摄的图像</string>
     <string name="image_to_crop">待裁剪的图像</string>
     <string name="cropped_image">已裁剪的图像</string>
@@ -470,4 +469,11 @@
     <string name="btn_finish">完成</string>
     <string name="btn_copy_text">复制文字</string>
     <string name="text_copied">文字已复制</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">将文档放入框内</string>
+    <string name="scan_hint_document_detected">已检测到文档</string>
+    <string name="scan_hint_move_closer">请靠近文档</string>
+    <string name="scan_hint_center_document">请将文档置于框中央</string>
+    <string name="scan_label_gallery">图库</string>
+    <string name="scan_label_documents">文档</string>
 </resources>

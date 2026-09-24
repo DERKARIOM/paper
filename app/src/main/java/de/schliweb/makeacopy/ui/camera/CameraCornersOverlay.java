@@ -60,13 +60,20 @@ public class CameraCornersOverlay extends View {
    */
   private void init() {
     setWillNotDraw(false);
+    // Detected document outline in Paper's scan accent, with a light translucent fill so the
+    // detected page stands out without hiding it.
+    int accent =
+        androidx.core.content.ContextCompat.getColor(
+            getContext(), de.schliweb.makeacopy.R.color.paper_scan_accent);
     linePaint.setStyle(Paint.Style.STROKE);
     linePaint.setStrokeWidth(dp(3));
-    linePaint.setColor(Color.rgb(255, 102, 0)); // orange, consistent with crop UI
-    linePaint.setShadowLayer(dp(2), dp(1), dp(1), Color.BLACK);
+    linePaint.setStrokeJoin(Paint.Join.ROUND);
+    linePaint.setColor(accent);
+    linePaint.setShadowLayer(dp(2), 0, dp(1), Color.argb(120, 0, 0, 0));
 
     shadowPaint.setStyle(Paint.Style.FILL);
-    shadowPaint.setColor(Color.TRANSPARENT); // no fill; kept for potential future use
+    shadowPaint.setColor(
+        Color.argb(48, Color.red(accent), Color.green(accent), Color.blue(accent)));
 
     textPaint.setStyle(Paint.Style.FILL);
     textPaint.setColor(Color.WHITE);
@@ -116,6 +123,15 @@ public class CameraCornersOverlay extends View {
     invalidate();
   }
 
+  /** Returns a copy of the outline currently drawn (sorted corners), or {@code null}. */
+  @Nullable
+  public PointF[] getCorners() {
+    if (corners == null) return null;
+    PointF[] out = new PointF[corners.length];
+    for (int i = 0; i < corners.length; i++) out[i] = new PointF(corners[i].x, corners[i].y);
+    return out;
+  }
+
   /**
    * Sets the live detection score to be rendered on top of the preview. Pass null to hide the
    * score. Expected range is [0..1].
@@ -161,6 +177,7 @@ public class CameraCornersOverlay extends View {
       path.moveTo(corners[0].x, corners[0].y);
       for (int i = 1; i < 4; i++) path.lineTo(corners[i].x, corners[i].y);
       path.close();
+      canvas.drawPath(path, shadowPaint);
       canvas.drawPath(path, linePaint);
     }
 

@@ -8,4 +8,16 @@
     <color name="white">#FFFFFFFF</color>
     <!-- Accent color for active state of crop toolbar toggles (e.g. snap-to-right-angle).
          Light theme: deep purple for strong contrast on light surfaces. -->
+    <!-- Paper brand (logo) colors, used by the scan screen which keeps a dark camera look in
+         both light and dark themes. -->
+    <color name="paper_brand_blue">#FF185FA5</color>
+    <color name="paper_scan_accent">#FF85B7EB</color>
+    <!-- Scan screen: floating controls and hint over the camera image -->
+    <color name="scan_background">#FF000000</color>
+    <color name="scan_control_bg">#66000000</color>
+    <color name="scan_control_stroke">#33FFFFFF</color>
+    <color name="scan_hint_bg">#A6000000</color>
+    <color name="scan_outside_dim">#33000000</color>
+    <color name="scan_on_dark">#FFFFFFFF</color>
+    <color name="scan_on_dark_secondary">#CCFFFFFF</color>
 </resources>

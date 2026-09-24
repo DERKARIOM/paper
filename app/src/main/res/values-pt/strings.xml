@@ -23,9 +23,6 @@
     <string name="msg_camera_permission_required">A permissão da câmera é necessária para digitalizar documentos
     </string>
     <string name="confirm">Confirmar</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Câmera pronta. Toque no botão para digitalizar um
-        documento.
-    </string>
     <string name="captured_image">Imagem capturada</string>
     <string name="image_to_crop">Imagem a cortar</string>
     <string name="cropped_image">Imagem cortada</string>
@@ -492,4 +489,11 @@
     <string name="btn_finish">Concluído</string>
     <string name="btn_copy_text">Copiar texto</string>
     <string name="text_copied">Texto copiado</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Coloque o documento no quadro</string>
+    <string name="scan_hint_document_detected">Documento detectado</string>
+    <string name="scan_hint_move_closer">Aproxime-se do documento</string>
+    <string name="scan_hint_center_document">Centralize o documento no quadro</string>
+    <string name="scan_label_gallery">Galeria</string>
+    <string name="scan_label_documents">Documentos</string>
 </resources>

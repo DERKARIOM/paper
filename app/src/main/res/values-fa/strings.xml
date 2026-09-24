@@ -23,8 +23,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">برای اسکن اسناد، مجوز دوربین لازم است</string>
     <string name="confirm">تأیید</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">دوربین آماده است. برای اسکن یک سند، دکمه را بزنید.
-    </string>
     <string name="captured_image">تصویر ثبت‌شده</string>
     <string name="image_to_crop">تصویر برای برش</string>
     <string name="cropped_image">تصویر برش‌خورده</string>
@@ -485,4 +483,11 @@
     <string name="btn_finish">انجام شد</string>
     <string name="btn_copy_text">کپی متن</string>
     <string name="text_copied">متن کپی شد</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">سند را داخل کادر قرار دهید</string>
+    <string name="scan_hint_document_detected">سند شناسایی شد</string>
+    <string name="scan_hint_move_closer">به سند نزدیک‌تر شوید</string>
+    <string name="scan_hint_center_document">سند را در مرکز کادر قرار دهید</string>
+    <string name="scan_label_gallery">گالری</string>
+    <string name="scan_label_documents">اسناد</string>
 </resources>

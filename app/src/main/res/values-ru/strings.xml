@@ -22,9 +22,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">Для сканирования документов требуется разрешение на камеру</string>
     <string name="confirm">Подтвердить</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Камера готова. Нажмите кнопку, чтобы отсканировать
-        документ.
-    </string>
     <string name="captured_image">Снятое изображение</string>
     <string name="image_to_crop">Изображение для обрезки</string>
     <string name="cropped_image">Обрезанное изображение</string>
@@ -490,4 +487,11 @@
     <string name="btn_finish">Готово</string>
     <string name="btn_copy_text">Копировать текст</string>
     <string name="text_copied">Текст скопирован</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Поместите документ в рамку</string>
+    <string name="scan_hint_document_detected">Документ обнаружен</string>
+    <string name="scan_hint_move_closer">Подойдите ближе к документу</string>
+    <string name="scan_hint_center_document">Расположите документ по центру рамки</string>
+    <string name="scan_label_gallery">Галерея</string>
+    <string name="scan_label_documents">Документы</string>
 </resources>

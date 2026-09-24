@@ -24,9 +24,6 @@
         documenti
     </string>
     <string name="confirm">Conferma</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Fotocamera pronta. Tocca il pulsante per scansionare
-        un documento.
-    </string>
     <string name="captured_image">Immagine acquisita</string>
     <string name="image_to_crop">Immagine da ritagliare</string>
     <string name="cropped_image">Immagine ritagliata</string>
@@ -495,4 +492,11 @@
     <string name="btn_finish">Fine</string>
     <string name="btn_copy_text">Copia testo</string>
     <string name="text_copied">Testo copiato</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Posiziona il documento nella cornice</string>
+    <string name="scan_hint_document_detected">Documento rilevato</string>
+    <string name="scan_hint_move_closer">Avvicinati al documento</string>
+    <string name="scan_hint_center_document">Centra il documento nella cornice</string>
+    <string name="scan_label_gallery">Galleria</string>
+    <string name="scan_label_documents">Documenti</string>
 </resources>

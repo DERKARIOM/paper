@@ -22,9 +22,6 @@
     <!-- Messages -->
     <string name="msg_camera_permission_required">Kameratilladelse er påkrævet for at scanne dokumenter</string>
     <string name="confirm">Bekræft</string>
-    <string name="camera_ready_tap_the_button_to_scan_a_document">Kameraet er klar. Tryk på knappen for at scanne et
-        dokument.
-    </string>
     <string name="captured_image">Optaget billede</string>
     <string name="image_to_crop">Billede til beskæring</string>
     <string name="cropped_image">Beskåret billede</string>
@@ -486,4 +483,11 @@
     <string name="btn_finish">Færdig</string>
     <string name="btn_copy_text">Kopiér tekst</string>
     <string name="text_copied">Tekst kopieret</string>
+    <!-- Scan screen: framing guide and floating controls -->
+    <string name="scan_hint_place_document">Placer dokumentet i rammen</string>
+    <string name="scan_hint_document_detected">Dokument fundet</string>
+    <string name="scan_hint_move_closer">Gå tættere på dokumentet</string>
+    <string name="scan_hint_center_document">Centrér dokumentet i rammen</string>
+    <string name="scan_label_gallery">Galleri</string>
+    <string name="scan_label_documents">Dokumenter</string>
 </resources>

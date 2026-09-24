@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Capture button: white ring around a white disc, Paper blue while pressed, dimmed while
+     disabled (capture in progress). -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false">
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <stroke android:width="4dp" android:color="#66FFFFFF" />
+                </shape>
+            </item>
+            <item android:left="9dp" android:top="9dp" android:right="9dp" android:bottom="9dp">
+                <shape android:shape="oval">
+                    <solid android:color="#66FFFFFF" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item android:state_pressed="true">
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <stroke android:width="4dp" android:color="@color/scan_on_dark" />
+                </shape>
+            </item>
+            <item android:left="11dp" android:top="11dp" android:right="11dp" android:bottom="11dp">
+                <shape android:shape="oval">
+                    <solid android:color="@color/paper_scan_accent" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <stroke android:width="4dp" android:color="@color/scan_on_dark" />
+                </shape>
+            </item>
+            <item android:left="9dp" android:top="9dp" android:right="9dp" android:bottom="9dp">
+                <shape android:shape="oval">
+                    <solid android:color="@color/scan_on_dark" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>
