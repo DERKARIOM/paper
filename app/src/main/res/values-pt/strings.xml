@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwiPaper</string>
+    <string name="app_name">Paper</string>
 
     <string name="tip_text_mode_editing">Modo de texto: As quebras de linha e a pontuação são atualmente normalizadas
         para espaços. Se forem inseridas menos palavras do que as reconhecidas, as palavras restantes do OCR permanecem
@@ -70,7 +70,7 @@
     <string name="error_camera_preview_failed">Falha ao iniciar a visualização da câmera. Tente novamente.</string>
 
     <string name="share_logs">Compartilhar logs</string>
-    <string name="share_logs_subject">Logs de diagnóstico do QwiPaper</string>
+    <string name="share_logs_subject">Logs de diagnóstico do Paper</string>
     <string name="share_logs_chooser_title">Compartilhar logs via…</string>
     <string name="share_logs_error">Não foi possível preparar os logs: %1$s</string>
 

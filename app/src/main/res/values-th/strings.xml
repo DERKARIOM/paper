@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwiPaper</string>
+    <string name="app_name">Paper</string>
 
     <string name="tip_text_mode_editing">โหมดข้อความ:
         การขึ้นบรรทัดใหม่และเครื่องหมายวรรคตอนจะถูกปรับให้เป็นช่องว่างในขณะนี้ หากป้อนคำจำนวนน้อยกว่าที่ระบบรู้จำได้ คำ
@@ -65,7 +65,7 @@
     <string name="error_camera_preview_failed">ไม่สามารถเริ่มพรีวิวกล้อง กรุณาลองใหม่</string>
 
     <string name="share_logs">แชร์บันทึก</string>
-    <string name="share_logs_subject">บันทึกการวินิจฉัยของ QwiPaper</string>
+    <string name="share_logs_subject">บันทึกการวินิจฉัยของ Paper</string>
     <string name="share_logs_chooser_title">แชร์บันทึกผ่าน…</string>
     <string name="share_logs_error">ไม่สามารถเตรียมบันทึกได้: %1$s</string>
 

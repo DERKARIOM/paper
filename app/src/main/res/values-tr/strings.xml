@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwiPaper</string>
+    <string name="app_name">Paper</string>
 
     <string name="tip_text_mode_editing">Metin modu: Satır sonları ve noktalama işaretleri şu anda boşluklara
         dönüştürülmektedir. Tanınan kelimelerden daha az kelime girilirse, kalan OCR kelimeleri değişmeden kalır.
@@ -68,7 +68,7 @@
     <string name="error_camera_preview_failed">Kamera önizlemesi başlatılamadı. Lütfen tekrar deneyin.</string>
 
     <string name="share_logs">Günlükleri paylaş</string>
-    <string name="share_logs_subject">QwiPaper tanılama günlükleri</string>
+    <string name="share_logs_subject">Paper tanılama günlükleri</string>
     <string name="share_logs_chooser_title">Günlükleri şununla paylaş…</string>
     <string name="share_logs_error">Günlükler hazırlanamadı: %1$s</string>
 

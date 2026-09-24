@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwiPaper</string>
+    <string name="app_name">Paper</string>
 
     <string name="tip_text_mode_editing">Textmodus: Zeilenumbrüche und Satzzeichen werden derzeit zu Leerzeichen
         normalisiert. Wenn weniger Wörter eingegeben werden, als erkannt wurden, bleiben die übrigen OCR-Wörter
@@ -69,7 +69,7 @@
     </string>
 
     <string name="share_logs">Protokolle teilen</string>
-    <string name="share_logs_subject">QwiPaper-Diagnoseprotokolle</string>
+    <string name="share_logs_subject">Paper-Diagnoseprotokolle</string>
     <string name="share_logs_chooser_title">Protokolle teilen über …</string>
     <string name="share_logs_error">Protokolle konnten nicht vorbereitet werden: %1$s</string>
 

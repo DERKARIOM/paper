@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwiPaper</string>
+    <string name="app_name">Paper</string>
 
     <string name="tip_text_mode_editing">Mod text: În prezent, întreruperile de rând și semnele de punctuație sunt
         normalizate la spații. Dacă se introduc mai puține cuvinte decât au fost recunoscute, celelalte cuvinte OCR
@@ -69,7 +69,7 @@
     <string name="error_camera_preview_failed">Previzualizarea camerei nu a putut fi pornită. Încearcă din nou.</string>
 
     <string name="share_logs">Partajează jurnalele</string>
-    <string name="share_logs_subject">Jurnale de diagnostic QwiPaper</string>
+    <string name="share_logs_subject">Jurnale de diagnostic Paper</string>
     <string name="share_logs_chooser_title">Partajează jurnalele prin…</string>
     <string name="share_logs_error">Nu s-au putut pregăti jurnalele: %1$s</string>
 

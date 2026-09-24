@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwiPaper</string>
+    <string name="app_name">Paper</string>
 
     <string name="tip_text_mode_editing">Szövegmód: A sortörések és az írásjelek jelenleg szóközökre vannak
         normalizálva. Ha kevesebb szót ír be, mint amennyit az OCR felismert, a fennmaradó szavak változatlanok
@@ -68,7 +68,7 @@
     <string name="error_camera_preview_failed">A kamera előnézete nem indítható el. Próbálja újra.</string>
 
     <string name="share_logs">Naplók megosztása</string>
-    <string name="share_logs_subject">QwiPaper diagnosztikai naplók</string>
+    <string name="share_logs_subject">Paper diagnosztikai naplók</string>
     <string name="share_logs_chooser_title">Naplók megosztása ezen keresztül…</string>
     <string name="share_logs_error">A naplókat nem sikerült előkészíteni: %1$s</string>
 

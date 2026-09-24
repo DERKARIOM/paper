@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwiPaper</string>
+    <string name="app_name">Paper</string>
 
     <string name="tip_text_mode_editing">Текстовый режим: Разрывы строк и знаки препинания в настоящее время
         нормализуются до пробелов. Если введено меньше слов, чем было распознано, оставшиеся слова OCR остаются без
@@ -69,7 +69,7 @@
     <string name="error_camera_preview_failed">Не удалось запустить предпросмотр камеры. Повторите попытку.</string>
 
     <string name="share_logs">Поделиться журналами</string>
-    <string name="share_logs_subject">Диагностические журналы QwiPaper</string>
+    <string name="share_logs_subject">Диагностические журналы Paper</string>
     <string name="share_logs_chooser_title">Поделиться журналами через…</string>
     <string name="share_logs_error">Не удалось подготовить журналы: %1$s</string>
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwiPaper</string>
+    <string name="app_name">Paper</string>
 
     <!-- OCR Review: Text mode editor tooltip documenting current behavior -->
     <string name="tip_text_mode_editing">حالت متن: در حال حاضر شکست خط‌ها و علائم نگارشی به فاصله تبدیل می‌شوند. اگر
@@ -68,7 +68,7 @@
 
     <!-- Logging / Share logs -->
     <string name="share_logs">اشتراک‌گذاری لاگ‌ها</string>
-    <string name="share_logs_subject">لاگ‌های عیب‌یابی QwiPaper</string>
+    <string name="share_logs_subject">لاگ‌های عیب‌یابی Paper</string>
     <string name="share_logs_chooser_title">اشتراک‌گذاری لاگ‌ها از طریق…</string>
     <string name="share_logs_error">آماده‌سازی لاگ‌ها ممکن نشد: %1$s</string>
 

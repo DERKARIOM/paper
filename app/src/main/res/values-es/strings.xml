@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwiPaper</string>
+    <string name="app_name">Paper</string>
 
     <string name="tip_text_mode_editing">Modo texto: Los saltos de línea y la puntuación se normalizan actualmente a
         espacios. Si se introducen menos palabras de las reconocidas, las palabras OCR restantes permanecen sin cambios.
@@ -72,7 +72,7 @@
     </string>
 
     <string name="share_logs">Compartir registros</string>
-    <string name="share_logs_subject">Registros de diagnóstico de QwiPaper</string>
+    <string name="share_logs_subject">Registros de diagnóstico de Paper</string>
     <string name="share_logs_chooser_title">Compartir registros mediante…</string>
     <string name="share_logs_error">No se pudieron preparar los registros: %1$s</string>
 

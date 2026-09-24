@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwiPaper</string>
+    <string name="app_name">Paper</string>
 
     <string name="tip_text_mode_editing">Tryb tekstowy: Podziały wierszy i znaki interpunkcyjne są obecnie normalizowane
         do spacji. Jeśli wprowadzono mniej słów, niż rozpoznano, pozostałe słowa OCR pozostaną bez zmian. Zmiany zostaną
@@ -68,7 +68,7 @@
     <string name="error_camera_preview_failed">Nie udało się uruchomić podglądu aparatu. Spróbuj ponownie.</string>
 
     <string name="share_logs">Udostępnij logi</string>
-    <string name="share_logs_subject">Logi diagnostyczne QwiPaper</string>
+    <string name="share_logs_subject">Logi diagnostyczne Paper</string>
     <string name="share_logs_chooser_title">Udostępnij logi przez…</string>
     <string name="share_logs_error">Nie udało się przygotować logów: %1$s</string>
 

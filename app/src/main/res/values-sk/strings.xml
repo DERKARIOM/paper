@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QwiPaper</string>
+    <string name="app_name">Paper</string>
 
     <string name="tip_text_mode_editing">Textový režim: Zalomenia riadkov a interpunkcia sa momentálne normalizujú na
         medzery. Ak sa zadá menej slov, ako bolo rozpoznaných, zvyšné slová OCR zostanú nezmenené. Zmeny sa použijú po
@@ -71,7 +71,7 @@
     <string name="error_camera_preview_failed">Náhľad fotoaparátu sa nepodarilo spustiť. Skúste to znova.</string>
 
     <string name="share_logs">Zdieľať záznamy</string>
-    <string name="share_logs_subject">Diagnostické záznamy QwiPaper</string>
+    <string name="share_logs_subject">Diagnostické záznamy Paper</string>
     <string name="share_logs_chooser_title">Zdieľať záznamy cez…</string>
     <string name="share_logs_error">Záznamy sa nepodarilo pripraviť: %1$s</string>
 
