@@ -354,6 +354,8 @@ public class PdfCreator {
 
         // Load embedded fonts with fallbacks (file-based; subset-embedded by default)
         List<PDFont> fonts = loadFontsWithFallbacks(document, context);
+        // Qwiper logo watermark (bottom-right of every page)
+        PdfWatermark watermark = PdfWatermark.load(context, document);
 
         try (PDPageContentStream cs = new PDPageContentStream(document, page)) {
           // 1) Draw image in page coordinates
@@ -384,6 +386,9 @@ public class PdfCreator {
                 cs, normWords, fonts, prepared.getWidth(), prepared.getHeight(), textLayerMode);
             cs.restoreGraphicsState();
           }
+
+          // 3) Watermark last, in page coordinates, so it sits above the scan
+          if (watermark != null) watermark.draw(cs, pageW, pageH);
         }
 
         try (OutputStream os = context.getContentResolver().openOutputStream(outputUri)) {
@@ -1256,6 +1261,8 @@ public class PdfCreator {
 
       // Load fonts once (file-based; subset-embedded)
       List<PDFont> fonts = loadFontsWithFallbacks(document, context);
+      // Qwiper logo watermark: embedded once, drawn on every page
+      PdfWatermark watermark = PdfWatermark.load(context, document);
 
       int total = bitmaps.size();
       for (int i = 0; i < bitmaps.size(); i++) {
@@ -1360,6 +1367,7 @@ public class PdfCreator {
                   cs, normWords, fonts, prepared.getWidth(), prepared.getHeight(), textLayerMode);
               cs.restoreGraphicsState();
             }
+            if (watermark != null) watermark.draw(cs, pageW, pageH);
           }
           if (listener != null) {
             try {
