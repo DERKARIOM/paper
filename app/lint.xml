@@ -15,8 +15,6 @@
     <!-- Intentional: root element backgrounds for themed containers -->
     <issue id="Overdraw" severity="ignore" />
 
-    <!-- Known: monochrome icon will be added in a future design iteration -->
-    <issue id="MonochromeLauncherIcon" severity="ignore" />
 
     <!-- Known: TrustManager in OcrModelManager is for local addon package verification only -->
     <issue id="TrustAllX509TrustManager" severity="ignore" />
