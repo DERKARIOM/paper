@@ -476,4 +476,7 @@
     <string name="scan_hint_center_document">请将文档置于框中央</string>
     <string name="scan_label_gallery">图库</string>
     <string name="scan_label_documents">文档</string>
+    <string name="scan_loader_capturing">正在拍摄…</string>
+    <string name="scan_loader_scanning">正在扫描…</string>
+    <string name="scan_loader_preparing">正在准备文档</string>
 </resources>

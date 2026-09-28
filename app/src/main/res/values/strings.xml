@@ -508,4 +508,7 @@
     <string name="scan_hint_center_document">Center the document in the frame</string>
     <string name="scan_label_gallery">Gallery</string>
     <string name="scan_label_documents">Documents</string>
+    <string name="scan_loader_capturing">Capturing…</string>
+    <string name="scan_loader_scanning">Scanning…</string>
+    <string name="scan_loader_preparing">Preparing the document</string>
 </resources>

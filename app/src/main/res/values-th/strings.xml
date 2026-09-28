@@ -490,4 +490,7 @@
     <string name="scan_hint_center_document">จัดเอกสารให้อยู่กลางกรอบ</string>
     <string name="scan_label_gallery">แกลเลอรี</string>
     <string name="scan_label_documents">เอกสาร</string>
+    <string name="scan_loader_capturing">กำลังถ่าย…</string>
+    <string name="scan_loader_scanning">กำลังสแกน…</string>
+    <string name="scan_loader_preparing">กำลังเตรียมเอกสาร</string>
 </resources>

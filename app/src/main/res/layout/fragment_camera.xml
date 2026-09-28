@@ -131,6 +131,20 @@
             app:layout_constraintStart_toStartOf="@id/view_finder"
             app:layout_constraintEnd_toEndOf="@id/view_finder" />
 
+    <!-- Frame shown on screen at the moment of the shutter press, frozen while the captured photo
+         is saved: the live preview keeps running underneath but no longer matters for this shot. -->
+    <ImageView
+            android:id="@+id/capture_freeze"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            android:importantForAccessibility="no"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/view_finder"
+            app:layout_constraintBottom_toBottomOf="@id/view_finder"
+            app:layout_constraintStart_toStartOf="@id/view_finder"
+            app:layout_constraintEnd_toEndOf="@id/view_finder"/>
+
     <!-- Captured image preview (legacy review mode) -->
     <ImageView
             android:id="@+id/captured_image"
@@ -404,5 +418,69 @@
                 android:maxLines="1"
                 android:ellipsize="end" />
     </LinearLayout>
+
+    <!-- Capture loader: full-screen translucent scrim (blocks every control while a capture runs)
+         with a rounded card and an indeterminate indicator (no real progress is available). -->
+    <FrameLayout
+            android:id="@+id/capture_loader"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/scan_loader_scrim"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:minWidth="200dp"
+                android:background="@drawable/bg_scan_loader_card"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingStart="28dp"
+                android:paddingTop="24dp"
+                android:paddingEnd="28dp"
+                android:paddingBottom="22dp"
+                android:accessibilityLiveRegion="polite">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/capture_loader_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:importantForAccessibility="no"
+                    app:indicatorColor="@color/paper_scan_accent"
+                    app:trackColor="@color/scan_control_stroke"
+                    app:indicatorSize="44dp"
+                    app:trackThickness="4dp"
+                    app:trackCornerRadius="2dp" />
+
+            <TextView
+                    android:id="@+id/capture_loader_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/scan_loader_capturing"
+                    android:textColor="@color/scan_on_dark"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+            <TextView
+                    android:id="@+id/capture_loader_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:maxWidth="240dp"
+                    android:text="@string/scan_loader_preparing"
+                    android:textColor="@color/scan_on_dark_secondary"
+                    android:textSize="14sp" />
+        </LinearLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -499,4 +499,7 @@
     <string name="scan_hint_center_document">Centra il documento nella cornice</string>
     <string name="scan_label_gallery">Galleria</string>
     <string name="scan_label_documents">Documenti</string>
+    <string name="scan_loader_capturing">Acquisizione…</string>
+    <string name="scan_loader_scanning">Scansione…</string>
+    <string name="scan_loader_preparing">Preparazione del documento</string>
 </resources>

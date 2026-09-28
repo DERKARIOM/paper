@@ -494,4 +494,7 @@
     <string name="scan_hint_center_document">Расположите документ по центру рамки</string>
     <string name="scan_label_gallery">Галерея</string>
     <string name="scan_label_documents">Документы</string>
+    <string name="scan_loader_capturing">Съёмка…</string>
+    <string name="scan_loader_scanning">Сканирование…</string>
+    <string name="scan_loader_preparing">Подготовка документа</string>
 </resources>

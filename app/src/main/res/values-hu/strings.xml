@@ -493,4 +493,7 @@
     <string name="scan_hint_center_document">Igazítsa a dokumentumot a keret közepére</string>
     <string name="scan_label_gallery">Galéria</string>
     <string name="scan_label_documents">Dokumentumok</string>
+    <string name="scan_loader_capturing">Rögzítés…</string>
+    <string name="scan_loader_scanning">Szkennelés…</string>
+    <string name="scan_loader_preparing">A dokumentum előkészítése</string>
 </resources>

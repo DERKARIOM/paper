@@ -494,4 +494,7 @@
     <string name="scan_hint_center_document">Wyśrodkuj dokument w ramce</string>
     <string name="scan_label_gallery">Galeria</string>
     <string name="scan_label_documents">Dokumenty</string>
+    <string name="scan_loader_capturing">Robienie zdjęcia…</string>
+    <string name="scan_loader_scanning">Skanowanie…</string>
+    <string name="scan_loader_preparing">Przygotowywanie dokumentu</string>
 </resources>

@@ -223,6 +223,9 @@ public class CameraFragment extends Fragment implements SensorEventListener {
   private long lastA11yReadyAnnounceTs = 0L;
   private long lastA11yLowLightTs = 0L;
   private long lastVolumeShutterTs = 0L;
+
+  /** READY → CAPTURING → PROCESSING → COMPLETED (or ERROR → READY) for the shutter button. */
+  private final CaptureStateMachine captureState = new CaptureStateMachine();
   private long lastA11yVolumeHintTs = 0L;
   // Overlay stabilization (jitter reduction)
   // Exponential smoothing for corners + score and hysteresis for visibility
@@ -368,6 +371,9 @@ public class CameraFragment extends Fragment implements SensorEventListener {
 
     binding = FragmentCameraBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
+    // A new view always starts READY (e.g. back from the crop step to add a page).
+    captureState.setListener(this::renderCaptureState);
+    captureState.reset();
 
     // Verbose environment log to help diagnose device-specific issues
     logEnvironment();
@@ -640,6 +646,8 @@ public class CameraFragment extends Fragment implements SensorEventListener {
             new OnBackPressedCallback(true) {
               @Override
               public void handleOnBackPressed() {
+                // Leaving mid-capture would unbind the camera under the running request.
+                if (captureState.isBusy()) return;
                 if (binding != null && binding.capturedImage.getVisibility() == View.VISIBLE) {
                   resetCamera();
                 } else {
@@ -843,7 +851,12 @@ public class CameraFragment extends Fragment implements SensorEventListener {
 
     ImageCapture.Builder captureBuilder =
         new ImageCapture.Builder()
-            .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY) // beste Qualität für OCR
+            // MINIMIZE_LATENCY: the photo is exposed right after the shutter press. With
+            // MAXIMIZE_QUALITY CameraX first runs its own AF trigger and waits for 3A to
+            // converge, so the frame was taken up to a second later, after the user may have
+            // moved. Continuous AF/AE keep the preview (and thus the still) focused and exposed;
+            // image quality is kept by the explicit JPEG quality and the HQ ISP modes below.
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
             .setResolutionSelector(rsCap.build())
             .setTargetRotation(rotation)
             .setJpegQuality(98);
@@ -1787,115 +1800,111 @@ public class CameraFragment extends Fragment implements SensorEventListener {
       initializeCamera();
       return;
     }
+    // One capture per press: a double tap or the volume-key shutter during a capture is ignored.
+    if (!captureState.tryStartCapture()) {
+      Log.d(TAG, "captureImage: ignored, capture state=" + captureState.getState());
+      return;
+    }
+    final long pressedAtNs = SystemClock.elapsedRealtimeNanos();
 
     try {
-      setProcessing(true);
-      // Pause live analysis during capture to free CPU resources
+      // Only cheap work before takePicture: pick the target file (no I/O but a mkdirs on the
+      // first capture). No focus/metering round trip and no analysis: the shutter fires on the
+      // frame the user is looking at.
+      File photoFile = createCaptureFile();
+      ImageCapture.OutputFileOptions outputOptions =
+          new ImageCapture.OutputFileOptions.Builder(photoFile).build();
+      doTakePicture(outputOptions, photoFile, pressedAtNs);
+
+      // After the request is queued: stop the live analysis (frees CPU for the JPEG encoding)
+      // and freeze the frame that was on screen at the press.
       if (imageAnalysis != null) {
         imageAnalysis.clearAnalyzer();
       }
-      binding.textCamera.setText(R.string.processing_image);
-
-      // PATCH A: robust target directory (externalFilesDir can be null; SD card / vendor-specific
-      // devices)
-      File baseExt = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-      File outputDir;
-      if (baseExt != null) {
-        // /storage/.../Android/data/<pkg>/files/Pictures/MakeACopy (also on SD if mounted)
-        outputDir = new File(baseExt, "MakeACopy");
-        Log.d(TAG, "captureImage: using external files dir: " + outputDir.getAbsolutePath());
-      } else {
-        // Internal fallback: /data/data/<pkg>/files/Pictures/MakeACopy
-        File picturesInInternal = new File(requireContext().getFilesDir(), "Pictures");
-        //noinspection ResultOfMethodCallIgnored
-        picturesInInternal.mkdirs();
-        outputDir = new File(picturesInInternal, "MakeACopy");
-        Log.w(
-            TAG,
-            "captureImage: external files dir null, using internal: "
-                + outputDir.getAbsolutePath());
-      }
-      if (!outputDir.exists()) {
-        boolean mkOk = outputDir.mkdirs();
-        Log.d(TAG, "captureImage: ensure output directory exists -> " + mkOk);
-      }
-
-      // Create file with timestamp
-      String timestamp =
-          new SimpleDateFormat("yyyyMMdd_HHmmss_SSS", Locale.US).format(System.currentTimeMillis());
-      File photoFile = new File(outputDir, "MakeACopy_" + timestamp + ".jpg");
-      Log.i(
-          TAG,
-          "captureImage: target file="
-              + photoFile.getAbsolutePath()
-              + ", rotationDeg="
-              + toDegrees(getViewFinderRotation()));
-
-      ImageCapture.OutputFileOptions outputOptions =
-          new ImageCapture.OutputFileOptions.Builder(photoFile).build();
-
-      // Pre-capture AF/AE/AWB lock for sharper, color-stable document shots.
-      // AWB is included so that warm/cool ambient light (lamps, daylight mix) is locked in
-      // before the shutter, improving OCR-relevant text/background contrast consistency.
-      // Timeout 2s: balance between robust AF convergence and responsive capture; if AF
-      // does not converge within the window, we still proceed (best-effort).
-      if (camera != null && camera.getCameraControl() != null) {
-        MeteringPointFactory mpf = binding.viewFinder.getMeteringPointFactory();
-        MeteringPoint center =
-            mpf.createPoint(
-                binding.viewFinder.getWidth() / 2f, binding.viewFinder.getHeight() / 2f);
-
-        FocusMeteringAction fma =
-            new FocusMeteringAction.Builder(
-                    center,
-                    FocusMeteringAction.FLAG_AF
-                        | FocusMeteringAction.FLAG_AE
-                        | FocusMeteringAction.FLAG_AWB)
-                .setAutoCancelDuration(2, TimeUnit.SECONDS)
-                .build();
-
-        ListenableFuture<FocusMeteringResult> fut =
-            camera.getCameraControl().startFocusAndMetering(fma);
-
-        fut.addListener(
-            () -> {
-              try {
-                FocusMeteringResult result =
-                    fut.get(); // does not block; listener fires only after completion
-                boolean ok = result != null && result.isFocusSuccessful();
-                Log.d(TAG, "captureImage: pre-focus(AF/AE/AWB) result=" + ok);
-              } catch (Exception e) {
-                Log.w(TAG, "captureImage: pre-focus threw: " + e.getMessage());
-              }
-              doTakePicture(outputOptions, photoFile);
-            },
-            ContextCompat.getMainExecutor(requireContext()));
-      } else {
-        // Camera not yet bound (edge case): proceed without explicit pre-focus.
-        Log.w(TAG, "captureImage: camera/cameraControl null, skipping pre-focus");
-        doTakePicture(outputOptions, photoFile);
-      }
-
+      showCaptureFreezeFrame();
     } catch (Exception e) {
       Log.e(TAG, "captureImage error: " + e.getMessage(), e);
       handleCaptureError(e);
     }
   }
 
-  private void doTakePicture(ImageCapture.OutputFileOptions outputOptions, File photoFile) {
+  /** Target JPEG for a camera capture (app-private pictures folder). */
+  private File createCaptureFile() {
+    // PATCH A: robust target directory (externalFilesDir can be null; SD card / vendor-specific
+    // devices)
+    File baseExt = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+    File outputDir;
+    if (baseExt != null) {
+      // /storage/.../Android/data/<pkg>/files/Pictures/MakeACopy (also on SD if mounted)
+      outputDir = new File(baseExt, "MakeACopy");
+    } else {
+      // Internal fallback: /data/data/<pkg>/files/Pictures/MakeACopy
+      File picturesInInternal = new File(requireContext().getFilesDir(), "Pictures");
+      //noinspection ResultOfMethodCallIgnored
+      picturesInInternal.mkdirs();
+      outputDir = new File(picturesInInternal, "MakeACopy");
+      Log.w(TAG, "captureImage: external files dir null, using internal: " + outputDir);
+    }
+    if (!outputDir.exists()) {
+      boolean mkOk = outputDir.mkdirs();
+      Log.d(TAG, "captureImage: ensure output directory exists -> " + mkOk);
+    }
+    String timestamp =
+        new SimpleDateFormat("yyyyMMdd_HHmmss_SSS", Locale.US).format(System.currentTimeMillis());
+    File photoFile = new File(outputDir, "MakeACopy_" + timestamp + ".jpg");
+    Log.i(
+        TAG,
+        "captureImage: target file="
+            + photoFile.getAbsolutePath()
+            + ", rotationDeg="
+            + toDegrees(getViewFinderRotation()));
+    return photoFile;
+  }
+
+  private void doTakePicture(
+      ImageCapture.OutputFileOptions outputOptions, File photoFile, long pressedAtNs) {
     imageCapture.takePicture(
         outputOptions,
         ContextCompat.getMainExecutor(requireContext()),
         new ImageCapture.OnImageSavedCallback() {
+          private boolean shutterFeedbackGiven;
+
+          @Override
+          public void onCaptureStarted() {
+            // The sensor is exposing the frame of this press: from here on, moving the phone
+            // no longer changes the photo.
+            Log.i(TAG, "Capture started " + msSince(pressedAtNs) + " ms after the press");
+            shutterFeedback();
+            captureState.onExposureStarted();
+          }
+
+          private void shutterFeedback() {
+            if (shutterFeedbackGiven) return;
+            shutterFeedbackGiven = true;
+            // Confirm the shot with a short haptic tick (all users)
+            HapticsUtils.vibrateOneShot(getContext(), 30L);
+          }
+
           @Override
           public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-            Log.d(
+            Log.i(
                 TAG,
-                "Image saved: " + photoFile.getAbsolutePath() + ", size=" + photoFile.length());
-            // Confirm capture success with a short haptic tick (all users)
-            HapticsUtils.vibrateOneShot(getContext(), 30L);
+                "Image saved "
+                    + msSince(pressedAtNs)
+                    + " ms after the press: "
+                    + photoFile.getAbsolutePath()
+                    + ", size="
+                    + photoFile.length());
+            shutterFeedback(); // devices that do not report the capture start
+            if (!isAdded() || binding == null) {
+              // Screen left while saving: nothing to show; the file is app-private and unused.
+              captureState.onError();
+              captureState.reset();
+              return;
+            }
+            captureState.onCompleted();
             // Accessibility: confirm capture success with haptic + spoken cue
-            if (isAccessibilityModeEnabled() && binding != null && isAdded()) {
+            if (isAccessibilityModeEnabled()) {
               binding.getRoot().performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
               announce(R.string.a11y_capture_success);
             }
@@ -1909,7 +1918,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
               imageUri = Uri.fromFile(photoFile);
             }
 
-            if (cameraViewModel != null && isAdded()) {
+            if (cameraViewModel != null) {
               if (cropViewModel != null) {
                 cropViewModel.setUserRotationDegrees(0);
                 int captureDeg = toDegrees(getViewFinderRotation());
@@ -1924,15 +1933,20 @@ public class CameraFragment extends Fragment implements SensorEventListener {
               OCRViewModel ocrVm = new ViewModelProvider(requireActivity()).get(OCRViewModel.class);
               ocrVm.resetForNewImage();
 
-              cropViewModel.setImageCropped(false);
-              cropViewModel.setImageBitmap(null);
+              if (cropViewModel != null) {
+                cropViewModel.setImageCropped(false);
+                cropViewModel.setImageBitmap(null);
+              }
 
               int dest = nextScanStepDestination();
               try {
                 Navigation.findNavController(requireView())
                     .navigate(dest, null, scanFlowNavOptions());
-              } catch (IllegalArgumentException | IllegalStateException ignored) {
-                // Best-effort; failure is non-critical
+              } catch (IllegalArgumentException | IllegalStateException navFailed) {
+                // Navigation not possible (e.g. state already saved): back to a usable camera.
+                Log.w(TAG, "Navigation after capture failed", navFailed);
+                captureState.reset();
+                restoreLiveAnalysis();
               }
             }
           }
@@ -1945,6 +1959,96 @@ public class CameraFragment extends Fragment implements SensorEventListener {
         });
   }
 
+  private static long msSince(long startNs) {
+    return (SystemClock.elapsedRealtimeNanos() - startNs) / 1_000_000L;
+  }
+
+  /**
+   * Shows the preview frame that was on screen at the shutter press while the photo is saved, so
+   * the screen does not keep following the camera after the press. Purely visual: the saved photo
+   * comes from the capture request, not from this bitmap.
+   */
+  private void showCaptureFreezeFrame() {
+    if (binding == null) return;
+    Bitmap frame = null;
+    try {
+      frame = binding.viewFinder.getBitmap(); // PixelCopy of the displayed frame (view size)
+    } catch (Throwable t) {
+      Log.w(TAG, "Freeze frame unavailable", t);
+    }
+    if (frame == null) return;
+    clearCaptureFreezeFrame();
+    binding.captureFreeze.setImageBitmap(frame);
+    binding.captureFreeze.setVisibility(View.VISIBLE);
+  }
+
+  private void clearCaptureFreezeFrame() {
+    if (binding == null) return;
+    Drawable d = binding.captureFreeze.getDrawable();
+    binding.captureFreeze.setImageDrawable(null);
+    binding.captureFreeze.setVisibility(View.GONE);
+    if (d instanceof BitmapDrawable) {
+      Bitmap bm = ((BitmapDrawable) d).getBitmap();
+      if (bm != null && !bm.isRecycled()) bm.recycle();
+    }
+  }
+
+  /** Applies a capture state to the scan screen (main thread). */
+  private void renderCaptureState(
+      @NonNull CaptureStateMachine.State from, @NonNull CaptureStateMachine.State to) {
+    Log.d(TAG, "Capture state " + from + " -> " + to);
+    if (binding == null) return;
+    switch (to) {
+      case CAPTURING:
+        setProcessing(true);
+        binding.captureLoaderTitle.setText(R.string.scan_loader_capturing);
+        binding.captureLoaderSubtitle.setVisibility(View.GONE);
+        showCaptureLoader(true);
+        break;
+      case PROCESSING:
+      case COMPLETED:
+        setProcessing(true);
+        binding.captureLoaderTitle.setText(R.string.scan_loader_scanning);
+        binding.captureLoaderSubtitle.setText(R.string.scan_loader_preparing);
+        binding.captureLoaderSubtitle.setVisibility(View.VISIBLE);
+        showCaptureLoader(true);
+        break;
+      case ERROR:
+      case READY:
+      default:
+        showCaptureLoader(false);
+        clearCaptureFreezeFrame();
+        setProcessing(false);
+        break;
+    }
+  }
+
+  private void showCaptureLoader(boolean show) {
+    if (binding == null) return;
+    View loader = binding.captureLoader;
+    loader.animate().cancel();
+    if (show) {
+      if (loader.getVisibility() != View.VISIBLE) {
+        loader.setAlpha(0f);
+        loader.setVisibility(View.VISIBLE);
+        loader.animate().alpha(1f).setDuration(150L).start();
+      }
+    } else {
+      loader.setVisibility(View.GONE);
+      loader.setAlpha(1f);
+    }
+  }
+
+  /** Re-enables live corner detection according to the user's preference. */
+  private void restoreLiveAnalysis() {
+    Context ctx = getContext();
+    if (ctx == null) return;
+    boolean analysisPref =
+        ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE)
+            .getBoolean("analysis_enabled", true);
+    setLiveAnalysisEnabled(analysisPref);
+  }
+
   /**
    * Handles errors occurring during the image capture process by providing user feedback and
    * updating the UI to indicate the camera is ready for another action.
@@ -1952,19 +2056,17 @@ public class CameraFragment extends Fragment implements SensorEventListener {
    * @param exception The exception that was thrown during the image capture process.
    */
   private void handleCaptureError(Exception exception) {
+    // PROCESSING/CAPTURING -> ERROR -> READY, also when the screen is already gone.
+    captureState.onError();
+    captureState.reset();
     if (!isAdded() || binding == null) return;
     UIUtils.showToast(
         requireContext(),
         getString(R.string.error_image_capture_failed, exception.getMessage()),
         Toast.LENGTH_SHORT);
     showIdleHint();
-    setProcessing(false);
     // Re-enable live analysis after capture error
-    boolean analysisPref =
-        requireContext()
-            .getSharedPreferences("export_options", Context.MODE_PRIVATE)
-            .getBoolean("analysis_enabled", true);
-    setLiveAnalysisEnabled(analysisPref);
+    restoreLiveAnalysis();
     // Accessibility: speak failure
     if (isAccessibilityModeEnabled()) {
       announce(R.string.a11y_capture_failed);
@@ -2330,6 +2432,8 @@ public class CameraFragment extends Fragment implements SensorEventListener {
       analysisExecutor = null;
     }
     streamObserverAttached = false;
+    clearCaptureFreezeFrame();
+    if (binding != null) binding.captureLoader.animate().cancel();
     binding = null;
   }
 

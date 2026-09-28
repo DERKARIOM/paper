@@ -496,4 +496,7 @@
     <string name="scan_hint_center_document">Centreer het document in het kader</string>
     <string name="scan_label_gallery">Galerij</string>
     <string name="scan_label_documents">Documenten</string>
+    <string name="scan_loader_capturing">Vastleggen…</string>
+    <string name="scan_loader_scanning">Scannen…</string>
+    <string name="scan_loader_preparing">Document voorbereiden</string>
 </resources>

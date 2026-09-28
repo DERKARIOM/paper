@@ -477,4 +477,7 @@
     <string name="scan_hint_center_document">Κεντράρετε το έγγραφο στο πλαίσιο</string>
     <string name="scan_label_gallery">Συλλογή</string>
     <string name="scan_label_documents">Έγγραφα</string>
+    <string name="scan_loader_capturing">Λήψη…</string>
+    <string name="scan_loader_scanning">Σάρωση…</string>
+    <string name="scan_loader_preparing">Προετοιμασία του εγγράφου</string>
 </resources>

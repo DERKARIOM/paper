@@ -490,4 +490,7 @@
     <string name="scan_hint_center_document">Centrér dokumentet i rammen</string>
     <string name="scan_label_gallery">Galleri</string>
     <string name="scan_label_documents">Dokumenter</string>
+    <string name="scan_loader_capturing">Optager…</string>
+    <string name="scan_loader_scanning">Scanner…</string>
+    <string name="scan_loader_preparing">Klargør dokumentet</string>
 </resources>

@@ -471,4 +471,7 @@
     <string name="scan_hint_center_document">दस्तावेज़ को फ़्रेम के बीच में रखें</string>
     <string name="scan_label_gallery">गैलरी</string>
     <string name="scan_label_documents">दस्तावेज़</string>
+    <string name="scan_loader_capturing">कैप्चर हो रहा है…</string>
+    <string name="scan_loader_scanning">स्कैन हो रहा है…</string>
+    <string name="scan_loader_preparing">दस्तावेज़ तैयार हो रहा है</string>
 </resources>

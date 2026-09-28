@@ -20,4 +20,6 @@
     <color name="scan_outside_dim">#33000000</color>
     <color name="scan_on_dark">#FFFFFFFF</color>
     <color name="scan_on_dark_secondary">#CCFFFFFF</color>
+    <color name="scan_loader_scrim">#59000000</color>
+    <color name="scan_loader_card">#E61C1F24</color>
 </resources>
