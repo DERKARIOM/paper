@@ -62,6 +62,13 @@ public final class DocQuadDetector implements CornerDetector {
   // Reused across calls: the live analysis runs this several times per second on one thread, so
   // a 256x256 bitmap, a 64k int array and a 196k float array are no longer allocated per frame.
   private Bitmap reuse256;
+  private volatile long lastInferenceMs;
+
+  /** Duration of the last network inference alone (diagnostics). */
+  public long lastInferenceMs() {
+    return lastInferenceMs;
+  }
+
   private int[] reusePixels;
   private float[] reuseInput;
 
@@ -83,7 +90,9 @@ public final class DocQuadDetector implements CornerDetector {
       }
       float[] input = bitmapToNchwFloat01(reuse256, reusePixels, reuseInput);
 
+      long tRun = SystemClock.uptimeMillis();
       DocQuadOrtRunner.Outputs outputs = runner.run(input);
+      lastInferenceMs = SystemClock.uptimeMillis() - tRun;
       mask = toModelMask(outputs, lb);
 
       DocQuadPostprocessor.PeakMode peakMode = DocQuadPostprocessor.PeakMode.REFINE_5X5_QUADRATIC;

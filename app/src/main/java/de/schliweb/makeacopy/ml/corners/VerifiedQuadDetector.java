@@ -153,6 +153,9 @@ public final class VerifiedQuadDetector implements CornerDetector {
               + (t1 - t0)
               + " model="
               + (tModel - t1)
+              + " (inference="
+              + (docQuad != null ? docQuad.lastInferenceMs() : 0)
+              + ")"
               + " refine="
               + (t2 - tModel)
               + " contours("

@@ -49,6 +49,9 @@ public final class DocQuadOrtRunner implements AutoCloseable {
 
   private static final String TAG = "DocQuadOrtRunner";
 
+  /** See {@link #createSessionWithFallback}: NNAPI made the live detection several times slower. */
+  private static final boolean USE_NNAPI = false;
+
   public static final int IN_H = 256;
   public static final int IN_W = 256;
   public static final int OUT_H = 64;
@@ -91,8 +94,11 @@ public final class DocQuadOrtRunner implements AutoCloseable {
     try (OrtSession.SessionOptions opts = new OrtSession.SessionOptions()) {
       opts.setOptimizationLevel(OrtSession.SessionOptions.OptLevel.ALL_OPT);
       opts.setIntraOpNumThreads(Math.max(1, Runtime.getRuntime().availableProcessors() / 2));
-      // NNAPI is unstable on API 29 (native SIGABRT in graph partitioning)
-      if (android.os.Build.VERSION.SDK_INT >= 30) {
+      // NNAPI is off by default: measured on a Galaxy S10 (API 31) the live detection took
+      // 750-1300 ms per frame with NNAPI (graph split between the accelerator and the CPU), and
+      // NNAPI is deprecated since Android 15. XNNPACK on the CPU is used instead. NNAPI is also
+      // unstable on API 29 (native SIGABRT in graph partitioning).
+      if (USE_NNAPI && android.os.Build.VERSION.SDK_INT >= 30) {
         try {
           opts.addNnapi();
           Log.i(TAG, "NNAPI EP enabled");
