@@ -480,4 +480,10 @@
     <string name="scan_loader_capturing">Λήψη…</string>
     <string name="scan_loader_scanning">Σάρωση…</string>
     <string name="scan_loader_preparing">Προετοιμασία του εγγράφου</string>
+    <string name="auto_capture_label">Αυτόμ.</string>
+    <string name="auto_capture_cd">Αυτόματη λήψη</string>
+    <string name="auto_capture_on">Αυτόματη λήψη ενεργή</string>
+    <string name="auto_capture_off">Αυτόματη λήψη ανενεργή</string>
+    <string name="scan_hint_hold_still">Μην κινείστε…</string>
+    <string name="scan_hint_auto_ready">Το έγγραφο είναι έτοιμο</string>
 </resources>

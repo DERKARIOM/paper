@@ -497,4 +497,10 @@
     <string name="scan_loader_capturing">Съёмка…</string>
     <string name="scan_loader_scanning">Сканирование…</string>
     <string name="scan_loader_preparing">Подготовка документа</string>
+    <string name="auto_capture_label">Авто</string>
+    <string name="auto_capture_cd">Автосъёмка</string>
+    <string name="auto_capture_on">Автосъёмка включена</string>
+    <string name="auto_capture_off">Автосъёмка выключена</string>
+    <string name="scan_hint_hold_still">Не двигайтесь…</string>
+    <string name="scan_hint_auto_ready">Документ готов</string>
 </resources>

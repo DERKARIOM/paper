@@ -493,4 +493,10 @@
     <string name="scan_loader_capturing">กำลังถ่าย…</string>
     <string name="scan_loader_scanning">กำลังสแกน…</string>
     <string name="scan_loader_preparing">กำลังเตรียมเอกสาร</string>
+    <string name="auto_capture_label">อัตโนมัติ</string>
+    <string name="auto_capture_cd">ถ่ายอัตโนมัติ</string>
+    <string name="auto_capture_on">เปิดการถ่ายอัตโนมัติ</string>
+    <string name="auto_capture_off">ปิดการถ่ายอัตโนมัติ</string>
+    <string name="scan_hint_hold_still">ถือนิ่งไว้…</string>
+    <string name="scan_hint_auto_ready">เอกสารพร้อมแล้ว</string>
 </resources>

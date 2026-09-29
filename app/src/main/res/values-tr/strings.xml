@@ -495,4 +495,10 @@
     <string name="scan_loader_capturing">Çekiliyor…</string>
     <string name="scan_loader_scanning">Taranıyor…</string>
     <string name="scan_loader_preparing">Belge hazırlanıyor</string>
+    <string name="auto_capture_label">Otomatik</string>
+    <string name="auto_capture_cd">Otomatik çekim</string>
+    <string name="auto_capture_on">Otomatik çekim açık</string>
+    <string name="auto_capture_off">Otomatik çekim kapalı</string>
+    <string name="scan_hint_hold_still">Kıpırdamayın…</string>
+    <string name="scan_hint_auto_ready">Belge hazır</string>
 </resources>

@@ -496,4 +496,10 @@
     <string name="scan_loader_capturing">Rögzítés…</string>
     <string name="scan_loader_scanning">Szkennelés…</string>
     <string name="scan_loader_preparing">A dokumentum előkészítése</string>
+    <string name="auto_capture_label">Auto</string>
+    <string name="auto_capture_cd">Automatikus rögzítés</string>
+    <string name="auto_capture_on">Automatikus rögzítés bekapcsolva</string>
+    <string name="auto_capture_off">Automatikus rögzítés kikapcsolva</string>
+    <string name="scan_hint_hold_still">Ne mozdítsa…</string>
+    <string name="scan_hint_auto_ready">A dokumentum kész</string>
 </resources>

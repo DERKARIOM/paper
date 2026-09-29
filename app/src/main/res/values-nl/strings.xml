@@ -499,4 +499,10 @@
     <string name="scan_loader_capturing">Vastleggen…</string>
     <string name="scan_loader_scanning">Scannen…</string>
     <string name="scan_loader_preparing">Document voorbereiden</string>
+    <string name="auto_capture_label">Auto</string>
+    <string name="auto_capture_cd">Automatisch vastleggen</string>
+    <string name="auto_capture_on">Automatisch vastleggen aan</string>
+    <string name="auto_capture_off">Automatisch vastleggen uit</string>
+    <string name="scan_hint_hold_still">Stilhouden…</string>
+    <string name="scan_hint_auto_ready">Document klaar</string>
 </resources>

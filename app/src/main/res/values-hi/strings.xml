@@ -474,4 +474,10 @@
     <string name="scan_loader_capturing">कैप्चर हो रहा है…</string>
     <string name="scan_loader_scanning">स्कैन हो रहा है…</string>
     <string name="scan_loader_preparing">दस्तावेज़ तैयार हो रहा है</string>
+    <string name="auto_capture_label">ऑटो</string>
+    <string name="auto_capture_cd">स्वचालित कैप्चर</string>
+    <string name="auto_capture_on">स्वचालित कैप्चर चालू</string>
+    <string name="auto_capture_off">स्वचालित कैप्चर बंद</string>
+    <string name="scan_hint_hold_still">स्थिर रखें…</string>
+    <string name="scan_hint_auto_ready">दस्तावेज़ तैयार</string>
 </resources>

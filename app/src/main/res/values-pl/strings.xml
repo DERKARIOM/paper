@@ -497,4 +497,10 @@
     <string name="scan_loader_capturing">Robienie zdjęcia…</string>
     <string name="scan_loader_scanning">Skanowanie…</string>
     <string name="scan_loader_preparing">Przygotowywanie dokumentu</string>
+    <string name="auto_capture_label">Auto</string>
+    <string name="auto_capture_cd">Automatyczne zdjęcie</string>
+    <string name="auto_capture_on">Automatyczne zdjęcie włączone</string>
+    <string name="auto_capture_off">Automatyczne zdjęcie wyłączone</string>
+    <string name="scan_hint_hold_still">Nie ruszaj się…</string>
+    <string name="scan_hint_auto_ready">Dokument gotowy</string>
 </resources>

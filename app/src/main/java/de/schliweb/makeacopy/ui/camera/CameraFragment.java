@@ -227,6 +227,13 @@ public class CameraFragment extends Fragment implements SensorEventListener {
 
   /** READY → CAPTURING → PROCESSING → COMPLETED (or ERROR → READY) for the shutter button. */
   private final CaptureStateMachine captureState = new CaptureStateMachine();
+
+  /** Optional automatic capture (off by default), fed by the live corner detection. */
+  private static final String PREF_AUTO_CAPTURE = "auto_capture_enabled";
+
+  private final AutoCaptureController autoCapture = new AutoCaptureController();
+  private boolean autoHintShown = false;
+  @Nullable private AutoCaptureController.Phase lastLoggedAutoPhase = null;
   private long lastA11yVolumeHintTs = 0L;
   // Framing score smoothing (accessibility stability logic)
   private double lastScoreEma = -1.0; // <0 means: uninitialized
@@ -371,6 +378,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
     // A new view always starts READY (e.g. back from the crop step to add a page).
     captureState.setListener(this::renderCaptureState);
     captureState.reset();
+    autoHintShown = false;
 
     // Verbose environment log to help diagnose device-specific issues
     logEnvironment();
@@ -416,6 +424,15 @@ public class CameraFragment extends Fragment implements SensorEventListener {
             checkCameraPermission();
           }
         });
+
+    // Automatic capture toggle (remembered; off by default). The shutter keeps working.
+    autoCapture.setEnabled(
+        requireContext()
+            .getSharedPreferences("export_options", Context.MODE_PRIVATE)
+            .getBoolean(PREF_AUTO_CAPTURE, false),
+        System.currentTimeMillis());
+    renderAutoCaptureButton();
+    binding.buttonAutoCapture.setOnClickListener(v -> toggleAutoCapture());
 
     // Set up flashlight button
     binding.buttonFlash.setOnClickListener(v -> toggleFlashlight());
@@ -660,6 +677,9 @@ public class CameraFragment extends Fragment implements SensorEventListener {
   @Override
   public void onResume() {
     super.onResume();
+    // Back on the scan screen (e.g. to add a page): automatic capture re-arms after a delay and
+    // does not capture the page that is still in view (see AutoCaptureController).
+    autoCapture.onScreenShown(System.currentTimeMillis());
     applyDarkSystemBars(true);
     Log.i(TAG, "onResume: registering listeners (lightSensor=" + hasLightSensor + ")");
     if (hasLightSensor && sensorManager != null && lightSensor != null) {
@@ -1802,6 +1822,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
       Log.d(TAG, "captureImage: ignored, capture state=" + captureState.getState());
       return;
     }
+    autoCapture.onCaptured(System.currentTimeMillis()); // manual or automatic: one capture
     final long pressedAtNs = SystemClock.elapsedRealtimeNanos();
 
     try {
@@ -2056,6 +2077,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
     // PROCESSING/CAPTURING -> ERROR -> READY, also when the screen is already gone.
     captureState.onError();
     captureState.reset();
+    autoCapture.onCaptureFailed(System.currentTimeMillis());
     if (!isAdded() || binding == null) return;
     UIUtils.showToast(
         requireContext(),
@@ -2095,6 +2117,116 @@ public class CameraFragment extends Fragment implements SensorEventListener {
     }
   }
 
+  // ---------------------------------------------------------------------------------------
+  // Automatic capture (optional)
+  // ---------------------------------------------------------------------------------------
+
+  private void toggleAutoCapture() {
+    if (binding == null) return;
+    boolean on = !autoCapture.isEnabled();
+    Context ctx = requireContext();
+    ctx.getSharedPreferences("export_options", Context.MODE_PRIVATE)
+        .edit()
+        .putBoolean(PREF_AUTO_CAPTURE, on)
+        .apply();
+    autoCapture.setEnabled(on, System.currentTimeMillis());
+    // Automatic capture relies on the live corner detection.
+    if (on && !analysisEnabled) setLiveAnalysisEnabled(true);
+    if (!on) clearAutoCaptureFeedback();
+    renderAutoCaptureButton();
+    binding.buttonAutoCapture.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+    UIUtils.showToast(
+        ctx, on ? R.string.auto_capture_on : R.string.auto_capture_off, Toast.LENGTH_SHORT);
+  }
+
+  private void renderAutoCaptureButton() {
+    if (binding == null) return;
+    boolean on = autoCapture.isEnabled();
+    binding.buttonAutoCapture.setBackgroundResource(
+        on ? R.drawable.bg_scan_chip_on : R.drawable.bg_scan_chip);
+    binding.buttonAutoCapture.setTextColor(
+        ContextCompat.getColor(
+            requireContext(), on ? R.color.scan_background : R.color.scan_on_dark));
+    binding.buttonAutoCapture.setContentDescription(
+        getString(on ? R.string.auto_capture_on : R.string.auto_capture_off));
+  }
+
+  /**
+   * One analysed frame for the automatic capture (UI thread). Fires the regular shutter path when
+   * the controller decides so; feedback: progress traced on the outline + "Hold still…" hint.
+   */
+  private void handleAutoCapture(
+      AutoCaptureController.Frame f, @Nullable android.graphics.PointF[] outlineInView) {
+    if (binding == null || !autoCapture.isEnabled()) return;
+    boolean wellPlaced =
+        analysisEnabled
+            && outlineInView != null
+            && binding.scanGuide.evaluate(outlineInView) == ScanGuideOverlay.Placement.GOOD;
+    AutoCaptureController.Frame frame =
+        new AutoCaptureController.Frame(
+            f.quad,
+            f.confidence,
+            f.maskSpill,
+            f.trackedDetected,
+            wellPlaced,
+            f.width,
+            f.height,
+            f.timeMs);
+    boolean idle =
+        !captureState.isBusy()
+            && isResumed()
+            && binding.viewFinder.getVisibility() == View.VISIBLE;
+    AutoCaptureController.Decision d = autoCapture.update(frame, idle);
+    if (BuildConfig.DEBUG && d.phase != lastLoggedAutoPhase) {
+      lastLoggedAutoPhase = d.phase;
+      Log.d(
+          TAG,
+          String.format(
+              Locale.US,
+              "[AUTO] phase=%s conf=%.2f spill=%.2f tracked=%b placed=%b idle=%b",
+              d.phase,
+              f.confidence,
+              f.maskSpill,
+              f.trackedDetected,
+              wellPlaced,
+              idle));
+    }
+    if (d.fire) {
+      binding.cornerOverlay.setAutoProgress(1f);
+      showAutoHint(R.string.scan_hint_auto_ready, R.drawable.ic_scan_check);
+      Log.i(TAG, "Automatic capture triggered");
+      captureImage(); // exactly the shutter button's capture path
+      if (captureState.getState() == CaptureStateMachine.State.READY) {
+        // the capture did not start (camera not ready): allow a new attempt
+        autoCapture.onCaptureFailed(System.currentTimeMillis());
+        clearAutoCaptureFeedback();
+      }
+      return;
+    }
+    if (d.phase == AutoCaptureController.Phase.STEADYING && d.progress > 0f) {
+      binding.cornerOverlay.setAutoProgress(d.progress);
+      if (!autoHintShown) showAutoHint(R.string.scan_hint_hold_still, R.drawable.ic_scan_frame);
+    } else if (d.phase != AutoCaptureController.Phase.FIRED) {
+      clearAutoCaptureFeedback();
+    }
+  }
+
+  private void showAutoHint(int text, int icon) {
+    if (binding == null) return;
+    autoHintShown = true;
+    binding.textCamera.setText(text);
+    binding.textCamera.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, 0, 0, 0);
+  }
+
+  private void clearAutoCaptureFeedback() {
+    if (binding == null) return;
+    binding.cornerOverlay.setAutoProgress(-1f);
+    if (autoHintShown) {
+      autoHintShown = false;
+      applyPlacement(shownPlacement != null ? shownPlacement : ScanGuideOverlay.Placement.NONE);
+    }
+  }
+
   /** Neutral hint shown when the camera is ready and nothing is detected (yet). */
   private void showIdleHint() {
     shownPlacement = null;
@@ -2113,6 +2245,11 @@ public class CameraFragment extends Fragment implements SensorEventListener {
     // Capture in progress: keep the "processing" message.
     if (!binding.buttonScan.isEnabled()) return;
     ScanGuideOverlay.Placement p = binding.scanGuide.evaluate(corners);
+    if (autoHintShown) {
+      // automatic capture owns the hint while the document is held still
+      shownPlacement = p;
+      return;
+    }
     if (p == candidatePlacement) {
       candidatePlacementCount++;
     } else {
@@ -3542,6 +3679,18 @@ public class CameraFragment extends Fragment implements SensorEventListener {
       final boolean trackedHolding =
           tracked.state == de.schliweb.makeacopy.ml.corners.CornerTracker.State.HOLDING;
       final android.graphics.PointF[] outlineForUi = trackedViewPts;
+      final boolean trackedDetected =
+          tracked.state == de.schliweb.makeacopy.ml.corners.CornerTracker.State.DETECTED;
+      final AutoCaptureController.Frame autoFrame =
+          new AutoCaptureController.Frame(
+              verified != null ? verified.quad : null,
+              verified != null ? verified.confidence : 0.0,
+              verified != null ? verified.maskSpill : 1.0,
+              trackedDetected,
+              false, // placement is evaluated on the UI thread (framing guide)
+              bmpW,
+              bmpH,
+              now);
 
       // Compute score EMA only when a value exists
       // Use FramingEngine quality (0..1) instead of det.score() which is always 0.0 for DocQuad
@@ -3569,6 +3718,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
             }
             // Framing guide + hint follow the outline actually shown to the user.
             updateFramingGuidance(analysisEnabled ? binding.cornerOverlay.getCorners() : null);
+            handleAutoCapture(autoFrame, outlineForUi);
 
             // Dev overlay: modelRect + metrics when logging flag is active
             if (FeatureFlags.isFramingLoggingEnabled() && frUi != null && fbRectUi != null) {

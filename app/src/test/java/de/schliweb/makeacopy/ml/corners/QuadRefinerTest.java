@@ -112,5 +112,8 @@ public class QuadRefinerTest {
     double[][] right = {{128, 0}, {256, 0}, {256, 256}, {128, 256}};
     assertEquals(1.0, QuadScorer.maskIoU(left, m), 0.03);
     assertEquals(0.0, QuadScorer.maskIoU(right, m), 0.03);
+    // mask spill: the whole mask inside the left outline, none inside the right one
+    assertEquals(0.0, QuadScorer.maskSpill(left, m), 0.03);
+    assertEquals(1.0, QuadScorer.maskSpill(right, m), 0.03);
   }
 }

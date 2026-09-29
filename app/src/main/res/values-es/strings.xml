@@ -508,4 +508,10 @@
     <string name="scan_loader_capturing">Capturando…</string>
     <string name="scan_loader_scanning">Escaneando…</string>
     <string name="scan_loader_preparing">Preparando el documento</string>
+    <string name="auto_capture_label">Auto</string>
+    <string name="auto_capture_cd">Captura automática</string>
+    <string name="auto_capture_on">Captura automática activada</string>
+    <string name="auto_capture_off">Captura automática desactivada</string>
+    <string name="scan_hint_hold_still">No te muevas…</string>
+    <string name="scan_hint_auto_ready">Documento listo</string>
 </resources>

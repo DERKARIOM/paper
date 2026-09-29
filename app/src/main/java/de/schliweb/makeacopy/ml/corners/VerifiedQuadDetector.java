@@ -61,11 +61,23 @@ public final class VerifiedQuadDetector implements CornerDetector {
     public final Source source;
     public final double[] sideSupport;
 
-    Verified(double[][] quad, double confidence, Source source, double[] sideSupport) {
+    /**
+     * Share of the network's document mask outside the outline ({@link QuadScorer#maskSpill}); 0
+     * when the network is not used. High when several documents are in view.
+     */
+    public final double maskSpill;
+
+    Verified(
+        double[][] quad,
+        double confidence,
+        Source source,
+        double[] sideSupport,
+        double maskSpill) {
       this.quad = quad;
       this.confidence = confidence;
       this.source = source;
       this.sideSupport = sideSupport;
+      this.maskSpill = maskSpill;
     }
   }
 
@@ -182,7 +194,8 @@ public final class VerifiedQuadDetector implements CornerDetector {
     if (!QuadGeometry.isConvex(start)) return null;
     QuadRefiner.Result r = QuadRefiner.refine(img, start, radius, 2);
     double conf = QuadScorer.confidence(r, img.width, img.height, mask);
-    return new Verified(QuadGeometry.orderClockwise(r.quad), conf, source, r.sideSupport);
+    double spill = mask != null ? QuadScorer.maskSpill(r.quad, mask) : 0.0;
+    return new Verified(QuadGeometry.orderClockwise(r.quad), conf, source, r.sideSupport, spill);
   }
 
   /** Contour hypotheses, searched on a downscaled copy when {@code contourMaxEdge} requires it. */

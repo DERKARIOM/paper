@@ -487,4 +487,10 @@
     <string name="scan_loader_capturing">جارٍ الالتقاط…</string>
     <string name="scan_loader_scanning">جارٍ المسح…</string>
     <string name="scan_loader_preparing">جارٍ تجهيز المستند</string>
+    <string name="auto_capture_label">تلقائي</string>
+    <string name="auto_capture_cd">الالتقاط التلقائي</string>
+    <string name="auto_capture_on">تم تفعيل الالتقاط التلقائي</string>
+    <string name="auto_capture_off">تم إيقاف الالتقاط التلقائي</string>
+    <string name="scan_hint_hold_still">لا تتحرك…</string>
+    <string name="scan_hint_auto_ready">المستند جاهز</string>
 </resources>

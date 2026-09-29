@@ -493,4 +493,10 @@
     <string name="scan_loader_capturing">در حال ثبت…</string>
     <string name="scan_loader_scanning">در حال اسکن…</string>
     <string name="scan_loader_preparing">در حال آماده‌سازی سند</string>
+    <string name="auto_capture_label">خودکار</string>
+    <string name="auto_capture_cd">عکس‌برداری خودکار</string>
+    <string name="auto_capture_on">عکس‌برداری خودکار فعال شد</string>
+    <string name="auto_capture_off">عکس‌برداری خودکار غیرفعال شد</string>
+    <string name="scan_hint_hold_still">حرکت نکنید…</string>
+    <string name="scan_hint_auto_ready">سند آماده است</string>
 </resources>

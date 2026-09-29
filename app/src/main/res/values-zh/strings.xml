@@ -479,4 +479,10 @@
     <string name="scan_loader_capturing">正在拍摄…</string>
     <string name="scan_loader_scanning">正在扫描…</string>
     <string name="scan_loader_preparing">正在准备文档</string>
+    <string name="auto_capture_label">自动</string>
+    <string name="auto_capture_cd">自动拍摄</string>
+    <string name="auto_capture_on">已开启自动拍摄</string>
+    <string name="auto_capture_off">已关闭自动拍摄</string>
+    <string name="scan_hint_hold_still">请保持稳定…</string>
+    <string name="scan_hint_auto_ready">文档已就绪</string>
 </resources>

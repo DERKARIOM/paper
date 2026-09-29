@@ -504,4 +504,10 @@
     <string name="scan_loader_capturing">Se capturează…</string>
     <string name="scan_loader_scanning">Se scanează…</string>
     <string name="scan_loader_preparing">Se pregătește documentul</string>
+    <string name="auto_capture_label">Auto</string>
+    <string name="auto_capture_cd">Captură automată</string>
+    <string name="auto_capture_on">Captură automată activată</string>
+    <string name="auto_capture_off">Captură automată dezactivată</string>
+    <string name="scan_hint_hold_still">Nu mișcați…</string>
+    <string name="scan_hint_auto_ready">Document pregătit</string>
 </resources>

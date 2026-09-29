@@ -493,4 +493,10 @@
     <string name="scan_loader_capturing">Tar bilde…</string>
     <string name="scan_loader_scanning">Skanner…</string>
     <string name="scan_loader_preparing">Klargjør dokumentet</string>
+    <string name="auto_capture_label">Auto</string>
+    <string name="auto_capture_cd">Automatisk opptak</string>
+    <string name="auto_capture_on">Automatisk opptak på</string>
+    <string name="auto_capture_off">Automatisk opptak av</string>
+    <string name="scan_hint_hold_still">Hold stille…</string>
+    <string name="scan_hint_auto_ready">Dokumentet er klart</string>
 </resources>

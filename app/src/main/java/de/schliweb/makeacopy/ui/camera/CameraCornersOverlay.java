@@ -28,7 +28,15 @@ public class CameraCornersOverlay extends View {
   private final Paint modelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
   private final Paint cornerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
   private final Paint cornerRingPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+  private final Paint progressPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
   private final Path path = new Path();
+  private final Path progressPath = new Path();
+  private final PathMeasure pathMeasure = new PathMeasure();
+
+  // Automatic capture: stability progress drawn along the outline (white trace from the top-left
+  // corner, clockwise), < 0 = hidden.
+  private float autoProgressTarget = -1f;
+  private float autoProgress = -1f;
 
   // Live outline animation: the detector updates ~5–8 times per second; between updates the drawn
   // outline glides to the new target (time constant CORNER_TAU_MS) and fades in/out, so the frame
@@ -96,6 +104,11 @@ public class CameraCornersOverlay extends View {
     cornerRingPaint.setStrokeWidth(dp(2));
     cornerRingPaint.setColor(Color.WHITE);
 
+    progressPaint.setStyle(Paint.Style.STROKE);
+    progressPaint.setStrokeWidth(dp(4));
+    progressPaint.setStrokeCap(Paint.Cap.ROUND);
+    progressPaint.setColor(Color.WHITE);
+
     textPaint.setStyle(Paint.Style.FILL);
     textPaint.setColor(Color.WHITE);
     textPaint.setTextSize(dp(14));
@@ -162,6 +175,20 @@ public class CameraCornersOverlay extends View {
     postInvalidateOnAnimation();
   }
 
+  /**
+   * Automatic capture feedback: stability progress 0..1 traced along the outline, or a negative
+   * value to hide it.
+   */
+  public void setAutoProgress(float progress) {
+    float p = progress < 0 ? -1f : Math.min(1f, progress);
+    if (p == autoProgressTarget) return;
+    autoProgressTarget = p;
+    if (p < 0) autoProgress = -1f;
+    else if (autoProgress < 0) autoProgress = 0f;
+    lastFrameNanos = 0L;
+    postInvalidateOnAnimation();
+  }
+
   /** Returns a copy of the outline currently shown (target corners), or {@code null}. */
   @Nullable
   public PointF[] getCorners() {
@@ -220,6 +247,13 @@ public class CameraCornersOverlay extends View {
       }
     }
     if (alpha <= 0f && target == null) corners = null;
+    if (autoProgressTarget >= 0 && autoProgress >= 0) {
+      // smooth, never faster than the real progress
+      float kp = 1f - (float) Math.exp(-dtMs / 90f);
+      autoProgress += (autoProgressTarget - autoProgress) * kp;
+      if (Math.abs(autoProgressTarget - autoProgress) < 0.005f) autoProgress = autoProgressTarget;
+      else moving = true;
+    }
     return moving;
   }
 
@@ -276,6 +310,13 @@ public class CameraCornersOverlay extends View {
       cornerRingPaint.setAlpha(a);
       canvas.drawPath(path, shadowPaint);
       canvas.drawPath(path, linePaint);
+      if (autoProgress > 0f) {
+        pathMeasure.setPath(path, true);
+        progressPath.reset();
+        pathMeasure.getSegment(0f, pathMeasure.getLength() * autoProgress, progressPath, true);
+        progressPaint.setAlpha(Math.round(230 * alpha));
+        canvas.drawPath(progressPath, progressPaint);
+      }
       float r = dp(5);
       for (PointF c : corners) {
         canvas.drawCircle(c.x, c.y, r, cornerPaint);

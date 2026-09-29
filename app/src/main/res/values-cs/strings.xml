@@ -496,4 +496,10 @@
     <string name="scan_loader_capturing">Snímání…</string>
     <string name="scan_loader_scanning">Skenování…</string>
     <string name="scan_loader_preparing">Příprava dokumentu</string>
+    <string name="auto_capture_label">Auto</string>
+    <string name="auto_capture_cd">Automatické snímání</string>
+    <string name="auto_capture_on">Automatické snímání zapnuto</string>
+    <string name="auto_capture_off">Automatické snímání vypnuto</string>
+    <string name="scan_hint_hold_still">Nehýbejte se…</string>
+    <string name="scan_hint_auto_ready">Dokument připraven</string>
 </resources>

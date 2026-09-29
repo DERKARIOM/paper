@@ -26,7 +26,8 @@ import androidx.annotation.Nullable;
  * <p>The combination and the thresholds were calibrated on a synthetic benchmark (19 lighting /
  * surface / document conditions, scenes without any document, partly visible pages): documents
  * correctly outlined score ≥ 0.5 (median ≈ 0.9), empty scenes ≤ 0.45 except plain rectangular
- * cards; SHOW / KEEP were chosen on that benchmark (no correct outline lost). It is not a probability and is never shown to the user as a percentage.
+ * cards; SHOW / KEEP were chosen on that benchmark (no correct outline lost). It is not a
+ * probability and is never shown to the user as a percentage.
  */
 public final class QuadScorer {
   /** A new outline is shown from this confidence on. */
@@ -70,6 +71,27 @@ public final class QuadScorer {
     }
     double border = QuadGeometry.borderFraction(r.quad, imgW, imgH, 3.0);
     return QuadGeometry.clamp01(geom * evidence * (1.0 - 0.8 * border));
+  }
+
+  /**
+   * Fraction of the network's document mask (&gt; 0.5) lying outside the quad: ≈ 0 for a single
+   * page, ≈ 0.45 when two documents are in view (the mask covers both). 1 when the mask is empty.
+   */
+  public static double maskSpill(double[][] quadImg, ModelMask m) {
+    double[][] q64 = new double[4][2];
+    for (int i = 0; i < 4; i++) {
+      q64[i][0] = (quadImg[i][0] * m.scale + m.offsetX) / 4.0;
+      q64[i][1] = (quadImg[i][1] * m.scale + m.offsetY) / 4.0;
+    }
+    int inMask = 0, outside = 0;
+    for (int y = 0; y < 64; y++) {
+      for (int x = 0; x < 64; x++) {
+        if (m.prob[y * 64 + x] <= 0.5f) continue;
+        inMask++;
+        if (!QuadGeometry.contains(q64, x + 0.5, y + 0.5)) outside++;
+      }
+    }
+    return inMask == 0 ? 1.0 : outside / (double) inMask;
   }
 
   /** IoU between the quad and the model mask (> 0.5), evaluated on the 64×64 grid cell centers. */

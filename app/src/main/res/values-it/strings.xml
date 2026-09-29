@@ -502,4 +502,10 @@
     <string name="scan_loader_capturing">Acquisizione…</string>
     <string name="scan_loader_scanning">Scansione…</string>
     <string name="scan_loader_preparing">Preparazione del documento</string>
+    <string name="auto_capture_label">Auto</string>
+    <string name="auto_capture_cd">Acquisizione automatica</string>
+    <string name="auto_capture_on">Acquisizione automatica attivata</string>
+    <string name="auto_capture_off">Acquisizione automatica disattivata</string>
+    <string name="scan_hint_hold_still">Non muoverti…</string>
+    <string name="scan_hint_auto_ready">Documento pronto</string>
 </resources>

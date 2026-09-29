@@ -499,4 +499,10 @@
     <string name="scan_loader_capturing">Capture…</string>
     <string name="scan_loader_scanning">Numérisation…</string>
     <string name="scan_loader_preparing">Préparation du document</string>
+    <string name="auto_capture_label">Auto</string>
+    <string name="auto_capture_cd">Capture automatique</string>
+    <string name="auto_capture_on">Capture automatique activée</string>
+    <string name="auto_capture_off">Capture automatique désactivée</string>
+    <string name="scan_hint_hold_still">Ne bougez plus…</string>
+    <string name="scan_hint_auto_ready">Document prêt</string>
 </resources>
