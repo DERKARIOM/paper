@@ -22,7 +22,8 @@ import androidx.annotation.Nullable;
  *       larger movements are followed with a gain that grows with the movement and reaches 1
  *       (immediate) from 2% of the diagonal, so moving the phone is followed without delay.
  *   <li><b>Outliers</b>: a jump larger than 8% of the diagonal (another object, a mislabeled
- *       corner) is ignored unless the next frame confirms it; then the outline snaps to the new position.
+ *       corner) is ignored unless the next frame confirms it; then the outline snaps to the new
+ *       position.
  *   <li><b>Loss</b>: when the document is momentarily not found (motion blur, glare), the last
  *       reliable outline is kept for {@link #HOLD_MS} ({@link State#HOLDING}), then dropped. The
  *       overlay fades it out, so the frame does not blink.

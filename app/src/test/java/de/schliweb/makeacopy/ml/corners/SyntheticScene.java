@@ -40,8 +40,8 @@ final class SyntheticScene {
   }
 
   /**
-   * @param printedFrame when &gt; 0, a dark printed frame (2% wide) is drawn at this fraction inside
-   *     the page border (bordered flyers, forms)
+   * @param printedFrame when &gt; 0, a dark printed frame (2% wide) is drawn at this fraction
+   *     inside the page border (bordered flyers, forms)
    */
   static SyntheticScene render(
       int w,

@@ -91,9 +91,9 @@ public final class VerifiedQuadDetector implements CornerDetector {
     this.contourMaxEdge = contourMaxEdge;
   }
 
-  /** Live settings: contour hypotheses only when the network outline is weak, at half size. */
+  /** Live settings: contour hypotheses on a half-size copy (about 20 ms on a Galaxy S10). */
   public static VerifiedQuadDetector forLive(@Nullable DocQuadDetector docQuad) {
-    return new VerifiedQuadDetector(docQuad, 0.6, 360);
+    return new VerifiedQuadDetector(docQuad, QuadScorer.CONVINCING, 360);
   }
 
   /** Per-step durations of the last call, for diagnostics logs. */
