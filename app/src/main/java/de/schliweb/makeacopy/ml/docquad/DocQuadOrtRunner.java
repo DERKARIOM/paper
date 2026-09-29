@@ -106,7 +106,11 @@ public final class DocQuadOrtRunner implements AutoCloseable {
           Log.i(TAG, "NNAPI not available: " + t.getMessage());
         }
       } else {
-        Log.i(TAG, "NNAPI EP skipped (API " + android.os.Build.VERSION.SDK_INT + " < 30)");
+        Log.i(
+            TAG,
+            "NNAPI EP not used ("
+                + (USE_NNAPI ? "API " + android.os.Build.VERSION.SDK_INT + " < 30" : "disabled")
+                + ")");
       }
       try {
         opts.addXnnpack(Collections.emptyMap());

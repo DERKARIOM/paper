@@ -1302,6 +1302,7 @@ public class TrapezoidSelectionView extends View {
   private Point[] detectCornersWithBudget(
       Bitmap work, float scaleToOrig, int viewW, int viewH, long budgetMs) {
     long t0 = android.os.SystemClock.uptimeMillis();
+    lastVerifiedCropConfidence = -1;
     try {
       // Use the central policy factory (DocQuad with OpenCV fallback).
       // DocQuad is used only once per image until a new image is set.
@@ -1387,7 +1388,12 @@ public class TrapezoidSelectionView extends View {
       // entire content is the document). In that case the model/legacy detector
       // tends to return degenerate quads — fall back to using (almost) the full
       // image rectangle so the user gets a sensible default they can fine-tune.
+      // A verified outline (all four sides on real edges, not glued to the image border) is not a
+      // degenerate quad: keep it even on imported images.
+      boolean verifiedOutline =
+          lastVerifiedCropConfidence >= de.schliweb.makeacopy.ml.corners.QuadScorer.SHOW;
       if (preCroppedHint
+          && !verifiedOutline
           && refBmp != null
           && looksAlreadyCropped(imgCorners, refBmp.getWidth(), refBmp.getHeight())) {
         Log.i(
@@ -1418,6 +1424,9 @@ public class TrapezoidSelectionView extends View {
   /** Photo size used for the final, precise corner refinement (memory bound: ~2 MP). */
   private static final int PRECISE_REFINE_MAX_EDGE = 1600;
 
+  /** Confidence of the last verified crop detection, or -1 when the legacy path was used. */
+  private volatile double lastVerifiedCropConfidence = -1;
+
   /**
    * Initial crop corners: verified detection (DocQuad + contour hypotheses snapped onto the real
    * edges and scored) on the small work image, then a precise refinement on the photo itself. Falls
@@ -1425,6 +1434,7 @@ public class TrapezoidSelectionView extends View {
    */
   @Nullable
   private org.opencv.core.Point[] detectBestCropCorners(Bitmap work, float scaleToOrig) {
+    lastVerifiedCropConfidence = -1;
     de.schliweb.makeacopy.ml.corners.DocQuadDetector dq = null;
     try {
       dq = new de.schliweb.makeacopy.ml.corners.DocQuadDetector(docQuadOrtRunner);
@@ -1446,6 +1456,7 @@ public class TrapezoidSelectionView extends View {
         }
         org.opencv.core.Point[] out = new org.opencv.core.Point[4];
         for (int i = 0; i < 4; i++) out[i] = new org.opencv.core.Point(q[i][0], q[i][1]);
+        lastVerifiedCropConfidence = v.confidence;
         Log.i(
             TAG,
             String.format(
