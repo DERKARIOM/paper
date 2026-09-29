@@ -29,10 +29,10 @@ public class CornerTrackerTest {
   @Test
   public void aSingleMediumConfidenceFrameIsNotShown() {
     CornerTracker t = new CornerTracker();
-    CornerTracker.Output o = t.update(rect(100, 100, 300, 420), 0.6, 0, W, H);
+    CornerTracker.Output o = t.update(rect(100, 100, 300, 420), 0.65, 0, W, H);
     assertEquals(CornerTracker.State.NONE, o.state);
     assertNull(o.quad);
-    o = t.update(rect(101, 100, 300, 420), 0.6, FRAME, W, H);
+    o = t.update(rect(101, 100, 300, 420), 0.65, FRAME, W, H);
     assertEquals(CornerTracker.State.DETECTED, o.state);
     assertNotNull(o.quad);
   }
@@ -48,7 +48,7 @@ public class CornerTrackerTest {
   public void lowConfidenceNeverShowsAnOutline() {
     CornerTracker t = new CornerTracker();
     for (int i = 0; i < 10; i++) {
-      assertNull(t.update(rect(100, 100, 300, 420), 0.5, i * FRAME, W, H).quad);
+      assertNull(t.update(rect(100, 100, 300, 420), 0.55, i * FRAME, W, H).quad);
     }
   }
 
@@ -129,8 +129,8 @@ public class CornerTrackerTest {
     CornerTracker t = new CornerTracker();
     double[][] a = rect(100, 100, 300, 420);
     t.update(a, 0.9, 0, W, H);
-    // 0.45 would not show a new outline, but keeps a tracked one
-    CornerTracker.Output o = t.update(a, 0.45, FRAME, W, H);
+    // between KEEP and SHOW: would not show a new outline, but keeps a tracked one
+    CornerTracker.Output o = t.update(a, 0.55, FRAME, W, H);
     assertEquals(CornerTracker.State.DETECTED, o.state);
   }
 }

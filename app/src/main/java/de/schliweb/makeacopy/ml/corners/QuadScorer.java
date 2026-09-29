@@ -26,14 +26,18 @@ import androidx.annotation.Nullable;
  * <p>The combination and the thresholds were calibrated on a synthetic benchmark (19 lighting /
  * surface / document conditions, scenes without any document, partly visible pages): documents
  * correctly outlined score ≥ 0.5 (median ≈ 0.9), empty scenes ≤ 0.45 except plain rectangular
- * cards. It is not a probability and is never shown to the user as a percentage.
+ * cards; SHOW / KEEP were chosen on that benchmark (no correct outline lost). It is not a probability and is never shown to the user as a percentage.
  */
 public final class QuadScorer {
   /** A new outline is shown from this confidence on. */
-  public static final double SHOW = 0.55;
+  public static final double SHOW = 0.60;
 
-  /** An outline already shown is kept while the confidence stays above this (hysteresis). */
-  public static final double KEEP = 0.40;
+  /**
+   * An outline already shown is kept while the confidence stays above this (hysteresis). 0.5 keeps
+   * every correct outline of the benchmark but drops most outlines of partly visible pages (a page
+   * cut by the frame snapped to a printed band was kept at 0.49 on the device with 0.40).
+   */
+  public static final double KEEP = 0.50;
 
   /** Above this, the model-based candidate is trusted without trying the contour candidates. */
   public static final double CONVINCING = 0.75;
