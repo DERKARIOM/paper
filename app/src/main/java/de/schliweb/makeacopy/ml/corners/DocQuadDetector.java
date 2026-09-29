@@ -15,6 +15,7 @@ import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.os.SystemClock;
 import android.util.Log;
+import androidx.annotation.Nullable;
 import de.schliweb.makeacopy.BuildConfig;
 import de.schliweb.makeacopy.ml.docquad.DocQuadLetterbox;
 import de.schliweb.makeacopy.ml.docquad.DocQuadOrtRunner;
@@ -40,28 +41,56 @@ public final class DocQuadDetector implements CornerDetector {
     this.runner = runner;
   }
 
+  /** Detection result plus the network's document mask (used by the confidence scoring). */
+  public static final class Detailed {
+    public final DetectionResult result;
+
+    /** Document mask predicted by the network, or {@code null} when inference failed. */
+    @Nullable public final QuadScorer.ModelMask mask;
+
+    Detailed(DetectionResult result, @Nullable QuadScorer.ModelMask mask) {
+      this.result = result;
+      this.mask = mask;
+    }
+  }
+
   @Override
   public DetectionResult detect(Bitmap src, Context ctx) {
-    if (src == null || ctx == null) return DetectionResult.fail(Source.DOCQUAD);
+    return detectDetailed(src, ctx).result;
+  }
 
-    Bitmap in256 = null;
+  // Reused across calls: the live analysis runs this several times per second on one thread, so
+  // a 256x256 bitmap, a 64k int array and a 196k float array are no longer allocated per frame.
+  private Bitmap reuse256;
+  private int[] reusePixels;
+  private float[] reuseInput;
+
+  /** Like {@link #detect}, and also returns the document mask predicted by the network. */
+  public synchronized Detailed detectDetailed(Bitmap src, Context ctx) {
+    if (src == null || ctx == null) return new Detailed(DetectionResult.fail(Source.DOCQUAD), null);
+    QuadScorer.ModelMask mask = null;
     try {
       int srcW = src.getWidth();
       int srcH = src.getHeight();
-      if (srcW <= 0 || srcH <= 0) return DetectionResult.fail(Source.DOCQUAD);
+      if (srcW <= 0 || srcH <= 0) return new Detailed(DetectionResult.fail(Source.DOCQUAD), null);
 
       DocQuadLetterbox lb =
           DocQuadLetterbox.create(srcW, srcH, DocQuadOrtRunner.IN_W, DocQuadOrtRunner.IN_H);
-      in256 = renderLetterbox256(src, lb);
-      float[] input = bitmapToNchwFloat01(in256);
+      reuse256 = renderLetterbox256(src, lb, reuse256);
+      if (reusePixels == null) {
+        reusePixels = new int[DocQuadOrtRunner.IN_W * DocQuadOrtRunner.IN_H];
+        reuseInput = new float[3 * reusePixels.length];
+      }
+      float[] input = bitmapToNchwFloat01(reuse256, reusePixels, reuseInput);
 
       DocQuadOrtRunner.Outputs outputs = runner.run(input);
+      mask = toModelMask(outputs, lb);
 
       DocQuadPostprocessor.PeakMode peakMode = DocQuadPostprocessor.PeakMode.REFINE_5X5_QUADRATIC;
 
       DocQuadPostprocessor.Result r = DocQuadPostprocessor.postprocess(outputs, lb, peakMode);
       if (r == null || r.chosenQuadOriginal() == null || r.chosenQuadOriginal().length != 4)
-        return DetectionResult.fail(Source.DOCQUAD);
+        return new Detailed(DetectionResult.fail(Source.DOCQUAD), mask);
 
       if (BuildConfig.FEATURE_FRAMING_LOGGING) {
         long now = SystemClock.uptimeMillis();
@@ -97,36 +126,49 @@ public final class DocQuadDetector implements CornerDetector {
       */
 
       if (!isValidQuad(r.chosenQuadOriginal(), srcW, srcH))
-        return DetectionResult.fail(Source.DOCQUAD);
+        return new Detailed(DetectionResult.fail(Source.DOCQUAD), mask);
 
-      return DetectionResult.successDebug(
-          Source.DOCQUAD,
-          r.chosenQuadOriginal(),
-          String.valueOf(r.chosenSource()),
-          r.penaltyMask(),
-          r.penaltyCorners());
+      return new Detailed(
+          DetectionResult.successDebug(
+              Source.DOCQUAD,
+              r.chosenQuadOriginal(),
+              String.valueOf(r.chosenSource()),
+              r.penaltyMask(),
+              r.penaltyCorners()),
+          mask);
     } catch (Throwable t) {
-      return DetectionResult.fail(Source.DOCQUAD);
-    } finally {
-      // Live analysis can call this repeatedly; avoid accumulating Bitmap native memory.
-      try {
-        if (in256 != null && !in256.isRecycled()) in256.recycle();
-      } catch (Throwable ignore) {
-        // Best-effort; failure is non-critical
-      }
+      return new Detailed(DetectionResult.fail(Source.DOCQUAD), mask);
     }
   }
 
+  /** Releases the reusable input bitmap (native memory). */
+  public synchronized void release() {
+    if (reuse256 != null && !reuse256.isRecycled()) reuse256.recycle();
+    reuse256 = null;
+    reusePixels = null;
+    reuseInput = null;
+  }
+
+  private static QuadScorer.ModelMask toModelMask(
+      DocQuadOrtRunner.Outputs outputs, DocQuadLetterbox lb) {
+    float[][] logits = outputs.maskLogits()[0][0];
+    float[] prob = new float[64 * 64];
+    for (int y = 0; y < 64; y++) {
+      for (int x = 0; x < 64; x++) {
+        prob[y * 64 + x] = (float) (1.0 / (1.0 + Math.exp(-logits[y][x])));
+      }
+    }
+    return new QuadScorer.ModelMask(prob, lb.scale, lb.offsetX, lb.offsetY);
+  }
+
   /** Preprocess exakt wie Training: RGB, 0..1, NCHW float32. */
-  private static float[] bitmapToNchwFloat01(Bitmap bmp) {
+  private static float[] bitmapToNchwFloat01(Bitmap bmp, int[] px, float[] out) {
     int w = bmp.getWidth();
     int h = bmp.getHeight();
     if (w != DocQuadOrtRunner.IN_W || h != DocQuadOrtRunner.IN_H) {
       throw new IllegalArgumentException("bitmap must be 256x256");
     }
     int hw = h * w;
-    float[] out = new float[3 * hw];
-    int[] px = new int[hw];
     bmp.getPixels(px, 0, w, 0, 0, w, h);
     for (int y = 0; y < h; y++) {
       for (int x = 0; x < w; x++) {
@@ -149,9 +191,12 @@ public final class DocQuadDetector implements CornerDetector {
   // [0..1] float space the model consumes.
   private static final int LETTERBOX_PAD_COLOR = 0xFF808080;
 
-  private static Bitmap renderLetterbox256(Bitmap src, DocQuadLetterbox lb) {
+  private static Bitmap renderLetterbox256(Bitmap src, DocQuadLetterbox lb, Bitmap reuse) {
     Bitmap out =
-        Bitmap.createBitmap(DocQuadOrtRunner.IN_W, DocQuadOrtRunner.IN_H, Bitmap.Config.ARGB_8888);
+        (reuse != null && !reuse.isRecycled())
+            ? reuse
+            : Bitmap.createBitmap(
+                DocQuadOrtRunner.IN_W, DocQuadOrtRunner.IN_H, Bitmap.Config.ARGB_8888);
     Canvas canvas = new Canvas(out);
     canvas.drawColor(LETTERBOX_PAD_COLOR);
 

@@ -125,10 +125,17 @@ public class CameraFragment extends Fragment implements SensorEventListener {
   private static final float TAP_TO_FOCUS_AF_POINT_SIZE = 0.07f;
   private static final float TAP_TO_FOCUS_AE_POINT_SIZE = 0.25f;
 
-  // Live corner detection: cache detector instance to make DocQuad caching/throttle effective.
+  // Live document detection: hypotheses (DocQuad network, OpenCV contours) snapped onto the real
+  // edges and scored, then stabilized over time. Created on the analyzer thread on first use.
   // Important: we must NOT instantiate any DocQuad/ORT objects when the prod flag is OFF.
-  private volatile de.schliweb.makeacopy.ml.corners.CornerDetector cachedLiveCornerDetector = null;
-  private volatile boolean cachedLiveCornerDetectorFlag = false;
+  @Nullable private de.schliweb.makeacopy.ml.corners.DocQuadDetector liveDocQuad = null;
+  @Nullable private de.schliweb.makeacopy.ml.corners.VerifiedQuadDetector liveQuadDetector = null;
+  private final de.schliweb.makeacopy.ml.corners.CornerTracker liveCornerTracker =
+      new de.schliweb.makeacopy.ml.corners.CornerTracker();
+  // Analysis pacing: at most every MIN ms, and never more often than 1.25x the last detection
+  // time (bounded CPU/battery on slow devices, ~6-8 Hz on fast ones).
+  private static final long ANALYSIS_MIN_INTERVAL_MS = 110L;
+  private static final long ANALYSIS_MAX_INTERVAL_MS = 320L;
 
   // Live-analysis allocation guardrails (avoid per-frame large allocations on analyzer thread)
   // ThreadLocal because CameraX analyzer runs on a dedicated background thread.
@@ -163,12 +170,6 @@ public class CameraFragment extends Fragment implements SensorEventListener {
   // Light sensor constants
   private static final float LOW_LIGHT_THRESHOLD = 10.0f; // lux
   private static final long MIN_TIME_BETWEEN_PROMPTS = 60000; // ms
-  // Tuning: minimum number of valid frames before overlay appears; tolerated gap before hiding
-  // again
-  private static final int OVERLAY_SHOW_AFTER_VALID = 2; // at least 2 consecutive valid frames
-  private static final int OVERLAY_HIDE_AFTER_INVALID =
-      3; // hide only after 3 consecutive invalid frames
-  private static final float CORNER_EMA_ALPHA = 0.25f; // higher = more reactive (0..1)
   private static final double SCORE_EMA_ALPHA = 0.25; // same as above, for score
   // Threshold for the live score below which an explicit "No document detected" hint is announced
   // (A11y).
@@ -227,9 +228,7 @@ public class CameraFragment extends Fragment implements SensorEventListener {
   /** READY → CAPTURING → PROCESSING → COMPLETED (or ERROR → READY) for the shutter button. */
   private final CaptureStateMachine captureState = new CaptureStateMachine();
   private long lastA11yVolumeHintTs = 0L;
-  // Overlay stabilization (jitter reduction)
-  // Exponential smoothing for corners + score and hysteresis for visibility
-  private android.graphics.PointF[] lastFilteredCorners = null; // in view coordinates
+  // Framing score smoothing (accessibility stability logic)
   private double lastScoreEma = -1.0; // <0 means: uninitialized
   private int consecutiveValidFrames = 0;
   private int consecutiveInvalidFrames = 0;
@@ -2443,6 +2442,10 @@ public class CameraFragment extends Fragment implements SensorEventListener {
    * camera UI is gone.
    */
   private void releaseLiveAnalysisResources() {
+    liveCornerTracker.reset();
+    if (liveDocQuad != null) liveDocQuad.release();
+    liveDocQuad = null;
+    liveQuadDetector = null;
     Bitmap a = uprightBitmapPoolA.get();
     if (a != null && !a.isRecycled()) a.recycle();
     uprightBitmapPoolA.remove();
@@ -3292,7 +3295,11 @@ public class CameraFragment extends Fragment implements SensorEventListener {
       // Orientation for this frame processing: initial defaults, set if available later
       int orientBucketLocal = -1; // 0 or 90
       double orientConfLocal = -1.0;
-      if (now - lastAnalysisTs < 180) return; // ~5–6 FPS
+      long lastMs = liveQuadDetector != null ? liveQuadDetector.lastDurationMs() : 0L;
+      long interval =
+          Math.max(
+              ANALYSIS_MIN_INTERVAL_MS, Math.min(ANALYSIS_MAX_INTERVAL_MS, (lastMs * 5) / 4));
+      if (now - lastAnalysisTs < interval) return;
       lastAnalysisTs = now;
 
       // Convert to small upright bitmap (to reduce CPU)
@@ -3340,46 +3347,45 @@ public class CameraFragment extends Fragment implements SensorEventListener {
       // the sharpness measurement then simply uses the full frame as ROI.
       org.opencv.core.Point[] detectedPts = null;
       boolean detectedValid = false;
+      de.schliweb.makeacopy.ml.corners.VerifiedQuadDetector.Verified verified = null;
       if (wantCorners) {
-        de.schliweb.makeacopy.ml.corners.CornerDetector liveDetector = cachedLiveCornerDetector;
-        if (liveDetector == null || !cachedLiveCornerDetectorFlag) {
-          liveDetector =
-              de.schliweb.makeacopy.ml.corners.CornerDetectorFactory.forLive(
-                  requireContext(), docQuadOrtRunner);
-          cachedLiveCornerDetector = liveDetector;
-          cachedLiveCornerDetectorFlag = true;
+        if (liveQuadDetector == null) {
+          if (BuildConfig.FEATURE_DOCQUAD_CORNERS) {
+            liveDocQuad = new de.schliweb.makeacopy.ml.corners.DocQuadDetector(docQuadOrtRunner);
+          }
+          liveQuadDetector = new de.schliweb.makeacopy.ml.corners.VerifiedQuadDetector(liveDocQuad);
         }
-
-        de.schliweb.makeacopy.ml.corners.DetectionResult r =
-            liveDetector.detect(bmp, requireContext());
-        // A FALLBACK result is the default rectangle used when nothing was found: it must not be
-        // shown (nor reported) as a detected document.
-        if (r != null
-            && r.success
-            && r.source != de.schliweb.makeacopy.ml.corners.Source.FALLBACK
-            && r.cornersOriginalTLTRBRBL != null
-            && r.cornersOriginalTLTRBRBL.length == 4) {
+        verified = liveQuadDetector.detectVerified(bmp, requireContext());
+        if (verified != null
+            && verified.confidence >= de.schliweb.makeacopy.ml.corners.QuadScorer.KEEP) {
           detectedPts = new org.opencv.core.Point[4];
           for (int i = 0; i < 4; i++) {
-            detectedPts[i] =
-                new org.opencv.core.Point(
-                    r.cornersOriginalTLTRBRBL[i][0], r.cornersOriginalTLTRBRBL[i][1]);
+            detectedPts[i] = new org.opencv.core.Point(verified.quad[i][0], verified.quad[i][1]);
           }
           detectedValid = true;
+        }
+        if (BuildConfig.DEBUG) {
+          Log.d(
+              TAG,
+              "[CORNERS] conf="
+                  + (verified != null
+                      ? String.format(Locale.US, "%.2f", verified.confidence)
+                      : "-")
+                  + " src="
+                  + (verified != null ? verified.source : "-")
+                  + " ms="
+                  + liveQuadDetector.lastDurationMs());
         }
       }
       final org.opencv.core.Point[] pts = detectedPts;
       final boolean hasValid = detectedValid;
-      // Live-DocQuad liefert aktuell keinen Score (Determinismus/Performance).
 
-      // Map bitmap coords to overlay coords (PreviewView with FIT_CENTER) when valid.
+      // Map bitmap coords to overlay coords (PreviewView with FIT_CENTER).
       // The detection bitmap is built from the FULL analysis buffer, but the PreviewView (sharing
       // a common ViewPort with Preview/Capture) only displays the cropped field of view. Compute
       // that crop region in upright-bitmap space so the overlay lines up with what is shown.
       final android.graphics.RectF analysisCropUpright =
           computeUprightCropRect(image, OpenCVUtils.DETECTION_MAX_EDGE, bmpW, bmpH);
-      android.graphics.PointF[] viewPts =
-          hasValid ? mapToOverlayPoints(pts, bmpW, bmpH, analysisCropUpright) : null;
 
       // Live focus-quality (sharpness) measurement — user-toggleable in the camera options.
       // Reuses this already throttled analysis pass and the small upright bitmap: no extra
@@ -3515,30 +3521,32 @@ public class CameraFragment extends Fragment implements SensorEventListener {
       // Removed: direct one‑shot announcement for orientation. Orientation now flows into the
       // central guidance path (see above), including hysteresis/rate limiting.
 
-      // --- Jitter reduction & hysteresis for the corner preview ---
-      if (hasValid && viewPts != null) {
+      // --- Temporal stabilization of the outline (dead zone, outlier rejection, short hold) ---
+      de.schliweb.makeacopy.ml.corners.CornerTracker.Output tracked =
+          liveCornerTracker.update(
+              verified != null ? verified.quad : null,
+              verified != null ? verified.confidence : 0.0,
+              now,
+              bmpW,
+              bmpH);
+      android.graphics.PointF[] trackedViewPts = null;
+      if (tracked.quad != null) {
+        org.opencv.core.Point[] tq = new org.opencv.core.Point[4];
+        for (int i = 0; i < 4; i++) {
+          tq[i] = new org.opencv.core.Point(tracked.quad[i][0], tracked.quad[i][1]);
+        }
+        trackedViewPts = mapToOverlayPoints(tq, bmpW, bmpH, analysisCropUpright);
+      }
+      final boolean trackedHolding =
+          tracked.state == de.schliweb.makeacopy.ml.corners.CornerTracker.State.HOLDING;
+      if (tracked.state == de.schliweb.makeacopy.ml.corners.CornerTracker.State.DETECTED) {
         consecutiveValidFrames++;
         consecutiveInvalidFrames = 0;
-        // Init filter
-        if (lastFilteredCorners == null) {
-          lastFilteredCorners = new android.graphics.PointF[4];
-          for (int i = 0; i < 4; i++)
-            lastFilteredCorners[i] = new android.graphics.PointF(viewPts[i].x, viewPts[i].y);
-        } else {
-          // Apply EMA to each coordinate
-          for (int i = 0; i < 4; i++) {
-            float fx = lastFilteredCorners[i].x;
-            float fy = lastFilteredCorners[i].y;
-            float nx = CORNER_EMA_ALPHA * viewPts[i].x + (1f - CORNER_EMA_ALPHA) * fx;
-            float ny = CORNER_EMA_ALPHA * viewPts[i].y + (1f - CORNER_EMA_ALPHA) * fy;
-            lastFilteredCorners[i].x = nx;
-            lastFilteredCorners[i].y = ny;
-          }
-        }
       } else {
         consecutiveInvalidFrames++;
         consecutiveValidFrames = 0;
       }
+      final android.graphics.PointF[] outlineForUi = trackedViewPts;
 
       // Compute score EMA only when a value exists
       // Use FramingEngine quality (0..1) instead of det.score() which is always 0.0 for DocQuad
@@ -3557,22 +3565,11 @@ public class CameraFragment extends Fragment implements SensorEventListener {
           () -> {
             if (binding == null) return;
 
-            // Show visible corner preview only when the user enabled visual analysis
+            // Show the stabilized outline only when the user enabled visual analysis; a missing
+            // or unreliable detection shows no outline (no false frame).
             if (analysisEnabled) {
-              boolean shouldShow =
-                  (consecutiveValidFrames >= OVERLAY_SHOW_AFTER_VALID)
-                      || binding.cornerOverlay.getVisibility() == View.VISIBLE;
-              if (hasValid && lastFilteredCorners != null && shouldShow) {
-                binding.cornerOverlay.setCorners(lastFilteredCorners);
-              } else {
-                // Only hide after enough consecutive invalid frames
-                if (consecutiveInvalidFrames >= OVERLAY_HIDE_AFTER_INVALID) {
-                  binding.cornerOverlay.setCorners(null);
-                  lastFilteredCorners = null;
-                }
-              }
+              binding.cornerOverlay.setOutline(outlineForUi, trackedHolding);
             } else {
-              // Visual analysis off → do not draw corners
               binding.cornerOverlay.setCorners(null);
             }
             // Framing guide + hint follow the outline actually shown to the user.

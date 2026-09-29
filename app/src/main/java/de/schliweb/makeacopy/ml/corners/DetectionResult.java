@@ -24,23 +24,31 @@ public final class DetectionResult {
   @Nullable public final Double penaltyMask;
   @Nullable public final Double penaltyCorners;
 
+  /**
+   * Confidence (0..1) from {@link QuadScorer} when the result was verified, else {@code null}. Not
+   * a calibrated probability: compare it with {@link QuadScorer#SHOW} / {@link QuadScorer#KEEP}.
+   */
+  @Nullable public final Double confidence;
+
   private DetectionResult(
       boolean success,
       Source source,
       @Nullable double[][] cornersOriginalTLTRBRBL,
       @Nullable String chosenSource,
       @Nullable Double penaltyMask,
-      @Nullable Double penaltyCorners) {
+      @Nullable Double penaltyCorners,
+      @Nullable Double confidence) {
     this.success = success;
     this.source = source;
     this.cornersOriginalTLTRBRBL = cornersOriginalTLTRBRBL;
     this.chosenSource = chosenSource;
     this.penaltyMask = penaltyMask;
     this.penaltyCorners = penaltyCorners;
+    this.confidence = confidence;
   }
 
   public static DetectionResult success(Source source, double[][] cornersOriginalTLTRBRBL) {
-    return new DetectionResult(true, source, cornersOriginalTLTRBRBL, null, null, null);
+    return new DetectionResult(true, source, cornersOriginalTLTRBRBL, null, null, null, null);
   }
 
   public static DetectionResult successDebug(
@@ -50,10 +58,17 @@ public final class DetectionResult {
       @Nullable Double penaltyMask,
       @Nullable Double penaltyCorners) {
     return new DetectionResult(
-        true, source, cornersOriginalTLTRBRBL, chosenSource, penaltyMask, penaltyCorners);
+        true, source, cornersOriginalTLTRBRBL, chosenSource, penaltyMask, penaltyCorners, null);
+  }
+
+  /** Verified outline with its {@link QuadScorer} confidence. */
+  public static DetectionResult successScored(
+      Source source, double[][] cornersOriginalTLTRBRBL, double confidence) {
+    return new DetectionResult(
+        true, source, cornersOriginalTLTRBRBL, null, null, null, confidence);
   }
 
   public static DetectionResult fail(Source source) {
-    return new DetectionResult(false, source, null, null, null, null);
+    return new DetectionResult(false, source, null, null, null, null, null);
   }
 }

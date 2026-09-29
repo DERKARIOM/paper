@@ -26,9 +26,23 @@ public class CameraCornersOverlay extends View {
   private final Paint shadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
   private final Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
   private final Paint modelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+  private final Paint cornerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+  private final Paint cornerRingPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
   private final Path path = new Path();
 
-  @Nullable private PointF[] corners; // 4 points in view coords
+  // Live outline animation: the detector updates ~5–8 times per second; between updates the drawn
+  // outline glides to the new target (time constant CORNER_TAU_MS) and fades in/out, so the frame
+  // neither jumps nor blinks.
+  private static final float CORNER_TAU_MS = 55f;
+  private static final float ALPHA_TAU_MS = 80f;
+  private static final float HOLD_ALPHA = 0.55f;
+
+  @Nullable private PointF[] corners; // drawn outline (animated), view coords
+  @Nullable private PointF[] target; // latest outline requested, view coords
+  private float alpha = 0f;
+  private float targetAlpha = 0f;
+  private long lastFrameNanos = 0L;
+  private int baseShadowAlpha = 48;
   @Nullable private Double score; // optional: live detection score (0..1)
   @Nullable private RectF modelRect; // optional: model rect in view coords
   @Nullable private CharSequence debugText; // optional: metrics text
@@ -73,7 +87,14 @@ public class CameraCornersOverlay extends View {
 
     shadowPaint.setStyle(Paint.Style.FILL);
     shadowPaint.setColor(
-        Color.argb(48, Color.red(accent), Color.green(accent), Color.blue(accent)));
+        Color.argb(baseShadowAlpha, Color.red(accent), Color.green(accent), Color.blue(accent)));
+
+    // The four corners are marked explicitly (filled accent dot with a white ring).
+    cornerPaint.setStyle(Paint.Style.FILL);
+    cornerPaint.setColor(accent);
+    cornerRingPaint.setStyle(Paint.Style.STROKE);
+    cornerRingPaint.setStrokeWidth(dp(2));
+    cornerRingPaint.setColor(Color.WHITE);
 
     textPaint.setStyle(Paint.Style.FILL);
     textPaint.setColor(Color.WHITE);
@@ -115,21 +136,91 @@ public class CameraCornersOverlay extends View {
    *     the corners will be set to null. Each point represents a corner's coordinates in 2D space.
    */
   public void setCorners(@Nullable PointF[] pts) {
-    if (pts == null || pts.length != 4) {
-      this.corners = null;
-    } else {
-      this.corners = sortByAngle(pts);
-    }
-    invalidate();
+    setOutline(pts, false);
   }
 
-  /** Returns a copy of the outline currently drawn (sorted corners), or {@code null}. */
+  /**
+   * Sets the live document outline. {@code null} fades the current outline out; {@code holding}
+   * (detection temporarily lost, last reliable outline kept) draws it dimmed. The drawn outline is
+   * animated toward the new corners.
+   */
+  public void setOutline(@Nullable PointF[] pts, boolean holding) {
+    if (pts == null || pts.length != 4) {
+      target = null;
+      targetAlpha = 0f;
+    } else {
+      PointF[] sorted = sortByAngle(pts);
+      if (corners == null || alpha < 0.02f) {
+        corners = copyOf(sorted); // appear in place, fading in
+      } else {
+        sorted = alignTo(corners, sorted); // no corner swapping when the TL choice flips
+      }
+      target = sorted;
+      targetAlpha = holding ? HOLD_ALPHA : 1f;
+    }
+    lastFrameNanos = 0L;
+    postInvalidateOnAnimation();
+  }
+
+  /** Returns a copy of the outline currently shown (target corners), or {@code null}. */
   @Nullable
   public PointF[] getCorners() {
-    if (corners == null) return null;
-    PointF[] out = new PointF[corners.length];
-    for (int i = 0; i < corners.length; i++) out[i] = new PointF(corners[i].x, corners[i].y);
+    if (target == null) return null;
+    return copyOf(target);
+  }
+
+  private static PointF[] copyOf(PointF[] src) {
+    PointF[] out = new PointF[src.length];
+    for (int i = 0; i < src.length; i++) out[i] = new PointF(src[i].x, src[i].y);
     return out;
+  }
+
+  /** Cyclic rotation of {@code next} that best matches {@code cur} corner by corner. */
+  private static PointF[] alignTo(PointF[] cur, PointF[] next) {
+    int bestShift = 0;
+    double best = Double.MAX_VALUE;
+    for (int shift = 0; shift < 4; shift++) {
+      double d = 0;
+      for (int i = 0; i < 4; i++) {
+        PointF a = cur[i], b = next[(i + shift) % 4];
+        d += Math.hypot(a.x - b.x, a.y - b.y);
+      }
+      if (d < best) {
+        best = d;
+        bestShift = shift;
+      }
+    }
+    PointF[] out = new PointF[4];
+    for (int i = 0; i < 4; i++) out[i] = next[(i + bestShift) % 4];
+    return out;
+  }
+
+  /** Advances the outline/alpha animation; returns true while it is still moving. */
+  private boolean stepAnimation() {
+    long now = System.nanoTime();
+    float dtMs = lastFrameNanos == 0L ? 16f : Math.min(100f, (now - lastFrameNanos) / 1e6f);
+    lastFrameNanos = now;
+    boolean moving = false;
+    float ka = 1f - (float) Math.exp(-dtMs / ALPHA_TAU_MS);
+    alpha += (targetAlpha - alpha) * ka;
+    if (Math.abs(targetAlpha - alpha) < 0.01f) alpha = targetAlpha;
+    else moving = true;
+    if (corners != null && target != null) {
+      float kc = 1f - (float) Math.exp(-dtMs / CORNER_TAU_MS);
+      for (int i = 0; i < 4; i++) {
+        float dx = target[i].x - corners[i].x, dy = target[i].y - corners[i].y;
+        if (Math.abs(dx) < 0.3f && Math.abs(dy) < 0.3f) {
+          corners[i].x = target[i].x;
+          corners[i].y = target[i].y;
+        } else {
+          corners[i].x += dx * kc;
+          corners[i].y += dy * kc;
+          moving = true;
+        }
+      }
+    }
+    if (alpha <= 0f && target == null) corners = null;
+    return moving;
   }
 
   /**
@@ -172,14 +263,26 @@ public class CameraCornersOverlay extends View {
   @Override
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
-    if (corners != null) {
+    boolean moving = stepAnimation();
+    if (corners != null && alpha > 0f) {
       path.reset();
       path.moveTo(corners[0].x, corners[0].y);
       for (int i = 1; i < 4; i++) path.lineTo(corners[i].x, corners[i].y);
       path.close();
+      int a = Math.round(255 * alpha);
+      shadowPaint.setAlpha(Math.round(baseShadowAlpha * alpha));
+      linePaint.setAlpha(a);
+      cornerPaint.setAlpha(a);
+      cornerRingPaint.setAlpha(a);
       canvas.drawPath(path, shadowPaint);
       canvas.drawPath(path, linePaint);
+      float r = dp(5);
+      for (PointF c : corners) {
+        canvas.drawCircle(c.x, c.y, r, cornerPaint);
+        canvas.drawCircle(c.x, c.y, r, cornerRingPaint);
+      }
     }
+    if (moving) postInvalidateOnAnimation();
 
     // Draw modelRect if provided (as dashed cyan rectangle)
     if (modelRect != null && !modelRect.isEmpty()) {

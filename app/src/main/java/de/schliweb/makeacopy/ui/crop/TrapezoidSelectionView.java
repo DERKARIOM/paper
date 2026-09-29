@@ -1415,8 +1415,54 @@ public class TrapezoidSelectionView extends View {
     }
   }
 
+  /** Photo size used for the final, precise corner refinement (memory bound: ~2 MP). */
+  private static final int PRECISE_REFINE_MAX_EDGE = 1600;
+
+  /**
+   * Initial crop corners: verified detection (DocQuad + contour hypotheses snapped onto the real
+   * edges and scored) on the small work image, then a precise refinement on the photo itself. Falls
+   * back to the previous best-of heuristic when nothing convincing is found.
+   */
   @Nullable
   private org.opencv.core.Point[] detectBestCropCorners(Bitmap work, float scaleToOrig) {
+    de.schliweb.makeacopy.ml.corners.DocQuadDetector dq = null;
+    try {
+      dq = new de.schliweb.makeacopy.ml.corners.DocQuadDetector(docQuadOrtRunner);
+      de.schliweb.makeacopy.ml.corners.VerifiedQuadDetector.Verified v =
+          new de.schliweb.makeacopy.ml.corners.VerifiedQuadDetector(dq)
+              .detectVerified(work, getContext());
+      if (v != null && v.confidence >= de.schliweb.makeacopy.ml.corners.QuadScorer.KEEP) {
+        double inv = scaleToOrig < 1f ? 1.0 / scaleToOrig : 1.0;
+        double[][] q = new double[4][2];
+        for (int i = 0; i < 4; i++) {
+          q[i][0] = v.quad[i][0] * inv;
+          q[i][1] = v.quad[i][1] * inv;
+        }
+        Bitmap photo = imageBitmap;
+        if (photo != null && !photo.isRecycled()) {
+          q =
+              de.schliweb.makeacopy.ml.corners.VerifiedQuadDetector.refineOnPhoto(
+                  photo, q, PRECISE_REFINE_MAX_EDGE);
+        }
+        org.opencv.core.Point[] out = new org.opencv.core.Point[4];
+        for (int i = 0; i < 4; i++) out[i] = new org.opencv.core.Point(q[i][0], q[i][1]);
+        Log.i(
+            TAG,
+            "Crop corners: verified "
+                + v.source
+                + String.format(java.util.Locale.US, " conf=%.2f", v.confidence));
+        return out;
+      }
+    } catch (Throwable t) {
+      Log.w(TAG, "Verified crop detection failed: " + t.getMessage());
+    } finally {
+      if (dq != null) dq.release();
+    }
+    return detectBestCropCornersLegacy(work, scaleToOrig);
+  }
+
+  @Nullable
+  private org.opencv.core.Point[] detectBestCropCornersLegacy(Bitmap work, float scaleToOrig) {
     org.opencv.core.Point[] docQuadCorners = null;
     try {
       DetectionResult docQuadResult =
