@@ -50,6 +50,27 @@ public class QuadRefinerTest {
   }
 
   @Test
+  public void paperEdgeWinsOverAPrintedFrameJustInside() {
+    // bordered flyer: a dark printed frame 3% inside the paper edge; the detector's outline sits
+    // between both edges
+    double[][] truth = SyntheticScene.page(W, H, 6, 0.72, 0.05);
+    SyntheticScene s = SyntheticScene.render(W, H, truth, 240, 95, 15, 3, 31, 0.03);
+    double[][] start = QuadGeometry.copy(truth);
+    double cx = 0, cy = 0;
+    for (double[] p : truth) {
+      cx += p[0] / 4;
+      cy += p[1] / 4;
+    }
+    for (double[] p : start) { // shrink by 3% toward the center
+      p[0] = cx + (p[0] - cx) * 0.97;
+      p[1] = cy + (p[1] - cy) * 0.97;
+    }
+    QuadRefiner.Result r = QuadRefiner.refine(s.image(), start, 8, 2);
+    double err = SyntheticScene.maxError(r.quad, truth);
+    assertTrue("corner error " + err, err < 1.0);
+  }
+
+  @Test
   public void guessedOutlineOnAnEmptyTableHasNoEdgeSupportAndNoConfidence() {
     double[][] guess = SyntheticScene.page(W, H, 5, 0.65, 0.05);
     SyntheticScene s = SyntheticScene.render(W, H, null, 0, 110, 25, 3, 21);

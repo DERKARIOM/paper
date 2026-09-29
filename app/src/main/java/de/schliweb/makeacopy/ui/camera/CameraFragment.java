@@ -230,8 +230,6 @@ public class CameraFragment extends Fragment implements SensorEventListener {
   private long lastA11yVolumeHintTs = 0L;
   // Framing score smoothing (accessibility stability logic)
   private double lastScoreEma = -1.0; // <0 means: uninitialized
-  private int consecutiveValidFrames = 0;
-  private int consecutiveInvalidFrames = 0;
   // Light sensor
   private SensorManager sensorManager;
   private Sensor lightSensor;
@@ -3353,7 +3351,8 @@ public class CameraFragment extends Fragment implements SensorEventListener {
           if (BuildConfig.FEATURE_DOCQUAD_CORNERS) {
             liveDocQuad = new de.schliweb.makeacopy.ml.corners.DocQuadDetector(docQuadOrtRunner);
           }
-          liveQuadDetector = new de.schliweb.makeacopy.ml.corners.VerifiedQuadDetector(liveDocQuad);
+          liveQuadDetector =
+              de.schliweb.makeacopy.ml.corners.VerifiedQuadDetector.forLive(liveDocQuad);
         }
         verified = liveQuadDetector.detectVerified(bmp, requireContext());
         if (verified != null
@@ -3374,7 +3373,10 @@ public class CameraFragment extends Fragment implements SensorEventListener {
                   + " src="
                   + (verified != null ? verified.source : "-")
                   + " ms="
-                  + liveQuadDetector.lastDurationMs());
+                  + liveQuadDetector.lastDurationMs()
+                  + " ["
+                  + liveQuadDetector.lastTimings()
+                  + "]");
         }
       }
       final org.opencv.core.Point[] pts = detectedPts;
@@ -3539,13 +3541,6 @@ public class CameraFragment extends Fragment implements SensorEventListener {
       }
       final boolean trackedHolding =
           tracked.state == de.schliweb.makeacopy.ml.corners.CornerTracker.State.HOLDING;
-      if (tracked.state == de.schliweb.makeacopy.ml.corners.CornerTracker.State.DETECTED) {
-        consecutiveValidFrames++;
-        consecutiveInvalidFrames = 0;
-      } else {
-        consecutiveInvalidFrames++;
-        consecutiveValidFrames = 0;
-      }
       final android.graphics.PointF[] outlineForUi = trackedViewPts;
 
       // Compute score EMA only when a value exists

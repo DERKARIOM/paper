@@ -1448,9 +1448,22 @@ public class TrapezoidSelectionView extends View {
         for (int i = 0; i < 4; i++) out[i] = new org.opencv.core.Point(q[i][0], q[i][1]);
         Log.i(
             TAG,
-            "Crop corners: verified "
-                + v.source
-                + String.format(java.util.Locale.US, " conf=%.2f", v.confidence));
+            String.format(
+                java.util.Locale.US,
+                "Crop corners: verified %s conf=%.2f photo=%dx%d TL=(%.1f,%.1f) TR=(%.1f,%.1f)"
+                    + " BR=(%.1f,%.1f) BL=(%.1f,%.1f)",
+                v.source,
+                v.confidence,
+                photo != null ? photo.getWidth() : 0,
+                photo != null ? photo.getHeight() : 0,
+                q[0][0],
+                q[0][1],
+                q[1][0],
+                q[1][1],
+                q[2][0],
+                q[2][1],
+                q[3][0],
+                q[3][1]));
         return out;
       }
     } catch (Throwable t) {

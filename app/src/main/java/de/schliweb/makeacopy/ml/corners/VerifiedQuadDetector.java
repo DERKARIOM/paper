@@ -45,9 +45,12 @@ public final class VerifiedQuadDetector implements CornerDetector {
   private static final double SEARCH_RADIUS_FRACTION = 0.016;
 
   @Nullable private final DocQuadDetector docQuad;
+  private final double contourBelow;
+  private final int contourMaxEdge;
   private int[] pixels;
   private float[] luma;
   private volatile long lastDurationMs;
+  private volatile String lastTimings = "";
 
   /** Outline, its confidence and where it comes from. */
   public static final class Verified {
@@ -67,10 +70,35 @@ public final class VerifiedQuadDetector implements CornerDetector {
   }
 
   /**
+   * One-shot detector (crop screen): contour hypotheses whenever the network outline scores below
+   * {@link QuadScorer#CONVINCING}, at full resolution.
+   *
    * @param docQuad network detector, or {@code null} to use the classical hypotheses only
    */
   public VerifiedQuadDetector(@Nullable DocQuadDetector docQuad) {
+    this(docQuad, QuadScorer.CONVINCING, Integer.MAX_VALUE);
+  }
+
+  /**
+   * @param contourBelow the (costlier) contour hypotheses are only tried when the network outline
+   *     scores below this
+   * @param contourMaxEdge contour hypotheses are searched on a copy downscaled to this size
+   */
+  public VerifiedQuadDetector(
+      @Nullable DocQuadDetector docQuad, double contourBelow, int contourMaxEdge) {
     this.docQuad = docQuad;
+    this.contourBelow = contourBelow;
+    this.contourMaxEdge = contourMaxEdge;
+  }
+
+  /** Live settings: contour hypotheses only when the network outline is weak, at half size. */
+  public static VerifiedQuadDetector forLive(@Nullable DocQuadDetector docQuad) {
+    return new VerifiedQuadDetector(docQuad, 0.6, 360);
+  }
+
+  /** Per-step durations of the last call, for diagnostics logs. */
+  public String lastTimings() {
+    return lastTimings;
   }
 
   /** Duration of the last {@link #detectVerified} call (for adaptive analysis pacing). */
@@ -94,26 +122,43 @@ public final class VerifiedQuadDetector implements CornerDetector {
       int w = src.getWidth(), h = src.getHeight();
       if (w < 16 || h < 16) return null;
       LumaImage img = luma(src);
+      long t1 = SystemClock.uptimeMillis();
       double radius = Math.max(6, SEARCH_RADIUS_FRACTION * Math.hypot(w, h));
 
       Verified best = null;
       QuadScorer.ModelMask mask = null;
+      long tModel = t1;
       if (docQuad != null && ctx != null) {
         DocQuadDetector.Detailed d = docQuad.detectDetailed(src, ctx);
+        tModel = SystemClock.uptimeMillis();
         mask = d.mask;
         if (d.result.success && QuadGeometry.isFiniteQuad(d.result.cornersOriginalTLTRBRBL)) {
           best = verify(img, d.result.cornersOriginalTLTRBRBL, radius, mask, Source.DOCQUAD);
         }
       }
-      if ((best == null || best.confidence < QuadScorer.CONVINCING)
-          && OpenCVUtils.isInitialized()) {
-        List<double[][]> cands = ContourQuadCandidates.find(src);
+      long t2 = SystemClock.uptimeMillis();
+      int nCands = 0;
+      if ((best == null || best.confidence < contourBelow) && OpenCVUtils.isInitialized()) {
+        List<double[][]> cands = contourCandidates(src);
+        nCands = cands.size();
         double r2 = Math.max(4, radius / 2);
         for (double[][] q : cands) {
           Verified v = verify(img, q, r2, mask, Source.OPENCV);
           if (v != null && (best == null || v.confidence > best.confidence)) best = v;
         }
       }
+      long t3 = SystemClock.uptimeMillis();
+      lastTimings =
+          "luma="
+              + (t1 - t0)
+              + " model="
+              + (tModel - t1)
+              + " refine="
+              + (t2 - tModel)
+              + " contours("
+              + nCands
+              + ")="
+              + (t3 - t2);
       return best;
     } catch (Throwable t) {
       Log.w(TAG, "detection failed: " + t.getMessage());
@@ -135,6 +180,28 @@ public final class VerifiedQuadDetector implements CornerDetector {
     QuadRefiner.Result r = QuadRefiner.refine(img, start, radius, 2);
     double conf = QuadScorer.confidence(r, img.width, img.height, mask);
     return new Verified(QuadGeometry.orderClockwise(r.quad), conf, source, r.sideSupport);
+  }
+
+  /** Contour hypotheses, searched on a downscaled copy when {@code contourMaxEdge} requires it. */
+  private List<double[][]> contourCandidates(Bitmap src) {
+    int w = src.getWidth(), h = src.getHeight();
+    double s = Math.min(1.0, contourMaxEdge / (double) Math.max(w, h));
+    if (s >= 1.0) return ContourQuadCandidates.find(src);
+    Bitmap small =
+        Bitmap.createScaledBitmap(
+            src, Math.max(1, (int) Math.round(w * s)), Math.max(1, (int) Math.round(h * s)), true);
+    try {
+      List<double[][]> out = ContourQuadCandidates.find(small);
+      for (double[][] q : out) {
+        for (double[] p : q) {
+          p[0] /= s;
+          p[1] /= s;
+        }
+      }
+      return out;
+    } finally {
+      small.recycle();
+    }
   }
 
   @NonNull

@@ -80,6 +80,8 @@ public final class CornerTracker {
   }
 
   /**
+   * Feeds the detection of one analysed frame and returns the outline to display.
+   *
    * @param quad detected outline (TL, TR, BR, BL) or {@code null}
    * @param confidence {@link QuadScorer} confidence of {@code quad}
    * @param w width of the coordinate space (for the relative thresholds)

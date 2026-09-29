@@ -105,14 +105,23 @@ public final class QuadRefiner {
     final double cx, cy, dx, dy; // point + unit direction
     final double support;
     final int polarity;
+    final double strength; // mean edge strength of the supporting samples
 
-    Line(double cx, double cy, double dx, double dy, double support, int polarity) {
+    Line(
+        double cx,
+        double cy,
+        double dx,
+        double dy,
+        double support,
+        int polarity,
+        double strength) {
       this.cx = cx;
       this.cy = cy;
       this.dx = dx;
       this.dy = dy;
       this.support = support;
       this.polarity = polarity;
+      this.strength = strength;
     }
   }
 
@@ -175,12 +184,49 @@ public final class QuadRefiner {
         for (Candidate t : top) if (t != null) cands.add(t);
       }
     }
-    Line best = null;
+    // Up to two straight edges per polarity: the paper edge, and e.g. both borders of a printed
+    // frame, a table or a colored band just inside the page.
+    List<Line> lines = new ArrayList<>(4);
     for (int pol = -1; pol <= 1; pol += 2) {
-      Line l = ransacLine(cands, pol);
-      if (l != null && (best == null || l.support > best.support)) best = l;
+      Line first = ransacLine(cands, pol);
+      if (first == null) continue;
+      lines.add(first);
+      List<Candidate> rest = new ArrayList<>(cands.size());
+      for (Candidate k : cands) {
+        if (Math.abs((k.x - first.cx) * -first.dy + (k.y - first.cy) * first.dx) > 2.0) {
+          rest.add(k);
+        }
+      }
+      Line second = ransacLine(rest, pol);
+      if (second != null) lines.add(second);
     }
-    return best;
+    if (lines.isEmpty()) return null;
+    Line best = lines.get(0);
+    for (Line l : lines) if (l.support > best.support) best = l;
+    // The document boundary is the OUTERMOST straight edge that is well supported and about as
+    // contrasted as the best one (printed frames lie inside the page; soft shadow edges outside it
+    // are weak and do not qualify).
+    double mx = a[0] + dx * 0.5, my = a[1] + dy * 0.5;
+    Line chosen = best;
+    double chosenOffset = offsetAlongNormal(best, mx, my, nx, ny);
+    for (Line l : lines) {
+      if (l == best || l.support < 0.6 * best.support || l.strength < 0.35 * best.strength) {
+        continue;
+      }
+      double off = offsetAlongNormal(l, mx, my, nx, ny);
+      if (off > chosenOffset) {
+        chosen = l;
+        chosenOffset = off;
+      }
+    }
+    return chosen;
+  }
+
+  /** Signed distance, along the outward normal from (mx, my), to where it crosses the line. */
+  private static double offsetAlongNormal(Line l, double mx, double my, double nx, double ny) {
+    double den = nx * l.dy - ny * l.dx;
+    if (Math.abs(den) < 1e-9) return 0;
+    return ((l.cx - mx) * l.dy - (l.cy - my) * l.dx) / den;
   }
 
   private static void insertTop(Candidate[] top, Candidate c) {
@@ -231,6 +277,7 @@ public final class QuadRefiner {
     // Refit twice: one point per sample (the one closest to the current line), total least squares.
     double lx = bestLine[0], ly = bestLine[1], ldx = bestLine[2], ldy = bestLine[3];
     int used = 0;
+    double strengthSum = 0;
     for (int pass = 0; pass < 2; pass++) {
       double nx = -ldy, ny = ldx;
       Candidate[] perSample = new Candidate[SAMPLES_PER_SIDE];
@@ -245,10 +292,12 @@ public final class QuadRefiner {
       }
       double sx = 0, sy = 0;
       used = 0;
+      strengthSum = 0;
       for (Candidate k : perSample) {
         if (k == null) continue;
         sx += k.x;
         sy += k.y;
+        strengthSum += k.strength;
         used++;
       }
       if (used < 4) return null;
@@ -273,14 +322,16 @@ public final class QuadRefiner {
       ldx = ndx;
       ldy = ndy;
     }
-    return new Line(lx, ly, ldx, ldy, used / (double) SAMPLES_PER_SIDE, pol);
+    return new Line(
+        lx, ly, ldx, ldy, used / (double) SAMPLES_PER_SIDE, pol, strengthSum / Math.max(1, used));
   }
 
   static double[] intersect(Line a, Line b) {
-    double det = a.dx * (-b.dy) - a.dy * (-b.dx);
+    // Solve a.c + t * a.d = b.c + s * b.d (Cramer's rule).
+    double det = b.dx * a.dy - a.dx * b.dy;
     if (Math.abs(det) < 1e-6) return null;
     double rx = b.cx - a.cx, ry = b.cy - a.cy;
-    double t = (rx * (-b.dy) - ry * (-b.dx)) / det;
+    double t = (b.dx * ry - rx * b.dy) / det;
     return new double[] {a.cx + t * a.dx, a.cy + t * a.dy};
   }
 

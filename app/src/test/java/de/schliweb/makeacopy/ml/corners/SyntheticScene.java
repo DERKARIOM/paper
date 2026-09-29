@@ -36,6 +36,23 @@ final class SyntheticScene {
       double texture,
       double noise,
       long seed) {
+    return render(w, h, quad, paper, background, texture, noise, seed, 0);
+  }
+
+  /**
+   * @param printedFrame when &gt; 0, a dark printed frame (2% wide) is drawn at this fraction inside
+   *     the page border (bordered flyers, forms)
+   */
+  static SyntheticScene render(
+      int w,
+      int h,
+      double[][] quad,
+      double paper,
+      double background,
+      double texture,
+      double noise,
+      long seed,
+      double printedFrame) {
     SyntheticScene s = new SyntheticScene(w, h);
     Random rnd = new Random(seed);
     for (int y = 0; y < h; y++) {
@@ -53,6 +70,7 @@ final class SyntheticScene {
           if (in > 0) {
             double page = paper;
             if (in == 16 && isText(quad, x, y)) page = paper * 0.15; // dark text strokes
+            if (in == 16 && printedFrame > 0 && inFrame(quad, x, y, printedFrame)) page = 60;
             double cov = in / 16.0;
             v = bg * (1 - cov) + page * cov;
           }
@@ -76,6 +94,13 @@ final class SyntheticScene {
     // words: gaps every few characters
     double col = u * 30 + Math.floor(row) * 1.7;
     return (col - Math.floor(col)) < 0.8;
+  }
+
+  private static boolean inFrame(double[][] q, double x, double y, double inset) {
+    double[] uv = inverseBilinear(q, x, y);
+    if (uv == null) return false;
+    double d = Math.min(Math.min(uv[0], 1 - uv[0]), Math.min(uv[1], 1 - uv[1]));
+    return d >= inset && d <= inset + 0.02;
   }
 
   /** Approximate (u,v) of a point inside the quad by Newton iterations on the bilinear map. */
