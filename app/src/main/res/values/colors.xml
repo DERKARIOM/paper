@@ -12,6 +12,8 @@
          both light and dark themes. -->
     <color name="paper_brand_blue">#FF185FA5</color>
     <color name="paper_scan_accent">#FF85B7EB</color>
+    <!-- Crop frame on the photo: saturated Paper blue, readable on white paper and dark tables -->
+    <color name="paper_crop_accent">#FF2F80ED</color>
     <!-- Scan screen: floating controls and hint over the camera image -->
     <color name="scan_background">#FF000000</color>
     <color name="scan_control_bg">#66000000</color>

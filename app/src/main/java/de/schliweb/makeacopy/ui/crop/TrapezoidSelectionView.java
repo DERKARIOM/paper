@@ -81,11 +81,11 @@ public class TrapezoidSelectionView extends View {
   private Paint hintBackgroundPaint; // Paint for the hint text background
   private Paint edgeHandlePaint; // Paint for the edge midpoint handles
   private Paint activeEdgePaint; // Paint for highlighting the actively dragged edge
+  private final Paint handleRingPaint =
+      new Paint(Paint.ANTI_ALIAS_FLAG); // Blue ring around the corner / edge handles
   private final Path drawPath = new Path(); // Preallocated path for onDraw
   private final Paint crosshairPaint =
       new Paint(Paint.ANTI_ALIAS_FLAG); // Preallocated crosshair paint
-  private final Paint indexTextPaint =
-      new Paint(Paint.ANTI_ALIAS_FLAG); // Preallocated index text paint
   private PointF[] corners; // The four corners of the trapezoid
   private PointF[] animationStartCorners; // Starting positions for corner animation
   private PointF[] animationEndCorners; // Target positions for corner animation
@@ -569,35 +569,43 @@ public class TrapezoidSelectionView extends View {
     // Initialize the relative corners array (as percentages of view dimensions)
     relativeCorners = new float[4][2];
 
-    // Initialize the paints with enhanced visual appearance
+    // Paper crop frame: crisp blue outline, white corner handles ringed in blue (filled blue while
+    // dragged), light blue tint inside the selection.
+    float dp = getResources().getDisplayMetrics().density;
+    int accent =
+        androidx.core.content.ContextCompat.getColor(
+            getContext(), de.schliweb.makeacopy.R.color.paper_crop_accent);
+    int shadow = Color.argb(110, 0, 0, 0);
+
     trapezoidPaint = new Paint();
-    trapezoidPaint.setColor(
-        Color.rgb(255, 102, 0)); // Bright orange for better visibility on most backgrounds
-    trapezoidPaint.setStrokeWidth(10); // Thicker line for better visibility
+    trapezoidPaint.setColor(accent);
+    trapezoidPaint.setStrokeWidth(3f * dp);
     trapezoidPaint.setStyle(Paint.Style.STROKE);
+    trapezoidPaint.setStrokeJoin(Paint.Join.ROUND);
     trapezoidPaint.setAntiAlias(true);
-    // Add shadow effect to make the outline stand out more
-    trapezoidPaint.setShadowLayer(5.0f, 2.0f, 2.0f, Color.BLACK);
+    trapezoidPaint.setShadowLayer(3f * dp, 0f, 1f * dp, shadow);
 
     cornerPaint = new Paint();
-    cornerPaint.setColor(Color.rgb(255, 102, 0)); // Matching orange color
+    cornerPaint.setColor(Color.WHITE);
     cornerPaint.setStyle(Paint.Style.FILL);
     cornerPaint.setAntiAlias(true);
-    // Add shadow effect to make corners stand out more
-    cornerPaint.setShadowLayer(5.0f, 2.0f, 2.0f, Color.BLACK);
+    cornerPaint.setShadowLayer(3f * dp, 0f, 1f * dp, shadow);
+
+    handleRingPaint.setColor(accent);
+    handleRingPaint.setStyle(Paint.Style.STROKE);
+    handleRingPaint.setStrokeWidth(3f * dp);
+    handleRingPaint.setAntiAlias(true);
 
     activePaint = new Paint();
-    activePaint.setColor(Color.rgb(255, 255, 0)); // Bright yellow for active corner
+    activePaint.setColor(accent);
     activePaint.setStyle(Paint.Style.FILL);
     activePaint.setAntiAlias(true);
-    // Add glow effect for active corner
-    activePaint.setShadowLayer(8.0f, 0.0f, 0.0f, Color.rgb(255, 255, 100));
+    activePaint.setShadowLayer(6f * dp, 0f, 0f, Color.argb(140, 0, 0, 0));
 
-    // Initialize the background paint for the semi-transparent overlay
+    // Semi-transparent blue tint inside the selection
     backgroundPaint = new Paint();
-    // Use a gradient overlay that's more visible but less intrusive
     backgroundPaint.setColor(
-        Color.argb(60, 0, 150, 255)); // Semi-transparent blue with higher saturation
+        Color.argb(40, Color.red(accent), Color.green(accent), Color.blue(accent)));
     backgroundPaint.setStyle(Paint.Style.FILL);
     backgroundPaint.setAntiAlias(true);
 
@@ -614,22 +622,20 @@ public class TrapezoidSelectionView extends View {
     hintBackgroundPaint.setStyle(Paint.Style.FILL);
     hintBackgroundPaint.setAntiAlias(true);
 
-    // Edge midpoint handle paint: same orange family as corners but distinct (hollow) so users
-    // can tell handles for edges (lines) apart from corner handles at a glance.
+    // Edge midpoint handles: small white dots ringed in blue, so edges (lines) can be dragged too.
     edgeHandlePaint = new Paint();
-    edgeHandlePaint.setColor(Color.rgb(255, 102, 0));
+    edgeHandlePaint.setColor(Color.WHITE);
     edgeHandlePaint.setStyle(Paint.Style.FILL);
     edgeHandlePaint.setAntiAlias(true);
-    edgeHandlePaint.setShadowLayer(4.0f, 2.0f, 2.0f, Color.BLACK);
+    edgeHandlePaint.setShadowLayer(2f * dp, 0f, 1f * dp, shadow);
 
-    // Active edge paint: bright yellow stroke drawn on top of the trapezoid outline while an
-    // edge is being translated (parallel drag).
+    // Active edge: white stroke drawn over the blue outline while an edge is being translated.
     activeEdgePaint = new Paint();
-    activeEdgePaint.setColor(Color.rgb(255, 255, 0));
+    activeEdgePaint.setColor(Color.WHITE);
     activeEdgePaint.setStyle(Paint.Style.STROKE);
     activeEdgePaint.setAntiAlias(true);
     activeEdgePaint.setStrokeCap(Paint.Cap.ROUND);
-    activeEdgePaint.setShadowLayer(6.0f, 0.0f, 0.0f, Color.rgb(255, 255, 100));
+    activeEdgePaint.setShadowLayer(4f * dp, 0f, 0f, accent);
 
     // Initialize default magnifier size in px (approx 140dp)
     if (magnifierSizePx == 0) {
@@ -2453,6 +2459,7 @@ public class TrapezoidSelectionView extends View {
       float my = (corners[i].y + corners[j].y) * 0.5f;
       Paint mp = (i == activeEdgeIndex) ? activePaint : edgeHandlePaint;
       canvas.drawCircle(mx, my, EDGE_HANDLE_RADIUS, mp);
+      if (i != activeEdgeIndex) canvas.drawCircle(mx, my, EDGE_HANDLE_RADIUS, handleRingPaint);
     }
 
     // Draw the corner handles
@@ -2463,8 +2470,18 @@ public class TrapezoidSelectionView extends View {
         // crosshair suffices.
         continue;
       }
-      Paint paint = (i == activeCornerIndex) ? activePaint : cornerPaint;
-      canvas.drawCircle(corners[i].x, corners[i].y, CORNER_RADIUS, paint);
+      boolean active = i == activeCornerIndex;
+      Paint fill = active ? activePaint : cornerPaint;
+      canvas.drawCircle(corners[i].x, corners[i].y, CORNER_RADIUS, fill);
+      if (active) {
+        // dragged handle: blue with a white ring
+        int ring = handleRingPaint.getColor();
+        handleRingPaint.setColor(Color.WHITE);
+        canvas.drawCircle(corners[i].x, corners[i].y, CORNER_RADIUS, handleRingPaint);
+        handleRingPaint.setColor(ring);
+      } else {
+        canvas.drawCircle(corners[i].x, corners[i].y, CORNER_RADIUS, handleRingPaint);
+      }
     }
 
     // Draw a simple crosshair at active corner while dragging (pairs well with magnifier)
@@ -2479,18 +2496,6 @@ public class TrapezoidSelectionView extends View {
       canvas.drawLine(cx - len, cy, cx + len, cy, crosshairPaint);
       // Vertical line
       canvas.drawLine(cx, cy - len, cx, cy + len, crosshairPaint);
-    }
-
-    // Draw corner indices (avoid drawing the active corner's digit while magnifier is active so it
-    // doesn't appear inside the loupe)
-    indexTextPaint.setColor(Color.WHITE);
-    indexTextPaint.setTextSize(40);
-    indexTextPaint.setTextAlign(Paint.Align.CENTER);
-    for (int i = 0; i < 4; i++) {
-      if (isDraggingWithMagnifier && i == activeCornerIndex) {
-        continue; // skip active corner digit to keep the loupe clean (only white crosshair visible)
-      }
-      canvas.drawText(String.valueOf(i), corners[i].x, corners[i].y + 15, indexTextPaint);
     }
 
     // Draw user guidance hints
